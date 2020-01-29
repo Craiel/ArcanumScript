@@ -663,6 +663,10 @@
     }
 
     function refreshInventorySubContent(conf){
+        if(conf === undefined) {
+            conf = {};
+        }
+
         let itemTable = $('div.inventory').find('div.item-table');
         if(itemTable.length === 0){
             return;
@@ -688,6 +692,10 @@
     }
 
     function processItemEntry(sourceEl, name, targetEl, conf){
+        if(conf === undefined){
+            conf = {};
+        }
+
         if(invalidItemNames[name] === true){
             return;
         }
@@ -771,8 +779,8 @@
 
         // Check enchantment state and normalize item name
         if (prop.name.startsWith('Enchanted') || prop.name.startsWith('enchanted')) {
-            prop.name = prop.name.replace("Enchanted ", "").replace("enchanted", "");
-            prop.fullName = prop.fullName.replace("Enchanted ", "");
+            prop.name = prop.name.replace(/enchanted/gi, "").trim();
+            prop.fullName = prop.fullName.replace(/enchanted/gi, "").trim();
             prop.isEnchanted = true;
         }
 
