@@ -69,7 +69,16 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 - spacing of elements increased to avoid layout shifting
 - removed equip buttons since they are not so useful here
 
-    ![](features/adventureInventory.png) 
+    ![](features/adventureInventory.png)
+     
+- Buffs now have fixed width + height making them easier to see and no longer overlap
+- Curse debuffs now have a violet background color
+    
+    ![](features/adventureBuffs.png)
+    
+- Added a Damage Meter that shows different statistics
+
+    ![](features/dmgMeter.gif)
     
 #### Skills Screen Adjusted
 

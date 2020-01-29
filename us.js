@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         Arcanum Auto
-// @version      1691
-// @author       ...
+// @version      1694
+// @author       Craiel
 // @description  Automation
-// @downloadURL  https://github.com/harrygiel/arcanum-automation/raw/master/automate.user.js
+// @updateURL    https://raw.githubusercontent.com/Craiel/ArcanumScript/master/us.js
+// @downloadURL  https://raw.githubusercontent.com/Craiel/ArcanumScript/master/us.js
 // @match        http://www.lerpinglemur.com/arcanum/*
 // @match        https://www.lerpinglemur.com/arcanum/*
 // @match        http://game312933.konggames.com/gamez/0031/2933/*
 // @match        https://game312933.konggames.com/gamez/0031/2933/*
 // @run-at       document-idle
-// @require http://code.jquery.com/jquery-3.4.1.min.js
+// @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
 
 // Game Addresses:
@@ -22,11 +23,61 @@
     const SettingsSaveKey = "at_settings";
     const SettingsVersion = 1;
 
+    const EnableDebugMode = false;
+
     const QuickSlotCount = 10;
     const MinUpdateInterval = 50;
 
     const ItemCountRegex = /(.*?)\s?\(([0-9]+)\)/;
     const ItemLevelRegex = /\[[0-9]+\](.*)/;
+
+    const DamageMeterHTML = `
+    <div id="at_dmg_meter" style="height: 200px;">
+        <div id="at_dmg_meter_header" style="background-color: lightgrey; display: flex;">
+            <span id="at_dmg_meter_header_title" style="margin-top: 6px">Damage</span>
+            <div style="margin-left: auto;">
+                <button id="at_dmg_meter_change_mode">M</button>
+                <button id="at_dmg_meter_reset">R</button>
+            </div>            
+        </div>
+        <table id="at_dmg_meter_values" style="width: 100%">
+            <thead>
+                <tr style="display: block">
+                    <th style="width: 80px">Name</th>
+                    <th style="width: 70px">Value</th>
+                    <th>/s</th>
+                </tr>            
+            </thead>
+            <tbody style="display:block;overflow:auto;height:130px;width:100%;">
+                            
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    const DamageMeterEntry = `
+    <tr id="at_dmg_meter_entry_{{id}}">
+        <td >{{name}}</td>
+        <td style="width: 50px">{{damage}}</td>
+        <td style="width: 50px">{{dps}}</td>
+    </tr>
+    `;
+
+    const DamageMeterMode = {
+        Default: 0,
+        DamageDoneBySource: 1,
+        DamageTakenBySource: 2,
+        OtherFriend: 3,
+        OtherFoe: 4
+    };
+
+    const CombatHitRegex = /(.*) hits (strongly )*(.*?):\s*([0-9\.]+) (\(absorb: ([0-9\.]+)%\))*/i;
+    const CombatParryRegex = /(.*) (parries|dodges) (.*)/i;
+    const CombatLifeStealRegex = /(.*) steals ([0-9\.]+) life/i;
+
+    let previousCombatLogLines = [];
+
+    let damageMeterMode = DamageMeterMode.Default;
 
     let isLoaded = false;
     let lastUpdate = 0;
@@ -52,6 +103,8 @@
     let intervalFunctionRemaining = {};
 
     let settingsPanelAdjusted = false;
+
+    let combatStats = {};
 
     // -------------------------------------------------------------------
     // Data
@@ -307,9 +360,12 @@
     // -------------------------------------------------------------------
     function loadAutomation() {
         loadQuickSlots();
+        loadDamageMeter();
+        loadDebugUI();
 
         checkData();
         initializePlayerState();
+        resetCombatStats();
 
         addIntervalFunction(updateTabState, 500);
         addIntervalFunction(refreshActiveTab, 500);
@@ -371,6 +427,17 @@
         }
     }
 
+    function loadDebugUI() {
+        if (EnableDebugMode !== true) {
+            return;
+        }
+
+        let parent = $('div.quickbar');
+        let button = $('<button id="at_Debug_btn" style="margin-left: auto;">Debug</button>');
+        button.click(printDebugInfo);
+        parent.append(button);
+    }
+
     function loadQuickSlots() {
         let slotId = 0;
 
@@ -415,6 +482,25 @@
                 el.val(time / 1000);
             }
         }
+    }
+
+    function processTemplate(template, parameters){
+        for(let key in parameters) {
+            template = template.split('{{'+key+'}}').join(parameters[key]);
+        }
+
+        return template;
+    }
+
+    function loadDamageMeter() {
+        let parent = $('div.log-view');
+
+        let panel = $(DamageMeterHTML);
+        parent.append(panel);
+
+        $('#at_dmg_meter_change_mode').click(toggleDamageMeterMode);
+
+        $('#at_dmg_meter_reset').click(resetCombatStats);
     }
 
     function saveSettings() {
@@ -576,7 +662,7 @@
         // <div data-v-2acc7e09=""><label data-v-2acc7e09="" for="compact-mode918">compact mode</label> <input data-v-2acc7e09="" type="checkbox" id="compact-mode918"></div>
     }
 
-    function refreshActiveTab() {
+    function refreshActiveTab(delta) {
         switch (playerState.activeTab) {
             case GameTabs.Skills: {
                 refreshSkillsTab();
@@ -584,7 +670,7 @@
             }
 
             case GameTabs.Adventure: {
-                refreshAdventureTab();
+                refreshAdventureTab(delta);
                 break;
             }
 
@@ -610,28 +696,428 @@
         }
     }
 
-    function refreshAdventureTab() {
+    function refreshAdventureTab(delta) {
         let root = $('div.adventure');
         if(root.length === 0){
             return;
         }
-
-        let explore = root.find('div.explore');
 
         let raid = root.find('div.raid-bottom');
         if(raid.length === 0){
             return;
         }
 
+        combatStats.combatTime += delta / 1000;
+
         refreshInventorySubContent({removeEquip: true});
+        refreshDotsLists();
+
+        // These have to be in order to get the right results
+        parseCombatants();
+        parseCombatLog();
+
+        refreshDamageMeter();
+    }
+
+    function hideDamageMeter(){
+        let meter = $('#at_dmg_meter');
+        if(meter.length === 0){
+            return;
+        }
+
+        meter.hide();
+    }
+
+    function refreshDamageMeter() {
+        let meter = $('#at_dmg_meter');
+        if(meter.length === 0){
+            return;
+        }
+
+        meter.show();
+
+        switch (damageMeterMode) {
+            case DamageMeterMode.Default:
+            {
+                refreshDamageMeterValuesSource(combatStats.damage);
+                break;
+            }
+
+            case DamageMeterMode.DamageDoneBySource: {
+                refreshDamageMeterValuesSource(combatStats.damageDoneBySource);
+                break;
+            }
+
+            case DamageMeterMode.DamageTakenBySource: {
+                refreshDamageMeterValuesSource(combatStats.damageTakenBySource);
+                break;
+            }
+
+            case DamageMeterMode.OtherFriend: {
+                refreshDamageMeterValuesSource(combatStats.otherFriend);
+                break;
+            }
+
+            case DamageMeterMode.OtherFoe: {
+                refreshDamageMeterValuesSource(combatStats.otherFoe);
+                break;
+            }
+        }
+    }
+
+    function refreshDamageMeterValuesSource(sourceData){
+        let meterValues= $('#at_dmg_meter_values').find('tbody');
+        meterValues.empty();
+
+        let sortedDamage = [];
+        for(let source in sourceData) {
+            sortedDamage.push([source, sourceData[source]]);
+        }
+
+        sortedDamage.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        for(let i = 0; i < sortedDamage.length; i++) {
+            let entry = sortedDamage[i];
+            let damageValue = sourceData[entry[0]];
+            let dps = damageValue / combatStats.combatTime;
+            let templateValues = {
+                id: entry[0].replace(" ", ""),
+                name: entry[0],
+                damage: Math.floor(damageValue),
+                dps: dps.toFixed(2)
+            };
+
+            let entrySelf = $(processTemplate(DamageMeterEntry, templateValues));
+            meterValues.append(entrySelf);
+        }
+    }
+
+    function refreshDotsLists() {
+        let view = $('div.dot-view');
+        if(view.length === 0){
+            return;
+        }
+
+        //view.css('flex-grow', '1');
+
+        view.find('div.mini').each(function() {
+            $(this).css('width', '26px').css('height', '26');
+            if($(this).hasClass('curse')) {
+                $(this).css('background-color', 'violet');
+            }
+        });
+    }
+
+    function syncCombatants(target, source) {
+        for(let i = 0; i < source.length; i++) {
+            let name = source[i];
+            if(target[name] === undefined){
+                target[name] = 0
+            }
+        }
+    }
+
+    function parseCombatants() {
+        let combatRoot = $('div.combat');
+        if(combatRoot.length === 0) {
+            return;
+        }
+
+        let groups = combatRoot.find('div.npc-group');
+        if(groups.length !== 2) {
+            return;
+        }
+
+        //friends are first group
+        let npcNames = [];
+        $(groups[0]).find('span.name-span').each(function() {
+            let name = $(this).children()[0].innerText.trim();
+            if(name === ""){
+                return;
+            }
+
+            npcNames.push(name);
+        });
+
+        syncCombatants(combatStats.friend, npcNames);
+
+        npcNames = [];
+        $(groups[1]).find('span.name-span').each(function() {
+            let name = $(this).children()[0].innerText.trim();
+            if(name === "") {
+                return;
+            }
+
+            npcNames.push(name);
+        });
+
+        syncCombatants(combatStats.foe, npcNames);
+    }
+
+    function parseCombatLog() {
+        let log = $('div.raid-bottom').find('div.outlog');
+        if(log.length === 0) {
+            return;
+        }
+
+        let combatLogUpToDate = false;
+        let newCombatLogLines = [];
+        log.find('div.log-item').each(function() {
+            if(combatLogUpToDate === true) {
+                return;
+            }
+
+            if($(this).find('span.log-title').length > 0){
+                return;
+            }
+
+            let line = $(this).find('span.log-text').text();
+            for(let i = 0; i < previousCombatLogLines.length; i++){
+                if(line === previousCombatLogLines[i]) {
+                    // Consider this the end of the current log section
+                    combatLogUpToDate = true;
+                    return;
+                }
+            }
+
+            newCombatLogLines.push(line);
+        });
+
+        previousCombatLogLines = newCombatLogLines;
+        for(let i = 0; i < newCombatLogLines.length; i++){
+            parseCombatLogLine(newCombatLogLines[i]);
+        }
+    }
+
+    function toggleDamageMeterMode(){
+        switch (damageMeterMode) {
+            case DamageMeterMode.Default:
+            {
+                $('#at_dmg_meter_header_title').text("Damage by Spell");
+                damageMeterMode = DamageMeterMode.DamageDoneBySource;
+                break;
+            }
+
+            case DamageMeterMode.DamageDoneBySource:
+            {
+                $('#at_dmg_meter_header_title').text("Received by Source");
+                damageMeterMode = DamageMeterMode.DamageTakenBySource;
+                break;
+            }
+
+            case DamageMeterMode.DamageTakenBySource:
+            {
+                $('#at_dmg_meter_header_title').text("Other (You)");
+                damageMeterMode = DamageMeterMode.OtherFriend;
+                break;
+            }
+
+            case DamageMeterMode.OtherFriend:
+            {
+                $('#at_dmg_meter_header_title').text("Other (Enemy)");
+                damageMeterMode = DamageMeterMode.OtherFoe;
+                break;
+            }
+
+            case DamageMeterMode.OtherFoe:
+            {
+                $('#at_dmg_meter_header_title').text("Damage");
+                damageMeterMode = DamageMeterMode.Default;
+                break;
+            }
+        }
+
+        refreshDamageMeter();
+    }
+
+    function resetCombatStats() {
+        combatStats = {
+            damage: {
+                dealt: 0,
+                received: 0
+            },
+            combatTime: 0,
+            friend: {},
+            foe: {},
+            damageDoneBySource: {},
+            damageTakenBySource: {},
+            otherFriend: {},
+            otherFoe: {},
+            unhandledLines: []
+        };
+
+        refreshDamageMeter();
+    }
+
+    function combatRegisterDamageTaken(id, value) {
+        if(combatStats.damageTakenBySource[id] === undefined) {
+            combatStats.damageTakenBySource[id] = 0;
+        }
+
+        combatStats.damageTakenBySource[id] += value;
+    }
+
+    function combatRegisterDamageDone(id, value) {
+        if(combatStats.damageDoneBySource[id] === undefined) {
+            combatStats.damageDoneBySource[id] = 0;
+        }
+
+        combatStats.damageDoneBySource[id] += value;
+    }
+
+    function combatRegisterOtherFriendly(id, value = 1) {
+        if(combatStats.otherFriend[id] === undefined) {
+            combatStats.otherFriend[id] = 0;
+        }
+
+        combatStats.otherFriend[id] += value;
+    }
+
+    function combatRegisterOtherFoe(id, value = 1) {
+        if(combatStats.otherFoe[id] === undefined) {
+            combatStats.otherFoe[id] = 0;
+        }
+
+        combatStats.otherFoe[id] += value;
+    }
+
+    function parseCombatLogLine(line) {
+        if(line === "") {
+            return;
+        }
+
+        let lineStats = {
+            ln: line,
+            f: Object.keys(combatStats.foe)
+        };
+
+        let hitResult = CombatHitRegex.exec(line);
+        if(hitResult !== null) {
+            lineStats.hit = true;
+
+            let source = hitResult[1].trim();
+            let strongHit = hitResult[2] !== undefined;
+            let target = hitResult[3].trim();
+            let dmg = parseFloat(hitResult[4]);
+
+            let absorb = undefined;
+            if(hitResult[6] !== undefined) {
+                absorb = parseFloat(hitResult[6]);
+            }
+
+            let handled = false;
+            for(let name in combatStats.friend) {
+                if (name === target) {
+                    combatStats.damage.dealt += dmg;
+
+                    combatRegisterDamageTaken(source, dmg);
+                    if(strongHit === true) {
+                        combatRegisterOtherFoe("crits");
+                    }
+
+                    if(absorb !== undefined){
+                        combatRegisterOtherFriendly("absorb", absorb);
+                    }
+
+                    handled = true;
+                }
+            }
+
+            for(let name in combatStats.foe) {
+                if(name === target) {
+                    combatStats.damage.received += dmg;
+
+                    combatRegisterDamageDone(source, dmg);
+                    if(strongHit === true) {
+                        combatRegisterOtherFriendly("crits");
+                    }
+
+                    if(absorb !== undefined){
+                        combatRegisterOtherFoe("absorb", absorb);
+                    }
+
+                    handled = true;
+                }
+            }
+
+            if(handled === true) {
+                return;
+            }
+        }
+
+        let parryResult = CombatParryRegex.exec(line);
+        if(parryResult !== null) {
+            lineStats.parry = true;
+
+            let source = parryResult[1].trim();
+            let what = parryResult[2].trim();
+            let target = parryResult[3].trim();
+            let handled = false;
+            for(let name in combatStats.friend) {
+                if (name === source) {
+                    combatRegisterOtherFriendly(what);
+                    handled = true;
+                }
+            }
+
+            for(let name in combatStats.foe) {
+                if(name === source) {
+                    combatRegisterOtherFoe(what);
+                    handled = true;
+                }
+            }
+
+            if(handled === true) {
+                return;
+            }
+        }
+
+        let lifeStealResult = CombatLifeStealRegex.exec(line);
+        if(lifeStealResult !== null) {
+            lineStats.leech = true;
+
+            let source = lifeStealResult[1].trim();
+            let amount = parseFloat(lifeStealResult[2].trim());
+
+            let handled = false;
+            for(let name in combatStats.friend) {
+                if (name === source) {
+                    combatStats.damage.dealt += amount;
+                    combatRegisterDamageDone("lifesteal", amount);
+                    handled = true;
+                }
+            }
+
+            for(let name in combatStats.foe) {
+                if(name === source) {
+                    combatStats.damage.received += amount;
+                    combatRegisterDamageTaken("lifesteel", amount);
+                    handled = true;
+                }
+            }
+
+            if(handled === true) {
+                return;
+            }
+        }
+
+        if(EnableDebugMode === true) {
+            combatStats.unhandledLines.push(lineStats);
+        }
     }
 
     function refreshSkillsTab() {
+        hideDamageMeter();
+
         let skillRoot = $('div.skills').find('div.subs');
         skillRoot.css("grid-template-columns", "repeat( auto-fit, minmax( 16rem, 1fr) )");
     }
 
     function refreshBestiaryTab() {
+        hideDamageMeter();
+
         let bestiaryTable = $('table.bestiary');
 
         bestiaryTable.find('tr').each(function(){
@@ -640,6 +1126,7 @@
     }
 
     function refreshEquipTab() {
+        hideDamageMeter();
         refreshInventorySubContent();
 
         let equipRoot = $('div.equip');
@@ -659,6 +1146,7 @@
     }
 
     function refreshEnchantingTab() {
+        hideDamageMeter();
         refreshInventorySubContent({hideConsumables: true});
     }
 
@@ -884,6 +1372,10 @@
     // -------------------------------------------------------------------
     // Main Automation
     // -------------------------------------------------------------------
+    function printDebugInfo() {
+        console.log(combatStats);
+    }
+
     function updatePlayerState(delta) {
         for(let vital in PlayerVitals) {
             playerState.vitals[vital] = getVitalValues(PlayerVitals[vital]);
