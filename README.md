@@ -2,6 +2,12 @@
 
 Tempermonkey / Greasemonkey userscript for the idle game Arcanum (Theory of Magic on Kongregate)
 
+The main focus of this set of scripts is minor covenience features. It is not meant as a full automation.
+
+If you want something more wholesome head over to [arcanum-automation](https://github.com/mettalogic/arcanum-automation/)
+
+This is tested on 1920x1080 resolution and using the normal theme, it may not work properly on other layouts / browsers / themes.
+
 ### Provides the following Features
 
 
