@@ -85,6 +85,18 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 - spacing of elements increased to avoid layout shifting
 
     ![](features/skillLayout.png)
+    
+#### Save file Fixing
+
+__BACKUP YOUR SAVE BEFORE USING THIS__
+- Added buttons to check and fix a save file
+- Fix broken enchantments and item names
+
+    ![](features/fixSave.png)
+    
+- To see the results of check file check the console window in your browser
+
+    ![](features/fixSave2.png)
 
 ## Getting Started
 
