@@ -1273,7 +1273,7 @@
             let handled = false;
             for(let name in combatStats.friend) {
                 if (name === target) {
-                    combatStats.damage.dealt += dmg;
+                    combatStats.damage.received += dmg;
 
                     combatRegisterDamageTaken(source, dmg);
                     if(strongHit === true) {
@@ -1290,7 +1290,7 @@
 
             for(let name in combatStats.foe) {
                 if(name === target) {
-                    combatStats.damage.received += dmg;
+                    combatStats.damage.dealt += dmg;
 
                     combatRegisterDamageDone(source, dmg);
                     if(strongHit === true) {
