@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Auto
-// @version      1694
+// @version      1698
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://raw.githubusercontent.com/Craiel/ArcanumScript/master/us.js
@@ -325,11 +325,182 @@
         'of sanity',
         'of fire',
         'of water',
-        'of luck'
+        'of luck',
+        'of regeneration',
+        'of speed',
+        'of mana',
+        'of life',
+        'of clarity'
     ];
 
+    const EnchantData = {
+        en_air1: {
+            level: 1,
+            mods: {
+                airlore: {max: 1},
+                air: {rate: 0.2},
+            }
+        },
+
+        en_fire1: {
+            level: 1,
+            mods: {
+                firelore: {max:1},
+                fire: {rate: 0.2}
+            }
+        },
+
+        en_water1: {
+            level: 1,
+            mods: {
+                waterlore: {max:1},
+                water: {rate:0.2}
+            }
+        },
+
+        en_earth1: {
+            level: 1,
+            mods: {
+                earthlore: {max:1},
+                earth: {rate:0.2}
+            }
+        },
+
+        en_armor1: {
+            level: 1,
+            armor: 1
+        },
+
+        en_energy1: {
+            level: 1,
+            mods: {
+                mana: {rate:1}
+            }
+        },
+
+        en_clarity: {
+            level: 3,
+            mods: {
+                bf: {rate:-0.5}
+            }
+        },
+
+        en_luck1: {
+            level: 1,
+            mods: {
+                luck: 1
+            }
+        },
+
+        en_dmg1: {
+            level: 1,
+            attack: {
+                bonus: 1
+            }
+        },
+
+        en_hp1: {
+            level: 1,
+            mods: {
+                hp: {max:1}
+            }
+        },
+
+        en_mana1: {
+            level: 1,
+            mods: {
+                mana: {max:1}
+            }
+        },
+
+        en_speed1: {
+            level: 7,
+            mods: {
+                speed: 0.5
+            }
+        },
+
+        en_speed2: {
+            level: 3,
+            mods: {
+                speed: 2,
+            }
+        },
+
+        en_speed3: {
+            level: 5,
+            mods: {
+                speed: 5
+            }
+        },
+
+        en_speed4: {
+            level: 7,
+            mods: {
+                speed: 8
+            }
+        },
+
+        en_tohit1: {
+            level: 1,
+            attack: {
+                tohit:2
+            }
+        },
+
+        en_scraft: {
+            level: 3,
+            mods: {
+                scraft: 1
+            }
+        },
+
+        en_scraft2: {
+            level: 6,
+            mods: {
+                scraft: 2
+            }
+        },
+
+        en_regen1: {
+            level: 2,
+            mods: {
+                hp: {rate:0.2}
+            }
+        },
+
+        en_courage: {
+            level: 5,
+            mods: {
+                unease: {rate:-0.5}
+            }
+        },
+
+        en_sanity: {
+            level: 6,
+            mods: {
+                madness: {rate:-1}
+            }
+        },
+
+        en_stam1: {
+            level: 7,
+            mods: {
+                stamina: {rate:0.3}
+            }
+        },
+
+        en_prisma: {
+            level: 8,
+            mods: {
+                prismatic:{rate:0.5}
+            }
+        }
+    };
+
     const SpecialItems = {
-        'orb of winters': {type: ItemType.Weapon, subType: WeaponSubType.Orb}
+        'orb of winters': {type: ItemType.Weapon, subType: WeaponSubType.Orb},
+        "titan's hammer": {type: ItemType.Weapon, subType: WeaponSubType.Mace2H}
     };
 
     const ItemMaterials = {
@@ -361,6 +532,8 @@
     function loadAutomation() {
         loadQuickSlots();
         loadDamageMeter();
+        loadCheckSaveButton();
+        loadFixSaveButton();
         loadDebugUI();
 
         checkData();
@@ -436,6 +609,96 @@
         let button = $('<button id="at_Debug_btn" style="margin-left: auto;">Debug</button>');
         button.click(printDebugInfo);
         parent.append(button);
+    }
+
+    function loadCheckSaveButton() {
+        let anchor = $('#drop-file');
+        let button = $('<button id="at_check_save_btn" style="border: var(--tiny-gap) dashed var(--quiet-text-color);">[Check Save]</button>');
+        button.on('dragenter', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).addClass('hilite');
+        });
+
+        button.on('dragleave', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).removeClass('hilite');
+        });
+
+        button.on('dragover', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).addClass('hilite');
+        });
+
+        button.on("drop", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('hilite');
+
+            if(e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length === 1) {
+                let file = e.originalEvent.dataTransfer.files[0];
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    fixSave(JSON.parse(reader.result));
+                };
+
+                reader.readAsText(file);
+            }
+        });
+
+        anchor.after(button);
+    }
+
+    function loadFixSaveButton() {
+        let anchor = $('#drop-file');
+        let button = $('<button id="at_fix_save_btn" style="border: var(--tiny-gap) dashed var(--quiet-text-color);">[Fix Save]</button>');
+        button.on('dragenter', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).addClass('hilite');
+        });
+
+        button.on('dragleave', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).removeClass('hilite');
+        });
+
+        button.on('dragover', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).addClass('hilite');
+        });
+
+        button.on("drop", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('hilite');
+
+            if(e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length === 1) {
+                let file = e.originalEvent.dataTransfer.files[0];
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let fixedData = fixSave(JSON.parse(reader.result));
+                    if(fixedData !== undefined) {
+                        let newName = file.name.replace(".json", ".fixed.json");
+                        $("<a />", {
+                            "download": newName,
+                            "href": "data:application/json," + encodeURIComponent(JSON.stringify(fixedData))
+                        }).appendTo("body")
+                            .click(function () {
+                                $(this).remove()
+                            })[0].click()
+                    }
+                };
+
+                reader.readAsText(file);
+            }
+        });
+
+        anchor.after(button);
     }
 
     function loadQuickSlots() {
@@ -1429,6 +1692,186 @@
                 quickSlotCooldown[i] = time;
             }
         }
+    }
+
+    function fixSave(jsonData) {
+        if(jsonData === undefined) {
+            return;
+        }
+
+        log("Attempting to Fix Save Issues...");
+
+        if(jsonData.chars === undefined) {
+            // Assume single character save
+            let fixedData = fixSaveCharacter(jsonData);
+            if(fixedData !== undefined) {
+                return fixedData;
+            }
+
+            return undefined;
+        } else {
+            let fixedCharData = [];
+            for (let i = 0; i < jsonData.chars.length; i++) {
+                let charData = jsonData.chars[i];
+                let fixedData = fixSaveCharacter(charData);
+                if(fixedData === undefined){
+                    return undefined;
+                }
+
+                fixedCharData.push(fixedData);
+            }
+
+            jsonData.chars = fixedCharData;
+            return jsonData;
+        }
+    }
+
+    function fixSaveCharacter(charData) {
+        if(charData === undefined || charData === null) {
+            return undefined;
+        }
+
+        log("Checking Character " + charData.name);
+
+        // Inventory
+        for(let k = 0; k < charData.items.inv.items.length; k++) {
+            let itemData = charData.items.inv.items[k];
+            let newItemData = fixSaveItem(itemData);
+            if(newItemData !== undefined) {
+                charData.items.inv.items[k] = newItemData;
+            }
+        }
+
+        // Equip
+        for(let key in charData.equip.slots) {
+            let slotData = charData.equip.slots[key];
+            if(key === "neck" || key === "fingers") {
+                for(let i = 0; i < slotData.item.length; i++) {
+                    let newItemData = fixSaveItem(slotData.item[i]);
+                    if(newItemData !== undefined){
+                        slotData.item[i] = newItemData;
+                    }
+                }
+            } else {
+                let newItemData = fixSaveItem(slotData.item);
+                if(newItemData !== undefined){
+                    slotData.item = newItemData;
+                }
+            }
+
+            charData.equip.slots[key] = slotData;
+        }
+
+        return charData;
+    }
+
+    function determineEnchantProperties(enchants) {
+        if(enchants === null || enchants === undefined || enchants === "" || !isNaN(enchants)){
+            return undefined;
+        }
+
+        let result = {
+            level: 0,
+            mods: {},
+            unknown: []
+        };
+
+        let values = enchants.split(',');
+        for(let i = 0; i < values.length; i++){
+            let key = values[i].trim();
+            if(EnchantData[key] === undefined) {
+                console.warn("Unknown Enchant: " + key);
+                result.unknown.push(key);
+                continue;
+            }
+
+            result.level += EnchantData[key].level;
+
+            if(EnchantData[key].mods !== undefined) {
+                mergeMods(result.mods, EnchantData[key].mods);
+            }
+        }
+
+        return result;
+    }
+
+    function mergeMods(target, source) {
+        for(let modKey in source) {
+            let value = source[modKey];
+            if(isNaN(value)){
+                if(target[modKey] === undefined) {
+                    target[modKey] = {};
+                }
+
+                for(let modParam in value) {
+                    if(target[modKey][modParam] === undefined){
+                        target[modKey][modParam] = 0
+                    }
+
+                    target[modKey][modParam] += value[modParam];
+                }
+            } else {
+                if(target[modKey] === undefined){
+                    target[modKey] = 0;
+                }
+
+                target[modKey] += value;
+            }
+        }
+    }
+
+    function fixSaveItem(itemData) {
+        if(itemData === null || itemData === undefined || itemData.name === undefined) {
+            return;
+        }
+
+        log(" -- Checking item `" + itemData.name + "`");
+
+        let properties = determineItemProperties(itemData.name);
+        if(properties.isKnown === false) {
+            log("Unknown Item!");
+            console.log(properties);
+            return;
+        }
+
+        // Re-construct the name, this gets rid of double enchanted
+        let originalName = itemData.name;
+        itemData.name = properties.fullName;
+        if(properties.isEnchanted === true) {
+            itemData.name = "enchanted " + itemData.name;
+        }
+
+        if(originalName !== itemData.name) {
+            log("Renaming to `" + itemData.name + "`");
+        }
+
+        if(itemData.enchants !== undefined && itemData.enchants !== "") {
+            let enchantProperties = determineEnchantProperties(itemData.enchants);
+            if(enchantProperties !== undefined) {
+                // Adjust level
+                if(itemData.enchantTot !== enchantProperties.level) {
+                    log("Fixing Enchanting level, was " + itemData.enchantTot + " should be " + enchantProperties.level);
+                    itemData.enchantTot = enchantProperties.level;
+                }
+
+                // Check mods
+                if(itemData.mod === undefined || typeof itemData.mod === "string") {
+                    log("Item has no mod info, adding");
+                    itemData.mod = {};
+                }
+
+                for(let modKey in enchantProperties.mods) {
+                    let currentModValue = JSON.stringify(itemData.mod[modKey]);
+                    let expectedModValue = JSON.stringify(enchantProperties.mods[modKey]);
+                    if(currentModValue === undefined || currentModValue !== expectedModValue) {
+                        log("Fixing Enchanting Mod for " + modKey + ", was " + currentModValue + " should be " + expectedModValue);
+                        itemData.mod[modKey] = enchantProperties.mods[modKey];
+                    }
+                }
+            }
+        }
+
+        return itemData;
     }
 
     // -------------------------------------------------------------------
