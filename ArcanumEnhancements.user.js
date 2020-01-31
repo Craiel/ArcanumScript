@@ -3,8 +3,8 @@
 // @version      1698
 // @author       Craiel
 // @description  Automation
-// @updateURL    https://raw.githubusercontent.com/Craiel/ArcanumScript/master/us.js
-// @downloadURL  https://raw.githubusercontent.com/Craiel/ArcanumScript/master/us.js
+// @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
+// @downloadURL  https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
 // @match        http://www.lerpinglemur.com/arcanum/*
 // @match        https://www.lerpinglemur.com/arcanum/*
 // @match        http://game312933.konggames.com/gamez/0031/2933/*
