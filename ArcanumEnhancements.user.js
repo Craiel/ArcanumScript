@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Arcanum Auto
+// @name         Arcanum Enhancements
 // @version      1698
 // @author       Craiel
 // @description  Automation
