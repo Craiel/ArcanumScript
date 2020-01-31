@@ -75,6 +75,11 @@
     const CombatParryRegex = /(.*) (parries|dodges) (.*)/i;
     const CombatLifeStealRegex = /(.*) steals ([0-9\.]+) life/i;
 
+    let documentLoaded = false;
+    let initializeDelay = 3000;
+
+    let arcanumAutomationPresent = false;
+
     let previousCombatLogLines = [];
 
     let damageMeterMode = DamageMeterMode.Default;
@@ -213,7 +218,8 @@
         HealingPotion: "healing potion",
 
         PotionOfStamina: "potion of stamina",
-        Serenity: "serenity"
+        Serenity: "serenity",
+        GodsBlood: "god's blood"
     };
 
     const ItemType = {
@@ -582,7 +588,12 @@
     // Loading
     // -------------------------------------------------------------------
     function loadAutomation() {
-        loadQuickSlots();
+        checkForOtherScripts();
+
+        if(arcanumAutomationPresent !== true) {
+            loadQuickSlots();
+        }
+
         loadDamageMeter();
         loadCheckSaveButton();
         loadFixSaveButton();
@@ -597,9 +608,20 @@
         addIntervalFunction(refreshResourceList, 500);
         addIntervalFunction(refreshSettingsPopup, 1000);
         addIntervalFunction(updatePlayerState, MinUpdateInterval);
-        addIntervalFunction(autoUseQuickSlot, MinUpdateInterval);
+
+        if(arcanumAutomationPresent !== true) {
+            addIntervalFunction(autoUseQuickSlot, MinUpdateInterval);
+        }
 
         loadSettings();
+    }
+
+    function checkForOtherScripts() {
+        let arcanumAutomationConfig = $('#automate_config');
+        if(arcanumAutomationConfig.length === 1) {
+            log("Arcanum Automation Script Detected, disabling some features!");
+            arcanumAutomationPresent = true;
+        }
     }
 
     function initializePlayerState(){
@@ -2002,9 +2024,29 @@
     // Update
     // -------------------------------------------------------------------
     function update(timestamp) {
+        tick(timestamp);
+        window.requestAnimationFrame(update);
+    }
+
+    function tick(timestamp) {
+        if(documentLoaded === false) {
+            return;
+        }
+
         let quickBar = $(".quickbar");
         if (quickBar.length === 0) {
-            window.requestAnimationFrame(update);
+            return;
+        }
+
+        if(lastUpdate === 0) {
+            lastUpdate = timestamp;
+        }
+
+        let delta = timestamp - lastUpdate;
+        lastUpdate = timestamp;
+
+        if(initializeDelay > 0) {
+            initializeDelay -= delta;
             return;
         }
 
@@ -2015,16 +2057,13 @@
             log(" Done!");
         }
 
-        if(lastUpdate === 0) {
-            lastUpdate = timestamp;
-        }
-
-        let delta = timestamp - lastUpdate;
-        lastUpdate = timestamp;
-
         updateIntervalFunctions(delta);
-        window.requestAnimationFrame(update);
     }
+
+    window.addEventListener('load', function() {
+        log("Document Loaded, proceeding initialization");
+        documentLoaded = true;
+    }, false);
 
     update();
 
