@@ -63,6 +63,18 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 
     ![](features/equipScreenLayout.png)
     
+#### Home Screen Adjusted
+
+- Home selection now shows the size in braces
+
+    ![](features/homeSizeDetails.png)
+    
+#### Player Screen Adjusted
+
+- Mount selection now shows the distance in braces
+
+    ![](features/mountDistanceDisplay.png)
+    
 #### Adventure Screen Adjusted
 
 - All items show their level

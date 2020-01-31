@@ -526,6 +526,58 @@
         PermaFrost: {name: 'permafrost', lvl: 7}
     };
 
+    const HomeData = {
+        alcove: {size:5},
+        'earthen spire': {size:300},
+        'attic bedroom': {size:10},
+        'lodge at inn': {size:12},
+        hut: {size:15},
+        camp: {size:14},
+        "tinker's wagon": {size:12},
+        cottage: {size:20},
+        house: {size:30},
+        shop:{size:25},
+        inn: {size:50},
+        lodge: {size:30},
+        'gabled mansion': {size:65},
+        'half-timber house': {size:75},
+        cave: {size:25},
+        pavilion: {size:50},
+        'haunted manse': {size:75},
+        'ancient ruins': {size:110},
+        tower: {size:55},
+        lighthouse: {size:80},
+        cataract: {size:70},
+        citadel: {size:200},
+        academy: {size:300},
+        temple: {size:200},
+        'mage tower': {size:420},
+        'idrasil seedling': {size:300},
+        palace: {size:400},
+        castle: {size:400},
+        cove: {size:350},
+        'volcanic lair': {size:200},
+        cavern: {size:200},
+        'enchanted grove': {size:420},
+        'shrouded isle': {size:420}
+    };
+
+    const MountData = {
+        'magic broomstick': {dist:115},
+        'ebonwood broomstick': {dist:355},
+        'flying carpet': {dist:300},
+        mule: {dist:30},
+        'old nag': {dist:30},
+        'demure gelding': {dist:55},
+        'fine bay': {dist:100},
+        'skeletal charger': {dist:270},
+        'fire charger': {dist:275},
+        fly: {dist:525},
+        'chariot of fire': {dist:550},
+        pegasus: {dist:320},
+        gryffon: {dist:325}
+    };
+
     // -------------------------------------------------------------------
     // Loading
     // -------------------------------------------------------------------
@@ -932,6 +984,16 @@
                 break;
             }
 
+            case GameTabs.Home: {
+                refreshHomeTab();
+                break;
+            }
+
+            case GameTabs.Player: {
+                refreshPlayerTab();
+                break;
+            }
+
             case GameTabs.Adventure: {
                 refreshAdventureTab(delta);
                 break;
@@ -957,6 +1019,68 @@
                 break;
             }
         }
+    }
+
+    function refreshHomeTab() {
+        hideDamageMeter();
+        updateHomeSelectionPopup();
+    }
+
+    function updateHomeSelectionPopup() {
+        let root = $('div.popup');
+        if(root.length === 0) {
+            return;
+        }
+
+        root.find('span.task-btn').each(function() {
+            let button = $(this).find('button');
+            if(button.length === 0) {
+                return;
+            }
+
+            let buttonText = $(button).text();
+            if(buttonText.includes('(')) {
+                return;
+            }
+
+            let homeKey = buttonText.toLocaleLowerCase();
+            if(HomeData[homeKey] === undefined) {
+                return;
+            }
+
+            $(button).text(buttonText + ' (' + HomeData[homeKey].size + ')')
+        });
+    }
+
+    function refreshPlayerTab(){
+        hideDamageMeter();
+        updateMountSelectionPopup();
+    }
+
+    function updateMountSelectionPopup() {
+        let root = $('div.popup');
+        if(root.length === 0) {
+            return;
+        }
+
+        root.find('span.task-btn').each(function() {
+            let button = $(this).find('button');
+            if(button.length === 0) {
+                return;
+            }
+
+            let buttonText = $(button).text();
+            if(buttonText.includes('(')) {
+                return;
+            }
+
+            let mountKey = buttonText.toLocaleLowerCase();
+            if(MountData[mountKey] === undefined) {
+                return;
+            }
+
+            $(button).text(buttonText + ' (' + MountData[mountKey].dist + ')')
+        });
     }
 
     function refreshAdventureTab(delta) {
