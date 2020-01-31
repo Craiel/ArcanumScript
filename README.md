@@ -26,6 +26,12 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 
     ![](features/resourceColoring.png)
  
+#### Top bar Buff Layout
+
+- Fixed the width and height and made the title wrap so they don't overlap
+- buffs with less than 10 seconds remaining will show the time in red
+
+    ![](features/buffLayout.png)
     
 #### Potion Screen Adjusted
 

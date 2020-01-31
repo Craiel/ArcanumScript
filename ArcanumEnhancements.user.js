@@ -75,7 +75,6 @@
     const CombatParryRegex = /(.*) (parries|dodges) (.*)/i;
     const CombatLifeStealRegex = /(.*) steals ([0-9\.]+) life/i;
 
-    let documentLoaded = false;
     let initializeDelay = 3000;
 
     let arcanumAutomationPresent = false;
@@ -606,6 +605,7 @@
         addIntervalFunction(updateTabState, 500);
         addIntervalFunction(refreshActiveTab, 500);
         addIntervalFunction(refreshResourceList, 500);
+        addIntervalFunction(refreshTopBarBuffView, 500);
         addIntervalFunction(refreshSettingsPopup, 1000);
         addIntervalFunction(updatePlayerState, MinUpdateInterval);
 
@@ -956,6 +956,32 @@
     // -------------------------------------------------------------------
     // Tab Extensions
     // -------------------------------------------------------------------
+    function refreshTopBarBuffView() {
+        let root = $('div.top-bar');
+        if(root.length === 0) {
+            return;
+        }
+
+        let buffBar = root.find('div.dot-view');
+        if(buffBar.length === 0) {
+            return;
+        }
+
+        buffBar.find('div.dot').each(function() {
+            let countdownSpan = $(this).children()[0];
+            let titleSpan = $(this).children()[1];
+            let timeLeft = parseInt(countdownSpan.innerText);
+            if(timeLeft < 10) {
+                $(countdownSpan).css('color', 'red');
+            } else {
+                $(countdownSpan).css('color', '');
+            }
+
+            $(titleSpan).css('white-space', 'normal');
+            $(this).css('width', '60px').css('height', '60px');
+        });
+    }
+
     function refreshResourceList() {
         let list = $('div.res-list');
         list.css('min-width', '18rem');
@@ -2029,10 +2055,6 @@
     }
 
     function tick(timestamp) {
-        if(documentLoaded === false) {
-            return;
-        }
-
         let quickBar = $(".quickbar");
         if (quickBar.length === 0) {
             return;
@@ -2059,11 +2081,6 @@
 
         updateIntervalFunctions(delta);
     }
-
-    window.addEventListener('load', function() {
-        log("Document Loaded, proceeding initialization");
-        documentLoaded = true;
-    }, false);
 
     update();
 
