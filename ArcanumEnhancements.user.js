@@ -812,6 +812,10 @@
                 target.quickSlotTimes.push(undefined);
             }
 
+            if(target.quickSlotTimes[i] === null) {
+                target.quickSlotTimes[i] = undefined;
+            }
+
             if(i === target.quickSlotEnabled.length) {
                 target.quickSlotEnabled.push(true);
             }
@@ -933,6 +937,12 @@
 
         log("Loading Preset " + id);
         if(preset.t !== undefined && preset.t.length === settings.quickSlotTimes.length) {
+            for(let i = 0; i < preset.t.length; i++) {
+                if(preset.t[i] === null) {
+                    preset.t[i] = undefined;
+                }
+            }
+
             settings.quickSlotTimes = preset.t;
         }
 
@@ -940,6 +950,7 @@
             settings.quickSlotEnabled = preset.e;
         }
 
+        saveSettings();
         updateQuickSlotDisplay();
     }
 

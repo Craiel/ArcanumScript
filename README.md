@@ -14,6 +14,8 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 #### Quickslot automation
 
 - similar to [arcanum-automation](https://github.com/mettalogic/arcanum-automation/) script
+- Can be enabled / disabled for each slot and globally suspended
+- 3 Presets can be saved and loaded anytime which persist timings and enabled state (does not persist the selected action)
 
     ![](features/quickSlotAutomation.png)
 
