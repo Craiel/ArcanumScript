@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1698
+// @version      1706
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -78,6 +78,8 @@
     let initializeDelay = 3000;
 
     let arcanumAutomationPresent = false;
+
+    let suspendQuickSlotAutomation = false;
 
     let previousCombatLogLines = [];
 
@@ -805,6 +807,16 @@
 
             slotId++;
         });
+
+        let parent = $('div.quickbar');
+        let button = $('<button id="at_qs_suspend" style="margin-left: auto;">Suspend</button>');
+        button.click(function() {
+            suspendQuickSlotAutomation = !suspendQuickSlotAutomation;
+            log("Quickslot Disabled: " + suspendQuickSlotAutomation);
+            $(this).text(suspendQuickSlotAutomation === true ? "Resume" : "Suspend")
+        });
+
+        parent.append(button);
 
         updateQuickSlotDisplay();
     }
@@ -1849,6 +1861,10 @@
     }
 
     function autoUseQuickSlot(delta) {
+        if(suspendQuickSlotAutomation === true) {
+            return;
+        }
+
         for(let i = 0; i < QuickSlotCount; i++){
             let target = quickSlotTarget[i];
             let time = settings.quickSlotTimes[i];
