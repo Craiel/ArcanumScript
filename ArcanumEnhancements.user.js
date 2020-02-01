@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1706
+// @version      1708
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -104,7 +104,8 @@
         version: SettingsVersion,
         quickSlotTimes: [],
         quickSlotEnabled: [],
-        quickSlotPresets: {}
+        quickSlotPresets: {},
+        quickSlotPresetNames: {}
     };
 
     let intervalFunctions = [];
@@ -807,6 +808,14 @@
             target.quickSlotTimes = [];
         }
 
+        if(settings.quickSlotPresets === undefined) {
+            settings.quickSlotPresets = {};
+        }
+
+        if(settings.quickSlotPresetNames === undefined) {
+            settings.quickSlotPresetNames = {};
+        }
+
         for(let i = 0; i < QuickSlotCount; i++) {
             if(i === target.quickSlotTimes.length) {
                 target.quickSlotTimes.push(undefined);
@@ -874,7 +883,16 @@
             let presetArea = $('<div id="at_qs_preset' + i + '" style="display: flex; flex-direction: column; margin-right: 15px;">');
             buttonArea.append(presetArea);
 
-            let header = $('<div>Preset ' + (i + 1) + '</div>');
+            let header = $('<input id="at_qs_preset_name_' + i + '" type="text" class="timeset" style="width: 80px; font-weight:bold; text-align:center;"></input>');
+            header.change({id: i}, function(data) {
+                if(settings.quickSlotPresetNames === undefined) {
+                    settings.quickSlotPresetNames = {};
+                }
+
+                settings.quickSlotPresetNames[data.data.id] = $(this).val();
+                saveSettings();
+            });
+
             presetArea.append(header);
 
             let saveBtn = $('<button id="at_qs_presetbtn_save"' + i + '>Save</button>');
@@ -911,6 +929,7 @@
         }
 
         settings.quickSlotPresets[id] = JSON.stringify({
+            n: settings.quickSlotPresetNames[id],
             t: settings.quickSlotTimes,
             e: settings.quickSlotEnabled
         });
@@ -936,6 +955,10 @@
         }
 
         log("Loading Preset " + id);
+        if(preset.n !== undefined) {
+            settings.quickSlotPresetNames[id] = preset.n;
+        }
+
         if(preset.t !== undefined && preset.t.length === settings.quickSlotTimes.length) {
             for(let i = 0; i < preset.t.length; i++) {
                 if(preset.t[i] === null) {
@@ -967,6 +990,15 @@
             }
 
             elEnabled.prop('checked', enabled);
+        }
+
+        for(let i = 0; i < QuickSlotPresetCount; i++) {
+            let el = $('#at_qs_preset_name_' + i);
+            if(settings.quickSlotPresetNames[i] !== undefined){
+                el.val(settings.quickSlotPresetNames[i]);
+            } else {
+                el.val("Preset " + (i + 1));
+            }
         }
     }
 
