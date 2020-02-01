@@ -21,10 +21,11 @@
     'use strict';
 
     const SettingsSaveKey = "at_settings";
-    const SettingsVersion = 1;
+    const SettingsVersion = 2;
 
     const EnableDebugMode = false;
 
+    const QuickSlotPresetCount = 3;
     const QuickSlotCount = 10;
     const MinUpdateInterval = 50;
 
@@ -101,7 +102,9 @@
 
     let settings = {
         version: SettingsVersion,
-        quickSlotTimes: [QuickSlotCount]
+        quickSlotTimes: [],
+        quickSlotEnabled: [],
+        quickSlotPresets: {}
     };
 
     let intervalFunctions = [];
@@ -590,20 +593,15 @@
     // -------------------------------------------------------------------
     function loadAutomation() {
         checkForOtherScripts();
+        initializeSettings(settings);
 
-        if(arcanumAutomationPresent !== true) {
-            loadQuickSlots();
-        }
-
-        loadDamageMeter();
-        loadCheckSaveButton();
-        loadFixSaveButton();
-        loadDebugUI();
+        loadHtmlModifications();
 
         checkData();
         initializePlayerState();
         resetCombatStats();
 
+        addIntervalFunction(reloadCheck, 2000);
         addIntervalFunction(updateTabState, 500);
         addIntervalFunction(refreshActiveTab, 500);
         addIntervalFunction(refreshResourceList, 500);
@@ -616,6 +614,29 @@
         }
 
         loadSettings();
+    }
+
+    function loadHtmlModifications() {
+        if(arcanumAutomationPresent !== true) {
+            loadQuickSlots();
+        }
+
+        loadDamageMeter();
+        loadCheckSaveButton();
+        loadFixSaveButton();
+        loadDebugUI();
+
+        let reloadCheckElement = $('<div id="at_reload_check" style="display: none"/>');
+        $('div.top-bar').append(reloadCheckElement);
+    }
+
+    function reloadCheck() {
+        let el = $('#at_reload_check');
+        if(el.length === 0) {
+            log("Reload Required, page state changed");
+            initializePlayerState();
+            loadHtmlModifications();
+        }
     }
 
     function checkForOtherScripts() {
@@ -777,17 +798,42 @@
         anchor.after(button);
     }
 
+    function initializeSettings(target){
+        if(target.quickSlotEnabled === undefined){
+            target.quickSlotEnabled = [];
+        }
+
+        if(target.quickSlotTimes === undefined) {
+            target.quickSlotTimes = [];
+        }
+
+        for(let i = 0; i < QuickSlotCount; i++) {
+            if(i === target.quickSlotTimes.length) {
+                target.quickSlotTimes.push(undefined);
+            }
+
+            if(i === target.quickSlotEnabled.length) {
+                target.quickSlotEnabled.push(true);
+            }
+        }
+
+        target.version = SettingsVersion;
+    }
+
     function loadQuickSlots() {
         let slotId = 0;
 
-        for(var i = 0; i < QuickSlotCount; i++) {
+        for(let i = 0; i < QuickSlotCount; i++) {
             quickSlotTarget[i] = undefined;
             quickSlotCooldown[i] = 0;
-            settings.quickSlotTimes[i] = undefined;
         }
 
         $(".quickslot").each(function() {
-            let input = $('<input id="at_qs_' + slotId +'" type="text" class="timeset" style="position:absolute; bottom:0px; left:0px; width:100%; font-weight:bold; opacity:0.75; text-align:center;">');
+            let inputRoot = $('<div id="at_qs_div_' + slotId +'" style="position:absolute; bottom:0px; left:0px; width:100%; opacity:0.75;height:20px;">');
+
+            let input = $('<input id="at_qs_' + slotId +'" type="text" class="timeset" style="position: absolute; bottom: 0px; left: 0px; width:100%; font-weight:bold; opacity:0.75; text-align:center;">');
+            inputRoot.append(input);
+
             input.change({id: slotId}, function(data) {
                 let newValue = parseFloat($(this).val());
                 if(isNaN(newValue) || newValue === undefined || newValue === null) {
@@ -803,33 +849,113 @@
             });
 
             quickSlotTarget[slotId] = $(this);
-            $(this).append(input);
+
+            let enableCheck = $('<input id="at_qs_e_' + slotId +'" type="checkbox" style="position: absolute; bottom: 0px; right: -5px; width:20px; opacity:0.75;">');
+            enableCheck.change({id: slotId}, function(data) {
+                settings.quickSlotEnabled[data.data.id] = !settings.quickSlotEnabled[data.data.id];
+                saveSettings();
+            });
+
+            inputRoot.append(enableCheck);
+
+            $(this).append(inputRoot);
 
             slotId++;
         });
 
         let parent = $('div.quickbar');
-        let button = $('<button id="at_qs_suspend" style="margin-left: auto;">Suspend</button>');
-        button.click(function() {
+        let buttonArea = $('<div id"at_qs_btn_area" style="margin-left: auto; display: flex; flex-direction: row;">');
+
+        for(let i = 0; i < QuickSlotPresetCount; i++) {
+            let presetArea = $('<div id="at_qs_preset' + i + '" style="display: flex; flex-direction: column; margin-right: 15px;">');
+            buttonArea.append(presetArea);
+
+            let header = $('<div>Preset ' + (i + 1) + '</div>');
+            presetArea.append(header);
+
+            let saveBtn = $('<button id="at_qs_presetbtn_save"' + i + '>Save</button>');
+            saveBtn.click({id: i}, function(data){
+                saveQuickSlotPreset(data.data.id);
+            });
+
+            presetArea.append(saveBtn);
+
+            let loadBtn = $('<button id="at_qs_presetbtn_load"' + i + '>Load</button>');
+            loadBtn.click({id: i}, function(data) {
+                loadQuickSlotPreset(data.data.id);
+            });
+
+            presetArea.append(loadBtn);
+        }
+
+        let suspendButton = $('<button id="at_qs_suspend" style="margin-left: auto;">Suspend</button>');
+        suspendButton.click(function() {
             suspendQuickSlotAutomation = !suspendQuickSlotAutomation;
             log("Quickslot Disabled: " + suspendQuickSlotAutomation);
             $(this).text(suspendQuickSlotAutomation === true ? "Resume" : "Suspend")
         });
 
-        parent.append(button);
+        buttonArea.append(suspendButton);
+        parent.append(buttonArea);
+
+        updateQuickSlotDisplay();
+    }
+
+    function saveQuickSlotPreset(id) {
+        if(settings.quickSlotPresets === undefined) {
+            settings.quickSlotPresets = {};
+        }
+
+        settings.quickSlotPresets[id] = JSON.stringify({
+            t: settings.quickSlotTimes,
+            e: settings.quickSlotEnabled
+        });
+
+        log("Saving Preset " + id);
+
+        saveSettings();
+    }
+
+    function loadQuickSlotPreset(id) {
+        if(settings.quickSlotPresets === undefined) {
+            return;
+        }
+
+        let data = settings.quickSlotPresets[id];
+        if(data === undefined) {
+            return;
+        }
+
+        let preset = JSON.parse(data);
+        if(preset === undefined) {
+            return;
+        }
+
+        log("Loading Preset " + id);
+        if(preset.t !== undefined && preset.t.length === settings.quickSlotTimes.length) {
+            settings.quickSlotTimes = preset.t;
+        }
+
+        if(preset.e !== undefined && preset.e.length === settings.quickSlotEnabled.length) {
+            settings.quickSlotEnabled = preset.e;
+        }
 
         updateQuickSlotDisplay();
     }
 
     function updateQuickSlotDisplay() {
-        for(var i = 0; i < QuickSlotCount; i++){
+        for(let i = 0; i < QuickSlotCount; i++){
             let el = $('#at_qs_' + i);
+            let elEnabled = $('#at_qs_e_' + i);
             let time = settings.quickSlotTimes[i];
+            let enabled = settings.quickSlotEnabled[i] ?? true;
             if(time === undefined){
                 el.val("");
             } else {
                 el.val(time / 1000);
             }
+
+            elEnabled.prop('checked', enabled);
         }
     }
 
@@ -862,20 +988,17 @@
             return;
         }
 
+        log("Loading Settings...");
         let newSettings = JSON.parse(data);
         if(newSettings === undefined || newSettings === null){
             return;
         }
 
-        for(let i = 0; i < QuickSlotCount; i++){
-            if(newSettings.quickSlotTimes[i] === null){
-                newSettings.quickSlotTimes[i] = undefined;
-            }
-        }
-
+        initializeSettings(newSettings);
         console.log(newSettings);
         settings = newSettings;
         updateQuickSlotDisplay();
+        log("Done");
     }
 
     // -------------------------------------------------------------------
@@ -1868,8 +1991,8 @@
         for(let i = 0; i < QuickSlotCount; i++){
             let target = quickSlotTarget[i];
             let time = settings.quickSlotTimes[i];
-
-            if (target === undefined || time === undefined) {
+            let enabled = settings.quickSlotEnabled[i];
+            if (target === undefined || time === undefined ||enabled === false) {
                 continue;
             }
 
