@@ -71,9 +71,9 @@
         OtherFoe: 4
     };
 
-    const CombatHitRegex = /(.*) hits (strongly )*(.*?):\s*([0-9\.]+) (\(absorb: ([0-9\.]+)%\))*/i;
-    const CombatParryRegex = /(.*) (parries|dodges) (.*)/i;
-    const CombatLifeStealRegex = /(.*) steals ([0-9\.]+) life/i;
+    const CombatHitRegex = /(.*)\shits\s(strongly )*(.*?):\s*([0-9\.]+)\s*(\(absorb: ([0-9\.]+)%\))*/i;
+    const CombatParryRegex = /(.*)\s(parries|dodges)\s(.*)/i;
+    const CombatLifeStealRegex = /(.*)\ssteals\s([0-9\.]+)\slife/i;
 
     let initializeDelay = 3000;
 
@@ -1882,9 +1882,14 @@
 
             return undefined;
         } else {
+            let expectedPrestige = jsonData.hall.items.hallPoints.val || 0;
+
+            let actualCharPrestige = 0;
             let fixedCharData = [];
             for (let i = 0; i < jsonData.chars.length; i++) {
                 let charData = jsonData.chars[i];
+                actualCharPrestige += getSaveCharPrestige(charData);
+
                 let fixedData = fixSaveCharacter(charData);
                 if(fixedData === undefined){
                     return undefined;
@@ -1893,9 +1898,41 @@
                 fixedCharData.push(fixedData);
             }
 
+            log("Prestige Check: " + actualCharPrestige + " == " + expectedPrestige);
+
             jsonData.chars = fixedCharData;
             return jsonData;
         }
+    }
+
+    function getSaveCharPrestige(charData) {
+        // Prestige formula:
+        // points + fame + (titles + level) / 10)
+
+        let points = 0;
+        let fame = 0;
+        let level = 0;
+        let titleCount = 0;
+
+        if(charData.items.player.points !== undefined) {
+            points = charData.items.player.points;
+        }
+
+        if(charData.items.fame !== undefined) {
+            fame = charData.items.fame.val;
+        }
+
+        if(charData.items.level !== undefined) {
+            level = charData.items.level.val;
+        }
+
+        if(charData.items.player !== undefined && charData.items.player.titles !== undefined) {
+            titleCount = charData.items.player.titles.length;
+        }
+
+        let value = points + fame + ((level + titleCount) / 10);
+        log("Prestige for " + charData.name + " == " + value + " (L:" + level + ", F: " + fame + ", T:" + titleCount +")");
+        return value;
     }
 
     function fixSaveCharacter(charData) {
