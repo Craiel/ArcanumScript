@@ -589,6 +589,19 @@
         gryffon: {dist:325}
     };
 
+    const GemCraftButtonDataKeys = {
+        imbuelifegem: 0,
+        imbuemanagem: 1,
+        imbuebloodgem: 2,
+        imbuefiregem: 3,
+        imbueairgem: 4,
+        imbueearthgem: 5,
+        imbuewatergem: 6,
+        imbuelightgem: 7,
+        imbueshadowgem: 8,
+        imbuespiritgem: 9
+    };
+
     // -------------------------------------------------------------------
     // Loading
     // -------------------------------------------------------------------
@@ -607,6 +620,7 @@
         addIntervalFunction(refreshActiveTab, 500);
         addIntervalFunction(refreshResourceList, 500);
         addIntervalFunction(refreshTopBarBuffView, 500);
+        addIntervalFunction(refreshGemCraftButton, 500);
         addIntervalFunction(refreshSettingsPopup, 1000);
         addIntervalFunction(updatePlayerState, MinUpdateInterval);
 
@@ -1131,6 +1145,30 @@
         };
     }
 
+    function getUpgradeButtons(keyDict) {
+        let taskArea = $('div.main-tasks');
+        if(taskArea.length === 0) {
+            return [];
+        }
+
+        let matchingButtons = [];
+        taskArea.find('span.task-btn').each(function() {
+            let button = $(this).find('button');
+            if(button.length === 0) {
+                return;
+            }
+
+            let dataKey = $(this).data("key");
+            if(dataKey === undefined || keyDict[dataKey] === undefined) {
+                return;
+            }
+
+            matchingButtons.push(button);
+        });
+
+        return matchingButtons;
+    }
+
     // -------------------------------------------------------------------
     // Tab Extensions
     // -------------------------------------------------------------------
@@ -1158,6 +1196,40 @@
             $(titleSpan).css('white-space', 'normal');
             $(this).css('width', '60px').css('height', '60px');
         });
+    }
+
+    function refreshGemCraftButton() {
+        let taskArea = $('div.main-tasks');
+        if(taskArea.length === 0) {
+            return;
+        }
+
+        let imbueSpan = $('#at_imbue_gems');
+
+        let gemCraftButtons = getUpgradeButtons(GemCraftButtonDataKeys);
+        if(gemCraftButtons.length === 0) {
+            if(imbueSpan.length !== 0) {
+                imbueSpan.remove();
+            }
+
+            return false;
+        }
+
+        if(imbueSpan.length === 0) {
+            imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
+            let imbueSpanBtn = $('<button class="wrapped-btn">Imbue All Gems</button>')
+            imbueSpanBtn.click(function() {
+                let gemCraftButtons = getUpgradeButtons(GemCraftButtonDataKeys);
+                console.log("IMBUE ALL:");
+                console.log(gemCraftButtons);
+                for(let i = 0; i < gemCraftButtons.length; i++){
+                    $(gemCraftButtons[i]).click();
+                }
+            });
+
+            imbueSpan.append(imbueSpanBtn);
+            gemCraftButtons[0].parent().before(imbueSpan);
+        }
     }
 
     function refreshResourceList() {
