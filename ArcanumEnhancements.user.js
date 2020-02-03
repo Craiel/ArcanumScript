@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1708
+// @version      1714
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -994,7 +994,7 @@
 
         for(let i = 0; i < QuickSlotPresetCount; i++) {
             let el = $('#at_qs_preset_name_' + i);
-            if(settings.quickSlotPresetNames[i] !== undefined){
+            if(settings.quickSlotPresetNames !== undefined && settings.quickSlotPresetNames[i] !== undefined){
                 el.val(settings.quickSlotPresetNames[i]);
             } else {
                 el.val("Preset " + (i + 1));
@@ -2151,6 +2151,23 @@
             }
 
             charData.equip.slots[key] = slotData;
+        }
+
+        // Reset raid
+        if(charData.raid !== undefined) {
+            if(charData.raid.combat !== undefined
+                && charData.raid.combat.enemies !== undefined
+                && charData.raid.combat.enemies.length > 0) {
+                log("Resetting Combat Enemies");
+                charData.raid.combat.enemies = [];
+            }
+
+            if(charData.raid.combat !== undefined
+                && charData.raid.combat.allies !== undefined
+                && charData.raid.combat.allies.length > 0) {
+                log("Resetting Combat Allies");
+                charData.raid.combat.allies = [];
+            }
         }
 
         return charData;
