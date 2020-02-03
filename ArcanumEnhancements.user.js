@@ -1052,7 +1052,6 @@
         }
 
         initializeSettings(newSettings);
-        console.log(newSettings);
         settings = newSettings;
         updateQuickSlotDisplay();
         log("Done");
@@ -1220,8 +1219,6 @@
             let imbueSpanBtn = $('<button class="wrapped-btn">Imbue All Gems</button>')
             imbueSpanBtn.click(function() {
                 let gemCraftButtons = getUpgradeButtons(GemCraftButtonDataKeys);
-                console.log("IMBUE ALL:");
-                console.log(gemCraftButtons);
                 for(let i = 0; i < gemCraftButtons.length; i++){
                     $(gemCraftButtons[i]).click();
                 }
