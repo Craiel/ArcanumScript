@@ -35,6 +35,12 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 
     ![](features/buffLayout.png)
     
+#### Main Screen
+
+- Added imbue all gems button which shows up as soon as you have some imbue actions, this will trigger all available imbue options in one click
+
+    ![](features/imbueAll.png)
+    
 #### Potion Screen Adjusted
 
 - Buttons color based on action
