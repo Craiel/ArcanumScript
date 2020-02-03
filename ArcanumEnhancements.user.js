@@ -996,7 +996,7 @@
             let el = $('#at_qs_' + i);
             let elEnabled = $('#at_qs_e_' + i);
             let time = settings.quickSlotTimes[i];
-            let enabled = settings.quickSlotEnabled[i] ?? true;
+            let enabled = settings.quickSlotEnabled[i] || true;
             if(time === undefined){
                 el.val("");
             } else {
