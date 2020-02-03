@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1714.1
+// @version      1714.2
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -89,8 +89,8 @@
     let isLoaded = false;
     let lastUpdate = 0;
 
-    let quickSlotTarget = [QuickSlotCount];
-    let quickSlotCooldown = [QuickSlotCount];
+    let quickSlotTarget = [];
+    let quickSlotCooldown = [];
 
     let playerState = {
         activeTab: undefined,
@@ -847,13 +847,16 @@
         target.version = SettingsVersion;
     }
 
+    function resetQuickSlotCooldown() {
+        for(let i = 0; i < QuickSlotCount; i++) {
+            quickSlotCooldown[i] = 0;
+        }
+    }
+
     function loadQuickSlots() {
         let slotId = 0;
 
-        for(let i = 0; i < QuickSlotCount; i++) {
-            quickSlotTarget[i] = undefined;
-            quickSlotCooldown[i] = 0;
-        }
+        resetQuickSlotCooldown();
 
         $(".quickslot").each(function() {
             let inputRoot = $('<div id="at_qs_div_' + slotId +'" style="position:absolute; bottom:0px; left:0px; width:100%; opacity:0.75;height:20px;">');
@@ -928,7 +931,8 @@
         suspendButton.click(function() {
             suspendQuickSlotAutomation = !suspendQuickSlotAutomation;
             log("Quickslot Disabled: " + suspendQuickSlotAutomation);
-            $(this).text(suspendQuickSlotAutomation === true ? "Resume" : "Suspend")
+            $(this).text(suspendQuickSlotAutomation === true ? "Resume" : "Suspend");
+            resetQuickSlotCooldown();
         });
 
         buttonArea.append(suspendButton);
@@ -996,7 +1000,7 @@
             let el = $('#at_qs_' + i);
             let elEnabled = $('#at_qs_e_' + i);
             let time = settings.quickSlotTimes[i];
-            let enabled = settings.quickSlotEnabled[i] || true;
+            let enabled = settings.quickSlotEnabled[i];
             if(time === undefined){
                 el.val("");
             } else {
