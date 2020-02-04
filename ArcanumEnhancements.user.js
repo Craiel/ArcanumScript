@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1716
+// @version      1716.1
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -1221,6 +1221,7 @@
         }
 
         if(imbueSpan.length === 0) {
+            imbueGemCraftButtonPinned = false;
             imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
             let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
             imbueSpanBtn.click(function(event) {
