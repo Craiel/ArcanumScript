@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1714.2
+// @version      1716
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -115,6 +115,8 @@
     let settingsPanelAdjusted = false;
 
     let combatStats = {};
+
+    let imbueGemCraftButtonPinned = false;
 
     // -------------------------------------------------------------------
     // Data
@@ -1220,8 +1222,19 @@
 
         if(imbueSpan.length === 0) {
             imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
-            let imbueSpanBtn = $('<button class="wrapped-btn">Imbue All Gems</button>')
-            imbueSpanBtn.click(function() {
+            let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
+            imbueSpanBtn.click(function(event) {
+                if(event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
+                    imbueGemCraftButtonPinned = !imbueGemCraftButtonPinned;
+                    if(imbueGemCraftButtonPinned === true) {
+                        $(this).css('background-color', 'lightblue');
+                    } else {
+                        $(this).css('background-color', '');
+                    }
+
+                    return;
+                }
+
                 let gemCraftButtons = getUpgradeButtons(GemCraftButtonDataKeys);
                 for(let i = 0; i < gemCraftButtons.length; i++){
                     $(gemCraftButtons[i]).click();
@@ -1230,6 +1243,10 @@
 
             imbueSpan.append(imbueSpanBtn);
             gemCraftButtons[0].parent().before(imbueSpan);
+        } else {
+            if(imbueGemCraftButtonPinned === true) {
+                $('#at_imbue_gems_btn').click();
+            }
         }
     }
 
