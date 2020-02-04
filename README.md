@@ -38,8 +38,9 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 #### Main Screen
 
 - Added imbue all gems button which shows up as soon as you have some imbue actions, this will trigger all available imbue options in one click
+- Ctrl+Click will lock the button and auto click it at a fixed interval
 
-    ![](features/imbueAll.png)
+    ![](features/imbueAllPin.gif)
     
 #### Potion Screen Adjusted
 
