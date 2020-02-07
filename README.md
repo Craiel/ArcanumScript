@@ -37,8 +37,14 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
     
 #### Main Screen
 
+- Upgrades have a pink background to distinguish them from single click actions
+- CTRL+Click on single click action will lock them and execute them at a fixed interval (~250ms)
+- Added alternative grouped task display
+
+    ![](features/mainScreenTasks.gif)
+    
 - Added imbue all gems button which shows up as soon as you have some imbue actions, this will trigger all available imbue options in one click
-- Ctrl+Click will lock the button and auto click it at a fixed interval
+- Ctrl+Click will lock the button same as single click actions
 
     ![](features/imbueAllPin.gif)
     

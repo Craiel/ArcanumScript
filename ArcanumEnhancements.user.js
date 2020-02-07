@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1716.2
+// @version      1725
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -95,6 +95,23 @@ let AE = (function($){
 
             return template;
         }
+
+        arrayEquals(a, b) {
+            if (a === b) return true;
+            if (a == null || b == null) return false;
+            if (a.length != b.length) return false;
+
+            // If you don't care about the order of the elements inside
+            // the array, you should sort both arrays here.
+            // Please note that calling sort on an array will modify that array.
+            // you might want to clone your array first.
+
+            for (let i = 0; i < a.length; ++i) {
+                if (a[i] !== b[i]) return false;
+            }
+
+            return true;
+        }
     }
 
     AE.utils = new AEUtils();
@@ -120,7 +137,21 @@ let AE = (function($){
 (function($) {
     'use strict';
 
-    AE.data = {};
+    class AEData {
+        getTaskGroup(dataId) {
+            for(let key in this.TaskGroups) {
+                let values = this.TaskGroups[key];
+                if(values.includes(dataId)) {
+                    return key;
+                }
+            }
+
+            return undefined;
+        }
+    }
+
+    AE.data = new AEData();
+
     AE.data.PlayerVitals = {
         // Core
         Stamina: 'stamina',
@@ -184,6 +215,7 @@ let AE = (function($){
         StarShard: 'sindel',
         Dream: 'dreams',
         Herb: 'herbs',
+        Schematic: 'schematic',
 
         Machine: 'machinae',
         Puppet: 'puppets',
@@ -194,6 +226,7 @@ let AE = (function($){
         Frost: 'frost',
         LivingSnow: 'livingsnow',
         SnowMan: 'snowman',
+        SnowDrop: 'snowdrop'
     };
 
     AE.data.GameTabs = {
@@ -591,18 +624,36 @@ let AE = (function($){
         gryffon: {dist:325}
     };
 
-    AE.data.GemCraftButtonDataKeys = {
-        imbuelifegem: 0,
-        imbuemanagem: 1,
-        imbuebloodgem: 2,
-        imbuefiregem: 3,
-        imbueairgem: 4,
-        imbueearthgem: 5,
-        imbuewatergem: 6,
-        imbuelightgem: 7,
-        imbueshadowgem: 8,
-        imbuespiritgem: 9
+    AE.data.GemImbueTaskIds = ['imbuelifegem', 'imbuemanagem', 'imbuebloodgem', 'imbuefiregem',
+        'imbueairgem', 'imbueearthgem', 'imbuewatergem', 'imbuelightgem', 'imbueshadowgem', 'imbuespiritgem'];
+
+    AE.data.TaskGroups = {
+        'Rest': ['rest', 'slumber', 'naturecamp', 'chant', 'eatchildren'],
+        'Gold': ['cleanstables', 'sellscroll', 'sellherbs', 'sellgem', 'pouch', 'thievery', 'readpalms', 'service', 'spingold',
+            'embalm', 'paidseance', 'heist', 'magicadvice', 'chores', 'treatailments', 'errands', 'prestidigitation', 'act_mine'],
+        'Research': ['buyscroll', 'scribescroll', 'sublimate', 'bindcodex', 'compiletome', 'pace', 'act_element', 'mapstars',
+            'grind', 'study', 'spellbook', 'act_garden', 'act_scry', 'act_concoct', 'bestiary', 'sylvansyllabary', 'dwarfbook',
+            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest'],
+        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
+        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
+        'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
+            'summonfamiliar'],
+        'Dreams': ['dreamweaver', 'starwish'],
+        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
+        'Home': ['fireplane', 'airplane', 'waterplane'],
+        'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
+        'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
+        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount'],
+        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
+
+        '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy']
     };
+
+    AE.data.UpgradeTasks = ['pouch', 'purse', 'gembox', 'gemcraft', 'artificialmountain', 'mythicanvil', 'up_runecrafter',
+        'wizardhall', 'winteraward', 'fireplane', 'airplane', 'waterplane', 'warmpotion', 'winterchill', 'advgems', 'sombercandle',
+        'hearthexpansion', 'flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'spellbook',
+        'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
+        'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy'];
 
 })(window.jQuery); 
  
@@ -881,34 +932,6 @@ let AE = (function($){
                 max: max,
                 pct: pct
             };
-        }
-
-        getUpgradeButtons(keyDict) {
-            let taskArea = $('div.main-tasks');
-            if(taskArea.length === 0) {
-                return [];
-            }
-
-            let matchingButtons = [];
-            taskArea.find('span.task-btn').each(function() {
-                if($(this).hasClass("locked") === true) {
-                    return;
-                }
-
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
-
-                let dataKey = $(this).data("key");
-                if(dataKey === undefined || keyDict[dataKey] === undefined) {
-                    return;
-                }
-
-                matchingButtons.push(button);
-            });
-
-            return matchingButtons;
         }
 
         checkData(){
@@ -1810,68 +1833,6 @@ let AE = (function($){
 
 })(window.jQuery); 
  
-// Imbue Gem Shortcut
-(function($) {
-    'use strict';
-
-    class AEImbueGemShortcut {
-        constructor() {
-            this.imbueGemCraftButtonPinned = false;
-        }
-
-        update(delta) {
-            let taskArea = $('div.main-tasks');
-            if(taskArea.length === 0) {
-                return;
-            }
-
-            let imbueSpan = $('#at_imbue_gems');
-
-            let gemCraftButtons = AE.pageUtils.getUpgradeButtons(AE.data.GemCraftButtonDataKeys);
-            if(gemCraftButtons.length === 0) {
-                if(imbueSpan.length !== 0) {
-                    imbueSpan.remove();
-                }
-
-                return false;
-            }
-
-            if(imbueSpan.length === 0) {
-                this.imbueGemCraftButtonPinned = false;
-                imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
-                let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
-                imbueSpanBtn.click(function(event) {
-                    if(event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
-                        AE.imbueGemShortcut.imbueGemCraftButtonPinned = !AE.imbueGemShortcut.imbueGemCraftButtonPinned;
-                        if(AE.imbueGemShortcut.imbueGemCraftButtonPinned === true) {
-                            $(this).css('background-color', 'lightblue');
-                        } else {
-                            $(this).css('background-color', '');
-                        }
-
-                        return;
-                    }
-
-                    let gemCraftButtons = AE.pageUtils.getUpgradeButtons(AE.data.GemCraftButtonDataKeys);
-                    for(let i = 0; i < gemCraftButtons.length; i++){
-                        $(gemCraftButtons[i]).click();
-                    }
-                });
-
-                imbueSpan.append(imbueSpanBtn);
-                gemCraftButtons[0].parent().before(imbueSpan);
-            } else {
-                if(this.imbueGemCraftButtonPinned === true) {
-                    $('#at_imbue_gems_btn').click();
-                }
-            }
-        }
-    }
-
-    AE.imbueGemShortcut = new AEImbueGemShortcut();
-
-})(window.jQuery); 
- 
 // Save Utils
 (function($) {
     'use strict';
@@ -2230,9 +2191,6 @@ let AE = (function($){
     'use strict';
 
     class AETabStyle {
-        constructor() {
-        }
-
         update(delta) {
             switch (AE.playerState.activeTab) {
                 case AE.data.GameTabs.Skills: {
@@ -2429,6 +2387,383 @@ let AE = (function($){
 
 })(window.jQuery); 
  
+// Player State
+(function($) {
+    'use strict';
+
+    const GroupHTML = `
+<div id="{{id}}">
+    <span style="margin-left: 5px; margin-top: 2px;">{{title}}</span>
+    <div id="{{id}}_content" style="margin: 0;padding:var(--md-gap);display:grid;grid-template-columns: repeat( auto-fit, var(--task-button-width) );"/>
+</div>`;
+
+    class AETabStyleMain {
+        constructor() {
+            this.taskButtons = {};
+            this.taskButtonOriginalParents = {};
+            this.pinnedButtons = {};
+            this.activeButtonRoot = undefined;
+            this.imbueGemCraftButtonPinned = false;
+
+            this.defaultGroup = 'Unsorted';
+            this.upgradeActiveColor = '#ff5757AA';
+            this.upgradeInactiveColor = '#feb3b3AA';
+            this.pinnedColor = '#5698ffAA';
+        }
+
+        clearState(){
+            this.taskButtons = {};
+            this.taskButtonOriginalParents = {};
+            this.pinnedButtons = {};
+            this.activeButtonRoot = undefined;
+            this.imbueGemCraftButtonPinned = false;
+        }
+
+        updateUI(delta) {
+            if (AE.playerState.activeTab !== AE.data.GameTabs.Main) {
+                this.clearState();
+                return;
+            }
+
+            let topRoot = $('div.main-tasks');
+            if(topRoot.length === 0) {
+                return;
+            }
+
+            this.updateMainTabAlternativeTaskDisplay();
+            this.updateMainTabCustomBar();
+
+            this.updateTaskButtonDisplay();
+        }
+
+        updateAutomation(delta) {
+            let topRoot = $('div.main-tasks');
+            if(topRoot.length === 0) {
+                return;
+            }
+
+            this.updateImbueAllButton();
+            this.updatePinnedButtons();
+        }
+
+        updateImbueAllButton() {
+            let imbueButton = $('#at_imbue_gems_btn');
+            if(imbueButton.length === 0) {
+                return;
+            }
+
+            if(this.imbueGemCraftButtonPinned === true) {
+                imbueButton.css('background-color', this.pinnedColor);
+                imbueButton.click();
+            } else {
+                imbueButton.css('background-color', '');
+            }
+        }
+
+        updatePinnedButtons() {
+            for(let key in this.pinnedButtons) {
+                if(this.pinnedButtons[key] !== true) {
+                    continue;
+                }
+
+                let target = this.taskButtons[key];
+                if(target === undefined){
+                    continue;
+                }
+
+                $(target.btn).css('background-color', this.pinnedColor);
+
+                this.clickTaskButton(key);
+            }
+        }
+
+        updateTaskButtonDisplay() {
+            for(let key in this.taskButtons) {
+                let button = this.taskButtons[key];
+                let buttonEl = $(button.btn);
+
+                // Update the disabled state
+                button.isDisabled = buttonEl.prop('disabled');
+
+                if(button.isUpgrade === true) {
+                    if(button.isDisabled === false) {
+                        buttonEl.css('background-color', this.upgradeInactiveColor);
+                    } else {
+                        buttonEl.css('background-color', this.upgradeActiveColor);
+                    }
+                }
+            }
+        }
+
+        createOptionsToggle(id, title, callback){
+            let toggle = $('<span class="opt"></span>');
+            let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
+            toggle.append(toggleInput);
+            toggleInput[0].addEventListener("change", event => {
+                callback(event.target.checked);
+            }, false);
+
+            return toggleInput;
+        }
+
+        onToggleMainBarTaskDisplay(checked) {
+            let vanillaRoot = $('#vanilla_task_display');
+            let alternateDisplayRoot = $('#at_main_alternative_task_display');
+
+            this.refreshTaskButtonState();
+
+            if(checked === true) {
+
+                vanillaRoot.hide();
+                alternateDisplayRoot.show();
+
+                this.moveTaskButtonsToGroupedDisplay(alternateDisplayRoot);
+
+                this.activeButtonRoot = alternateDisplayRoot;
+                this.createImbueAllButton();
+
+            } else {
+
+                vanillaRoot.show();
+                alternateDisplayRoot.hide();
+
+                this.moveTaskButtonsToOriginalParents();
+
+                this.activeButtonRoot = vanillaRoot;
+                this.createImbueAllButton();
+            }
+        }
+
+        createImbueAllButton() {
+            let existing = $('#at_imbue_gems');
+            if(existing.length !== 0) {
+                existing.remove();
+            }
+
+            let activeImbueKeys = [];
+            for(let key in this.taskButtons) {
+                let button = this.taskButtons[key];
+                if (button.isLocked === true || button.isRunnable === true){
+                    continue;
+                }
+
+                if(AE.data.GemImbueTaskIds.includes(key)) {
+                    activeImbueKeys.push(key);
+                }
+            }
+
+            if (activeImbueKeys.length === 0) {
+                return false;
+            }
+
+            this.imbueGemCraftButtonPinned = false;
+            let imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
+            let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
+            imbueSpanBtn.click({keys: activeImbueKeys}, function(event) {
+                if(event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
+                    AE.tabStyleMain.imbueGemCraftButtonPinned = !AE.tabStyleMain.imbueGemCraftButtonPinned;
+                    return;
+                }
+
+                for(let i = 0; i < event.data.keys.length; i++){
+                    AE.tabStyleMain.clickTaskButton(event.data.keys[i]);
+                }
+            });
+
+            imbueSpan.append(imbueSpanBtn);
+
+            let button = this.taskButtons[activeImbueKeys[0]].btn;
+            $(button).parent().before(imbueSpan);
+        }
+
+        clickTaskButton(key) {
+            let data = this.taskButtons[key];
+            if(data === undefined) {
+                return;
+            }
+
+            $(data.btn).click();
+        }
+
+        moveTaskButtonsToOriginalParents(){
+            for(let key in this.taskButtons) {
+                let el = $(this.taskButtons[key].btn).parent();
+                let parent = this.taskButtonOriginalParents[key];
+
+                // Relocate the button
+                el.detach();
+                parent.append(el);
+            }
+        }
+
+        createTaskGroup(id, title) {
+            let html = AE.utils.processTemplate(GroupHTML, {
+                id: id,
+                title: title
+            });
+
+            let group = $(html);
+            group.hide();
+
+            return group;
+        }
+
+        moveTaskButtonsToGroupedDisplay(target) {
+            target.empty();
+
+            let groups = {};
+
+            for(let key in this.taskButtons) {
+                let data = this.taskButtons[key];
+                let el = $(data.btn).parent();
+                el.detach();
+
+                let groupName = AE.data.getTaskGroup(key);
+                if(groupName === undefined) {
+                    console.warn("No Group for " + key);
+                    groupName = this.defaultGroup;
+                }
+
+                let groupId = 'at_main_alternative_display_group_' + groupName.replace(/[\s\,\.]/g, '').toLowerCase();
+                if(groups[groupId] === undefined){
+                    groups[groupId] = this.createTaskGroup(groupId, groupName);
+                }
+
+                let groupContent = groups[groupId].find('#' + groupId + '_content');
+                groupContent.append(el);
+
+                if(data.isLocked !== true) {
+                    groups[groupId].show();
+                }
+            }
+
+            let sortedGroupKeys = Object.keys(groups);
+            sortedGroupKeys.sort();
+
+            for(let i = 0; i < sortedGroupKeys.length; i++){
+                target.append(groups[sortedGroupKeys[i]]);
+            }
+        }
+
+        updateMainTabCustomBar() {
+            let existing = $('#at_main_top_bar');
+            if(existing.length !== 0) {
+                return;
+            }
+
+            let root = $('div.main-tasks');
+            if(root.length === 0) {
+                return;
+            }
+
+            let bar = $('<div id="at_main_top_bar" class="top separate"></div>');
+            let options = $('<span></span>');
+            let optionToggleView = this.createOptionsToggle("at_main_task_toggle_view", "Alternative Display", this.onToggleMainBarTaskDisplay.bind(this));
+            options.append(optionToggleView);
+            bar.append(options);
+            let buttons = $('<div></div>');
+            let clearPinButton = $('<button>Reset Pinned Buttons</button>');
+            clearPinButton[0].addEventListener("click", event => {
+                AE.tabStyleMain.resetPinnedButtons();
+            }, false);
+
+            buttons.append(clearPinButton);
+            bar.append(buttons);
+            $(root[0]).prepend(bar);
+        }
+
+        resetPinnedButtons() {
+            for(let key in this.pinnedButtons) {
+                if(this.pinnedButtons[key] !== true) {
+                    continue;
+                }
+
+                this.pinnedButtons[key] = false;
+                $(this.taskButtons[key].btn).css('background-color', '');
+            }
+        }
+
+        refreshTaskButtonState(){
+            AE.tabStyleMain.taskButtons = {};
+
+            if(this.activeButtonRoot === undefined){
+                return;
+            }
+
+            this.activeButtonRoot.find('span.task-btn').each(function() {
+                let el = $(this);
+                let dataKey = el.data("key");
+                if(dataKey === undefined){
+                    return;
+                }
+
+                let buttonData = {
+                    btn: el.children()[0],
+                    isLocked: el.hasClass('locked'),
+                    isRunnable: el.hasClass('runnable'),
+                    isUpgrade: AE.data.UpgradeTasks.includes(dataKey)
+                };
+
+                AE.tabStyleMain.taskButtons[dataKey] = buttonData;
+                if(AE.tabStyleMain.taskButtonOriginalParents[dataKey] === undefined) {
+                    AE.tabStyleMain.taskButtonOriginalParents[dataKey] = el.parent();
+                }
+
+                if(buttonData.isLocked === false
+                    && buttonData.isUpgrade === false
+                    && buttonData.isRunnable === false) {
+                    // Can pin only single-action buttons for now
+                    if (AE.tabStyleMain.pinnedButtons[dataKey] === undefined) {
+                        AE.tabStyleMain.pinnedButtons[dataKey] = false;
+                        $(buttonData.btn).click({key: dataKey}, AE.tabStyleMain.pinTaskButtonCallback.bind(AE.tabStyleMain));
+                    }
+                }
+            });
+        }
+
+        pinTaskButtonCallback(event) {
+            if (event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
+                let dataKey = event.data.key;
+                if(AE.tabStyleMain.pinnedButtons[dataKey] === true) {
+                    AE.tabStyleMain.pinnedButtons[dataKey] = false;
+                    $(event.currentTarget).css('background-color', '');
+                } else {
+                    AE.tabStyleMain.pinnedButtons[dataKey] = true;
+                }
+            }
+        }
+
+        updateMainTabAlternativeTaskDisplay() {
+            let existing = $('#at_main_alternative_task_display');
+            if(existing.length !== 0) {
+                return;
+            }
+
+            let root = $('div.main-tasks');
+            if(root.length !== 1) {
+                return;
+            }
+
+            let current = $('<div id="vanilla_task_display" class="main-tasks"></div>');
+            root.children().each(function() {
+                $(this).detach();
+                current.append($(this));
+            });
+
+            root.append(current);
+
+            let alternative = $('<div id="at_main_alternative_task_display" class="main-tasks"></div>');
+            root.append(alternative);
+
+            this.activeButtonRoot = current;
+            this.onToggleMainBarTaskDisplay(false);
+        }
+    }
+
+    AE.tabStyleMain = new AETabStyleMain();
+
+})(window.jQuery); 
+ 
 // Debug
 (function($) {
     'use strict';
@@ -2472,10 +2807,15 @@ let AE = (function($){
             this.loadHtmlModifications();
 
             AE.interval.add(this.reloadCheck.bind(this), 2000);
+
             AE.interval.add(AE.pageStyle.update.bind(AE.pageStyle), AE.config.uiUpdateInterval);
+
             AE.interval.add(AE.playerState.update.bind(AE.playerState), AE.config.minUpdateInterval);
+
             AE.interval.add(AE.tabStyle.update.bind(AE.tabStyle), AE.config.uiUpdateInterval);
-            AE.interval.add(AE.imbueGemShortcut.update.bind(AE.imbueGemShortcut), AE.config.uiUpdateInterval);
+
+            AE.interval.add(AE.tabStyleMain.updateUI.bind(AE.tabStyleMain), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 250);
 
             if(AE.config.arcanumAutomationPresent !== true) {
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);
@@ -2560,7 +2900,7 @@ let AE = (function($){
             AE.log("Loading...");
             AE.loader.load();
             isLoaded = true;
-            AE.log(" Done!");
+            AE.log("Loading Done!");
         }
 
         AE.interval.update(delta);

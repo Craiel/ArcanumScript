@@ -45,34 +45,6 @@
             };
         }
 
-        getUpgradeButtons(keyDict) {
-            let taskArea = $('div.main-tasks');
-            if(taskArea.length === 0) {
-                return [];
-            }
-
-            let matchingButtons = [];
-            taskArea.find('span.task-btn').each(function() {
-                if($(this).hasClass("locked") === true) {
-                    return;
-                }
-
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
-
-                let dataKey = $(this).data("key");
-                if(dataKey === undefined || keyDict[dataKey] === undefined) {
-                    return;
-                }
-
-                matchingButtons.push(button);
-            });
-
-            return matchingButtons;
-        }
-
         checkData(){
             let unknownResources = [];
             $('div.res-list').find('div.rsrc').each(function() {

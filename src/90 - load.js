@@ -13,10 +13,15 @@
             this.loadHtmlModifications();
 
             AE.interval.add(this.reloadCheck.bind(this), 2000);
+
             AE.interval.add(AE.pageStyle.update.bind(AE.pageStyle), AE.config.uiUpdateInterval);
+
             AE.interval.add(AE.playerState.update.bind(AE.playerState), AE.config.minUpdateInterval);
+
             AE.interval.add(AE.tabStyle.update.bind(AE.tabStyle), AE.config.uiUpdateInterval);
-            AE.interval.add(AE.imbueGemShortcut.update.bind(AE.imbueGemShortcut), AE.config.uiUpdateInterval);
+
+            AE.interval.add(AE.tabStyleMain.updateUI.bind(AE.tabStyleMain), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 250);
 
             if(AE.config.arcanumAutomationPresent !== true) {
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);

@@ -2,7 +2,21 @@
 (function($) {
     'use strict';
 
-    AE.data = {};
+    class AEData {
+        getTaskGroup(dataId) {
+            for(let key in this.TaskGroups) {
+                let values = this.TaskGroups[key];
+                if(values.includes(dataId)) {
+                    return key;
+                }
+            }
+
+            return undefined;
+        }
+    }
+
+    AE.data = new AEData();
+
     AE.data.PlayerVitals = {
         // Core
         Stamina: 'stamina',
@@ -66,6 +80,7 @@
         StarShard: 'sindel',
         Dream: 'dreams',
         Herb: 'herbs',
+        Schematic: 'schematic',
 
         Machine: 'machinae',
         Puppet: 'puppets',
@@ -76,6 +91,7 @@
         Frost: 'frost',
         LivingSnow: 'livingsnow',
         SnowMan: 'snowman',
+        SnowDrop: 'snowdrop'
     };
 
     AE.data.GameTabs = {
@@ -473,17 +489,35 @@
         gryffon: {dist:325}
     };
 
-    AE.data.GemCraftButtonDataKeys = {
-        imbuelifegem: 0,
-        imbuemanagem: 1,
-        imbuebloodgem: 2,
-        imbuefiregem: 3,
-        imbueairgem: 4,
-        imbueearthgem: 5,
-        imbuewatergem: 6,
-        imbuelightgem: 7,
-        imbueshadowgem: 8,
-        imbuespiritgem: 9
+    AE.data.GemImbueTaskIds = ['imbuelifegem', 'imbuemanagem', 'imbuebloodgem', 'imbuefiregem',
+        'imbueairgem', 'imbueearthgem', 'imbuewatergem', 'imbuelightgem', 'imbueshadowgem', 'imbuespiritgem'];
+
+    AE.data.TaskGroups = {
+        'Rest': ['rest', 'slumber', 'naturecamp', 'chant', 'eatchildren'],
+        'Gold': ['cleanstables', 'sellscroll', 'sellherbs', 'sellgem', 'pouch', 'thievery', 'readpalms', 'service', 'spingold',
+            'embalm', 'paidseance', 'heist', 'magicadvice', 'chores', 'treatailments', 'errands', 'prestidigitation', 'act_mine'],
+        'Research': ['buyscroll', 'scribescroll', 'sublimate', 'bindcodex', 'compiletome', 'pace', 'act_element', 'mapstars',
+            'grind', 'study', 'spellbook', 'act_garden', 'act_scry', 'act_concoct', 'bestiary', 'sylvansyllabary', 'dwarfbook',
+            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest'],
+        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
+        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
+        'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
+            'summonfamiliar'],
+        'Dreams': ['dreamweaver', 'starwish'],
+        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
+        'Home': ['fireplane', 'airplane', 'waterplane'],
+        'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
+        'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
+        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount'],
+        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
+
+        '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy']
     };
+
+    AE.data.UpgradeTasks = ['pouch', 'purse', 'gembox', 'gemcraft', 'artificialmountain', 'mythicanvil', 'up_runecrafter',
+        'wizardhall', 'winteraward', 'fireplane', 'airplane', 'waterplane', 'warmpotion', 'winterchill', 'advgems', 'sombercandle',
+        'hearthexpansion', 'flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'spellbook',
+        'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
+        'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy'];
 
 })(window.jQuery);

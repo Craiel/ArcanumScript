@@ -3,9 +3,6 @@
     'use strict';
 
     class AETabStyle {
-        constructor() {
-        }
-
         update(delta) {
             switch (AE.playerState.activeTab) {
                 case AE.data.GameTabs.Skills: {

@@ -36,7 +36,7 @@
             AE.log("Loading...");
             AE.loader.load();
             isLoaded = true;
-            AE.log(" Done!");
+            AE.log("Loading Done!");
         }
 
         AE.interval.update(delta);
