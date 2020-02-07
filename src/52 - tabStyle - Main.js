@@ -19,6 +19,8 @@
             this.defaultGroup = 'Unsorted';
             this.upgradeActiveColor = '#ff5757AA';
             this.upgradeInactiveColor = '#feb3b3AA';
+            this.classUpgradeInactiveColor = '#8fff57AA';
+            this.classUpgradeActiveColor = '#c4ffa6AA';
             this.pinnedColor = '#5698ffAA';
         }
 
@@ -101,6 +103,12 @@
                         buttonEl.css('background-color', this.upgradeInactiveColor);
                     } else {
                         buttonEl.css('background-color', this.upgradeActiveColor);
+                    }
+                } else if(button.isClassUpgrade === true) {
+                    if(button.isDisabled === false) {
+                        buttonEl.css('background-color', this.classUpgradeInactiveColor);
+                    } else {
+                        buttonEl.css('background-color', this.classUpgradeActiveColor);
                     }
                 }
             }
@@ -312,7 +320,8 @@
                     btn: el.children()[0],
                     isLocked: el.hasClass('locked'),
                     isRunnable: el.hasClass('runnable'),
-                    isUpgrade: AE.data.UpgradeTasks.includes(dataKey)
+                    isUpgrade: AE.data.UpgradeTasks.includes(dataKey),
+                    isClassUpgrade: AE.data.ClassUpgradeTasks.includes(dataKey)
                 };
 
                 AE.tabStyleMain.taskButtons[dataKey] = buttonData;

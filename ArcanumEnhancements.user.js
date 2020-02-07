@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1725
+// @version      1725.1
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -627,10 +627,19 @@ let AE = (function($){
     AE.data.GemImbueTaskIds = ['imbuelifegem', 'imbuemanagem', 'imbuebloodgem', 'imbuefiregem',
         'imbueairgem', 'imbueearthgem', 'imbuewatergem', 'imbuelightgem', 'imbueshadowgem', 'imbuespiritgem'];
 
+    AE.data.ClassUpgradeTasks = ['apprentice', 'falconer', 'herbalist', 'scribe', 'neophyte', 'adept', 'blueadept', 'savant',
+        'magician', 'darkmagician', 'reanimator', 'witch', 'trickster', 'madcap', 'bonemonger', 'thanophage', 'battlemage',
+        'bladeweaver', 'arcanedervish', 'eldritchknight', 'spellblade', 'dreadlord', 'warlock', 'bloodmage', 'summoner', 'warden',
+        'alchemist', 'enchanter', 'geomancer', 'earthshaker', 'titan', 'pyromancer', 'hydromancer', 'windmage', 'stormcaller',
+        'elementalist', 'sorcerer', 'druid', 'highelemental', 'oracle', 'seer', 'mage', 'highmage', 'doomsayer', 'fey',
+        'thaumaturge', 'necromancer', 'wizard', 'wizard2', 'kell', 'greynecromancer', 'archlock', 'heresiarch', 'highkell',
+        'necro3', 'deathlock', 'wizard3', 'astralseer', 'c_avatar'];
+
     AE.data.TaskGroups = {
         'Rest': ['rest', 'slumber', 'naturecamp', 'chant', 'eatchildren'],
         'Gold': ['cleanstables', 'sellscroll', 'sellherbs', 'sellgem', 'pouch', 'thievery', 'readpalms', 'service', 'spingold',
-            'embalm', 'paidseance', 'heist', 'magicadvice', 'chores', 'treatailments', 'errands', 'prestidigitation', 'act_mine'],
+            'embalm', 'paidseance', 'heist', 'magicadvice', 'chores', 'treatailments', 'errands', 'prestidigitation', 'act_mine',
+            'purse'],
         'Research': ['buyscroll', 'scribescroll', 'sublimate', 'bindcodex', 'compiletome', 'pace', 'act_element', 'mapstars',
             'grind', 'study', 'spellbook', 'act_garden', 'act_scry', 'act_concoct', 'bestiary', 'sylvansyllabary', 'dwarfbook',
             'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest'],
@@ -645,6 +654,7 @@ let AE = (function($){
         'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
         'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount'],
         'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
+        'Class': AE.data.ClassUpgradeTasks,
 
         '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy']
     };
@@ -654,6 +664,8 @@ let AE = (function($){
         'hearthexpansion', 'flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'spellbook',
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
         'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy'];
+
+
 
 })(window.jQuery); 
  
@@ -2408,6 +2420,8 @@ let AE = (function($){
             this.defaultGroup = 'Unsorted';
             this.upgradeActiveColor = '#ff5757AA';
             this.upgradeInactiveColor = '#feb3b3AA';
+            this.classUpgradeInactiveColor = '#8fff57AA';
+            this.classUpgradeActiveColor = '#c4ffa6AA';
             this.pinnedColor = '#5698ffAA';
         }
 
@@ -2490,6 +2504,12 @@ let AE = (function($){
                         buttonEl.css('background-color', this.upgradeInactiveColor);
                     } else {
                         buttonEl.css('background-color', this.upgradeActiveColor);
+                    }
+                } else if(button.isClassUpgrade === true) {
+                    if(button.isDisabled === false) {
+                        buttonEl.css('background-color', this.classUpgradeInactiveColor);
+                    } else {
+                        buttonEl.css('background-color', this.classUpgradeActiveColor);
                     }
                 }
             }
@@ -2701,7 +2721,8 @@ let AE = (function($){
                     btn: el.children()[0],
                     isLocked: el.hasClass('locked'),
                     isRunnable: el.hasClass('runnable'),
-                    isUpgrade: AE.data.UpgradeTasks.includes(dataKey)
+                    isUpgrade: AE.data.UpgradeTasks.includes(dataKey),
+                    isClassUpgrade: AE.data.ClassUpgradeTasks.includes(dataKey)
                 };
 
                 AE.tabStyleMain.taskButtons[dataKey] = buttonData;
