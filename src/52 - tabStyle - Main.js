@@ -117,6 +117,10 @@
         createOptionsToggle(id, title, callback){
             let toggle = $('<span class="opt"></span>');
             let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
+            if(AE.settings.data.mainScreenAlternateDisplay === true) {
+                toggleInput.prop('checked', true);
+            }
+
             toggle.append(toggleInput);
             toggleInput[0].addEventListener("change", event => {
                 callback(event.target.checked);
@@ -126,13 +130,23 @@
         }
 
         onToggleMainBarTaskDisplay(checked) {
+            if(AE.settings.data.mainScreenAlternateDisplay !== checked) {
+                // Update the settings
+                AE.settings.data.mainScreenAlternateDisplay = checked;
+                AE.settings.save();
+            }
+
+            this.rebuildTaskButtonDisplay();
+        }
+
+        rebuildTaskButtonDisplay(){
             let vanillaRoot = $('#vanilla_task_display');
             let alternateDisplayRoot = $('#at_main_alternative_task_display');
 
             this.refreshTaskButtonState();
 
-            if(checked === true) {
-
+            if(AE.settings.data.mainScreenAlternateDisplay === true)
+            {
                 vanillaRoot.hide();
                 alternateDisplayRoot.show();
 
@@ -376,7 +390,7 @@
             root.append(alternative);
 
             this.activeButtonRoot = current;
-            this.onToggleMainBarTaskDisplay(false);
+            this.onToggleMainBarTaskDisplay(AE.settings.data.mainScreenAlternateDisplay);
         }
     }
 

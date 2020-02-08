@@ -13,7 +13,9 @@
                 quickSlotTimes: [],
                 quickSlotEnabled: [],
                 quickSlotPresets: {},
-                quickSlotPresetNames: {}
+                quickSlotPresetNames: {},
+                mainScreenAlternateDisplay: false,
+                gameVersion: undefined
             };
         }
 
@@ -46,6 +48,10 @@
                 if(i === target.quickSlotEnabled.length) {
                     target.quickSlotEnabled.push(true);
                 }
+            }
+
+            if(target.mainScreenAlternateDisplay === undefined) {
+                target.mainScreenAlternateDisplay = false;
             }
 
             target.version = SettingsVersion;

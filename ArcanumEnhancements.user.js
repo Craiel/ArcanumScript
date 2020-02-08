@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1725.1
+// @version      1725.2
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -138,6 +138,12 @@ let AE = (function($){
     'use strict';
 
     class AEData {
+        constructor() {
+            this.gameVersionKongregate = 1725;
+            this.gameVersionLerpingLemur = 1358;
+            this.gameVersionOutdatedThreshold = 1400;
+        }
+
         getTaskGroup(dataId) {
             for(let key in this.TaskGroups) {
                 let values = this.TaskGroups[key];
@@ -646,24 +652,27 @@ let AE = (function($){
         'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
         'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
         'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
-            'summonfamiliar'],
+            'summonfamiliar', 'voidtouch'],
         'Dreams': ['dreamweaver', 'starwish'],
         'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
-        'Home': ['fireplane', 'airplane', 'waterplane'],
+        'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane'],
         'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
         'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
-        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount'],
+        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
+            'ebonwoodbroomstick', 'pegasusmount'],
         'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
         'Class': AE.data.ClassUpgradeTasks,
 
-        '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy']
+        '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy',
+            'w_fazbit1', 'w_fazbit2', 'w_fazbit3']
     };
 
     AE.data.UpgradeTasks = ['pouch', 'purse', 'gembox', 'gemcraft', 'artificialmountain', 'mythicanvil', 'up_runecrafter',
         'wizardhall', 'winteraward', 'fireplane', 'airplane', 'waterplane', 'warmpotion', 'winterchill', 'advgems', 'sombercandle',
         'hearthexpansion', 'flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'spellbook',
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
-        'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy'];
+        'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy',
+        'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount'];
 
 
 
@@ -1110,7 +1119,9 @@ let AE = (function($){
                 quickSlotTimes: [],
                 quickSlotEnabled: [],
                 quickSlotPresets: {},
-                quickSlotPresetNames: {}
+                quickSlotPresetNames: {},
+                mainScreenAlternateDisplay: false,
+                gameVersion: undefined
             };
         }
 
@@ -1143,6 +1154,10 @@ let AE = (function($){
                 if(i === target.quickSlotEnabled.length) {
                     target.quickSlotEnabled.push(true);
                 }
+            }
+
+            if(target.mainScreenAlternateDisplay === undefined) {
+                target.mainScreenAlternateDisplay = false;
             }
 
             target.version = SettingsVersion;
@@ -2518,6 +2533,10 @@ let AE = (function($){
         createOptionsToggle(id, title, callback){
             let toggle = $('<span class="opt"></span>');
             let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
+            if(AE.settings.data.mainScreenAlternateDisplay === true) {
+                toggleInput.prop('checked', true);
+            }
+
             toggle.append(toggleInput);
             toggleInput[0].addEventListener("change", event => {
                 callback(event.target.checked);
@@ -2527,13 +2546,23 @@ let AE = (function($){
         }
 
         onToggleMainBarTaskDisplay(checked) {
+            if(AE.settings.data.mainScreenAlternateDisplay !== checked) {
+                // Update the settings
+                AE.settings.data.mainScreenAlternateDisplay = checked;
+                AE.settings.save();
+            }
+
+            this.rebuildTaskButtonDisplay();
+        }
+
+        rebuildTaskButtonDisplay(){
             let vanillaRoot = $('#vanilla_task_display');
             let alternateDisplayRoot = $('#at_main_alternative_task_display');
 
             this.refreshTaskButtonState();
 
-            if(checked === true) {
-
+            if(AE.settings.data.mainScreenAlternateDisplay === true)
+            {
                 vanillaRoot.hide();
                 alternateDisplayRoot.show();
 
@@ -2777,7 +2806,7 @@ let AE = (function($){
             root.append(alternative);
 
             this.activeButtonRoot = current;
-            this.onToggleMainBarTaskDisplay(false);
+            this.onToggleMainBarTaskDisplay(AE.settings.data.mainScreenAlternateDisplay);
         }
     }
 
@@ -2817,6 +2846,8 @@ let AE = (function($){
 (function($) {
     'use strict';
 
+    const VersionRegex = /.*build#\s*([0-9]+)/i;
+
     class AELoader {
         load() {
             this.checkForOtherScripts();
@@ -2824,6 +2855,8 @@ let AE = (function($){
             AE.settings.load();
             AE.pageUtils.checkData();
             AE.playerState.initialize();
+
+            this.checkVersion();
 
             this.loadHtmlModifications();
 
@@ -2843,6 +2876,46 @@ let AE = (function($){
             }
 
             AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), 250);
+        }
+
+        checkVersion() {
+            let versionSpan = $('span.vers');
+            if(versionSpan.length === 0){
+                console.warn("Missing Version Tag");
+                return;
+            }
+
+            let rawText = versionSpan.text();
+            let parse = VersionRegex.exec(rawText);
+            if(parse === undefined || parse === null || parse.length !== 2) {
+                console.warn("Unknown Version: " + rawText);
+                return;
+            }
+
+            let version = parseInt(parse[1]);
+            if(AE.settings.data.gameVersion === version){
+                // Same version
+                return;
+            }
+
+            if(AE.settings.data.gameVersion !== undefined){
+                // Version has changed, check how
+                if(AE.settings.data.gameVersion > version){
+                    console.error("Game version degraded, was " + AE.settings.data.gameVersion + " now at " + version);
+                } else {
+                    AE.log("Game Version updated, was " + AE.settings.data.gameVersion + " now at " + version)
+                }
+            } else {
+                // First time start
+                AE.log("Game version initialized to " + version);
+            }
+
+            AE.settings.data.gameVersion = version;
+            AE.settings.save();
+
+            if(version < AE.data.gameVersionOutdatedThreshold) {
+                alert("You are running a very old version of the game: " + version + " latest should be " + AE.data.gameVersionKongregate + " or higher\n\n • Recommended version to play is 'Theory of Magic on Kongregate'");
+            }
         }
 
         checkForOtherScripts() {

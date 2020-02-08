@@ -2,6 +2,8 @@
 (function($) {
     'use strict';
 
+    const VersionRegex = /.*build#\s*([0-9]+)/i;
+
     class AELoader {
         load() {
             this.checkForOtherScripts();
@@ -9,6 +11,8 @@
             AE.settings.load();
             AE.pageUtils.checkData();
             AE.playerState.initialize();
+
+            this.checkVersion();
 
             this.loadHtmlModifications();
 
@@ -28,6 +32,46 @@
             }
 
             AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), 250);
+        }
+
+        checkVersion() {
+            let versionSpan = $('span.vers');
+            if(versionSpan.length === 0){
+                console.warn("Missing Version Tag");
+                return;
+            }
+
+            let rawText = versionSpan.text();
+            let parse = VersionRegex.exec(rawText);
+            if(parse === undefined || parse === null || parse.length !== 2) {
+                console.warn("Unknown Version: " + rawText);
+                return;
+            }
+
+            let version = parseInt(parse[1]);
+            if(AE.settings.data.gameVersion === version){
+                // Same version
+                return;
+            }
+
+            if(AE.settings.data.gameVersion !== undefined){
+                // Version has changed, check how
+                if(AE.settings.data.gameVersion > version){
+                    console.error("Game version degraded, was " + AE.settings.data.gameVersion + " now at " + version);
+                } else {
+                    AE.log("Game Version updated, was " + AE.settings.data.gameVersion + " now at " + version)
+                }
+            } else {
+                // First time start
+                AE.log("Game version initialized to " + version);
+            }
+
+            AE.settings.data.gameVersion = version;
+            AE.settings.save();
+
+            if(version < AE.data.gameVersionOutdatedThreshold) {
+                alert("You are running a very old version of the game: " + version + " latest should be " + AE.data.gameVersionKongregate + " or higher\n\n • Recommended version to play is 'Theory of Magic on Kongregate'");
+            }
         }
 
         checkForOtherScripts() {
