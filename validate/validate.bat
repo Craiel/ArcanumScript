@@ -1,0 +1,1 @@
+node validate.js ../../Arcanum/data
