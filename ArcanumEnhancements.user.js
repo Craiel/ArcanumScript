@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1725.2
+// @version      1731
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -112,6 +112,21 @@ let AE = (function($){
 
             return true;
         }
+
+        createOptionsToggle(id, title, callback, defaultValue){
+            let toggle = $('<span class="opt"></span>');
+            let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
+            if(defaultValue === true) {
+                toggleInput.prop('checked', true);
+            }
+
+            toggle.append(toggleInput);
+            toggleInput[0].addEventListener("change", event => {
+                callback(event.target.checked);
+            }, false);
+
+            return toggleInput;
+        }
     }
 
     AE.utils = new AEUtils();
@@ -128,7 +143,7 @@ let AE = (function($){
         quickSlotCount: 10,
         quickSlotPresetCount: 3,
         minUpdateInterval: 50,
-        uiUpdateInterval: 500
+        uiUpdateInterval: 250
     }
 
 })(window.jQuery); 
@@ -139,7 +154,7 @@ let AE = (function($){
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1725;
+            this.gameVersionKongregate = 1731;
             this.gameVersionLerpingLemur = 1358;
             this.gameVersionOutdatedThreshold = 1400;
         }
@@ -158,83 +173,6 @@ let AE = (function($){
 
     AE.data = new AEData();
 
-    AE.data.PlayerVitals = {
-        // Core
-        Stamina: 'stamina',
-        Health: 'hp',
-        Mana: 'mana',
-
-        Earth: 'earth',
-        Water: 'water',
-        Wind: 'air',
-        Fire: 'fire',
-
-        Spirit: 'spirit',
-        Nature: 'nature',
-
-        Light: 'light',
-        Dark: 'shadow',
-
-        Chaos: 'chaos',
-        Tempus: 'tempus',
-        Void: 'void',
-
-        // Seasonal
-        Ice: 'ice'
-    };
-
-    AE.data.PlayerResources = {
-        Gold: 'gold',
-
-        Research: 'research',
-        Arcana: 'arcana',
-        Scroll: 'scrolls',
-        Codex: 'codices',
-        Tome: 'tomes',
-        StarChart: 'starcharts',
-
-        Body: 'bodies',
-        Soul: 'souls',
-        Bone: 'bones',
-        BoneDust: 'bonedust',
-        Skull: 'skulls',
-
-        Gem: 'gems',
-        GemMana: 'managem',
-        GemFire: 'firegem',
-        GemWater: 'watergem',
-        GemEarth: 'earthgem',
-        GemWind: 'airgem',
-        GemLight: 'lightgem',
-        GemDark: 'shadowgem',
-        GemSpirit: 'spiritgem',
-        GemNature: 'naturegem',
-        GemBlood: 'bloodgem',
-
-        RuneStone: 'runestones',
-        RuneFire: 'firerune',
-        RuneWater: 'waterrune',
-        RuneWind: 'airrune',
-        RuneEarth: 'earthrune',
-
-        Ichor: 'ichor',
-        StarShard: 'sindel',
-        Dream: 'dreams',
-        Herb: 'herbs',
-        Schematic: 'schematic',
-
-        Machine: 'machinae',
-        Puppet: 'puppets',
-
-        // Seasonal
-        EmblemOfIce: 'emblemofice',
-        WinterEssence: 'winteressence',
-        Frost: 'frost',
-        LivingSnow: 'livingsnow',
-        SnowMan: 'snowman',
-        SnowDrop: 'snowdrop'
-    };
-
     AE.data.GameTabs = {
         Main: 'main',
         Skills: 'skills',
@@ -247,25 +185,6 @@ let AE = (function($){
         Bestiary: 'bestiary',
         Enchanting: 'enchanting',
         Potions: 'potions',
-    };
-
-    AE.data.Potions = {
-        PoisonWard: "poison ward",
-        IronSkinSalve: "ironskin salve",
-        AdamantSalve: "adamant salve",
-        WaterWard: "water ward",
-        FireWard: "fire ward",
-        TrueStriking: "true striking",
-
-        DraughtOfMana: "draught of mana",
-        DraughtOfStamina: "draught of stamina",
-
-        MinorHealing: "minor healing",
-        HealingPotion: "healing potion",
-
-        PotionOfStamina: "potion of stamina",
-        Serenity: "serenity",
-        GodsBlood: "god's blood"
     };
 
     AE.data.ItemType = {
@@ -301,6 +220,20 @@ let AE = (function($){
         Hands: 'hands',
         Back: 'back',
         Waist: 'waist',
+        Chest: 'chest',
+        Shins: 'shins',
+        Feet: 'feet'
+    };
+
+    AE.data.ItemSlot = {
+        WeaponLeft: 'left',
+        WeaponRight: 'right',
+        Head: 'head',
+        Hands: 'hands',
+        Back: 'back',
+        Waist: 'waist',
+        Neck: 'neck',
+        Finger: 'finger',
         Chest: 'chest',
         Shins: 'shins',
         Feet: 'feet'
@@ -367,267 +300,9 @@ let AE = (function($){
         Spear: {name: 'spear', lvl: 2, subType: AE.data.WeaponSubType.Spear},
     };
 
-    AE.data.EnchantItemNotations = [
-        'of colors',
-        'of energy',
-        'of air',
-        'of spells',
-        'of earth',
-        'of biting',
-        'of sanity',
-        'of fire',
-        'of water',
-        'of luck',
-        'of regeneration',
-        'of speed',
-        'of mana',
-        'of life',
-        'of clarity'
-    ];
-
-    AE.data.EnchantData = {
-        en_air1: {
-            level: 1,
-            mods: {
-                airlore: {max: 1},
-                air: {rate: 0.2},
-            }
-        },
-
-        en_fire1: {
-            level: 1,
-            mods: {
-                firelore: {max:1},
-                fire: {rate: 0.2}
-            }
-        },
-
-        en_water1: {
-            level: 1,
-            mods: {
-                waterlore: {max:1},
-                water: {rate:0.2}
-            }
-        },
-
-        en_earth1: {
-            level: 1,
-            mods: {
-                earthlore: {max:1},
-                earth: {rate:0.2}
-            }
-        },
-
-        en_armor1: {
-            level: 1,
-            armor: 1
-        },
-
-        en_energy1: {
-            level: 1,
-            mods: {
-                mana: {rate:1}
-            }
-        },
-
-        en_clarity: {
-            level: 3,
-            mods: {
-                bf: {rate:-0.5}
-            }
-        },
-
-        en_luck1: {
-            level: 1,
-            mods: {
-                luck: 1
-            }
-        },
-
-        en_dmg1: {
-            level: 1,
-            attack: {
-                bonus: 1
-            }
-        },
-
-        en_hp1: {
-            level: 1,
-            mods: {
-                hp: {max:1}
-            }
-        },
-
-        en_mana1: {
-            level: 1,
-            mods: {
-                mana: {max:1}
-            }
-        },
-
-        en_speed1: {
-            level: 7,
-            mods: {
-                speed: 0.5
-            }
-        },
-
-        en_speed2: {
-            level: 3,
-            mods: {
-                speed: 2,
-            }
-        },
-
-        en_speed3: {
-            level: 5,
-            mods: {
-                speed: 5
-            }
-        },
-
-        en_speed4: {
-            level: 7,
-            mods: {
-                speed: 8
-            }
-        },
-
-        en_tohit1: {
-            level: 1,
-            attack: {
-                tohit:2
-            }
-        },
-
-        en_scraft: {
-            level: 3,
-            mods: {
-                scraft: 1
-            }
-        },
-
-        en_scraft2: {
-            level: 6,
-            mods: {
-                scraft: 2
-            }
-        },
-
-        en_regen1: {
-            level: 2,
-            mods: {
-                hp: {rate:0.2}
-            }
-        },
-
-        en_courage: {
-            level: 5,
-            mods: {
-                unease: {rate:-0.5}
-            }
-        },
-
-        en_sanity: {
-            level: 6,
-            mods: {
-                madness: {rate:-1}
-            }
-        },
-
-        en_stam1: {
-            level: 7,
-            mods: {
-                stamina: {rate:0.3}
-            }
-        },
-
-        en_prisma: {
-            level: 8,
-            mods: {
-                prismatic:{rate:0.5}
-            }
-        }
-    };
-
     AE.data.SpecialItems = {
         'orb of winters': {type: AE.data.ItemType.Weapon, subType: AE.data.WeaponSubType.Orb},
         "titan's hammer": {type: AE.data.ItemType.Weapon, subType: AE.data.WeaponSubType.Mace2H}
-    };
-
-    AE.data.ItemMaterials = {
-        Silk: {name: 'silk', lvl: 2},
-        Cotton: {name:'cotton', lvl: 0},
-        Stone: {name:'stone', lvl: 0},
-        Leather: {name:'leather', lvl:0},
-        Wood: {name:'wood', lvl: 0},
-        Bone: {name:'bone', lvl: 2},
-        Bronze: {name:'bronze', lvl: 2},
-        Iron: {name:'iron', lvl: 3},
-        Steel: {name: 'steel', lvl: 4},
-        QuickSteel: {name:'quicksteel', lvl: 5},
-        Mithril: {name:'mithril', lvl: 7},
-        Ebonwood: {name:'ebonwood', lvl: 8},
-        Idrasil: {name:'idrasil', lvl: 8},
-        Ethereal: {name:'ethereal', lvl: 8},
-        Adamant: {name:'adamant', lvl: 9},
-
-        // Seasonal
-        CrimsonIce: {name: 'crimsonice', lvl: 5},
-        ColdSteel: {name: 'coldsteel', lvl: 5},
-        PermaFrost: {name: 'permafrost', lvl: 7}
-    };
-
-    AE.data.HomeData = {
-        alcove: {size:5},
-        'earthen spire': {size:300},
-        'attic bedroom': {size:10},
-        'lodge at inn': {size:12},
-        hut: {size:15},
-        camp: {size:14},
-        "tinker's wagon": {size:12},
-        cottage: {size:20},
-        house: {size:30},
-        shop:{size:25},
-        inn: {size:50},
-        lodge: {size:30},
-        'gabled mansion': {size:65},
-        'half-timber house': {size:75},
-        cave: {size:25},
-        pavilion: {size:50},
-        'haunted manse': {size:75},
-        'ancient ruins': {size:110},
-        tower: {size:55},
-        lighthouse: {size:80},
-        cataract: {size:70},
-        citadel: {size:200},
-        academy: {size:300},
-        temple: {size:200},
-        'mage tower': {size:420},
-        'idrasil seedling': {size:300},
-        palace: {size:400},
-        castle: {size:400},
-        cove: {size:350},
-        'volcanic lair': {size:200},
-        cavern: {size:200},
-        'enchanted grove': {size:420},
-        'shrouded isle': {size:420}
-    };
-
-    AE.data.MountData = {
-        'magic broomstick': {dist:115},
-        'ebonwood broomstick': {dist:355},
-        'flying carpet': {dist:300},
-        mule: {dist:30},
-        'old nag': {dist:30},
-        'demure gelding': {dist:55},
-        'fine bay': {dist:100},
-        'skeletal charger': {dist:270},
-        'fire charger': {dist:275},
-        fly: {dist:525},
-        'chariot of fire': {dist:550},
-        pegasus: {dist:320},
-        gryffon: {dist:325}
     };
 
     AE.data.GemImbueTaskIds = ['imbuelifegem', 'imbuemanagem', 'imbuebloodgem', 'imbuefiregem',
@@ -678,6 +353,39 @@ let AE = (function($){
 
 })(window.jQuery); 
  
+// Generated Data
+(function($) {
+    'use strict';
+    
+    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"scrolls":{"max":10},"starcharts":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"timerune":{"max":3,"name":"time runes"},"bodies":{"max":1},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"Codices"},"tomes":{"max":5,"name":"Tomes"},"gems":{"max":5},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3},"voidgem":{"max":3},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"sulphur":{"max":10},"mercury":{"max":10},"space":{"max":0,"name":"floor space"},"mana":{"max":5,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"w_fazbitknowledge":{"max":100000,"name":"fazbit's knowledge"},"snowman":{"max":5,"name":"snomunculus"},"livingsnow":{"max":20},"frost":{"max":80},"winteressence":{"max":10000,"name":"essence of winter"},"emblemofice":{"max":1,"name":"emblem of ice"},"ice":{"max":0},"snowdrop":{"max":5,"name":"snowdrop"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
+    
+    AE.data.PotionData = {"pot_poisonward":{"name":"poison ward"},"pot_mana1":{"name":"draught of mana"},"pot_heal1":{"name":"minor healing"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of stamina"},"pot_ironskin":{"name":"ironskin salve"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_waterward":{"name":"water ward"},"pot_fireward":{"name":"fire ward"},"pot_heal3":{"name":"healing potion"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"}};
+    
+    AE.data.EnchantItemNotations = ["of luck","of mana","of energy","of life","of regeneration","of biting","of fire","of water","of earth","of air","of speed","of clarity","of spells","of sanity","of refreshing","of spells","of deception","of colors"];
+    AE.data.EnchantNameLookup = {"sturdy armor":"en_armor1","luck":"en_luck1","mana":"en_mana1","energy":"en_energy1","life pool":"en_hp1","regeneration":"en_regen1","biting edge":"en_dmg1","quick boots":"en_speed1","fire ring":"en_fire1","water ring":"en_water1","earth ring":"en_earth1","air ring":"en_air1","quick boots ii":"en_speed2","quick boots iii":"en_speed3","quick boots iv":"en_speed4","clarity":"en_clarity","spellcraft":"en_scraft","courage":"en_courage","sanity":"en_sanity","refreshment":"en_stam1","keen weapon":"en_tohit1","spellcraft ii":"en_scraft2","deception":"en_decep","prismatic ring":"en_prisma"};
+    AE.data.EnchantData = {"en_armor1":{"level":1,"name":"sturdy armor","target":["armor"],"mods":{"armor":1}},"en_luck1":{"level":1,"name":"luck","target":["ring"],"mods":{"luck":1}},"en_mana1":{"level":1,"name":"mana","target":["ring"],"mods":{"mana":{"max":1}}},"en_energy1":{"level":1,"name":"energy","target":["ring"],"mods":{"mana":{"rate":0.01}}},"en_hp1":{"level":1,"name":"life pool","target":["neck"],"mods":{"hp":{"max":4}}},"en_regen1":{"level":2,"name":"regeneration","target":["neck"],"mods":{"hp":{"rate":0.2}}},"en_dmg1":{"level":1,"name":"biting edge","target":["weapon"],"mods":{"attack":{"bonus":1}}},"en_speed1":{"level":1,"name":"quick boots","target":["feet"],"mods":{"speed":0.5}},"en_fire1":{"level":1,"name":"fire ring","target":["ring"],"mods":{"firelore":{"max":1},"fire":{"rate":0.2}}},"en_water1":{"level":1,"name":"water ring","target":["ring"],"mods":{"waterlore":{"max":1},"water":{"rate":0.2}}},"en_earth1":{"level":1,"name":"earth ring","target":["ring"],"mods":{"earthlore":{"max":1},"earth":{"rate":0.2}}},"en_air1":{"level":1,"name":"air ring","target":["ring"],"mods":{"airlore":{"max":1},"air":{"rate":0.2}}},"en_speed2":{"level":3,"name":"quick boots II","target":["feet"],"mods":{"speed":2}},"en_speed3":{"level":5,"name":"quick boots III","target":["feet"],"mods":{"speed":5}},"en_speed4":{"level":7,"name":"quick boots IV","target":["feet"],"mods":{"speed":8}},"en_clarity":{"level":3,"name":"clarity","target":["head"],"mods":{"bf":{"rate":-0.5}}},"en_scraft":{"level":3,"name":"spellcraft","target":["armor","weapon"],"mods":{"scraft":1}},"en_courage":{"level":5,"name":"courage","target":["waist"],"mods":{"unease":{"rate":-0.5}}},"en_sanity":{"level":6,"name":"sanity","target":["head"],"mods":{"madness":{"rate":-1}}},"en_stam1":{"level":7,"name":"refreshment","target":["ring"],"mods":{"stamina":{"rate":0.3}}},"en_tohit1":{"level":1,"name":"keen weapon","target":["weapon"],"mods":{"attack":{"tohit":2}}},"en_scraft2":{"level":6,"name":"spellcraft II","target":["armor","weapon"],"mods":{"scraft":2}},"en_decep":{"level":9,"name":"deception","target":["back"],"mods":{"trickery":2}},"en_prisma":{"level":8,"name":"prismatic ring","target":["ring"],"mods":{"prismatic":{"rate":0.5}}}};
+    
+    AE.data.MaterialData = {"silk":{"level":2},"cotton":{"level":0},"stone":{"level":0},"leather":{"level":0},"wood":{"level":0},"bone":{"level":2},"bronze":{"level":2},"iron":{"level":3},"steel":{"level":4},"quicksteel":{"level":5},"mithril":{"level":7},"ebonwood":{"level":8},"idrasil":{"level":8},"ethereal":{"level":8},"adamant":{"level":9},"crimsonice":{"level":5},"coldsteel":{"level":5},"permafrost":{"level":7}};
+    
+    AE.data.HomeData = {"alcove":{"name":"alcove","size":5},"earthspire":{"name":"earthen spire","size":300},"atticbedroom":{"name":"Attic Bedroom","size":10},"innroom":{"name":"Lodge at Inn","size":12},"hut":{"name":"hut","size":15},"camp":{"name":"camp","size":14},"wagon":{"name":"tinker's wagon","size":12},"cottage":{"name":"cottage","size":20},"house":{"name":"house","size":30},"shop":{"name":"shop","size":25},"inn":{"name":"inn","size":50},"lodge":{"name":"lodge","size":30},"gabledhouse":{"name":"gabled mansion","size":65},"halftimber":{"name":"half-timber house","size":75},"cave":{"name":"cave","size":25},"pavilion":{"name":"pavilion","size":50},"hauntedmanse":{"name":"haunted manse","size":75},"ancientruins":{"name":"ancient ruins","size":110},"tower":{"name":"tower","size":55},"lighthouse":{"name":"lighthouse","size":80},"cataract":{"name":"cataract","size":70},"citadel":{"name":"citadel","size":200},"academy":{"name":"academy","size":300},"temple":{"name":"temple","size":200},"magetower":{"name":"mage tower","size":420},"sm_idrasil":{"name":"idrasil seedling","size":300},"palace":{"name":"palace","size":400},"castle":{"name":"castle","size":400},"cove":{"name":"cove","size":350},"volcano":{"name":"volcanic lair","size":200},"cavern":{"name":"cavern","size":200},"grove":{"name":"Enchanted Grove","size":420},"island":{"name":"Shrouded Isle","size":420},"wildcamp":{"name":"wild's encampment","size":40},"clockworkhome":{"name":"clockwork home","size":50}};
+    AE.data.HomeNameLookup = {"alcove":"alcove","earthen spire":"earthspire","attic bedroom":"atticbedroom","lodge at inn":"innroom","hut":"hut","camp":"camp","tinker's wagon":"wagon","cottage":"cottage","house":"house","shop":"shop","inn":"inn","lodge":"lodge","gabled mansion":"gabledhouse","half-timber house":"halftimber","cave":"cave","pavilion":"pavilion","haunted manse":"hauntedmanse","ancient ruins":"ancientruins","tower":"tower","lighthouse":"lighthouse","cataract":"cataract","citadel":"citadel","academy":"academy","temple":"temple","mage tower":"magetower","idrasil seedling":"sm_idrasil","palace":"palace","castle":"castle","cove":"cove","volcanic lair":"volcano","cavern":"cavern","enchanted grove":"grove","shrouded isle":"island","wild's encampment":"wildcamp","clockwork home":"clockworkhome"};
+    
+    AE.data.MountData = {"magicbroomstick":{"name":"magic broomstick","distance":115},"ebonwoodbroomstick":{"name":"ebonwood broomstick","distance":355},"flyingcarpet":{"name":"flying carpet","distance":300},"mule":{"name":"mule","distance":15},"oldnag":{"name":"old nag","distance":30},"gelding":{"name":"demure gelding","distance":55},"bayhorse":{"name":"fine bay","distance":100},"skelcharger":{"name":"skeletal charger","distance":270},"firecharger":{"name":"fire charger","distance":275},"fly":{"name":"fly","distance":525},"firechariot":{"name":"chariot of fire","distance":550},"pegasusmount":{"name":"pegasus","distance":320},"gryffonmount":{"name":"gryffon","distance":325}};
+    AE.data.MountNameLookup = {"magic broomstick":"magicbroomstick","ebonwood broomstick":"ebonwoodbroomstick","flying carpet":"flyingcarpet","mule":"mule","old nag":"oldnag","demure gelding":"gelding","fine bay":"bayhorse","skeletal charger":"skelcharger","fire charger":"firecharger","fly":"fly","chariot of fire":"firechariot","pegasus":"pegasusmount","gryffon":"gryffonmount"};
+    
+})(window.jQuery);
+     
+ 
+// Generated Data
+(function($) {
+    'use strict';
+
+    AE.data.ResourceData.stamina = {};
+    AE.data.ResourceData.hp = {};
+
+})(window.jQuery);
+ 
+ 
 // Item utils
 (function($) {
     'use strict';
@@ -685,19 +393,27 @@ let AE = (function($){
     const ItemCountRegex = /(.*?)\s?\(([0-9]+)\)/;
     const ItemLevelRegex = /\[[0-9]+\](.*)/;
 
+    const ItemSpecialCharacters = ['🔻', '👍'];
+
     class AEItemUtils {
         constructor() {
             this.invalidItemNames = {};
         }
 
         determineItemProperties(name) {
+            // Get rid of special characters first
+            for(let i = 0; i < ItemSpecialCharacters.length; i++){
+                name = name.replace(ItemSpecialCharacters[i], '').trim();
+            }
+
             let prop = {
                 fullName: name.trim(),
                 name: name.trim(),
                 count: 1,
                 type: AE.data.ItemType.Unknown,
                 subType: undefined,
-                isKnown: false
+                isKnown: false,
+                enchantNotations: []
             };
 
             let levelMatch = ItemLevelRegex.exec(prop.name);
@@ -713,8 +429,9 @@ let AE = (function($){
             }
 
             // Handle potions
-            for(let key in AE.data.Potions) {
-                if (prop.name === AE.data.Potions[key]) {
+            for(let key in AE.data.PotionData) {
+                let potionData = AE.data.PotionData[key];
+                if (prop.name === potionData.name) {
                     prop.type = AE.data.ItemType.Consumable;
                     prop.subType = AE.data.ConsumableSubType.Potion;
                     prop.isKnown = true;
@@ -722,18 +439,21 @@ let AE = (function($){
                 }
             }
 
-            // Check enchantment state and normalize item name
-            if (prop.name.startsWith('Enchanted') || prop.name.startsWith('enchanted')) {
-                prop.name = prop.name.replace(/enchanted/gi, "").trim();
-                prop.fullName = prop.fullName.replace(/enchanted/gi, "").trim();
-                prop.isEnchanted = true;
-            }
-
-            for(let i = 0; i < AE.data.EnchantItemNotations.length; i++){
-                let notation = AE.data.EnchantItemNotations[i];
-                if(prop.name.includes(notation)){
-                    prop.name = prop.name.replace(notation, "").trim();
+            if(prop.isKnown === false) {
+                // Check enchantment state and normalize item name
+                if (prop.name.startsWith('Enchanted') || prop.name.startsWith('enchanted')) {
+                    prop.name = prop.name.replace(/enchanted/gi, "").trim();
+                    prop.fullName = prop.fullName.replace(/enchanted/gi, "").trim();
                     prop.isEnchanted = true;
+                }
+
+                for (let i = 0; i < AE.data.EnchantItemNotations.length; i++) {
+                    let notation = AE.data.EnchantItemNotations[i];
+                    if (prop.name.includes(notation)) {
+                        prop.name = prop.name.replace(notation, "").trim();
+                        prop.isEnchanted = true;
+                        prop.enchantNotations.push(notation);
+                    }
                 }
             }
 
@@ -752,12 +472,12 @@ let AE = (function($){
 
             // Check the material
             if (prop.isKnown === false) {
-                for(let key in AE.data.ItemMaterials) {
-                    let materialString = AE.data.ItemMaterials[key].name+" ";
+                for(let key in AE.data.MaterialData) {
+                    let materialString = key+" ";
                     if(prop.name.startsWith(materialString)) {
                         prop.name = prop.name.replace(materialString, "").trim();
                         prop.material = key;
-                        prop.level = AE.data.ItemMaterials[key].lvl;
+                        prop.level = AE.data.MaterialData[key].level;
                         break;
                     }
                 }
@@ -811,7 +531,95 @@ let AE = (function($){
                 }
             }
 
+            if(prop.isKnown === true) {
+                prop.itemSlot = this.determineItemSlot(prop.type, prop.subType);
+            }
+
             return prop;
+        }
+
+        determineItemSlot(type, subType) {
+            switch (type) {
+                case AE.data.ItemType.Armor: {
+                    switch (subType) {
+                        case AE.data.ArmorSubType.Back: {
+                            return [AE.data.ItemSlot.Back];
+                        }
+
+                        case AE.data.ArmorSubType.Chest: {
+                            return [AE.data.ItemSlot.Chest];
+                        }
+
+                        case AE.data.ArmorSubType.Feet: {
+                            return [AE.data.ItemSlot.Feet];
+                        }
+
+                        case AE.data.ArmorSubType.Hands: {
+                            return [AE.data.ItemSlot.Hands];
+                        }
+
+                        case AE.data.ArmorSubType.Head: {
+                            return [AE.data.ItemSlot.Head];
+                        }
+
+                        case AE.data.ArmorSubType.Shins: {
+                            return [AE.data.ItemSlot.Shins];
+                        }
+
+                        case AE.data.ArmorSubType.Waist: {
+                            return [AE.data.ItemSlot.Waist];
+                        }
+
+                        default: {
+                            return undefined;
+                        }
+                    }
+                }
+
+                case AE.data.ItemType.Accessory: {
+                    switch (subType) {
+                        case AE.data.AccessorySubType.Neck: {
+                            return [AE.data.ItemSlot.Neck];
+                        }
+
+                        case AE.data.AccessorySubType.Ring: {
+                            return [AE.data.ItemSlot.Finger];
+                        }
+
+                        default: {
+                            return undefined;
+                        }
+                    }
+                }
+
+                case AE.data.ItemType.Weapon: {
+                    switch (subType) {
+                        case AE.data.WeaponSubType.Axe2H:
+                        case AE.data.WeaponSubType.Mace2H:
+                        case AE.data.WeaponSubType.Spear:
+                        case AE.data.WeaponSubType.Staff:
+                        case AE.data.WeaponSubType.Sword2H: {
+                            return [AE.data.ItemSlot.WeaponRight];
+                        }
+
+                        case AE.data.WeaponSubType.Axe1H:
+                        case AE.data.WeaponSubType.Orb:
+                        case AE.data.WeaponSubType.Mace1H:
+                        case AE.data.WeaponSubType.Sword1H:
+                        case AE.data.WeaponSubType.Dagger: {
+                            return [AE.data.ItemSlot.WeaponLeft, AE.data.ItemSlot.WeaponRight];
+                        }
+
+                        default: {
+                            return undefined;
+                        }
+                    }
+                }
+
+                default: {
+                    return undefined;
+                }
+            }
         }
 
         determineEnchantProperties(enchants) {
@@ -869,13 +677,61 @@ let AE = (function($){
             }
         }
 
+        modifyItemElement(properties, targetEl, conf) {
+            if(properties.isSpecialItem === true) {
+                $(targetEl).css('color', '#FF8000').css('font-weight', 'bold');
+            }
+            else if(properties.type === AE.data.ItemType.Consumable) {
+                $(targetEl).css('color', '#3955cb');
+            }
+            else if(properties.isEnchanted === true) {
+                $(targetEl).css('color', '#b60083').css('font-style', 'italic');
+            }
+
+            if(properties.level !== undefined) {
+                let fullText = properties.fullName;
+                if(conf.showLevelInName !== false) {
+                    fullText = "[" + properties.level + "] " + fullText;
+                }
+
+                if(conf.compareEquip === true && properties.itemSlot !== undefined) {
+                    let equippedItems = AE.playerState.getEquippedItemToCompareFor(properties);
+                    if(equippedItems !== undefined) {
+                        let lowestItem = undefined;
+                        for(let i = 0; i < equippedItems.length; i++) {
+                            let item = equippedItems[i];
+                            if(item.level === undefined) {
+                                continue;
+                            }
+
+                            if(lowestItem === undefined || lowestItem.level > item.level) {
+                                lowestItem = item;
+                            }
+                        }
+
+                        if(lowestItem !== undefined) {
+                            if(lowestItem.level > properties.level) {
+                                fullText = fullText + " 🔻";
+                            } else if (lowestItem.level < properties.level) {
+                                fullText = fullText + " 👍";
+                            }
+                        }
+                    } else {
+                        fullText = fullText + " 👍";
+                    }
+                }
+
+                $(targetEl).text(fullText);
+            }
+        }
+
         processItemEntry(sourceEl, name, targetEl, conf){
             if(conf === undefined){
                 conf = {};
             }
 
             if(this.invalidItemNames[name] === true){
-                return;
+                return undefined;
             }
 
             let properties = this.determineItemProperties(name);
@@ -883,24 +739,17 @@ let AE = (function($){
                 console.warn("Unknown Item:");
                 console.warn(properties);
                 this.invalidItemNames[name] = true;
-                return;
+                return undefined;
             }
 
             if(conf.hideConsumables === true && properties.type === AE.data.ItemType.Consumable) {
                 sourceEl.hide();
-                return;
+                return properties;
             }
 
-            if(properties.isSpecialItem === true) {
-                $(targetEl).css('color', 'blue').css('font-style', 'italic');
-            }
-            else if(properties.isEnchanted === true) {
-                $(targetEl).css('color', 'purple').css('font-style', 'italic');
-            }
+            this.modifyItemElement(properties, targetEl, conf);
 
-            if(properties.level !== undefined) {
-                $(targetEl).text("[" + properties.level + "] " + properties.fullName);
-            }
+            return properties;
         }
     }
 
@@ -912,9 +761,22 @@ let AE = (function($){
 (function($) {
     'use strict';
 
+    const ItemPopupCompareDiv = `
+<div id="at_item_popup_compare_div">
+    <div class="note-text"><hr>equipped</div>    
+</div>
+`;
+
+    const ItemPopupCompareDivContent = `<span id="at_item_popup_compare_text" class="separate"></span>`;
+
     class AEPageUtils {
         getVitalValues(id) {
-            let rawValues = $('.bars').find('tr[data-key="' + id + '"').find('.bar-text').text().split('/');
+            let bar = $('.bars').find('tr[data-key="' + id + '"');
+            if(bar.length === 0) {
+                return undefined;
+            }
+
+            let rawValues = bar.find('.bar-text').text().split('/');
             return this.getValues(rawValues);
         }
 
@@ -959,13 +821,7 @@ let AE = (function($){
             let unknownResources = [];
             $('div.res-list').find('div.rsrc').each(function() {
                 let resourceKey = $(this).data('key');
-                let isKnown = false;
-                for(let id in AE.data.PlayerResources) {
-                    if(resourceKey === AE.data.PlayerResources[id]){
-                        isKnown = true;
-                        break;
-                    }
-                }
+                let isKnown = AE.data.ResourceData[resourceKey] !== undefined;
                 if(isKnown === false) {
                     unknownResources.push(resourceKey);
                 }
@@ -978,13 +834,7 @@ let AE = (function($){
             let unknownVitals = [];
             $('table.bars').find('tr').each(function() {
                 let vitalKey = $(this).data('key');
-                let isKnown = false;
-                for(let id in AE.data.PlayerVitals) {
-                    if(vitalKey === AE.data.PlayerVitals[id]){
-                        isKnown = true;
-                        break;
-                    }
-                }
+                let isKnown = AE.data.ResourceData[vitalKey] !== undefined;
                 if(isKnown === false) {
                     unknownVitals.push(vitalKey);
                 }
@@ -1007,14 +857,64 @@ let AE = (function($){
             });
         }
 
-        refreshInventorySubContent(conf){
+        sellInventoryJunk() {
+            let inventoryDiv = $('div.inventory');
+            if(inventoryDiv.length === 0) {
+                return;
+            }
+
+            let itemTable = inventoryDiv.find('div.item-table');
+            if(itemTable.length === 0){
+                return;
+            }
+
+            itemTable.find('.separate').each(function() {
+                let nameEl = $(this).children()[0];
+                let buttons = $(this).find('button');
+                let sellButton = undefined;
+                for(let i = 0; i < buttons.length; i++){
+                    if(buttons[i].innerText === "Sell"){
+                        sellButton = buttons[i];
+                        break;
+                    }
+                }
+
+                if(sellButton !== undefined && nameEl.innerText.includes("🔻")) {
+                    sellButton.click();
+                }
+            });
+        }
+
+        updateInventorySubContent(conf){
             if(conf === undefined) {
                 conf = {};
             }
 
-            let itemTable = $('div.inventory').find('div.item-table');
+            let inventoryDiv = $('div.inventory');
+            if(inventoryDiv.length === 0) {
+                return;
+            }
+
+            let itemTable = inventoryDiv.find('div.item-table');
             if(itemTable.length === 0){
                 return;
+            }
+
+            if(conf.addSellJunkButton === true) {
+                let sellJunkButton = inventoryDiv.find('#at_inv_sell_junk_btn');
+                if(sellJunkButton.length === 0){
+                    let topSpan = inventoryDiv.find('span.top');
+                    let sellAllButton = topSpan.find('button');
+                    if(sellAllButton.length !== 0){
+                        let sellJunkButtonSpan = $('<span id="at_inv_sell_junk_btn"></span>');
+                        sellJunkButton = $('<button>Sell Low Level Items</button>');
+                        sellJunkButton[0].addEventListener("click", event => {
+                            AE.pageUtils.sellInventoryJunk();
+                        }, false);
+                        sellJunkButtonSpan.append(sellJunkButton);
+                        topSpan.append(sellJunkButtonSpan);
+                    }
+                }
             }
 
             this.fixTableLayout(itemTable);
@@ -1035,6 +935,47 @@ let AE = (function($){
                 AE.itemUtils.processItemEntry($(this), itemName, nameEl, conf);
             });
         }
+
+        updateItemPopup() {
+            let popup = $('div.item-popup');
+            if(popup.length === 0) {
+                return;
+            }
+
+            let itemInfo = popup.find('div.item-info');
+            if(itemInfo.length === 0) {
+                return;
+            }
+
+            let itemNameSpan = itemInfo.find('span.item-name');
+            let itemName = itemNameSpan.text();
+            let properties = AE.itemUtils.determineItemProperties(itemName);
+            if(properties === undefined){
+                return;
+            }
+
+            AE.itemUtils.modifyItemElement(properties, itemNameSpan, {showLevelInName: false, compareEquip: true});
+
+            let compareDiv = popup.find('#at_item_popup_compare_div');
+            let equippedItems = AE.playerState.getEquippedItemToCompareFor(properties);
+            if(compareDiv.length === 0) {
+                compareDiv = $(ItemPopupCompareDiv);
+
+                if(equippedItems !== undefined) {
+                    for (let i = 0; i < equippedItems.length; i++) {
+                        let content = $(ItemPopupCompareDivContent);
+                        AE.itemUtils.modifyItemElement(equippedItems[i], content, {});
+                        compareDiv.append(content);
+                    }
+                } else {
+                    let content = $(ItemPopupCompareDiv);
+                    content.text("None");
+                    compareDiv.append(content);
+                }
+
+                itemInfo.append(compareDiv);
+            }
+        }
     }
 
     AE.pageUtils = new AEPageUtils();
@@ -1049,29 +990,68 @@ let AE = (function($){
         constructor() {
             this.activeTab = undefined;
             this.resources = {};
-            this.vitals = {};
+            this.equippedItems = {};
         }
 
         initialize(){
-            for(let vital in AE.data.PlayerVitals) {
-                this.vitals[vital] = {current: 0, max: 0};
-            }
-
-            for(let resource in AE.data.PlayerResources){
-                this.resources[resource] = {current: 0, max: 0};
+            for(let key in AE.data.ResourceData){
+                this.resources[key] = {current: 0, max: 0};
             }
         }
 
         update(delta) {
-            for(let vital in AE.data.PlayerVitals) {
-                this.vitals[vital] = AE.pageUtils.getVitalValues(AE.data.PlayerVitals[vital]);
-            }
-
-            for(let resource in AE.data.PlayerResources) {
-                this.resources[resource] = AE.pageUtils.getResourceValues(AE.data.PlayerResources[resource]);
+            for(let key in AE.data.ResourceData) {
+                let vitalValue = AE.pageUtils.getVitalValues(key);
+                if(vitalValue !== undefined) {
+                    this.resources[key] = vitalValue;
+                } else {
+                    this.resources[key] = AE.pageUtils.getResourceValues(key);
+                }
             }
 
             this.updateActiveTab();
+        }
+
+        clearEquippedItems() {
+            this.equippedItems = {};
+        }
+
+        registerEquippedItem(slot, itemProperties) {
+            if(this.equippedItems[slot] === undefined) {
+                this.equippedItems[slot] = [];
+            }
+
+            this.equippedItems[slot].push(itemProperties);
+        }
+
+        getEquippedItems(slots) {
+            let results = [];
+            for(let i = 0; i < slots.length; i++) {
+                let items = this.equippedItems[slots[i]];
+                if(items === undefined){
+                    continue;
+                }
+
+                for(let k = 0; k < items.length; k++) {
+                    results.push(items[k]);
+                }
+            }
+
+            return results;
+        }
+
+        getEquippedItemToCompareFor(otherItem) {
+            if(otherItem.itemSlot === undefined){
+                return undefined;
+            }
+
+            let equippedItems = this.getEquippedItems(otherItem.itemSlot);
+            if(equippedItems === undefined || equippedItems.length === 0) {
+                return undefined;
+            }
+
+            // TODO: for now we compare against the first, this will not be good for dual wielding
+            return equippedItems;
         }
 
         updateActiveTab(){
@@ -1121,6 +1101,7 @@ let AE = (function($){
                 quickSlotPresets: {},
                 quickSlotPresetNames: {},
                 mainScreenAlternateDisplay: false,
+                enchantScreenGroupedDisplay: false,
                 gameVersion: undefined
             };
         }
@@ -2235,23 +2216,8 @@ let AE = (function($){
                     break;
                 }
 
-                case AE.data.GameTabs.Adventure: {
-                    this.updateAdventureTab();
-                    break;
-                }
-
-                case AE.data.GameTabs.Equip: {
-                    this.updateEquipTab();
-                    break;
-                }
-
                 case AE.data.GameTabs.Bestiary: {
                     this.updateBestiaryTab();
-                    break;
-                }
-
-                case AE.data.GameTabs.Enchanting: {
-                    this.updateEnchantingTab();
                     break;
                 }
 
@@ -2278,13 +2244,20 @@ let AE = (function($){
                     return;
                 }
 
-                let buttonText = $(button).text();
+                let buttonText = $(button).text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
-                let homeKey = buttonText.toLocaleLowerCase();
-                if(AE.data.HomeData[homeKey] === undefined) {
+                let homeKey = undefined;
+                for(let name in AE.data.HomeNameLookup) {
+                    if(buttonText.includes(name)) {
+                        homeKey = AE.data.HomeNameLookup[name];
+                        break;
+                    }
+                }
+
+                if(homeKey === undefined) {
                     return;
                 }
 
@@ -2308,48 +2281,24 @@ let AE = (function($){
                     return;
                 }
 
-                let buttonText = $(button).text();
+                let buttonText = $(button).text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
-                let mountKey = buttonText.toLocaleLowerCase();
-                if(AE.data.MountData[mountKey] === undefined) {
+                let mountKey = undefined;
+                for(let name in AE.data.MountNameLookup) {
+                    if(buttonText.includes(name)) {
+                        mountKey = AE.data.MountNameLookup[name];
+                        break;
+                    }
+                }
+
+                if(mountKey === undefined) {
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].dist + ')')
-            });
-        }
-
-        updateAdventureTab() {
-            let root = $('div.adventure');
-            if(root.length === 0){
-                return;
-            }
-
-            let raid = root.find('div.raid-bottom');
-            if(raid.length === 0){
-                return;
-            }
-
-            AE.pageUtils.refreshInventorySubContent({removeEquip: true});
-            this.updateDotsLists();
-        }
-
-        updateDotsLists() {
-            let view = $('div.dot-view');
-            if(view.length === 0){
-                return;
-            }
-
-            //view.css('flex-grow', '1');
-
-            view.find('div.mini').each(function() {
-                $(this).css('width', '26px').css('height', '26');
-                if($(this).hasClass('curse')) {
-                    $(this).css('background-color', 'violet');
-                }
+                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
             });
         }
 
@@ -2364,29 +2313,6 @@ let AE = (function($){
             bestiaryTable.find('tr').each(function(){
                 $(this).find('th.sm-name').css("text-decoration", "none").css("cursor", "default");
             })
-        }
-
-        updateEquipTab() {
-            AE.pageUtils.refreshInventorySubContent();
-
-            let equipRoot = $('div.equip');
-            equipRoot.css("grid-template-columns", "repeat( auto-fill, minmax(18rem,1fr))");
-
-            // Process equipped items
-            $('div.equip').find('div.equip-slot').find('.slot-item').each(function() {
-                let slot = $(this);
-                let nameSpan = slot.find('span.item-name');
-                if(nameSpan.length === 0) {
-                    return;
-                }
-
-                let name = nameSpan.text();
-                AE.itemUtils.processItemEntry($(this), name, nameSpan);
-            });
-        }
-
-        updateEnchantingTab() {
-            AE.pageUtils.refreshInventorySubContent({hideConsumables: true});
         }
 
         updatePotionsTab(){
@@ -2528,21 +2454,6 @@ let AE = (function($){
                     }
                 }
             }
-        }
-
-        createOptionsToggle(id, title, callback){
-            let toggle = $('<span class="opt"></span>');
-            let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
-            if(AE.settings.data.mainScreenAlternateDisplay === true) {
-                toggleInput.prop('checked', true);
-            }
-
-            toggle.append(toggleInput);
-            toggleInput[0].addEventListener("change", event => {
-                callback(event.target.checked);
-            }, false);
-
-            return toggleInput;
         }
 
         onToggleMainBarTaskDisplay(checked) {
@@ -2707,7 +2618,7 @@ let AE = (function($){
 
             let bar = $('<div id="at_main_top_bar" class="top separate"></div>');
             let options = $('<span></span>');
-            let optionToggleView = this.createOptionsToggle("at_main_task_toggle_view", "Alternative Display", this.onToggleMainBarTaskDisplay.bind(this));
+            let optionToggleView = AE.utils.createOptionsToggle("at_main_task_toggle_view", "Alternative Display", this.onToggleMainBarTaskDisplay.bind(this), AE.settings.data.mainScreenAlternateDisplay);
             options.append(optionToggleView);
             bar.append(options);
             let buttons = $('<div></div>');
@@ -2818,6 +2729,368 @@ let AE = (function($){
 (function($) {
     'use strict';
 
+    const SlotLevelRegex = /\s*([0-9]+)\s*\/\s*([0-9]+)\s*slot-levels/i;
+
+    class AETabStyleEnchant {
+        constructor() {
+            this.resetState();
+        }
+
+        resetState() {
+            this.slotsRemaining = 0;
+            this.slotsUsed = 0;
+            this.slotsMax = 0;
+            this.enchantElements = {};
+        }
+
+        updateUI() {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Enchanting) {
+                this.resetState();
+                return;
+            }
+
+            let enchantDiv = $('div.enchants');
+            if(enchantDiv.length === 0) {
+                this.resetState();
+                return;
+            }
+
+            AE.pageUtils.updateInventorySubContent({hideConsumables: true, compareEquip: true});
+            AE.pageUtils.updateItemPopup();
+
+            this.updateEnchantList();
+            this.updateEnchantTabCustomBar();
+            this.updateGroupedList();
+            this.updateEnchantState();
+        }
+
+        onToggleEnchantBarTaskDisplay(checked) {
+            if(AE.settings.data.enchantScreenGroupedDisplay !== checked) {
+                // Update the settings
+                AE.settings.data.enchantScreenGroupedDisplay = checked;
+                AE.settings.save();
+            }
+
+            this.rebuildEnchantsDisplay();
+        }
+
+        updateEnchantTabCustomBar() {
+            let existing = $('#at_enchant_top_bar');
+            if(existing.length !== 0) {
+                return;
+            }
+
+            let root = $('div.enchants');
+            if(root.length === 0) {
+                return;
+            }
+
+            let bar = $('<div id="at_enchant_top_bar" class="top separate"></div>');
+            let options = $('<span></span>');
+            let optionToggleView = AE.utils.createOptionsToggle("at_enchants_toggle_view", "Grouped Display", this.onToggleEnchantBarTaskDisplay.bind(this), AE.settings.data.enchantScreenGroupedDisplay);
+            options.append(optionToggleView);
+            bar.append(options);
+
+            $(root[0]).prepend(bar);
+        }
+
+        updateEnchantState() {
+            let enchantDiv = $('div.enchants');
+            let activeSlots = enchantDiv.find('div.enchant-slots');
+            if(activeSlots.length === 0) {
+                return;
+            }
+
+            let slotInfo = SlotLevelRegex.exec(activeSlots.children()[0].innerText);
+            if(slotInfo === null) {
+                return;
+            }
+
+            this.slotsUsed = parseInt(slotInfo[1]);
+            this.slotsMax = parseInt(slotInfo[2]);
+            this.slotsRemaining = this.slotsMax - this.slotsUsed;
+
+            // Update the enchant divs with colors based on slot count
+            for(let enchantKey in AE.data.EnchantData) {
+                let enchantData = AE.data.EnchantData[enchantKey];
+                let div = $('#at_ench_div_' + enchantKey);
+                if(div.length === 0) {
+                    continue;
+                }
+
+                let nameSpan = div.find('span.ench-name');
+                if(this.slotsRemaining < enchantData.level) {
+                    nameSpan.css('color', 'red');
+                } else {
+                    nameSpan.css('color', '');
+                }
+            }
+        }
+
+        refreshEnchantListElements(root) {
+            root.find('div.enchant').each(function () {
+                let el = $(this);
+                if(el.attr('id') !== undefined) {
+                    return;
+                }
+
+                let textSpan = el.find('span.ench-name');
+                let name = textSpan.text().toLowerCase();
+                let enchantKey = AE.data.EnchantNameLookup[name];
+                if(enchantKey === undefined) {
+                    return;
+                }
+
+                let enchantData = AE.data.EnchantData[enchantKey];
+                el.attr("id", 'at_ench_div_' + enchantKey);
+                textSpan.text('[' + enchantData.level + '] ' + name);
+
+                // Always Override the old element with this one, we keep the last one we see
+                AE.tabStyleEnchant.enchantElements[enchantKey] = [this, name];
+            });
+        }
+
+        updateGroupedList() {
+            let vanillaList = $('#at_enchant_list_vanilla');
+            if(vanillaList.length === 0){
+                return;
+            }
+
+            let groupedList = $('#at_enchant_list_grouped');
+            if(groupedList.length !== 0) {
+                return;
+            }
+
+            let grouped = $('<div id="at_enchant_list_grouped" style="min-width: 250px"/>');
+            vanillaList.after(grouped);
+
+            this.rebuildEnchantsDisplay();
+        }
+
+        updateEnchantList() {
+            let existing = $('#at_enchant_list_vanilla');
+            if(existing.length !== 0) {
+                if(existing.is(":visible")) {
+                    this.refreshEnchantListElements(existing);
+                }
+                return;
+            }
+
+            let root = $('div.enchants');
+            let enchantListRoot = root.find('div.enchant-list');
+            if (enchantListRoot.length !== 0) {
+                enchantListRoot.css('min-width', '250px');
+                enchantListRoot.attr('id', 'at_enchant_list_vanilla');
+                this.refreshEnchantListElements(enchantListRoot);
+            }
+
+            let filterRoot = root.find('div.filter-box');
+            if(filterRoot.length !== 0) {
+                filterRoot.attr('id', 'at_enchant_filter_vanilla');
+            }
+        }
+
+        rebuildEnchantsDisplay() {
+            let vanillaRoot = $('#at_enchant_list_vanilla');
+            let groupedRoot = $('#at_enchant_list_grouped');
+            let filterRoot = $('#at_enchant_filter_vanilla');
+
+            if(AE.settings.data.enchantScreenGroupedDisplay === true) {
+                vanillaRoot.hide();
+                filterRoot.hide();
+                groupedRoot.show();
+
+                this.moveEnchantsToGroupedDisplay();
+
+            } else {
+
+                this.moveEnchantsToVanillaDisplay();
+
+                groupedRoot.hide();
+                vanillaRoot.show();
+                filterRoot.show();
+            }
+        }
+
+        moveEnchantsToGroupedDisplay() {
+            let enchantListGrouped = $('#at_enchant_list_grouped');
+            if(enchantListGrouped.length === 0) {
+                return;
+            }
+
+            enchantListGrouped.empty();
+            let groupedElements = {};
+            for(let enchantKey in this.enchantElements){
+                let element = this.enchantElements[enchantKey][0];
+                let name = this.enchantElements[enchantKey][1];
+                let group = 'any';
+                if(enchantKey !== undefined && AE.data.EnchantData[enchantKey].target !== undefined){
+                    group = AE.data.EnchantData[enchantKey].target;
+                }
+
+                if(groupedElements[group] === undefined) {
+                    groupedElements[group] = [];
+                }
+
+                groupedElements[group][name] = element;
+            }
+
+            let sortedGroupNames = Object.keys(groupedElements);
+            sortedGroupNames.sort();
+
+            for(let i = 0; i < sortedGroupNames.length; i++) {
+                let groupName = sortedGroupNames[i];
+                let group = $('<div id="at_enchant_list_group_' + groupName + '" class="enchant-list" style="margin-bottom: 5px;"/>');
+                group.append('<span style="font-weight: bold">' + groupName + '</span>');
+
+                let sortedEnchantNames = Object.keys(groupedElements[groupName]);
+                sortedEnchantNames.sort();
+
+                for(let i = 0; i < sortedEnchantNames.length; i++){
+                    let el = $(groupedElements[groupName][sortedEnchantNames[i]]);
+                    el.detach();
+                    group.append(el);
+                }
+
+                enchantListGrouped.append(group);
+            }
+        }
+
+        moveEnchantsToVanillaDisplay() {
+            let vanillaRoot = $('#at_enchant_list_vanilla');
+
+            for(let enchantKey in this.enchantElements) {
+                let element = $(this.enchantElements[enchantKey][0]);
+                element.detach();
+                vanillaRoot.append(element);
+            }
+        }
+    }
+
+    AE.tabStyleEnchant = new AETabStyleEnchant();
+
+})(window.jQuery); 
+ 
+// Debug
+(function($) {
+    'use strict';
+
+    class AETabStyleEquip {
+        constructor() {
+            this.resetState();
+        }
+
+        resetState() {
+        }
+
+        updateUI() {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Equip) {
+                this.resetState();
+                return;
+            }
+
+            AE.pageUtils.updateInventorySubContent({compareEquip: true});
+            AE.pageUtils.updateItemPopup();
+
+            let equipRoot = $('div.equip');
+            equipRoot.css("grid-template-columns", "repeat( auto-fill, minmax(18rem,1fr))");
+
+            // Process equipped items
+            AE.playerState.clearEquippedItems();
+
+            $('div.equip').find('div.equip-slot').each(function() {
+                let slotName = $(this).find('.slot-name').text().replace(':', '').trim().toLowerCase();
+                $(this).find('.slot-item').each(function() {
+                    let slot = $(this);
+                    let nameSpan = slot.find('span.item-name');
+                    if(nameSpan.length === 0) {
+                        return;
+                    }
+
+                    let name = nameSpan.text();
+                    let properties = AE.itemUtils.processItemEntry($(this), name, nameSpan);
+
+                    if(properties !== undefined && properties.itemSlot !== undefined) {
+                        let itemSlot = properties.itemSlot[0];
+                        if(properties.itemSlot.length > 1) {
+                            for(let i = 0; i < properties.itemSlot.length; i++){
+                                if(properties.itemSlot[i] === slotName) {
+                                    itemSlot = properties.itemSlot[i];
+                                    break;
+                                }
+                            }
+                        }
+
+                        AE.playerState.registerEquippedItem(itemSlot, properties);
+                    }
+                });
+            });
+        }
+    }
+
+    AE.tabStyleEquip = new AETabStyleEquip();
+
+})(window.jQuery); 
+ 
+// Debug
+(function($) {
+    'use strict';
+
+    class AETabStyleAdventure {
+        constructor() {
+            this.resetState();
+        }
+
+        resetState() {
+        }
+
+        updateUI() {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Adventure) {
+                this.resetState();
+                return;
+            }
+
+            let root = $('div.adventure');
+            if(root.length === 0){
+                return;
+            }
+
+            let raid = root.find('div.raid-bottom');
+            if(raid.length === 0){
+                return;
+            }
+
+            AE.pageUtils.updateInventorySubContent({removeEquip: true, compareEquip: true, addSellJunkButton: true});
+            AE.pageUtils.updateItemPopup();
+
+            this.updateDotsLists();
+        }
+
+        updateDotsLists() {
+            let view = $('div.dot-view');
+            if(view.length === 0){
+                return;
+            }
+
+            //view.css('flex-grow', '1');
+
+            view.find('div.mini').each(function() {
+                $(this).css('width', '26px').css('height', '26');
+                if($(this).hasClass('curse')) {
+                    $(this).css('background-color', 'violet');
+                }
+            });
+        }
+    }
+
+    AE.tabStyleAdventure = new AETabStyleAdventure();
+
+})(window.jQuery); 
+ 
+// Debug
+(function($) {
+    'use strict';
+
     class AEDebug {
         constructor() {
         }
@@ -2870,6 +3143,11 @@ let AE = (function($){
 
             AE.interval.add(AE.tabStyleMain.updateUI.bind(AE.tabStyleMain), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 250);
+
+            AE.interval.add(AE.tabStyleEnchant.updateUI.bind(AE.tabStyleEnchant), AE.config.uiUpdateInterval);
+
+            AE.interval.add(AE.tabStyleEquip.updateUI.bind(AE.tabStyleEquip), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleAdventure.updateUI.bind(AE.tabStyleAdventure), AE.config.uiUpdateInterval);
 
             if(AE.config.arcanumAutomationPresent !== true) {
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);

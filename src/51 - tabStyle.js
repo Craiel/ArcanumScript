@@ -20,23 +20,8 @@
                     break;
                 }
 
-                case AE.data.GameTabs.Adventure: {
-                    this.updateAdventureTab();
-                    break;
-                }
-
-                case AE.data.GameTabs.Equip: {
-                    this.updateEquipTab();
-                    break;
-                }
-
                 case AE.data.GameTabs.Bestiary: {
                     this.updateBestiaryTab();
-                    break;
-                }
-
-                case AE.data.GameTabs.Enchanting: {
-                    this.updateEnchantingTab();
                     break;
                 }
 
@@ -63,13 +48,20 @@
                     return;
                 }
 
-                let buttonText = $(button).text();
+                let buttonText = $(button).text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
-                let homeKey = buttonText.toLocaleLowerCase();
-                if(AE.data.HomeData[homeKey] === undefined) {
+                let homeKey = undefined;
+                for(let name in AE.data.HomeNameLookup) {
+                    if(buttonText.includes(name)) {
+                        homeKey = AE.data.HomeNameLookup[name];
+                        break;
+                    }
+                }
+
+                if(homeKey === undefined) {
                     return;
                 }
 
@@ -93,48 +85,24 @@
                     return;
                 }
 
-                let buttonText = $(button).text();
+                let buttonText = $(button).text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
-                let mountKey = buttonText.toLocaleLowerCase();
-                if(AE.data.MountData[mountKey] === undefined) {
+                let mountKey = undefined;
+                for(let name in AE.data.MountNameLookup) {
+                    if(buttonText.includes(name)) {
+                        mountKey = AE.data.MountNameLookup[name];
+                        break;
+                    }
+                }
+
+                if(mountKey === undefined) {
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].dist + ')')
-            });
-        }
-
-        updateAdventureTab() {
-            let root = $('div.adventure');
-            if(root.length === 0){
-                return;
-            }
-
-            let raid = root.find('div.raid-bottom');
-            if(raid.length === 0){
-                return;
-            }
-
-            AE.pageUtils.refreshInventorySubContent({removeEquip: true});
-            this.updateDotsLists();
-        }
-
-        updateDotsLists() {
-            let view = $('div.dot-view');
-            if(view.length === 0){
-                return;
-            }
-
-            //view.css('flex-grow', '1');
-
-            view.find('div.mini').each(function() {
-                $(this).css('width', '26px').css('height', '26');
-                if($(this).hasClass('curse')) {
-                    $(this).css('background-color', 'violet');
-                }
+                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
             });
         }
 
@@ -149,29 +117,6 @@
             bestiaryTable.find('tr').each(function(){
                 $(this).find('th.sm-name').css("text-decoration", "none").css("cursor", "default");
             })
-        }
-
-        updateEquipTab() {
-            AE.pageUtils.refreshInventorySubContent();
-
-            let equipRoot = $('div.equip');
-            equipRoot.css("grid-template-columns", "repeat( auto-fill, minmax(18rem,1fr))");
-
-            // Process equipped items
-            $('div.equip').find('div.equip-slot').find('.slot-item').each(function() {
-                let slot = $(this);
-                let nameSpan = slot.find('span.item-name');
-                if(nameSpan.length === 0) {
-                    return;
-                }
-
-                let name = nameSpan.text();
-                AE.itemUtils.processItemEntry($(this), name, nameSpan);
-            });
-        }
-
-        updateEnchantingTab() {
-            AE.pageUtils.refreshInventorySubContent({hideConsumables: true});
         }
 
         updatePotionsTab(){

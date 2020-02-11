@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1725.2
+// @version      1731
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js

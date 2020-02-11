@@ -27,6 +27,21 @@
 
             return true;
         }
+
+        createOptionsToggle(id, title, callback, defaultValue){
+            let toggle = $('<span class="opt"></span>');
+            let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
+            if(defaultValue === true) {
+                toggleInput.prop('checked', true);
+            }
+
+            toggle.append(toggleInput);
+            toggleInput[0].addEventListener("change", event => {
+                callback(event.target.checked);
+            }, false);
+
+            return toggleInput;
+        }
     }
 
     AE.utils = new AEUtils();

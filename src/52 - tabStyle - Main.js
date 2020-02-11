@@ -114,21 +114,6 @@
             }
         }
 
-        createOptionsToggle(id, title, callback){
-            let toggle = $('<span class="opt"></span>');
-            let toggleInput = $('<input id="' + id + '" type="checkbox"><label for="' + id + '">' + title + '</label></input>');
-            if(AE.settings.data.mainScreenAlternateDisplay === true) {
-                toggleInput.prop('checked', true);
-            }
-
-            toggle.append(toggleInput);
-            toggleInput[0].addEventListener("change", event => {
-                callback(event.target.checked);
-            }, false);
-
-            return toggleInput;
-        }
-
         onToggleMainBarTaskDisplay(checked) {
             if(AE.settings.data.mainScreenAlternateDisplay !== checked) {
                 // Update the settings
@@ -291,7 +276,7 @@
 
             let bar = $('<div id="at_main_top_bar" class="top separate"></div>');
             let options = $('<span></span>');
-            let optionToggleView = this.createOptionsToggle("at_main_task_toggle_view", "Alternative Display", this.onToggleMainBarTaskDisplay.bind(this));
+            let optionToggleView = AE.utils.createOptionsToggle("at_main_task_toggle_view", "Alternative Display", this.onToggleMainBarTaskDisplay.bind(this), AE.settings.data.mainScreenAlternateDisplay);
             options.append(optionToggleView);
             bar.append(options);
             let buttons = $('<div></div>');

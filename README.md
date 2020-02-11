@@ -62,13 +62,13 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 
 - Potions are no longer shown
 - Enchanted items are colored purple and have italic font
-- All items show their level
-- Special items are colored blue
+- Enchanting list now shows the level of the enchant
+- Enchanting list can be shown grouped by equipment slot with the enchants sorted by name
+- Enchants that exceed the available slot levels are colored red
 - spacing of elements increased to make room for long names
 - 'Enchanted' stripped from the name since coloring makes it clear
 
-    ![](features/enchantingLayout.png)
-    
+    ![](features/enchantingLayout.png)    
     
 #### Bestiary Screen Adjusted
 
@@ -81,9 +81,12 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 
 - Enchanted items are colored purple and have italic font
 - All items show their level
-- Special items are colored blue
+- Special items are colored golden
+- consumables are colored blue
 - spacing of elements increased to make room for long names
 - 'Enchanted' stripped from the name since coloring makes it clear
+- items that have a higher level than currently equipped show a 👍 symbol
+- items that are lower than currently equpped show a 🔻 symbol
 
     ![](features/equipScreenLayout.png)
     
@@ -104,6 +107,7 @@ This is tested on 1920x1080 resolution and using the normal theme, it may not wo
 - All items show their level
 - spacing of elements increased to avoid layout shifting
 - removed equip buttons since they are not so useful here
+- Item tooltips show currently equipped item
 
     ![](features/adventureInventory.png)
      

@@ -2,9 +2,22 @@
 (function($) {
     'use strict';
 
+    const ItemPopupCompareDiv = `
+<div id="at_item_popup_compare_div">
+    <div class="note-text"><hr>equipped</div>    
+</div>
+`;
+
+    const ItemPopupCompareDivContent = `<span id="at_item_popup_compare_text" class="separate"></span>`;
+
     class AEPageUtils {
         getVitalValues(id) {
-            let rawValues = $('.bars').find('tr[data-key="' + id + '"').find('.bar-text').text().split('/');
+            let bar = $('.bars').find('tr[data-key="' + id + '"');
+            if(bar.length === 0) {
+                return undefined;
+            }
+
+            let rawValues = bar.find('.bar-text').text().split('/');
             return this.getValues(rawValues);
         }
 
@@ -49,13 +62,7 @@
             let unknownResources = [];
             $('div.res-list').find('div.rsrc').each(function() {
                 let resourceKey = $(this).data('key');
-                let isKnown = false;
-                for(let id in AE.data.PlayerResources) {
-                    if(resourceKey === AE.data.PlayerResources[id]){
-                        isKnown = true;
-                        break;
-                    }
-                }
+                let isKnown = AE.data.ResourceData[resourceKey] !== undefined;
                 if(isKnown === false) {
                     unknownResources.push(resourceKey);
                 }
@@ -68,13 +75,7 @@
             let unknownVitals = [];
             $('table.bars').find('tr').each(function() {
                 let vitalKey = $(this).data('key');
-                let isKnown = false;
-                for(let id in AE.data.PlayerVitals) {
-                    if(vitalKey === AE.data.PlayerVitals[id]){
-                        isKnown = true;
-                        break;
-                    }
-                }
+                let isKnown = AE.data.ResourceData[vitalKey] !== undefined;
                 if(isKnown === false) {
                     unknownVitals.push(vitalKey);
                 }
@@ -97,14 +98,64 @@
             });
         }
 
-        refreshInventorySubContent(conf){
+        sellInventoryJunk() {
+            let inventoryDiv = $('div.inventory');
+            if(inventoryDiv.length === 0) {
+                return;
+            }
+
+            let itemTable = inventoryDiv.find('div.item-table');
+            if(itemTable.length === 0){
+                return;
+            }
+
+            itemTable.find('.separate').each(function() {
+                let nameEl = $(this).children()[0];
+                let buttons = $(this).find('button');
+                let sellButton = undefined;
+                for(let i = 0; i < buttons.length; i++){
+                    if(buttons[i].innerText === "Sell"){
+                        sellButton = buttons[i];
+                        break;
+                    }
+                }
+
+                if(sellButton !== undefined && nameEl.innerText.includes("🔻")) {
+                    sellButton.click();
+                }
+            });
+        }
+
+        updateInventorySubContent(conf){
             if(conf === undefined) {
                 conf = {};
             }
 
-            let itemTable = $('div.inventory').find('div.item-table');
+            let inventoryDiv = $('div.inventory');
+            if(inventoryDiv.length === 0) {
+                return;
+            }
+
+            let itemTable = inventoryDiv.find('div.item-table');
             if(itemTable.length === 0){
                 return;
+            }
+
+            if(conf.addSellJunkButton === true) {
+                let sellJunkButton = inventoryDiv.find('#at_inv_sell_junk_btn');
+                if(sellJunkButton.length === 0){
+                    let topSpan = inventoryDiv.find('span.top');
+                    let sellAllButton = topSpan.find('button');
+                    if(sellAllButton.length !== 0){
+                        let sellJunkButtonSpan = $('<span id="at_inv_sell_junk_btn"></span>');
+                        sellJunkButton = $('<button>Sell Low Level Items</button>');
+                        sellJunkButton[0].addEventListener("click", event => {
+                            AE.pageUtils.sellInventoryJunk();
+                        }, false);
+                        sellJunkButtonSpan.append(sellJunkButton);
+                        topSpan.append(sellJunkButtonSpan);
+                    }
+                }
             }
 
             this.fixTableLayout(itemTable);
@@ -124,6 +175,47 @@
                 let itemName = nameEl.innerText;
                 AE.itemUtils.processItemEntry($(this), itemName, nameEl, conf);
             });
+        }
+
+        updateItemPopup() {
+            let popup = $('div.item-popup');
+            if(popup.length === 0) {
+                return;
+            }
+
+            let itemInfo = popup.find('div.item-info');
+            if(itemInfo.length === 0) {
+                return;
+            }
+
+            let itemNameSpan = itemInfo.find('span.item-name');
+            let itemName = itemNameSpan.text();
+            let properties = AE.itemUtils.determineItemProperties(itemName);
+            if(properties === undefined){
+                return;
+            }
+
+            AE.itemUtils.modifyItemElement(properties, itemNameSpan, {showLevelInName: false, compareEquip: true});
+
+            let compareDiv = popup.find('#at_item_popup_compare_div');
+            let equippedItems = AE.playerState.getEquippedItemToCompareFor(properties);
+            if(compareDiv.length === 0) {
+                compareDiv = $(ItemPopupCompareDiv);
+
+                if(equippedItems !== undefined) {
+                    for (let i = 0; i < equippedItems.length; i++) {
+                        let content = $(ItemPopupCompareDivContent);
+                        AE.itemUtils.modifyItemElement(equippedItems[i], content, {});
+                        compareDiv.append(content);
+                    }
+                } else {
+                    let content = $(ItemPopupCompareDiv);
+                    content.text("None");
+                    compareDiv.append(content);
+                }
+
+                itemInfo.append(compareDiv);
+            }
         }
     }
 

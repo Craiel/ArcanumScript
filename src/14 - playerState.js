@@ -6,29 +6,68 @@
         constructor() {
             this.activeTab = undefined;
             this.resources = {};
-            this.vitals = {};
+            this.equippedItems = {};
         }
 
         initialize(){
-            for(let vital in AE.data.PlayerVitals) {
-                this.vitals[vital] = {current: 0, max: 0};
-            }
-
-            for(let resource in AE.data.PlayerResources){
-                this.resources[resource] = {current: 0, max: 0};
+            for(let key in AE.data.ResourceData){
+                this.resources[key] = {current: 0, max: 0};
             }
         }
 
         update(delta) {
-            for(let vital in AE.data.PlayerVitals) {
-                this.vitals[vital] = AE.pageUtils.getVitalValues(AE.data.PlayerVitals[vital]);
-            }
-
-            for(let resource in AE.data.PlayerResources) {
-                this.resources[resource] = AE.pageUtils.getResourceValues(AE.data.PlayerResources[resource]);
+            for(let key in AE.data.ResourceData) {
+                let vitalValue = AE.pageUtils.getVitalValues(key);
+                if(vitalValue !== undefined) {
+                    this.resources[key] = vitalValue;
+                } else {
+                    this.resources[key] = AE.pageUtils.getResourceValues(key);
+                }
             }
 
             this.updateActiveTab();
+        }
+
+        clearEquippedItems() {
+            this.equippedItems = {};
+        }
+
+        registerEquippedItem(slot, itemProperties) {
+            if(this.equippedItems[slot] === undefined) {
+                this.equippedItems[slot] = [];
+            }
+
+            this.equippedItems[slot].push(itemProperties);
+        }
+
+        getEquippedItems(slots) {
+            let results = [];
+            for(let i = 0; i < slots.length; i++) {
+                let items = this.equippedItems[slots[i]];
+                if(items === undefined){
+                    continue;
+                }
+
+                for(let k = 0; k < items.length; k++) {
+                    results.push(items[k]);
+                }
+            }
+
+            return results;
+        }
+
+        getEquippedItemToCompareFor(otherItem) {
+            if(otherItem.itemSlot === undefined){
+                return undefined;
+            }
+
+            let equippedItems = this.getEquippedItems(otherItem.itemSlot);
+            if(equippedItems === undefined || equippedItems.length === 0) {
+                return undefined;
+            }
+
+            // TODO: for now we compare against the first, this will not be good for dual wielding
+            return equippedItems;
         }
 
         updateActiveTab(){

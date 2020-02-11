@@ -27,6 +27,11 @@
             AE.interval.add(AE.tabStyleMain.updateUI.bind(AE.tabStyleMain), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 250);
 
+            AE.interval.add(AE.tabStyleEnchant.updateUI.bind(AE.tabStyleEnchant), AE.config.uiUpdateInterval);
+
+            AE.interval.add(AE.tabStyleEquip.updateUI.bind(AE.tabStyleEquip), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleAdventure.updateUI.bind(AE.tabStyleAdventure), AE.config.uiUpdateInterval);
+
             if(AE.config.arcanumAutomationPresent !== true) {
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);
             }

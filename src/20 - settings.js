@@ -15,6 +15,7 @@
                 quickSlotPresets: {},
                 quickSlotPresetNames: {},
                 mainScreenAlternateDisplay: false,
+                enchantScreenGroupedDisplay: false,
                 gameVersion: undefined
             };
         }

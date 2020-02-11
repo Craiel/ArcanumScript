@@ -8,7 +8,7 @@
         quickSlotCount: 10,
         quickSlotPresetCount: 3,
         minUpdateInterval: 50,
-        uiUpdateInterval: 500
+        uiUpdateInterval: 250
     }
 
 })(window.jQuery);
