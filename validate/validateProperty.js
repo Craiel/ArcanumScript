@@ -27,6 +27,11 @@ function validateResourceBlock(settings, object, key) {
             }
         }
 
+        let objectTarget = settings.data.lookups.objects[key];
+        if(objectTarget !== undefined){
+            continue;
+        }
+
         settings.logError(key + " unknown mod");
     }
 }
@@ -50,11 +55,34 @@ function isValidRequireValue(settings, value) {
     }
 
     let modTarget = settings.data.lookups.modStrings[value];
-    if(modTarget === undefined) {
-        return false;
+    if(modTarget !== undefined) {
+        return true;
     }
 
-    return true;
+    let objectTarget = settings.data.lookups.objects[value];
+    if(objectTarget !== undefined) {
+        return true;
+    }
+
+    return false;
+}
+
+function validateObjectArray(settings, values, fieldName) {
+    if(values === undefined || values.length === 0) {
+        return true;
+    }
+
+    for(let i = 0; i < values.length; i++){
+        let value = values[i];
+        let objectTarget = settings.data.lookups.objects[value];
+        if(objectTarget !== undefined){
+            return true;
+        }
+
+        settings.logError(fieldName + " Unknown Object Array Target " + value)
+    }
+
+    return false;
 }
 
 exports.validateSecondPass = function(settings, object, key) {
@@ -98,13 +126,24 @@ exports.validateSecondPass = function(settings, object, key) {
                     }
 
                     case 'object': {
-                        settings.logWarning(" Suspicious require data: " + values[i])
+                        settings.logWarning(" Require data is Object format");
+
+                        for(let key in values[i]) {
+                            validateResourceBlock(settings, values[i], key);
+                        }
+
                         break;
                     }
                 }
 
             }
 
+            break;
+        }
+
+        case 'only':
+        case 'exclude': {
+            validateObjectArray(settings, object[key], key);
             break;
         }
 

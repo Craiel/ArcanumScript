@@ -220,12 +220,19 @@ function appendHardcodedData() {
     }
 }
 
+function addObjectKeyLookup(key, type) {
+    if(settings.data.lookups.objects[key] !== undefined) {
+        throw "Duplicate Object ID: " + key;
+    }
+
+    settings.data.lookups.objects[key] = [key, type];
+}
+
 function addModStringBase(key, targetType) {
     if(settings.data.lookups.modStrings[key] !== undefined) {
         throw "Duplicate Mod Strings: " + key;
     }
 
-    settings.data.lookups.modStrings[key] = [key, targetType];
     settings.data.lookups.modStrings['effect.' + key] = [key, targetType];
 }
 
@@ -275,8 +282,16 @@ function buildSecondPassLookups() {
     settings.log();
 
     settings.data.lookups = {
+        objects: {},
         modStrings: {}
     };
+
+    for(let objectKey in settings.data.objects) {
+        let objectList = settings.data.objects[objectKey];
+        for(let key in objectList) {
+            addObjectKeyLookup(key, objectList[key].type);
+        }
+    }
 
     for(let key in settings.data.objects.resource) {
         addModStringBase(key, valData.DataType.Resource);
@@ -373,6 +388,7 @@ function buildSecondPassLookups() {
         settings.data.lookups.modStrings["player.hits." + resist] = [resist, valData.DataType.Internal];
     }
 
+    settings.log(" - " + Object.keys(settings.data.lookups.objects).length + " Objects");
     settings.log(" - " + Object.keys(settings.data.lookups.modStrings).length + " possible modifier lookup entries");
 }
 
