@@ -161,12 +161,12 @@ exports.build = function(data) {
         MountNameLookup: {}
     };
 
-    buildResources(data.resources, result);
-    buildPotions(data.potions, result);
-    buildEnchantData(data.enchants, result);
-    buildMaterialData(data.materials, result);
-    buildHomeData(data.homes, result);
-    buildUpgradeData(data.tasks, result);
+    buildResources(data.resource, result);
+    buildPotions(data.potion, result);
+    buildEnchantData(data.enchant, result);
+    buildMaterialData(data.material, result);
+    buildHomeData(data.home, result);
+    buildUpgradeData(data.upgrade, result);
 
     let fileData = `// Generated Data
 (function($) {

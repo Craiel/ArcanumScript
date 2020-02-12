@@ -1,45 +1,37 @@
-const StatType = {
-    Number: 0,
-    Object: 1,
-    Boolean: 3,
-    Percent: 4,
-    Range: 5,
-    Exponent: 6,
-    String: 7
-};
+let valData = require('./validateData.js');
 
 exports.validateOne = function(settings, key, value) {
     switch (typeof value) {
         case 'number':
         {
-            return [value, StatType.Number];
+            return [value, valData.StatType.Number];
         }
 
         case 'object': {
-            return [value, StatType.Object];
+            return [value, valData.StatType.Object];
         }
 
         case 'boolean': {
-            return [value, StatType.Boolean];
+            return [value, valData.StatType.Boolean];
         }
 
         case 'string': {
             let parsed = value.match(/[0-9]+%/);
             if(parsed !== null) {
-                return [parsed[0], StatType.Percent];
+                return [parsed[0], valData.StatType.Percent];
             }
 
             parsed = value.match(/([0-9]+)~([0-9]+)/);
             if(parsed !== null){
-                return [[parsed[1], parsed[2]], StatType.Range];
+                return [[parsed[1], parsed[2]], valData.StatType.Range];
             }
 
             parsed = value.match(/([0-9]+)\/([0-9]+)/);
             if(parsed !== null){
-                return [[parsed[1], parsed[2]], StatType.Exponent];
+                return [[parsed[1], parsed[2]], valData.StatType.Exponent];
             }
 
-            return [value, StatType.String];
+            return [value, valData.StatType.String];
         }
 
         default: {

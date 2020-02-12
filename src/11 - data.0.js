@@ -189,7 +189,7 @@
         'Class': AE.data.ClassUpgradeTasks,
 
         '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy',
-            'w_fazbit1', 'w_fazbit2', 'w_fazbit3']
+            'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'winterhowl']
     };
 
     AE.data.UpgradeTasks = ['pouch', 'purse', 'gembox', 'gemcraft', 'artificialmountain', 'mythicanvil', 'up_runecrafter',
@@ -197,7 +197,7 @@
         'hearthexpansion', 'flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'spellbook',
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
         'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy',
-        'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount'];
+        'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount', 'winterhowl'];
 
 
 

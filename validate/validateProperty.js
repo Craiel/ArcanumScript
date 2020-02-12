@@ -1,126 +1,116 @@
 let validateStat = require('./validateStat.js');
 let validateLoot = require('./validateLoot.js');
+let valData = require('./validateData.js');
 
-const PatternType = {
-    Object: 0,
-    SubAction: 1,
-    Effector: 2,
-    Contextual: 3
-};
+const RequireRegex = /g\.[\w]+/gi;
 
-const PatternObjectType = {
-    Resource: 0,
-    Skill: 1,
-    State: 3,
-    Stat: 4
-};
-
-function validateTargetObject(settings, key) {
-    let target = settings.data.objects.resources[key];
-    if(target !== undefined) {
-        return [PatternType.Object, PatternObjectType.Resource, target];
-    }
-
-    target = settings.data.objects.skills[key];
-    if(target !== undefined) {
-        return [PatternType.Object, PatternObjectType.Skill, target];
-    }
-
-    target = settings.data.objects.states[key];
-    if(target !== undefined) {
-        return [PatternType.Object, PatternObjectType.State, target];
-    }
-
-    target = settings.data.objects.stats[key];
-    if(target !== undefined) {
-        return [PatternType.Object, PatternObjectType.Stat, target];
-    }
-
-    return undefined;
-}
-
-function validateTargetSubAction(settings, action) {
-    switch (action) {
-        case 'max':
-        case 'rate': {
-            return [PatternType.SubAction, action];
-        }
-
-        default: {
-            return undefined;
-        }
-    }
-}
-
-function validateTargetEffector(settings, effector) {
-    switch (effector) {
-        case 'inv':
-        case 'rest':
-        case 'player': {
-            return [PatternType.Effector, effector];
-        }
-
-        default: {
-            return undefined;
-        }
-    }
-}
-
-function validateSpecialKeyword(settings, data) {
-    switch (data) {
-        case 'void': {
-            return [PatternType.Contextual, data];
-        }
-
-        default: {
-            return undefined;
-        }
-    }
-}
-
-function validateResourceBlock(settings, data) {
+function validateResourceBlock(settings, object, key) {
+    let data = object[key];
     if(data === undefined) {
         return true;
     }
 
     for(let key in data) {
-        let keyParts = key.split('.');
-        let partInfo = [];
-        for(let i = 0; i < keyParts.length; i++) {
-            let target = validateTargetObject(settings, keyParts[i]);
-            if(target !== undefined) {
-                partInfo.push(target);
-                continue;
-            }
-
-            target = validateTargetEffector(settings, keyParts[i]);
-            if(target !== undefined) {
-                partInfo.push(target);
-                continue;
-            }
-
-            target = validateTargetSubAction(settings, keyParts[i]);
-            if(target !== undefined) {
-                partInfo.push(target);
-                continue;
-            }
-
-            throw "Could not idenfiy part " + keyParts[i] + " -- " + key;
+        let modTarget = settings.data.lookups.modStrings[key];
+        if(modTarget !== undefined) {
+            continue;
         }
+
+        let keyParts = key.split('.');
+        if(keyParts.length > 1) {
+            let modContextTarget = settings.data.lookups.modStrings[keyParts[0]];
+            keyParts.shift();
+            let modTarget = settings.data.lookups.modStrings[keyParts.join(".")];
+            if(modContextTarget !== undefined && modTarget !== undefined) {
+                // This is a context + mod action
+                continue;
+            }
+        }
+
+        settings.logError(key + " unknown mod");
     }
 }
 
-exports.validateSecondPass = function(settings, key, value) {
+function tagExists(tag) {
+    for(let i = 0; i < valData.Tags.length; i++){
+        if(valData.Tags[i].toLowerCase() === tag.trim().toLowerCase()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isValidRequireValue(settings, value) {
+    value = value.replace("g.", "");
+    switch (value) {
+        case 'player': {
+            return true;
+        }
+    }
+
+    let modTarget = settings.data.lookups.modStrings[value];
+    if(modTarget === undefined) {
+        return false;
+    }
+
+    return true;
+}
+
+exports.validateSecondPass = function(settings, object, key) {
     switch (key) {
         // resource modifying block data
         case 'mod': {
-            validateResourceBlock(settings, value);
+            validateResourceBlock(settings, object, key);
+            break;
+        }
+
+        case 'tags': {
+            let tags = object[key];
+            for(let i = 0; i < tags.length; i++){
+                if(!tagExists(tags[i])) {
+                    settings.logError(" Unknown Tag: " + tags[i]);
+                }
+            }
+
+            break;
+        }
+
+        case 'require': {
+            let values = object[key];
+            for(let i = 0; i < values.length; i++) {
+                switch (typeof values[i]) {
+                    case 'string': {
+                        let result = values[i].match(RequireRegex);
+                        if(result === null) {
+                            if(isValidRequireValue(settings, values[i]) !== true) {
+                                settings.logError(" Unknown Require target: " + values[i]);
+                            }
+                        } else {
+                            for(let n = 0; n < result.length; n++){
+                                if(isValidRequireValue(settings, result[n]) !== true) {
+                                    settings.logError(" Unknown Require target in formula: " + result[n] + " -- " + values[i]);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case 'object': {
+                        settings.logWarning(" Suspicious require data: " + values[i])
+                        break;
+                    }
+                }
+
+            }
+
             break;
         }
 
         default: {
-            // settings.logError("Unhandled property in second pass: " + key);
-            // console.log(value);
+            //console.log(object[key]);
+            //throw "Unhandled property in second pass: " + key;
         }
     }
 };

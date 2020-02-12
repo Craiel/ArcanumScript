@@ -1,4 +1,4 @@
-// Debug
+// TabStyle - Equip
 (function($) {
     'use strict';
 

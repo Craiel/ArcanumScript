@@ -1,4 +1,4 @@
-// Debug
+// TabStyle - Enchant
 (function($) {
     'use strict';
 

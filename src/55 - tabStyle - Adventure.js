@@ -1,4 +1,4 @@
-// Debug
+// TabStyle - Adventure
 (function($) {
     'use strict';
 
