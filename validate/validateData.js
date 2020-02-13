@@ -24,28 +24,44 @@ exports.DataType = {
     Internal: {id: 'internal'}
 };
 
-exports.Elements = ['void', 'shadow', 'fire', 'water', 'ice', 'air', 'earth', "slash", "pierce", "blunt", 'light', 'poison', 'venom', 'mana', 'nature', 'spirit'];
+exports.getObjectType = function(id) {
+    for(let key in this.DataType) {
+        if(this.DataType[key].id === id) {
+            return this.DataType[key];
+        }
+    }
 
-exports.StatType = {
-    Number: 0,
-    Object: 1,
-    Boolean: 3,
-    Percent: 4,
-    Range: 5,
-    Exponent: 6,
-    String: 7
+    return undefined;
 };
 
-exports.HardCodedStats = ["tohit", "defense", "armor", 'notoriety', 'regen', 'skill', 'runner'];
-exports.Tags = ["magicgems", "t_runes", "element", 'elemental', 'manas', "prismatic", 'bed', "airsource","armssource","automata","book","candle","earthsource","enchantsource","firesource","gemimbue","herb","lightsource","naturesource","outdoors","patron","plantsource","potsource","prison","reagent","rez","shadowsource","spiritsource","stables","starsource","steed","stress","t_automata","t_hall","t_job","t_machina","t_mine","t_pets","t_puppet","t_rest","t_school","t_tier0","t_tier1","t_tier2","t_tier3","t_tier4","t_tier5","t_tier6","timesource","tricksource","watersource","workspace"];
+exports.Elements = ['void', 'shadow', 'fire', 'water', 'ice', 'air', 'earth', "slash", "pierce", "blunt", 'physical', 'light', 'poison', 'venom', 'mana', 'nature', 'spirit', 'undead'];
 
-exports.MetaResources = ["minions", "allies", "spelllist", "enchantslots", 'inv', 'userSpells', 'hallSize', 'pursuits'];
+exports.Targets = ['all', 'enemies', 'ally', 'allies', 'self'];
+
+exports.Flags = ['noattack', 'nodefend', 'noact', 'nocast'];
+
+exports.Biomes = ['swamp', 'plains', 'woods', 'town', 'sea', 'mountains'];
+
+exports.StatType = {
+    Number: 'number',
+    Object: 'object',
+    Boolean: 'bool',
+    Percent: 'percent',
+    Range: 'range',
+    Exponent: 'exponent',
+    String: 'string'
+};
+
+exports.HardCodedStats = ["tohit", "defense", "armor", 'notoriety', 'regen', 'skill', 'runner', 'title'];
+
+exports.MetaResources = ["minions", "allies", "spelllist", "enchantslots", 'inv', 'userSpells', 'pursuits'];
 
 exports.CombatModStrings = ["player.damage",'attack.damage.min','attack.damage.max','attack.dot.effect.dmg.min','attack.dot.effect.dmg.max',
-    'attack.bonus', 'attack.tohit', 'attack.dot.duration'];
+    'attack.bonus', 'attack.tohit', 'attack.dot.duration', 'attack.hits.tohit', 'attack.hits.damage.max', 'attack.hits.damage.min',
+    'attack.dot.dmg.min', 'attack.dot.dmg.max', 'attack.dot.damage.max', 'attack.dot.damage.min'];
 
 exports.PuppetModStrings = ['minions.puppet.hp', 'minions.puppet.dmg', 'minions.machina.hp', 'minions.machina.dmg', 'minions.automata.hp', 'minions.automata.dmg',
     'result.automatas', 'minions.machina.speed', 'result.machinae', 'result.puppets'];
 
 exports.SpecialModStrings = ['witchcraft', 'minions.keep', 'focus.effect.runner.exp', 'gemimbue.length', 'gemimbue.perpetual', 'candle.max',
-    'assemblemachina.length', 'assembleautomata.length'];
+    'assemblemachina.length', 'assembleautomata.length', 'bed.mod.runner.max', 'dot.duration'];

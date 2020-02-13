@@ -23,7 +23,15 @@ let settings = {
         dumpUniq: {},
         all: [],
         errors: [],
-        warnings: []
+        warnings: [],
+        stats: {},
+        addStat: function(key) {
+            if(this.stats[key] === undefined) {
+                this.stats[key] = 0;
+            }
+
+            this.stats[key]++;
+        }
     },
 
     getFormattedLog(msg, subType) {
@@ -162,6 +170,7 @@ function validateFirstPass(data) {
     validateFirstPassMany(data, 'locales', valData.DataType.Location);
     validateFirstPassMany(data, 'stressors', valData.DataType.State);
     validateFirstPassMany(data, 'player', valData.DataType.Stat);
+    validateFirstPassMany(data, 'stats', valData.DataType.Stat);
     validateFirstPassMany(data, 'sections', valData.DataType.Section);
 }
 
@@ -188,7 +197,6 @@ function validateSecondPass() {
     }
 }
 
-
 function appendHardcodedData() {
     for(let i = 0; i < valData.HardCodedStats.length; i++){
         let key = valData.HardCodedStats[i];
@@ -208,15 +216,43 @@ function appendHardcodedData() {
 
         settings.data.objects.resource[key] = {"id": key};
     }
+}
 
-    // Tags
-    for(let i = 0; i < valData.Tags.length; i++) {
-        let key = valData.Tags[i];
-        if(settings.data.objects.resource[key] !== undefined) {
-            throw "Tag exists: " + key;
+function addMetaTagLookup(value, type) {
+    if(value === undefined){
+        return;
+    }
+
+    switch (typeof value) {
+        case 'string': {
+            let trimmedValue = value.toLowerCase().trim();
+            if(settings.data.lookups.metaTags[trimmedValue] === undefined){
+                // Ignore duplicates for meta tags
+                settings.data.lookups.metaTags[trimmedValue] = [trimmedValue, {}];
+                addModStrings(trimmedValue, type);
+            }
+
+            if(settings.data.lookups.metaTags[trimmedValue][1][type.id] === undefined) {
+                settings.data.lookups.metaTags[trimmedValue][1][type.id] = 1;
+            } else {
+                settings.data.lookups.metaTags[trimmedValue][1][type.id]++;
+            }
+
+            break;
         }
 
-        settings.data.objects.resource[key] = {"id": key};
+        case 'object': {
+            for(let i = 0; i < value.length; i++) {
+                addMetaTagLookup(value[i], type);
+            }
+
+            break;
+        }
+
+        default: {
+            console.log(value);
+            throw "Unhandled Tag Value: " + typeof value;
+        }
     }
 }
 
@@ -228,27 +264,33 @@ function addObjectKeyLookup(key, type) {
     settings.data.lookups.objects[key] = [key, type];
 }
 
-function addModStringBase(key, targetType) {
-    if(settings.data.lookups.modStrings[key] !== undefined) {
-        throw "Duplicate Mod Strings: " + key;
-    }
-
-    settings.data.lookups.modStrings['effect.' + key] = [key, targetType];
-}
-
-function addModStringExtended(key, targetType) {
+function addModStrings(key, targetType) {
     if(settings.data.lookups.modStrings['player.' + key] !== undefined) {
-        throw "Duplicate Extended Mod Strings: " + key;
+        return;
     }
 
     settings.data.lookups.modStrings['player.' + key] = [key, targetType];
 
     settings.data.lookups.modStrings[key + '.rate'] = [key, targetType];
     settings.data.lookups.modStrings[key + '.max'] = [key, targetType];
+    settings.data.lookups.modStrings[key + '.min'] = [key, targetType];
+
+    settings.data.lookups.modStrings['effect.' + key] = [key, targetType];
+    settings.data.lookups.modStrings['effect.' + key + '.rate'] = [key, targetType];
+    settings.data.lookups.modStrings['effect.' + key + '.max'] = [key, targetType];
+    settings.data.lookups.modStrings['effect.' + key + '.min'] = [key, targetType];
+    settings.data.lookups.modStrings['effect.' + key + '.exp'] = [key, targetType];
+
+    settings.data.lookups.modStrings['result.' + key] = [key, targetType];
+    settings.data.lookups.modStrings['result.' + key + '.rate'] = [key, targetType];
+    settings.data.lookups.modStrings['result.' + key + '.max'] = [key, targetType];
+    settings.data.lookups.modStrings['result.' + key + '.min'] = [key, targetType];
+    settings.data.lookups.modStrings['result.' + key + '.exp'] = [key, targetType];
 
     settings.data.lookups.modStrings['mod.' + key] = [key, targetType];
     settings.data.lookups.modStrings['mod.' + key + '.rate'] = [key, targetType];
     settings.data.lookups.modStrings['mod.' + key + '.max'] = [key, targetType];
+    settings.data.lookups.modStrings['mod.' + key + '.min'] = [key, targetType];
 }
 
 function addCostModString(key, dataType) {
@@ -276,12 +318,63 @@ function addPuppetModString(key, dataType) {
     }
 }
 
+function buildSpecialSecondPassLookups(objectKey) {
+    let type = valData.getObjectType(objectKey);
+    for(let key in settings.data.objects[objectKey]) {
+        let object = settings.data.objects[objectKey][key];
+        switch (type) {
+            case valData.DataType.Stat:
+            case valData.DataType.State:
+            case valData.DataType.Resource: {
+                addModStrings(key, type);
+                break;
+            }
+
+            case valData.DataType.Upgrade: {
+                addModStrings(key, type);
+                addCostModString(key, type);
+                addCombatModString(key, type);
+                addPuppetModString(key, type);
+                break;
+            }
+
+            case valData.DataType.Skill: {
+                addModStrings(key, type);
+                addPuppetModString(key, type);
+                break;
+            }
+
+            case valData.DataType.Spell:
+            case valData.DataType.Home:
+            case valData.DataType.Furniture:
+            case valData.DataType.Enchant:
+            case valData.DataType.Task: {
+                addCostModString(key, type);
+                addCombatModString(key, type);
+                break;
+            }
+
+            case valData.DataType.Armor: {
+                addMetaTagLookup(object.slot, type);
+                break;
+            }
+
+            case valData.DataType.Monster:
+            case valData.DataType.Material: {
+                addMetaTagLookup(object.kind, type);
+                break;
+            }
+        }
+    }
+}
+
 function buildSecondPassLookups() {
     settings.log();
     settings.log(" --------------------- Building Lookup Data ---------------------");
     settings.log();
 
     settings.data.lookups = {
+        metaTags: {},
         objects: {},
         modStrings: {}
     };
@@ -289,80 +382,13 @@ function buildSecondPassLookups() {
     for(let objectKey in settings.data.objects) {
         let objectList = settings.data.objects[objectKey];
         for(let key in objectList) {
-            addObjectKeyLookup(key, objectList[key].type);
+            let object = objectList[key];
+            addModStrings(key, object.type);
+            addObjectKeyLookup(key, object.type);
+            addMetaTagLookup(object.tags, object.type);
         }
-    }
 
-    for(let key in settings.data.objects.resource) {
-        addModStringBase(key, valData.DataType.Resource);
-        addModStringExtended(key, valData.DataType.Resource);
-    }
-
-    for(let key in settings.data.objects.skill) {
-        addModStringBase(key, valData.DataType.Skill);
-        addModStringExtended(key, valData.DataType.Skill);
-        addPuppetModString(key, valData.DataType.Skill);
-    }
-
-    for(let key in settings.data.objects.state) {
-        addModStringBase(key, valData.DataType.State);
-        addModStringExtended(key, valData.DataType.State);
-    }
-
-    for(let key in settings.data.objects.stat) {
-        addModStringBase(key, valData.DataType.Stat);
-        addModStringExtended(key, valData.DataType.Stat);
-    }
-
-    for(let key in settings.data.objects.upgrade) {
-        addModStringBase(key, valData.DataType.Upgrade);
-        addModStringExtended(key, valData.DataType.Upgrade);
-        addCostModString(key, valData.DataType.Upgrade);
-        addCombatModString(key, valData.DataType.Upgrade);
-        addPuppetModString(key, valData.DataType.Skill);
-    }
-
-    for(let key in settings.data.objects.task) {
-        addModStringBase(key, valData.DataType.Task);
-        addCostModString(key, valData.DataType.Task);
-        addCombatModString(key, valData.DataType.Task);
-    }
-
-    for(let key in settings.data.objects.enchant) {
-        addModStringBase(key, valData.DataType.Enchant);
-        addCostModString(key, valData.DataType.Enchant);
-        addCombatModString(key, valData.DataType.Enchant);
-    }
-
-    for(let key in settings.data.objects.furniture) {
-        addModStringBase(key, valData.DataType.Furniture);
-        addCostModString(key, valData.DataType.Furniture);
-    }
-
-    for(let key in settings.data.objects.spell) {
-        addModStringBase(key, valData.DataType.Spell);
-        addCostModString(key, valData.DataType.Spell);
-    }
-
-    for(let key in settings.data.objects.home) {
-        addModStringBase(key, valData.DataType.Home);
-        addCostModString(key, valData.DataType.Home);
-    }
-
-    for(let key in settings.data.objects.class) {
-        addModStringBase(key, valData.DataType.Class);
-    }
-
-    for(let key in settings.data.objects.location) {
-        addModStringBase(key, valData.DataType.Location);
-    }
-
-    for(let key in settings.data.objects.event) {
-        addModStringBase(key, valData.DataType.Event);
-    }
-
-    for(let key in settings.data.objects.dungeon) {
-        addModStringBase(key, valData.DataType.Dungeon);
+        buildSpecialSecondPassLookups(objectKey);
     }
 
     for(let i = 0; i < valData.CombatModStrings.length; i++){
@@ -386,10 +412,44 @@ function buildSecondPassLookups() {
         settings.data.lookups.modStrings["player.resist." + resist] = [resist, valData.DataType.Internal];
         settings.data.lookups.modStrings["player.bonuses." + resist] = [resist, valData.DataType.Internal];
         settings.data.lookups.modStrings["player.hits." + resist] = [resist, valData.DataType.Internal];
+        settings.data.lookups.modStrings["player.immunities." + resist] = [resist, valData.DataType.Internal];
+
+        settings.data.lookups.modStrings["mod.player.resist." + resist] = [resist, valData.DataType.Internal];
     }
 
+    settings.log(" - " + Object.keys(settings.data.lookups.metaTags).length + " Tags");
     settings.log(" - " + Object.keys(settings.data.lookups.objects).length + " Objects");
     settings.log(" - " + Object.keys(settings.data.lookups.modStrings).length + " possible modifier lookup entries");
+}
+
+function writeLogs(){
+    if(settings.results.dump.length > 0) {
+        fs.writeFileSync('dump.txt', settings.results.dump.join('\n'), 'UTF8');
+    }
+
+    let uniqDumpEntries = [];
+    for(let entry in settings.results.dumpUniq) {
+        uniqDumpEntries.push(entry);
+    }
+
+    if(uniqDumpEntries.length > 0) {
+        uniqDumpEntries.sort();
+        fs.writeFileSync('dump_u.txt', uniqDumpEntries.join('","'), 'UTF8');
+    }
+
+    fs.writeFileSync('log.txt', settings.results.all.join('\n'), 'UTF8');
+    fs.writeFileSync('log-warn.txt', settings.results.warnings.join('\n'), 'UTF8');
+    fs.writeFileSync('log-error.txt', settings.results.errors.join('\n'), 'UTF8');
+}
+
+function logStats(){
+    settings.log();
+    settings.log(" Statistics:");
+    settings.log();
+
+    for(let key in settings.results.stats) {
+        settings.log("Stat: " + key + " == " + settings.results.stats[key]);
+    }
 }
 
 function doValidate() {
@@ -427,23 +487,8 @@ function doValidate() {
         }
     }
 
-    if(settings.results.dump.length > 0) {
-        fs.writeFileSync('dump.txt', settings.results.dump.join('\n'), 'UTF8');
-    }
-
-    let uniqDumpEntries = [];
-    for(let entry in settings.results.dumpUniq) {
-        uniqDumpEntries.push(entry);
-    }
-
-    if(uniqDumpEntries.length > 0) {
-        uniqDumpEntries.sort();
-        fs.writeFileSync('dump_u.txt', uniqDumpEntries.join('","'), 'UTF8');
-    }
-
-    fs.writeFileSync('log.txt', settings.results.all.join('\n'), 'UTF8');
-    fs.writeFileSync('log-warn.txt', settings.results.warnings.join('\n'), 'UTF8');
-    fs.writeFileSync('log-error.txt', settings.results.errors.join('\n'), 'UTF8');
+    logStats();
+    writeLogs();
 }
 
 doValidate();

@@ -1,6 +1,11 @@
 let valData = require('./validateData.js');
 
-exports.validateOne = function(settings, key, value) {
+exports.validateOne = function(settings, value) {
+    if(value === undefined) {
+        return undefined;
+    }
+
+    settings.results.addStat('Val_Stat_One');
     switch (typeof value) {
         case 'number':
         {
@@ -45,16 +50,28 @@ exports.validateBlock = function(settings, statSet) {
 
     let result = {};
 
+    settings.results.addStat('Val_Stat_Block');
     if(typeof statSet === 'string') {
-        this.validateOne(settings, statSet, 1);
+        result[statSet] = this.validateOne(settings, 1);
     } else {
-        for (let key in statSet) {
-            let values = this.validateOne(settings, key, statSet[key]);
-            if(values === undefined){
-                return undefined;
+        if(statSet.length !== undefined) {
+            result = [];
+            for(let i = 0; i < statSet.length; i++) {
+                let arrayValue = this.validateBlock(settings, statSet[i]);
+                result.push(arrayValue);
             }
 
-            result[key] = values;
+            return result;
+        } else {
+            for (let key in statSet) {
+                let values = this.validateOne(settings, statSet[key]);
+                if (values === undefined) {
+                    settings.logError("Unknown stat value: " + statSet[key]);
+                    return undefined;
+                }
+
+                result[key] = values;
+            }
         }
     }
 
@@ -64,6 +81,7 @@ exports.validateBlock = function(settings, statSet) {
 exports.validateIntervalStats = function(settings, intervalSet) {
     let result = {};
 
+    settings.results.addStat('Val_Stat_Interval');
     for(let key in intervalSet) {
         let time = parseInt(key);
         if(time === undefined){
