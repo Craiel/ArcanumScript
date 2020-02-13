@@ -6,16 +6,58 @@
         constructor() {
             this.activeTab = undefined;
             this.resources = {};
+            this.resourceState = {};
             this.equippedItems = {};
+            this.timeSinceResourceCompute = 0;
         }
 
         initialize(){
             for(let key in AE.data.ResourceData){
                 this.resources[key] = {current: 0, max: 0};
+                this.resourceState[key] = {
+                    initialized: false,
+                    diff: 0,
+                    perSecond: 0,
+                    lastUpdateState: {current: 0, max: 0}
+                };
             }
         }
 
         update(delta) {
+            this.updateResources();
+
+            this.timeSinceResourceCompute += delta;
+            if(this.timeSinceResourceCompute >= 1000) {
+                this.timeSinceResourceCompute = 0;
+                this.updateResourceState();
+            }
+
+            this.updateActiveTab();
+        }
+
+        getResourcePerSecond(key) {
+            if(this.resourceState[key] === undefined) {
+                return 0;
+            }
+
+            return this.resourceState[key].perSecond;
+        }
+
+        updateResourceState() {
+            for(let key in AE.data.ResourceData) {
+                let state = this.resourceState[key];
+                let currentValue = this.resources[key];
+
+                if(state.initialized === true) {
+                    this.resourceState[key].perSecond = currentValue.current - state.lastUpdateState.current;
+                }
+
+                this.resourceState[key].lastUpdateState = currentValue;
+                state.initialized = true;
+            }
+        }
+
+        updateResources(){
             for(let key in AE.data.ResourceData) {
                 let vitalValue = AE.pageUtils.getVitalValues(key);
                 if(vitalValue !== undefined) {
@@ -24,8 +66,6 @@
                     this.resources[key] = AE.pageUtils.getResourceValues(key);
                 }
             }
-
-            this.updateActiveTab();
         }
 
         clearEquippedItems() {

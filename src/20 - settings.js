@@ -3,7 +3,7 @@
     'use strict';
 
     const SettingsSaveKey = "at_settings";
-    const SettingsVersion = 2;
+    const SettingsVersion = 3;
 
     class AESettings {
 
@@ -16,7 +16,8 @@
                 quickSlotPresetNames: {},
                 mainScreenAlternateDisplay: false,
                 enchantScreenGroupedDisplay: false,
-                gameVersion: undefined
+                gameVersion: undefined,
+                sanctum: {}
             };
         }
 
@@ -53,6 +54,10 @@
 
             if(target.mainScreenAlternateDisplay === undefined) {
                 target.mainScreenAlternateDisplay = false;
+            }
+
+            if(target.sanctum === undefined) {
+                target.sanctum = {};
             }
 
             target.version = SettingsVersion;
