@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1733.1
+// @version      1737
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -327,7 +327,7 @@ let AE = (function($){
         'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
         'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
         'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
-            'summonfamiliar', 'voidtouch'],
+            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest'],
         'Dreams': ['dreamweaver', 'starwish'],
         'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
         'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane'],
@@ -339,7 +339,7 @@ let AE = (function($){
         'Class': AE.data.ClassUpgradeTasks,
 
         '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy',
-            'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask']
+            'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4']
     };
 
     AE.data.UpgradeTasks = ['pouch', 'purse', 'gembox', 'gemcraft', 'artificialmountain', 'mythicanvil', 'up_runecrafter',
@@ -348,7 +348,7 @@ let AE = (function($){
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
         'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy',
         'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount',
-        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask'];
+        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest'];
 
 
 
@@ -461,7 +461,7 @@ let AE = (function($){
             // Check for special items
             if (prop.isKnown === false) {
                 for(let key in AE.data.SpecialItems) {
-                    if(prop.name === key) {
+                    if(prop.name.includes(key)) {
                         prop.type = AE.data.SpecialItems[key].type;
                         prop.subType = AE.data.SpecialItems[key].subType;
                         prop.isSpecialItem = true;

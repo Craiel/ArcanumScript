@@ -72,7 +72,7 @@
             // Check for special items
             if (prop.isKnown === false) {
                 for(let key in AE.data.SpecialItems) {
-                    if(prop.name === key) {
+                    if(prop.name.includes(key)) {
                         prop.type = AE.data.SpecialItems[key].type;
                         prop.subType = AE.data.SpecialItems[key].subType;
                         prop.isSpecialItem = true;
