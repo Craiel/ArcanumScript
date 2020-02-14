@@ -25,7 +25,7 @@
             AE.interval.add(AE.tabStyle.update.bind(AE.tabStyle), AE.config.uiUpdateInterval);
 
             AE.interval.add(AE.tabStyleMain.updateUI.bind(AE.tabStyleMain), AE.config.uiUpdateInterval);
-            AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 250);
+            AE.interval.add(AE.tabStyleMain.updateAutomation.bind(AE.tabStyleMain), 125);
 
             AE.interval.add(AE.tabStyleEnchant.updateUI.bind(AE.tabStyleEnchant), AE.config.uiUpdateInterval);
 
