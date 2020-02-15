@@ -47,6 +47,8 @@
             this.updateMainTabCustomBar();
 
             this.updateTaskButtonDisplay();
+
+            // AE.pageUtils.updatePopupCost();
         }
 
         updateAutomation(delta) {

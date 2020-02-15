@@ -164,7 +164,7 @@
         'alchemist', 'enchanter', 'geomancer', 'earthshaker', 'titan', 'pyromancer', 'hydromancer', 'windmage', 'stormcaller',
         'elementalist', 'sorcerer', 'druid', 'highelemental', 'oracle', 'seer', 'mage', 'highmage', 'doomsayer', 'fey',
         'thaumaturge', 'necromancer', 'wizard', 'wizard2', 'kell', 'greynecromancer', 'archlock', 'heresiarch', 'highkell',
-        'necro3', 'deathlock', 'wizard3', 'astralseer', 'c_avatar'];
+        'necro3', 'deathlock', 'wizard3', 'astralseer', 'c_avatar', 'leavemaster', 'slaymaster', 'puppeteer'];
 
     AE.data.TaskGroups = {
         'Rest': ['rest', 'slumber', 'naturecamp', 'chant', 'eatchildren'],
@@ -173,19 +173,23 @@
             'purse', 'restless'],
         'Research': ['buyscroll', 'scribescroll', 'sublimate', 'bindcodex', 'compiletome', 'pace', 'act_element', 'mapstars',
             'grind', 'study', 'spellbook', 'act_garden', 'act_scry', 'act_concoct', 'bestiary', 'sylvansyllabary', 'dwarfbook',
-            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest'],
-        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
-        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
+            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'prism',
+            'breviary'],
+        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul',
+            'urn'],
+        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems', 'gembag'].concat(AE.data.GemImbueTaskIds),
         'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
-            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher'],
+            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher', 'windchime', 'ball'],
         'Dreams': ['dreamweaver', 'starwish'],
-        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
-        'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane'],
+        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow', 'strongstrings', 'ebonwoodsupply'],
+        'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane', 'cellar', 'clockworkexpansion'],
         'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
-        'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
-        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
-            'ebonwoodbroomstick', 'pegasusmount'],
-        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
+        'Misc': ['wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon', 'wishingwells', 'mendicant'],
+        'Alchemy and Potions': ['gatherherbs', 'alembic', 'herbbag', 'crucible', 'mortar', 'cauldron'],
+        'Mounts and Travel': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
+            'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1'],
+        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies'],
+        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich', 'proxies2'],
         'Class': AE.data.ClassUpgradeTasks,
 
         '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy',
@@ -198,7 +202,10 @@
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
         'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy',
         'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount',
-        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest', 'restless', 'dreamcatcher'];
+        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest', 'restless', 'dreamcatcher',
+        'herbbag', 'prism', 'gembag', 'up_pack', 'windchime', 'urn', 'ball', 'crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'mortar',
+        'waxcandle', 'wishingwells', 'breviary', 'pot', 'strongstrings', 'proxies', 'up_ten_map', 'alembic', 'crucible', 'celerity',
+        'mendicant', 'cauldron', 'cellar', 'puppetspies', 'clockworkexpansion', 'magichorseshoe', 'up_map1', 'proxies2', 'ebonwoodsupply'];
 
 
 

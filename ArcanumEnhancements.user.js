@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1737.1
+// @version      1737.2
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -314,7 +314,7 @@ let AE = (function($){
         'alchemist', 'enchanter', 'geomancer', 'earthshaker', 'titan', 'pyromancer', 'hydromancer', 'windmage', 'stormcaller',
         'elementalist', 'sorcerer', 'druid', 'highelemental', 'oracle', 'seer', 'mage', 'highmage', 'doomsayer', 'fey',
         'thaumaturge', 'necromancer', 'wizard', 'wizard2', 'kell', 'greynecromancer', 'archlock', 'heresiarch', 'highkell',
-        'necro3', 'deathlock', 'wizard3', 'astralseer', 'c_avatar'];
+        'necro3', 'deathlock', 'wizard3', 'astralseer', 'c_avatar', 'leavemaster', 'slaymaster', 'puppeteer'];
 
     AE.data.TaskGroups = {
         'Rest': ['rest', 'slumber', 'naturecamp', 'chant', 'eatchildren'],
@@ -323,19 +323,23 @@ let AE = (function($){
             'purse', 'restless'],
         'Research': ['buyscroll', 'scribescroll', 'sublimate', 'bindcodex', 'compiletome', 'pace', 'act_element', 'mapstars',
             'grind', 'study', 'spellbook', 'act_garden', 'act_scry', 'act_concoct', 'bestiary', 'sylvansyllabary', 'dwarfbook',
-            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest'],
-        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul'],
-        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems'].concat(AE.data.GemImbueTaskIds),
+            'lemurlexicon', 'demondict', 'malleus', 'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'prism',
+            'breviary'],
+        'Bones, Bodies and Evil things': ['bloodsiphon', 'graverob', 'murder', 'vileexperiment', 'dissect', 'dissect cadaver', 'grindbones', 'trapsoul',
+            'urn'],
+        'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems', 'gembag'].concat(AE.data.GemImbueTaskIds),
         'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
-            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher'],
+            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher', 'windchime', 'ball'],
         'Dreams': ['dreamweaver', 'starwish'],
-        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow'],
-        'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane'],
+        'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow', 'strongstrings', 'ebonwoodsupply'],
+        'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane', 'cellar', 'clockworkexpansion'],
         'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
-        'Misc': ['gatherherbs', 'wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon'],
-        'Mount': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
-            'ebonwoodbroomstick', 'pegasusmount'],
-        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich'],
+        'Misc': ['wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon', 'wishingwells', 'mendicant'],
+        'Alchemy and Potions': ['gatherherbs', 'alembic', 'herbbag', 'crucible', 'mortar', 'cauldron'],
+        'Mounts and Travel': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
+            'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1'],
+        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies'],
+        'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich', 'proxies2'],
         'Class': AE.data.ClassUpgradeTasks,
 
         '❄ Winter': ['meltsnowman', 'makesnowman', 'restincottage', 'winteraward', 'winterchill', 'warmpotion', 'hearthexpansion', 'icystudy',
@@ -348,7 +352,10 @@ let AE = (function($){
         'bestiary', 'codexannih', 'markhulcodex', 'sylvansyllabary', 'dwarfbook', 'lemurlexicon', 'demondict', 'malleus', 'maketitanhammer',
         'fazbitfixate', 'coporisfabrica', 'unendingtome', 'almagest', 'phylactory', 'up_lich', 'animalfriend', 'summonfamiliar', 'icystudy',
         'firechariot', 'earthplane', 'voidtouch', 'w_fazbit1', 'w_fazbit2', 'w_fazbit3', 'magicbroomstick', 'ebonwoodbroomstick', 'pegasusmount',
-        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest', 'restless', 'dreamcatcher'];
+        'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest', 'restless', 'dreamcatcher',
+        'herbbag', 'prism', 'gembag', 'up_pack', 'windchime', 'urn', 'ball', 'crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'mortar',
+        'waxcandle', 'wishingwells', 'breviary', 'pot', 'strongstrings', 'proxies', 'up_ten_map', 'alembic', 'crucible', 'celerity',
+        'mendicant', 'cauldron', 'cellar', 'puppetspies', 'clockworkexpansion', 'magichorseshoe', 'up_map1', 'proxies2', 'ebonwoodsupply'];
 
 
 
@@ -770,6 +777,8 @@ let AE = (function($){
 
     const ItemPopupCompareDivContent = `<span id="at_item_popup_compare_text" class="separate"></span>`;
 
+    const PopupCostRegex = /(max )*(.*)?:\s+([0-9\.]+)/i;
+
     class AEPageUtils {
         getVitalValues(id) {
             let bar = $('.bars').find('tr[data-key="' + id + '"');
@@ -816,6 +825,40 @@ let AE = (function($){
                 max: max,
                 pct: pct
             };
+        }
+
+        getResourceDiv(id) {
+            id = id.trim().toLowerCase();
+            let result = undefined;
+            $('div.res-list').find('div.rsrc').each(function() {
+                if(result !== undefined) {
+                    return;
+                }
+
+                let resourceKey = $(this).data('key').trim().toLowerCase();
+                if(resourceKey === id) {
+                    result = $(this);
+                }
+            });
+
+            return result;
+        }
+
+        getVitalsRow(id) {
+            id = id.trim().toLowerCase();
+            let result = undefined;
+            $('table.bars').find('tr').each(function() {
+                if(result !== undefined) {
+                    return;
+                }
+
+                let vitalKey = $(this).data('key').trim().toLowerCase();
+                if(vitalKey === id) {
+                    result = $(this);
+                }
+            });
+
+            return result;
         }
 
         checkData(){
@@ -934,6 +977,70 @@ let AE = (function($){
 
                 let itemName = nameEl.innerText;
                 AE.itemUtils.processItemEntry($(this), itemName, nameEl, conf);
+            });
+        }
+
+        getPopupSection(root, sectionTexts) {
+            let result = undefined;
+            root.find('div.note-text').each(function() {
+                if(result !== undefined){
+                    return;
+                }
+
+                let sectionTitle = $(this).text().trim().toLowerCase();
+                for(let i = 0; i < sectionTexts.length; i++) {
+                    if (sectionTitle === sectionTexts[i].toLowerCase()) {
+                        result = $(this).parent();
+                        return;
+                    }
+                }
+            });
+
+            return result;
+        }
+
+        updatePopupCost() {
+            let popup = $('div.item-popup');
+            if(popup.length === 0) {
+                return;
+            }
+
+            let itemInfo = popup.find('div.item-info');
+            if(itemInfo.length === 0) {
+                return;
+            }
+
+            let costSection = this.getPopupSection(itemInfo, ['cost', 'progress cost', 'purchase cost']);
+            if(costSection === undefined) {
+                return;
+            }
+
+            costSection.find('span').each(function() {
+                let spanText = $(this).text();
+                let match = PopupCostRegex.exec(spanText);
+                if(match === null) {
+                    console.warn("Unknown Cost Value: " + spanText);
+                    return;
+                }
+
+                let costId = match[2].toLowerCase().trim();
+                let costValue = parseFloat(match[3]);
+                if(AE.playerState.resources[costId] === undefined) {
+                    console.warn("Unknown Cost Resource: " + costId);
+                    return;
+                }
+
+                let resourceDiv = AE.pageUtils.getResourceDiv(costId);
+                if(resourceDiv !== undefined && resourceDiv.length > 0) {
+                    resourceDiv.find('span.item-name').css('color', 'red');
+                    return;
+                }
+
+                let vitalsDiv = AE.pageUtils.getVitalsRow(costId);
+                if(vitalsDiv !== undefined && vitalsDiv.length > 0) {
+                    $(vitalsDiv.children()[0]).css('color', 'red');
+                    return;
+                }
             });
         }
 
@@ -2435,6 +2542,8 @@ let AE = (function($){
             this.updateMainTabCustomBar();
 
             this.updateTaskButtonDisplay();
+
+            // AE.pageUtils.updatePopupCost();
         }
 
         updateAutomation(delta) {

@@ -10,6 +10,8 @@
 
     const ItemPopupCompareDivContent = `<span id="at_item_popup_compare_text" class="separate"></span>`;
 
+    const PopupCostRegex = /(max )*(.*)?:\s+([0-9\.]+)/i;
+
     class AEPageUtils {
         getVitalValues(id) {
             let bar = $('.bars').find('tr[data-key="' + id + '"');
@@ -56,6 +58,40 @@
                 max: max,
                 pct: pct
             };
+        }
+
+        getResourceDiv(id) {
+            id = id.trim().toLowerCase();
+            let result = undefined;
+            $('div.res-list').find('div.rsrc').each(function() {
+                if(result !== undefined) {
+                    return;
+                }
+
+                let resourceKey = $(this).data('key').trim().toLowerCase();
+                if(resourceKey === id) {
+                    result = $(this);
+                }
+            });
+
+            return result;
+        }
+
+        getVitalsRow(id) {
+            id = id.trim().toLowerCase();
+            let result = undefined;
+            $('table.bars').find('tr').each(function() {
+                if(result !== undefined) {
+                    return;
+                }
+
+                let vitalKey = $(this).data('key').trim().toLowerCase();
+                if(vitalKey === id) {
+                    result = $(this);
+                }
+            });
+
+            return result;
         }
 
         checkData(){
@@ -174,6 +210,70 @@
 
                 let itemName = nameEl.innerText;
                 AE.itemUtils.processItemEntry($(this), itemName, nameEl, conf);
+            });
+        }
+
+        getPopupSection(root, sectionTexts) {
+            let result = undefined;
+            root.find('div.note-text').each(function() {
+                if(result !== undefined){
+                    return;
+                }
+
+                let sectionTitle = $(this).text().trim().toLowerCase();
+                for(let i = 0; i < sectionTexts.length; i++) {
+                    if (sectionTitle === sectionTexts[i].toLowerCase()) {
+                        result = $(this).parent();
+                        return;
+                    }
+                }
+            });
+
+            return result;
+        }
+
+        updatePopupCost() {
+            let popup = $('div.item-popup');
+            if(popup.length === 0) {
+                return;
+            }
+
+            let itemInfo = popup.find('div.item-info');
+            if(itemInfo.length === 0) {
+                return;
+            }
+
+            let costSection = this.getPopupSection(itemInfo, ['cost', 'progress cost', 'purchase cost']);
+            if(costSection === undefined) {
+                return;
+            }
+
+            costSection.find('span').each(function() {
+                let spanText = $(this).text();
+                let match = PopupCostRegex.exec(spanText);
+                if(match === null) {
+                    console.warn("Unknown Cost Value: " + spanText);
+                    return;
+                }
+
+                let costId = match[2].toLowerCase().trim();
+                let costValue = parseFloat(match[3]);
+                if(AE.playerState.resources[costId] === undefined) {
+                    console.warn("Unknown Cost Resource: " + costId);
+                    return;
+                }
+
+                let resourceDiv = AE.pageUtils.getResourceDiv(costId);
+                if(resourceDiv !== undefined && resourceDiv.length > 0) {
+                    resourceDiv.find('span.item-name').css('color', 'red');
+                    return;
+                }
+
+                let vitalsDiv = AE.pageUtils.getVitalsRow(costId);
+                if(vitalsDiv !== undefined && vitalsDiv.length > 0) {
+                    $(vitalsDiv.children()[0]).css('color', 'red');
+                    return;
+                }
             });
         }
 
