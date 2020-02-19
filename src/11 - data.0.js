@@ -4,7 +4,7 @@
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1731;
+            this.gameVersionKongregate = 1751;
             this.gameVersionLerpingLemur = 1358;
             this.gameVersionOutdatedThreshold = 1400;
         }
@@ -179,15 +179,15 @@
             'urn'],
         'Gems': ['buygem', 'gembox', 'craftgem', 'gemcraft', 'terraform', 'artificialmountain', 'advgems', 'gembag'].concat(AE.data.GemImbueTaskIds),
         'Skills': ['focus', 'tendanimals', 'mythicanvil', 'geas', 'sabbat', 'a_travel', 'sombercandle', 'phylactory', 'animalfriend',
-            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher', 'windchime', 'ball'],
+            'summonfamiliar', 'voidtouch', 'a_oppress', 'alkahest', 'dreamcatcher', 'windchime', 'ball', 'threesidecoin'],
         'Dreams': ['dreamweaver', 'starwish'],
         'Puppeteer': ['assemblemachina', 'assembleautomata', 'assemblepuppet', 'futurecouncil', 'machinalabor', 'puppetshow', 'strongstrings', 'ebonwoodsupply'],
         'Home': ['fireplane', 'airplane', 'waterplane', 'earthplane', 'cellar', 'clockworkexpansion'],
         'Runes': ['up_runecrafter', 'craftrune', 'craftfirerune', 'craftearthrune', 'craftairrune', 'craftwaterrune', 'craftspiritrune'],
-        'Misc': ['wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon', 'wishingwells', 'mendicant'],
+        'Misc': ['wizardhall', 'hattrick', 'craftschematic', 'indulge', 'timesiphon', 'wishingwells', 'mendicant', 'siegeperilous'],
         'Alchemy and Potions': ['gatherherbs', 'alembic', 'herbbag', 'crucible', 'mortar', 'cauldron'],
         'Mounts and Travel': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
-            'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1'],
+            'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1', 'tent'],
         'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies'],
         'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich', 'proxies2'],
         'Class': AE.data.ClassUpgradeTasks,
@@ -205,7 +205,8 @@
         'winterhowl', 'preparetree', 'good_sacrifice', 'w_scholar', 'w_fame', 'w_multitask', 'w_fazbit4', 'alkahest', 'restless', 'dreamcatcher',
         'herbbag', 'prism', 'gembag', 'up_pack', 'windchime', 'urn', 'ball', 'crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'mortar',
         'waxcandle', 'wishingwells', 'breviary', 'pot', 'strongstrings', 'proxies', 'up_ten_map', 'alembic', 'crucible', 'celerity',
-        'mendicant', 'cauldron', 'cellar', 'puppetspies', 'clockworkexpansion', 'magichorseshoe', 'up_map1', 'proxies2', 'ebonwoodsupply'];
+        'mendicant', 'cauldron', 'cellar', 'puppetspies', 'clockworkexpansion', 'magichorseshoe', 'up_map1', 'proxies2', 'ebonwoodsupply',
+        'threesidecoin', 'tent', 'siegeperilous'];
 
 
 
