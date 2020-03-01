@@ -46,5 +46,11 @@ exports.loadData = function(settings) {
         }
     }
 
+    let deprecatedModules = ['winter'];
+    for(let i = 0; i < deprecatedModules.length; i++) {
+        let moduleFile = deprecatedModules[i];
+        settings.rawdata['mod_' + moduleFile] = loadJsonFile(settings, "modules\\" + moduleFile);
+    }
+
     return true;
 };

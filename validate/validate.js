@@ -465,6 +465,7 @@ function doValidate() {
     validateModule(settings.rawdata.hall, 'hall');
     validateModule(settings.rawdata.mod_patrons, 'mod_patrons');
     validateModule(settings.rawdata.mod_winter, 'mod_winter');
+    validateModule(settings.rawdata.mod_shian, 'mod_shian');
     validateModule(settings.rawdata.mod_puppeteer, 'mod_puppeteer');
     validateModule(settings.rawdata.mod_combattutorial, 'mod_combattutorial');
 
