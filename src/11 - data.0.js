@@ -4,7 +4,7 @@
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1831;
+            this.gameVersionKongregate = 1884;
             this.gameVersionLerpingLemur = 1358;
             this.gameVersionOutdatedThreshold = 1400;
         }

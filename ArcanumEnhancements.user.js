@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1831
+// @version      1884
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -154,7 +154,7 @@ let AE = (function($){
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1831;
+            this.gameVersionKongregate = 1884;
             this.gameVersionLerpingLemur = 1358;
             this.gameVersionOutdatedThreshold = 1400;
         }
@@ -1377,6 +1377,7 @@ let AE = (function($){
             this.combatStats = {};
             this.mode = DamageMeterMode.Default;
             this.lastCombatLogLine = undefined;
+            this.hasChanged = true;
         }
 
         load() {
@@ -1400,7 +1401,11 @@ let AE = (function($){
             meter.hide();
         }
 
-        update(delta) {
+        updateUI(delta) {
+            if(this.hasChanged === false) {
+                return;
+            }
+
             let meter = $('#at_dmg_meter');
             if(meter.length === 0){
                 return;
@@ -1413,12 +1418,8 @@ let AE = (function($){
                 return;
             }
 
+            this.hasChanged = false;
             meter.show();
-
-            this.parseCombatants();
-            this.parseCombatLog();
-
-            this.combatStats.combatTime += delta / 1000;
 
             switch (this.mode) {
                 case DamageMeterMode.Default:
@@ -1447,6 +1448,18 @@ let AE = (function($){
                     break;
                 }
             }
+        }
+
+        update(delta) {
+            let meter = $('#at_dmg_meter');
+            if(meter.length === 0){
+                return;
+            }
+
+            this.parseCombatants();
+            this.parseCombatLog();
+
+            this.combatStats.combatTime += delta / 1000;
         }
 
         refreshValuesSource(sourceData){
@@ -1479,12 +1492,16 @@ let AE = (function($){
         }
 
         syncCombatants(target, source) {
+            let result = false;
             for(let i = 0; i < source.length; i++) {
                 let name = source[i];
                 if(target[name] === undefined){
-                    target[name] = 0
+                    target[name] = 0;
+                    result = true;
                 }
             }
+
+            return result;
         }
 
         parseCombatants() {
@@ -1509,7 +1526,9 @@ let AE = (function($){
                 npcNames.push(name);
             });
 
-            this.syncCombatants(this.combatStats.friend, npcNames);
+            if(this.syncCombatants(this.combatStats.friend, npcNames) === true) {
+                this.hasChanged = true;
+            }
 
             npcNames = [];
             $(groups[1]).find('span.name-span').each(function() {
@@ -1521,7 +1540,9 @@ let AE = (function($){
                 npcNames.push(name);
             });
 
-            this.syncCombatants(this.combatStats.foe, npcNames);
+            if(this.syncCombatants(this.combatStats.foe, npcNames) === true) {
+                this.hasChanged = true;
+            }
         }
 
         parseCombatLog() {
@@ -1556,7 +1577,9 @@ let AE = (function($){
             }
 
             for(let i = 0; i < newCombatLogLines.length; i++){
-                this.parseCombatLogLine(newCombatLogLines[i]);
+                if(this.parseCombatLogLine(newCombatLogLines[i]) === true) {
+                    this.hasChanged = true;
+                }
             }
 
             AE.damageMeter.lastCombatLogLine = newCombatLogLines[0];
@@ -1656,7 +1679,7 @@ let AE = (function($){
 
         parseCombatLogLine(line) {
             if(line === "") {
-                return;
+                return false;
             }
 
             let lineStats = {
@@ -1714,7 +1737,7 @@ let AE = (function($){
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
@@ -1741,7 +1764,7 @@ let AE = (function($){
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
@@ -1770,13 +1793,15 @@ let AE = (function($){
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
             if(AE.config.enableDebugMode === true) {
                 this.combatStats.unhandledLines.push(lineStats);
             }
+
+            return false;
         }
     }
 
@@ -3649,7 +3674,8 @@ let AE = (function($){
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);
             }
 
-            AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), 250);
+            AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), AE.config.minUpdateInterval);
+            AE.interval.add(AE.damageMeter.updateUI.bind(AE.damageMeter), 1000);
         }
 
         checkVersion() {

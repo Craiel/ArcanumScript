@@ -51,6 +51,7 @@
             this.combatStats = {};
             this.mode = DamageMeterMode.Default;
             this.lastCombatLogLine = undefined;
+            this.hasChanged = true;
         }
 
         load() {
@@ -74,7 +75,11 @@
             meter.hide();
         }
 
-        update(delta) {
+        updateUI(delta) {
+            if(this.hasChanged === false) {
+                return;
+            }
+
             let meter = $('#at_dmg_meter');
             if(meter.length === 0){
                 return;
@@ -87,12 +92,8 @@
                 return;
             }
 
+            this.hasChanged = false;
             meter.show();
-
-            this.parseCombatants();
-            this.parseCombatLog();
-
-            this.combatStats.combatTime += delta / 1000;
 
             switch (this.mode) {
                 case DamageMeterMode.Default:
@@ -121,6 +122,18 @@
                     break;
                 }
             }
+        }
+
+        update(delta) {
+            let meter = $('#at_dmg_meter');
+            if(meter.length === 0){
+                return;
+            }
+
+            this.parseCombatants();
+            this.parseCombatLog();
+
+            this.combatStats.combatTime += delta / 1000;
         }
 
         refreshValuesSource(sourceData){
@@ -153,12 +166,16 @@
         }
 
         syncCombatants(target, source) {
+            let result = false;
             for(let i = 0; i < source.length; i++) {
                 let name = source[i];
                 if(target[name] === undefined){
-                    target[name] = 0
+                    target[name] = 0;
+                    result = true;
                 }
             }
+
+            return result;
         }
 
         parseCombatants() {
@@ -183,7 +200,9 @@
                 npcNames.push(name);
             });
 
-            this.syncCombatants(this.combatStats.friend, npcNames);
+            if(this.syncCombatants(this.combatStats.friend, npcNames) === true) {
+                this.hasChanged = true;
+            }
 
             npcNames = [];
             $(groups[1]).find('span.name-span').each(function() {
@@ -195,7 +214,9 @@
                 npcNames.push(name);
             });
 
-            this.syncCombatants(this.combatStats.foe, npcNames);
+            if(this.syncCombatants(this.combatStats.foe, npcNames) === true) {
+                this.hasChanged = true;
+            }
         }
 
         parseCombatLog() {
@@ -230,7 +251,9 @@
             }
 
             for(let i = 0; i < newCombatLogLines.length; i++){
-                this.parseCombatLogLine(newCombatLogLines[i]);
+                if(this.parseCombatLogLine(newCombatLogLines[i]) === true) {
+                    this.hasChanged = true;
+                }
             }
 
             AE.damageMeter.lastCombatLogLine = newCombatLogLines[0];
@@ -330,7 +353,7 @@
 
         parseCombatLogLine(line) {
             if(line === "") {
-                return;
+                return false;
             }
 
             let lineStats = {
@@ -388,7 +411,7 @@
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
@@ -415,7 +438,7 @@
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
@@ -444,13 +467,15 @@
                 }
 
                 if(handled === true) {
-                    return;
+                    return true;
                 }
             }
 
             if(AE.config.enableDebugMode === true) {
                 this.combatStats.unhandledLines.push(lineStats);
             }
+
+            return false;
         }
     }
 

@@ -39,7 +39,8 @@
                 AE.interval.add(AE.quickSlots.update.bind(AE.quickSlots), AE.config.minUpdateInterval);
             }
 
-            AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), 250);
+            AE.interval.add(AE.damageMeter.update.bind(AE.damageMeter), AE.config.minUpdateInterval);
+            AE.interval.add(AE.damageMeter.updateUI.bind(AE.damageMeter), 1000);
         }
 
         checkVersion() {
