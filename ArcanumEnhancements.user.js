@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1884.1
+// @version      1943
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -9,6 +9,8 @@
 // @match        https://www.lerpinglemur.com/arcanum/*
 // @match        http://game312933.konggames.com/gamez/0031/2933/*
 // @match        https://game312933.konggames.com/gamez/0031/2933/*
+// @match        https://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
+// @match        http://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
 // @run-at       document-idle
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
@@ -154,7 +156,7 @@ let AE = (function($){
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1884;
+            this.gameVersionKongregate = 1943;
             this.gameVersionLerpingLemur = 1358;
             this.gameVersionOutdatedThreshold = 1400;
         }
@@ -366,7 +368,7 @@ let AE = (function($){
 (function($) {
     'use strict';
     
-    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"scrolls":{"max":10},"starcharts":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"timerune":{"max":3,"name":"time runes"},"bodies":{"max":1},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"Codices"},"tomes":{"max":5,"name":"Tomes"},"gems":{"max":5},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3},"voidgem":{"max":3},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"sulphur":{"max":10},"mercury":{"max":10},"space":{"max":0,"name":"floor space"},"mana":{"max":5,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"w_fazbitknowledge":{"max":100000,"name":"fazbit's knowledge"},"snowman":{"max":5,"name":"snomunculus"},"livingsnow":{"max":20},"frost":{"max":80},"winteressence":{"max":10000,"name":"essence of winter"},"emblemofice":{"max":1,"name":"emblem of ice"},"ice":{"max":0},"snowdrop":{"max":5,"name":"snowdrop"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
+    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"scrolls":{"max":10},"starcharts":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"timerune":{"max":3,"name":"time runes"},"bodies":{"max":1},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"Codices"},"tomes":{"max":5,"name":"Tomes"},"gems":{"max":5},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3},"voidgem":{"max":3},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"sulphur":{"max":10},"mercury":{"max":10},"space":{"max":0,"name":"floor space"},"mana":{"max":5,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"w_fazbitknowledge":{"max":100000,"name":"fazbit's knowledge"},"snowman":{"max":5,"name":"snomunculus"},"livingsnow":{"max":20},"frost":{"max":80},"winteressence":{"max":10000,"name":"essence of winter"},"emblemofice":{"max":1,"name":"emblem of ice"},"ice":{"max":0},"snowdrop":{"max":5,"name":"snowdrop"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
     
     AE.data.PotionData = {"pot_poisonward":{"name":"poison ward"},"pot_mana1":{"name":"draught of mana"},"pot_cparalysis":{"name":"cure paralysis"},"pot_csilence":{"name":"cure silence"},"pot_heal1":{"name":"minor healing"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of stamina"},"pot_ironskin":{"name":"ironskin salve"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_waterward":{"name":"water ward"},"pot_fireward":{"name":"fire ward"},"pot_heal3":{"name":"healing potion"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"}};
     

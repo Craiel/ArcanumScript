@@ -329,6 +329,7 @@ function validateLootBlock(settings, value) {
 
             case '%':
             case 'body':
+            case 'maxlevel':
             case 'max': {
                 let value = validateStat.validateOne(settings, propertyValue);
                 if(value === undefined) {
@@ -463,6 +464,32 @@ function validateAttackBlock(settings, value) {
                 }
 
                 break;
+            }
+
+            case 'harmless': {
+                switch(typeof propertyValue) {
+                    case 'string': {
+                        let temp = propertyValue.toLowerCase().trim();
+                        if(temp === "true") {
+                            settings.logWarning(property + " is boolean type but serialized as string");
+                            return false;
+                        }
+
+                        if(temp === "false") {
+                            settings.logWarning(property + " is boolean type but serialized as string");
+                            return false;
+                        }
+
+                        break;
+                    }
+
+                    case 'boolean': {
+                        return true;
+                    }
+                }
+
+                settings.logError(property + " value is invalid: " + propertyValue + ' (' + typeof propertyValue + ')');
+                return false;
             }
 
             case 'id':
@@ -644,6 +671,7 @@ exports.validateSecondPass = function(settings, object, key) {
             break;
         }
 
+        case 'show':
         case 'action': {
             settings.logWarning(key + " not currently handled");
             break;
@@ -749,6 +777,8 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'reverse':
         case 'stat':
         case 'unused':
+        case 'silent':
+        case 'secret':
         case 'repeat': {
             switch(typeof propertyData) {
                 case 'string': {
@@ -801,6 +831,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'choice':
         case 'need':
         case 'once':
+        case 'show':
         case 'tags': {
             if(Array.isArray(propertyData)) {
                 targetData[property] = propertyData;
@@ -831,6 +862,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'buyname':
         case 'actdesc':
         case 'title':
+        case 'group':
         case 'name': {
             targetData[property] = propertyData;
             return true;
