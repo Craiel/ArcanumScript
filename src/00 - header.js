@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1943
+// @version      2020.0.8.0
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -11,6 +11,8 @@
 // @match        https://game312933.konggames.com/gamez/0031/2933/*
 // @match        https://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
 // @match        http://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
+// @match        http://shokkuno.gitlab.io/arcanum/
+// @match        https://shokkuno.gitlab.io/arcanum/
 // @run-at       document-idle
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==

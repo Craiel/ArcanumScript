@@ -4,8 +4,14 @@
 
     class AEPageStyle {
         update(delta) {
+            this.updateDarkModeState();
+
             this.updateTopBarBuffView();
             this.updateResourceList();
+        }
+
+        updateDarkModeState() {
+            AE.pageStyle.darkModeActive = $('body').hasClass('darkmode');
         }
 
         updateTopBarBuffView() {
@@ -51,7 +57,7 @@
                 } else if(values.pct <= 0.1) {
                     el.css('color', '#ff8000');
                 } else {
-                    el.css('color', '#000000');
+                    el.css('color', '#999');
                 }
             });
         }

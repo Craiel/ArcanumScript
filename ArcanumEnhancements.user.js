@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      1943
+// @version      2020.0.8.0
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -11,6 +11,8 @@
 // @match        https://game312933.konggames.com/gamez/0031/2933/*
 // @match        https://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
 // @match        http://www.kongregate.com/games/lerpinglemur/theory-of-magic/*
+// @match        http://shokkuno.gitlab.io/arcanum/
+// @match        https://shokkuno.gitlab.io/arcanum/
 // @run-at       document-idle
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
@@ -156,9 +158,6 @@ let AE = (function($){
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1943;
-            this.gameVersionLerpingLemur = 1358;
-            this.gameVersionOutdatedThreshold = 1400;
         }
 
         getTaskGroup(dataId) {
@@ -368,15 +367,15 @@ let AE = (function($){
 (function($) {
     'use strict';
     
-    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"scrolls":{"max":10},"starcharts":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"timerune":{"max":3,"name":"time runes"},"bodies":{"max":1},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"Codices"},"tomes":{"max":5,"name":"Tomes"},"gems":{"max":5},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3},"voidgem":{"max":3},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"sulphur":{"max":10},"mercury":{"max":10},"space":{"max":0,"name":"floor space"},"mana":{"max":5,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"w_fazbitknowledge":{"max":100000,"name":"fazbit's knowledge"},"snowman":{"max":5,"name":"snomunculus"},"livingsnow":{"max":20},"frost":{"max":80},"winteressence":{"max":10000,"name":"essence of winter"},"emblemofice":{"max":1,"name":"emblem of ice"},"ice":{"max":0},"snowdrop":{"max":5,"name":"snowdrop"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
+    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"scrolls":{"max":10},"starcharts":{"max":10},"tapestries":{"max":3,"name":"tapestries"},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"timerune":{"max":3,"name":"time runes"},"bodies":{"max":1},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"codices"},"tomes":{"max":5,"name":"tomes"},"gems":{"max":5},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3},"voidgem":{"max":3},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"space":{"max":0,"name":"floor space"},"mana":{"max":5,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"w_fazbitknowledge":{"max":100000,"name":"fazbit's knowledge"},"snowman":{"max":5,"name":"snomunculus"},"livingsnow":{"max":20},"frost":{"max":80},"winteressence":{"max":10000,"name":"essence of winter"},"emblemofice":{"max":1,"name":"emblem of ice"},"ice":{"max":0},"snowdrop":{"max":5,"name":"snowdrop"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
     
-    AE.data.PotionData = {"pot_poisonward":{"name":"poison ward"},"pot_mana1":{"name":"draught of mana"},"pot_cparalysis":{"name":"cure paralysis"},"pot_csilence":{"name":"cure silence"},"pot_heal1":{"name":"minor healing"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of stamina"},"pot_ironskin":{"name":"ironskin salve"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_waterward":{"name":"water ward"},"pot_fireward":{"name":"fire ward"},"pot_heal3":{"name":"healing potion"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"}};
+    AE.data.PotionData = {"pot_poisonward":{"name":"poison ward"},"pot_breath1":{"name":"portion of waterbreathing"},"pot_mana1":{"name":"draught of mana"},"pot_cparalysis":{"name":"cure paralysis"},"pot_csilence":{"name":"cure silence"},"pot_heal1":{"name":"minor healing"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of stamina"},"pot_ironskin":{"name":"ironskin salve"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_waterward":{"name":"water ward"},"pot_fireward":{"name":"fire ward"},"pot_heal3":{"name":"healing potion"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"}};
     
-    AE.data.EnchantItemNotations = ["of luck","of mana","of energy","of life","of regeneration","of biting","of fire","of water","of earth","of air","of speed","of clarity","of spells","of sanity","of refreshing","of spells","of deception","of colors"];
-    AE.data.EnchantNameLookup = {"sturdy armor":"en_armor1","luck":"en_luck1","mana":"en_mana1","energy":"en_energy1","life pool":"en_hp1","regeneration":"en_regen1","biting edge":"en_dmg1","quick boots":"en_speed1","fire ring":"en_fire1","water ring":"en_water1","earth ring":"en_earth1","air ring":"en_air1","quick boots ii":"en_speed2","quick boots iii":"en_speed3","quick boots iv":"en_speed4","clarity":"en_clarity","spellcraft":"en_scraft","courage":"en_courage","sanity":"en_sanity","refreshment":"en_stam1","keen weapon":"en_tohit1","spellcraft ii":"en_scraft2","deception":"en_decep","prismatic ring":"en_prisma"};
-    AE.data.EnchantData = {"en_armor1":{"level":1,"name":"sturdy armor","target":["armor"],"mods":{"armor":1}},"en_luck1":{"level":1,"name":"luck","target":["ring"],"mods":{"luck":1}},"en_mana1":{"level":1,"name":"mana","target":["ring"],"mods":{"mana":{"max":1}}},"en_energy1":{"level":1,"name":"energy","target":["ring"],"mods":{"mana":{"rate":0.01}}},"en_hp1":{"level":1,"name":"life pool","target":["neck"],"mods":{"hp":{"max":4}}},"en_regen1":{"level":2,"name":"regeneration","target":["neck"],"mods":{"hp":{"rate":0.2}}},"en_dmg1":{"level":1,"name":"biting edge","target":["weapon"],"mods":{"attack":{"bonus":1}}},"en_speed1":{"level":1,"name":"quick boots","target":["feet"],"mods":{"speed":0.5}},"en_fire1":{"level":1,"name":"fire ring","target":["ring"],"mods":{"firelore":{"max":1},"fire":{"rate":0.2}}},"en_water1":{"level":1,"name":"water ring","target":["ring"],"mods":{"waterlore":{"max":1},"water":{"rate":0.2}}},"en_earth1":{"level":1,"name":"earth ring","target":["ring"],"mods":{"earthlore":{"max":1},"earth":{"rate":0.2}}},"en_air1":{"level":1,"name":"air ring","target":["ring"],"mods":{"airlore":{"max":1},"air":{"rate":0.2}}},"en_speed2":{"level":3,"name":"quick boots II","target":["feet"],"mods":{"speed":2}},"en_speed3":{"level":5,"name":"quick boots III","target":["feet"],"mods":{"speed":5}},"en_speed4":{"level":7,"name":"quick boots IV","target":["feet"],"mods":{"speed":8}},"en_clarity":{"level":3,"name":"clarity","target":["head"],"mods":{"bf":{"rate":-0.5}}},"en_scraft":{"level":3,"name":"spellcraft","target":["armor","weapon"],"mods":{"scraft":1}},"en_courage":{"level":5,"name":"courage","target":["waist"],"mods":{"unease":{"rate":-0.5}}},"en_sanity":{"level":6,"name":"sanity","target":["head"],"mods":{"madness":{"rate":-1}}},"en_stam1":{"level":7,"name":"refreshment","target":["ring"],"mods":{"stamina":{"rate":0.3}}},"en_tohit1":{"level":1,"name":"keen weapon","target":["weapon"],"mods":{"attack":{"tohit":2}}},"en_scraft2":{"level":6,"name":"spellcraft II","target":["armor","weapon"],"mods":{"scraft":2}},"en_decep":{"level":9,"name":"deception","target":["back"],"mods":{"trickery":2}},"en_prisma":{"level":8,"name":"prismatic ring","target":["ring"],"mods":{"prismatic":{"rate":0.5}}}};
+    AE.data.EnchantItemNotations = ["lucky","%i of %s","%i of %s","%i of life","%i of %s","%i of biting","%i of biting","%i of biting","%i of speed","of Pyromancy","of Hydromancy","of Geomancy","of Aeromancy","%i of the salamander","of the Ifrit","of the Sun Dog","%i of the crab","%i of the otter","%i of the Pisces","%i of the vole","of the Welver","of the Delver","%i of the sparrow","of the Eagle","of the Albatross","%i of speed","%i of speed","%i of speed","%i of %s","%i of spells","%i of %s","%i of %s","%i of %s","%i of %s","%i of spells","%i of spells","%i of spells","%i of %s","of the light","of darkness","%i of colors"];
+    AE.data.EnchantNameLookup = {"sturdy armor":"en_armor1","luck":"en_luck1","mana":"en_mana1","energy":"en_energy1","life pool":"en_hp1","regeneration":"en_regen1","biting edge":"en_dmg3","quick boots":"en_speed1","pyromancy":"en_firelore1","hydromancy":"en_waterlore1","geomancy":"en_earthlore1","aeromancy":"en_airlore1","fire ring":"en_fire1","ifrit's ring":"en_fire2","sun dog's ring":"en_fire3","crabs's ring":"en_water1","otters's ring":"en_water2","pisces' ring":"en_water3","vole's ring":"en_earth1","worms's ring":"en_earth2","delver's ring":"en_earth3","sparrow's ring":"en_air1","eagle's ring":"en_air2","albatross's ring":"en_air3","quick boots ii":"en_speed2","quick boots iii":"en_speed3","quick boots iv":"en_speed4","clarity":"en_clarity2","spellcraft":"en_scraft","courage":"en_courage","sanity":"en_sanity","refreshment":"en_stam1","keen weapon":"en_tohit2","spellcraft ii":"en_scraft2","spellcraft iii":"en_scraft3","spellcraft iv":"en_scraft4","deception":"en_decep","lumos":"en_lightcloak","shadow":"en_shadowcloak","prismatic ring":"en_prisma"};
+    AE.data.EnchantData = {"en_armor1":{"level":1,"name":"sturdy armor","target":["armor"],"mods":{}},"en_luck1":{"level":1,"name":"luck","target":["ring"],"mods":{}},"en_mana1":{"level":1,"name":"mana","target":["ring"],"mods":{}},"en_energy1":{"level":1,"name":"energy","target":["ring"],"mods":{}},"en_hp1":{"level":1,"name":"life pool","target":["neck"],"mods":{}},"en_regen1":{"level":2,"name":"regeneration","target":["neck"],"mods":{}},"en_dmg1":{"level":1,"name":"biting edge","target":["weapon"],"mods":{}},"en_dmg2":{"level":3,"name":"biting edge","target":["weapon"],"mods":{}},"en_dmg3":{"level":5,"name":"biting edge","target":["weapon"],"mods":{}},"en_speed1":{"level":1,"name":"quick boots","target":["feet"],"mods":{}},"en_firelore1":{"level":8,"name":"Pyromancy","target":["ring"],"mods":{}},"en_waterlore1":{"level":8,"name":"Hydromancy","target":["ring"],"mods":{}},"en_earthlore1":{"level":8,"name":"Geomancy","target":["ring"],"mods":{}},"en_airlore1":{"level":8,"name":"Aeromancy","target":["ring"],"mods":{}},"en_fire1":{"level":3,"name":"fire ring","target":["ring"],"mods":{}},"en_fire2":{"level":2,"name":"Ifrit's ring","target":["ring"],"mods":{}},"en_fire3":{"level":3,"name":"Sun Dog's ring","target":["ring"],"mods":{}},"en_water1":{"level":3,"name":"crabs's ring","target":["ring"],"mods":{}},"en_water2":{"level":2,"name":"otters's ring","target":["ring"],"mods":{}},"en_water3":{"level":3,"name":"Pisces' ring","target":["ring"],"mods":{}},"en_earth1":{"level":3,"name":"vole's ring","target":["ring"],"mods":{}},"en_earth2":{"level":5,"name":"Worms's Ring","target":["ring"],"mods":{}},"en_earth3":{"level":3,"name":"Delver's ring","target":["ring"],"mods":{}},"en_air1":{"level":1,"name":"Sparrow's ring","target":["ring"],"mods":{}},"en_air2":{"level":2,"name":"Eagle's ring","target":["ring"],"mods":{}},"en_air3":{"level":3,"name":"Albatross's ring","target":["ring"],"mods":{}},"en_speed2":{"level":3,"name":"quick boots II","target":["feet"],"mods":{}},"en_speed3":{"level":5,"name":"quick boots III","target":["feet"],"mods":{}},"en_speed4":{"level":7,"name":"quick boots IV","target":["feet"],"mods":{}},"en_clarity":{"level":3,"name":"clarity","target":["head"],"mods":{}},"en_scraft":{"level":3,"name":"spellcraft","target":["armor","weapon"],"mods":{}},"en_courage":{"level":5,"name":"courage","target":["waist"],"mods":{}},"en_sanity":{"level":6,"name":"sanity","target":["head"],"mods":{}},"en_clarity2":{"level":7,"name":"clarity","target":["head"],"mods":{}},"en_stam1":{"level":7,"name":"refreshment","target":["ring"],"mods":{}},"en_tohit1":{"level":1,"name":"keen weapon","target":["weapon"],"mods":{}},"en_scraft2":{"level":6,"name":"spellcraft II","target":["armor","weapon"],"mods":{}},"en_tohit2":{"level":2,"name":"keen weapon","target":["weapon"],"mods":{}},"en_scraft3":{"level":8,"name":"spellcraft III","target":["armor","weapon"],"mods":{}},"en_scraft4":{"level":10,"name":"spellcraft IV","target":["armor","weapon"],"mods":{}},"en_decep":{"level":9,"name":"deception","target":["back"],"mods":{}},"en_lightcloak":{"level":9,"name":"Lumos","target":["back"],"mods":{}},"en_shadowcloak":{"level":9,"name":"Shadow","target":["back"],"mods":{}},"en_prisma":{"level":8,"name":"prismatic ring","target":["ring"],"mods":{}}};
     
-    AE.data.MaterialData = {"silk":{"level":1},"cotton":{"level":0},"stone":{"level":0},"leather":{"level":0},"wood":{"level":0},"bone":{"level":2},"bronze":{"level":2},"iron":{"level":3},"steel":{"level":4},"dragonscale":{"level":7},"basiliskhide":{"level":6},"quicksteel":{"level":5},"mithril":{"level":7},"ebonwood":{"level":8},"idrasil":{"level":8},"ethereal":{"level":8},"adamant":{"level":9},"crimsonice":{"level":5},"coldsteel":{"level":5},"permafrost":{"level":7}};
+    AE.data.MaterialData = {"silk":{"level":1},"cotton":{"level":0},"stone":{"level":0},"glass":{"level":2},"leather":{"level":0},"wood":{"level":0},"bone":{"level":2},"ivory":{"level":4},"mat_gold":{"level":4},"mat_ruby":{"level":6},"bronze":{"level":2},"iron":{"level":3},"steel":{"level":4},"dragonscale":{"level":7},"basiliskhide":{"level":6},"quicksteel":{"level":5},"mithril":{"level":7},"ebonwood":{"level":8},"idrasil":{"level":8},"ethereal":{"level":8},"adamant":{"level":9},"crimsonice":{"level":5},"coldsteel":{"level":5},"permafrost":{"level":7}};
     
     AE.data.HomeData = {"alcove":{"name":"alcove","size":5},"earthspire":{"name":"earthen spire","size":300},"atticbedroom":{"name":"Attic Bedroom","size":10},"innroom":{"name":"Lodge at Inn","size":12},"hut":{"name":"hut","size":15},"camp":{"name":"camp","size":14},"wagon":{"name":"tinker's wagon","size":12},"cottage":{"name":"cottage","size":20},"house":{"name":"house","size":30},"shop":{"name":"shop","size":25},"inn":{"name":"inn","size":50},"lodge":{"name":"lodge","size":30},"gabledhouse":{"name":"gabled mansion","size":65},"halftimber":{"name":"half-timber house","size":75},"cave":{"name":"cave","size":25},"pavilion":{"name":"pavilion","size":50},"hauntedmanse":{"name":"haunted manse","size":75},"ancientruins":{"name":"ancient ruins","size":110},"tower":{"name":"tower","size":55},"lighthouse":{"name":"lighthouse","size":80},"cataract":{"name":"cataract","size":70},"citadel":{"name":"citadel","size":200},"academy":{"name":"academy","size":300},"temple":{"name":"temple","size":200},"magetower":{"name":"mage tower","size":420},"sm_idrasil":{"name":"idrasil seedling","size":300},"palace":{"name":"palace","size":400},"castle":{"name":"castle","size":400},"cove":{"name":"cove","size":350},"volcano":{"name":"volcanic lair","size":200},"cavern":{"name":"cavern","size":200},"grove":{"name":"Enchanted Grove","size":420},"island":{"name":"Shrouded Isle","size":420},"wildcamp":{"name":"wild's encampment","size":40},"shianpagoda":{"name":"elegant pagoda","size":550},"clockworkhome":{"name":"clockwork home","size":50}};
     AE.data.HomeNameLookup = {"alcove":"alcove","earthen spire":"earthspire","attic bedroom":"atticbedroom","lodge at inn":"innroom","hut":"hut","camp":"camp","tinker's wagon":"wagon","cottage":"cottage","house":"house","shop":"shop","inn":"inn","lodge":"lodge","gabled mansion":"gabledhouse","half-timber house":"halftimber","cave":"cave","pavilion":"pavilion","haunted manse":"hauntedmanse","ancient ruins":"ancientruins","tower":"tower","lighthouse":"lighthouse","cataract":"cataract","citadel":"citadel","academy":"academy","temple":"temple","mage tower":"magetower","idrasil seedling":"sm_idrasil","palace":"palace","castle":"castle","cove":"cove","volcanic lair":"volcano","cavern":"cavern","enchanted grove":"grove","shrouded isle":"island","wild's encampment":"wildcamp","elegant pagoda":"shianpagoda","clockwork home":"clockworkhome"};
@@ -1253,7 +1252,6 @@ let AE = (function($){
                 quickSlotPresetNames: {},
                 mainScreenAlternateDisplay: false,
                 enchantScreenGroupedDisplay: false,
-                gameVersion: undefined,
                 sanctum: {}
             };
         }
@@ -2318,8 +2316,14 @@ let AE = (function($){
 
     class AEPageStyle {
         update(delta) {
+            this.updateDarkModeState();
+
             this.updateTopBarBuffView();
             this.updateResourceList();
+        }
+
+        updateDarkModeState() {
+            AE.pageStyle.darkModeActive = $('body').hasClass('darkmode');
         }
 
         updateTopBarBuffView() {
@@ -2365,7 +2369,7 @@ let AE = (function($){
                 } else if(values.pct <= 0.1) {
                     el.css('color', '#ff8000');
                 } else {
-                    el.css('color', '#000000');
+                    el.css('color', '#999');
                 }
             });
         }
@@ -2678,7 +2682,7 @@ let AE = (function($){
         }
 
         createImbueAllButton() {
-            let existing = $('#at_imbue_gems');
+            let existing = $('#at_imbue_gems_btn');
             if(existing.length !== 0) {
                 existing.remove();
             }
@@ -2700,7 +2704,6 @@ let AE = (function($){
             }
 
             this.imbueGemCraftButtonPinned = false;
-            let imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
             let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
             imbueSpanBtn.click({keys: activeImbueKeys}, function(event) {
                 if(event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
@@ -2713,10 +2716,8 @@ let AE = (function($){
                 }
             });
 
-            imbueSpan.append(imbueSpanBtn);
-
             let button = this.taskButtons[activeImbueKeys[0]].btn;
-            $(button).parent().before(imbueSpan);
+            $(button).parent().before(imbueSpanBtn);
         }
 
         clickTaskButton(key) {
@@ -2730,7 +2731,7 @@ let AE = (function($){
 
         moveTaskButtonsToOriginalParents(){
             for(let key in this.taskButtons) {
-                let el = $(this.taskButtons[key].btn).parent();
+                let el = $(this.taskButtons[key].btn);
                 let parent = this.taskButtonOriginalParents[key];
 
                 // Relocate the button
@@ -2758,7 +2759,7 @@ let AE = (function($){
 
             for(let key in this.taskButtons) {
                 let data = this.taskButtons[key];
-                let el = $(data.btn).parent();
+                let el = $(data.btn);
                 el.detach();
 
                 let groupName = AE.data.getTaskGroup(key);
@@ -2833,7 +2834,7 @@ let AE = (function($){
                 return;
             }
 
-            this.activeButtonRoot.find('span.task-btn').each(function() {
+            this.activeButtonRoot.find('button.task-btn').each(function() {
                 let el = $(this);
                 let dataKey = el.data("key");
                 if(dataKey === undefined){
@@ -2841,7 +2842,7 @@ let AE = (function($){
                 }
 
                 let buttonData = {
-                    btn: el.children()[0],
+                    btn: el,
                     isLocked: el.hasClass('locked'),
                     isRunnable: el.hasClass('runnable'),
                     isUpgrade: AE.data.UpgradeTasks.includes(dataKey),
@@ -3639,7 +3640,7 @@ let AE = (function($){
 (function($) {
     'use strict';
 
-    const VersionRegex = /.*build#\s*([0-9]+)/i;
+    const ValidGameVersions = ['vers pseudo_stable 0.8.1', 'vers 0.8.0'];
 
     class AELoader {
         load() {
@@ -3687,37 +3688,16 @@ let AE = (function($){
                 return;
             }
 
-            let rawText = versionSpan.text();
-            let parse = VersionRegex.exec(rawText);
-            if(parse === undefined || parse === null || parse.length !== 2) {
-                console.warn("Unknown Version: " + rawText);
-                return;
-            }
-
-            let version = parseInt(parse[1]);
-            if(AE.settings.data.gameVersion === version){
-                // Same version
-                return;
-            }
-
-            if(AE.settings.data.gameVersion !== undefined){
-                // Version has changed, check how
-                if(AE.settings.data.gameVersion > version){
-                    console.error("Game version degraded, was " + AE.settings.data.gameVersion + " now at " + version);
-                } else {
-                    AE.log("Game Version updated, was " + AE.settings.data.gameVersion + " now at " + version)
+            let rawText = versionSpan.text().trim();
+            for(let i = 0; i < ValidGameVersions.length; i++){
+                let specialVersion = ValidGameVersions[i];
+                if(rawText === specialVersion){
+                    console.log("Detected Game Version: '" + rawText + "'");
+                    return;
                 }
-            } else {
-                // First time start
-                AE.log("Game version initialized to " + version);
             }
 
-            AE.settings.data.gameVersion = version;
-            AE.settings.save();
-
-            if(version < AE.data.gameVersionOutdatedThreshold) {
-                alert("You are running a very old version of the game: " + version + " latest should be " + AE.data.gameVersionKongregate + " or higher\n\n • Recommended version to play is 'Theory of Magic on Kongregate'");
-            }
+            console.warn("Unknown Version: " + rawText);
         }
 
         checkForOtherScripts() {

@@ -155,7 +155,7 @@
         }
 
         createImbueAllButton() {
-            let existing = $('#at_imbue_gems');
+            let existing = $('#at_imbue_gems_btn');
             if(existing.length !== 0) {
                 existing.remove();
             }
@@ -177,7 +177,6 @@
             }
 
             this.imbueGemCraftButtonPinned = false;
-            let imbueSpan = $('<span id="at_imbue_gems" class="task-btn hidable"></span>');
             let imbueSpanBtn = $('<button id="at_imbue_gems_btn" class="wrapped-btn">Imbue All Gems</button>')
             imbueSpanBtn.click({keys: activeImbueKeys}, function(event) {
                 if(event !== undefined && event.originalEvent !== undefined && event.originalEvent.ctrlKey === true) {
@@ -190,10 +189,8 @@
                 }
             });
 
-            imbueSpan.append(imbueSpanBtn);
-
             let button = this.taskButtons[activeImbueKeys[0]].btn;
-            $(button).parent().before(imbueSpan);
+            $(button).parent().before(imbueSpanBtn);
         }
 
         clickTaskButton(key) {
@@ -207,7 +204,7 @@
 
         moveTaskButtonsToOriginalParents(){
             for(let key in this.taskButtons) {
-                let el = $(this.taskButtons[key].btn).parent();
+                let el = $(this.taskButtons[key].btn);
                 let parent = this.taskButtonOriginalParents[key];
 
                 // Relocate the button
@@ -235,7 +232,7 @@
 
             for(let key in this.taskButtons) {
                 let data = this.taskButtons[key];
-                let el = $(data.btn).parent();
+                let el = $(data.btn);
                 el.detach();
 
                 let groupName = AE.data.getTaskGroup(key);
@@ -310,7 +307,7 @@
                 return;
             }
 
-            this.activeButtonRoot.find('span.task-btn').each(function() {
+            this.activeButtonRoot.find('button.task-btn').each(function() {
                 let el = $(this);
                 let dataKey = el.data("key");
                 if(dataKey === undefined){
@@ -318,7 +315,7 @@
                 }
 
                 let buttonData = {
-                    btn: el.children()[0],
+                    btn: el,
                     isLocked: el.hasClass('locked'),
                     isRunnable: el.hasClass('runnable'),
                     isUpgrade: AE.data.UpgradeTasks.includes(dataKey),

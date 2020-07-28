@@ -568,6 +568,7 @@ exports.validateSecondPass = function(settings, object, key) {
         case 'once':
         case 'effect':
         case 'resist':
+        case 'alter':
         case 'mod': {
             validateModificationBlock(settings, object, key);
             break;
@@ -731,11 +732,14 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'dist':
         case 'distance':
         case 'level':
+        case 'enchants':
+        case 'properties':
         case 'duration':
         case 'bonus':
         case 'cd':
         case 'max':
         case 'val':
+        case 'rate':
         case 'scale':
         case 'length': {
             switch (typeof propertyData) {
@@ -852,6 +856,8 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'alias':
         case 'slot':
         case 'log':
+        case 'start':
+        case 'bars':
         case 'fill':
         case 'desc':
         case 'sym':
@@ -886,6 +892,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'buy':
         case 'effect':
         case 'mod':
+        case 'alter':
         case 'result':
         case 'run':
         case 'cost': {

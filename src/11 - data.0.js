@@ -4,9 +4,6 @@
 
     class AEData {
         constructor() {
-            this.gameVersionKongregate = 1943;
-            this.gameVersionLerpingLemur = 1358;
-            this.gameVersionOutdatedThreshold = 1400;
         }
 
         getTaskGroup(dataId) {

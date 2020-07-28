@@ -2,7 +2,7 @@
 (function($) {
     'use strict';
 
-    const VersionRegex = /.*build#\s*([0-9]+)/i;
+    const ValidGameVersions = ['vers pseudo_stable 0.8.1', 'vers 0.8.0'];
 
     class AELoader {
         load() {
@@ -50,37 +50,16 @@
                 return;
             }
 
-            let rawText = versionSpan.text();
-            let parse = VersionRegex.exec(rawText);
-            if(parse === undefined || parse === null || parse.length !== 2) {
-                console.warn("Unknown Version: " + rawText);
-                return;
-            }
-
-            let version = parseInt(parse[1]);
-            if(AE.settings.data.gameVersion === version){
-                // Same version
-                return;
-            }
-
-            if(AE.settings.data.gameVersion !== undefined){
-                // Version has changed, check how
-                if(AE.settings.data.gameVersion > version){
-                    console.error("Game version degraded, was " + AE.settings.data.gameVersion + " now at " + version);
-                } else {
-                    AE.log("Game Version updated, was " + AE.settings.data.gameVersion + " now at " + version)
+            let rawText = versionSpan.text().trim();
+            for(let i = 0; i < ValidGameVersions.length; i++){
+                let specialVersion = ValidGameVersions[i];
+                if(rawText === specialVersion){
+                    console.log("Detected Game Version: '" + rawText + "'");
+                    return;
                 }
-            } else {
-                // First time start
-                AE.log("Game version initialized to " + version);
             }
 
-            AE.settings.data.gameVersion = version;
-            AE.settings.save();
-
-            if(version < AE.data.gameVersionOutdatedThreshold) {
-                alert("You are running a very old version of the game: " + version + " latest should be " + AE.data.gameVersionKongregate + " or higher\n\n • Recommended version to play is 'Theory of Magic on Kongregate'");
-            }
+            console.warn("Unknown Version: " + rawText);
         }
 
         checkForOtherScripts() {
