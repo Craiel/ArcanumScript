@@ -34,7 +34,7 @@
                 prop.fullName = prop.name;
             }
 
-            let countMatch =ItemCountRegex.exec(prop.name);
+            let countMatch = ItemCountRegex.exec(prop.name);
             if(countMatch !== null) {
                 prop.name = countMatch[1].trim();
                 prop.count = parseInt(countMatch[2]);
@@ -43,7 +43,7 @@
             // Handle potions
             for(let key in AE.data.PotionData) {
                 let potionData = AE.data.PotionData[key];
-                if (prop.name === potionData.name) {
+                if (prop.name.toLowerCase() === potionData.name) {
                     prop.type = AE.data.ItemType.Consumable;
                     prop.subType = AE.data.ConsumableSubType.Potion;
                     prop.isKnown = true;
@@ -72,7 +72,7 @@
             // Check for special items
             if (prop.isKnown === false) {
                 for(let key in AE.data.SpecialItems) {
-                    if(prop.name.includes(key)) {
+                    if(prop.name.toLowerCase().includes(key)) {
                         prop.type = AE.data.SpecialItems[key].type;
                         prop.subType = AE.data.SpecialItems[key].subType;
                         prop.isSpecialItem = true;
@@ -86,8 +86,12 @@
             if (prop.isKnown === false) {
                 for(let key in AE.data.MaterialData) {
                     let materialString = key+" ";
-                    if(prop.name.startsWith(materialString)) {
-                        prop.name = prop.name.replace(materialString, "").trim();
+                    if (AE.data.MaterialData[key].adj !== undefined) {
+                        materialString = AE.data.MaterialData[key].adj + " ";
+                    }
+
+                    if(prop.name.toLowerCase().startsWith(materialString)) {
+                        prop.name = prop.name.substr(materialString.length).trim();
                         prop.material = key;
                         prop.level = AE.data.MaterialData[key].level;
                         break;
@@ -98,7 +102,7 @@
             // Check if its an accessory
             if(prop.isKnown === false) {
                 for(let key in AE.data.Accessories) {
-                    if(prop.name === AE.data.Accessories[key].name) {
+                    if(prop.name.toLowerCase() === AE.data.Accessories[key].name) {
                         prop.type = AE.data.ItemType.Accessory;
                         prop.subType = AE.data.Accessories[key].subType;
                         if(prop.level === undefined) {
@@ -114,7 +118,7 @@
             // Check if its an Armor
             if(prop.isKnown === false) {
                 for(let key in AE.data.Armor) {
-                    if(prop.name === AE.data.Armor[key].name) {
+                    if(prop.name.toLowerCase() === AE.data.Armor[key].name) {
                         prop.type = AE.data.ItemType.Armor;
                         prop.subType = AE.data.Armor[key].subType;
                         if(prop.level === undefined) {
@@ -130,7 +134,7 @@
             // Check if its a Weapon
             if(prop.isKnown === false) {
                 for(let key in AE.data.Weapons) {
-                    if(prop.name === AE.data.Weapons[key].name) {
+                    if(prop.name.toLowerCase() === AE.data.Weapons[key].name) {
                         prop.type = AE.data.ItemType.Weapon;
                         prop.subType = AE.data.Weapons[key].subType;
                         if(prop.level === undefined) {

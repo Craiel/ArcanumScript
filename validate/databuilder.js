@@ -96,7 +96,8 @@ function buildMaterialData(source, target) {
     for(let key in source) {
         let materialData = source[key];
         let outData = {
-            level: materialData.level
+            level: materialData.level,
+            adj: materialData.adj
         };
 
         target.MaterialData[materialData.id] = outData;

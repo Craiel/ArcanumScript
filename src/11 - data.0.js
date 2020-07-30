@@ -145,6 +145,7 @@
         Mace: {name: 'mace', lvl: 3, subType: AE.data.WeaponSubType.Mace1H},
         WarHammer: {name: 'warhammer', lvl: 3, subType: AE.data.WeaponSubType.Mace2H},
         Spear: {name: 'spear', lvl: 2, subType: AE.data.WeaponSubType.Spear},
+        HomingDart: {name: 'homing dart', lvl: 0, subType: AE.data.WeaponSubType.Dagger }
     };
 
     AE.data.SpecialItems = {

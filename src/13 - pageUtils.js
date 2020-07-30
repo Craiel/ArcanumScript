@@ -195,7 +195,6 @@
             }
 
             this.fixTableLayout(itemTable);
-
             itemTable.find('.separate').each(function() {
                 let nameEl = $(this).children()[0];
 
@@ -203,7 +202,7 @@
                     $(this).find('button').each(function() {
                         let buttonText = $(this).text();
                         if(buttonText === "Equip") {
-                            $(this).parent().remove();
+                            $(this).remove();
                         }
                     });
                 }
