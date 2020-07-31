@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      2020.0.8.1
+// @version      2020.0.8.2
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -2428,20 +2428,16 @@ let AE = (function($){
                 return;
             }
 
-            root.find('span.task-btn').each(function() {
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
-
-                let buttonText = $(button).text().toLowerCase();
+            root.find('button.task-btn').each(function() {
+                let button = $(this);
+                let buttonText = button.text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
                 let homeKey = undefined;
                 for(let name in AE.data.HomeNameLookup) {
-                    if(buttonText.includes(name)) {
+                    if(buttonText.toLowerCase().includes(name)) {
                         homeKey = AE.data.HomeNameLookup[name];
                         break;
                     }
@@ -2451,7 +2447,7 @@ let AE = (function($){
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
+                button.text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
             });
         }
 
@@ -2465,20 +2461,17 @@ let AE = (function($){
                 return;
             }
 
-            root.find('span.task-btn').each(function() {
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
+            root.find('button.task-btn').each(function() {
+                let button = $(this);
 
-                let buttonText = $(button).text().toLowerCase();
+                let buttonText = button.text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
                 let mountKey = undefined;
                 for(let name in AE.data.MountNameLookup) {
-                    if(buttonText.includes(name)) {
+                    if(buttonText.toLowerCase().includes(name)) {
                         mountKey = AE.data.MountNameLookup[name];
                         break;
                     }
@@ -2488,7 +2481,7 @@ let AE = (function($){
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
+                button.text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
             });
         }
 

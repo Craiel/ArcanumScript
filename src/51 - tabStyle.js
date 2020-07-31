@@ -42,20 +42,16 @@
                 return;
             }
 
-            root.find('span.task-btn').each(function() {
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
-
-                let buttonText = $(button).text().toLowerCase();
+            root.find('button.task-btn').each(function() {
+                let button = $(this);
+                let buttonText = button.text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
                 let homeKey = undefined;
                 for(let name in AE.data.HomeNameLookup) {
-                    if(buttonText.includes(name)) {
+                    if(buttonText.toLowerCase().includes(name)) {
                         homeKey = AE.data.HomeNameLookup[name];
                         break;
                     }
@@ -65,7 +61,7 @@
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
+                button.text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
             });
         }
 
@@ -79,20 +75,17 @@
                 return;
             }
 
-            root.find('span.task-btn').each(function() {
-                let button = $(this).find('button');
-                if(button.length === 0) {
-                    return;
-                }
+            root.find('button.task-btn').each(function() {
+                let button = $(this);
 
-                let buttonText = $(button).text().toLowerCase();
+                let buttonText = button.text().toLowerCase();
                 if(buttonText.includes('(')) {
                     return;
                 }
 
                 let mountKey = undefined;
                 for(let name in AE.data.MountNameLookup) {
-                    if(buttonText.includes(name)) {
+                    if(buttonText.toLowerCase().includes(name)) {
                         mountKey = AE.data.MountNameLookup[name];
                         break;
                     }
@@ -102,7 +95,7 @@
                     return;
                 }
 
-                $(button).text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
+                button.text(buttonText + ' (' + AE.data.MountData[mountKey].distance + ')')
             });
         }
 
