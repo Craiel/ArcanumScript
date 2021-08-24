@@ -2,7 +2,7 @@
 (function($) {
     'use strict';
 
-    const ValidGameVersions = ['vers pseudo_stable 0.8.1', 'vers 0.8.0'];
+    const ValidGameVersions = ['vers pseudo_stable 0.8.1', 'vers 0.8.0', 'Version: pseudo_stable 0.10.4'];
 
     class AELoader {
         load() {
@@ -11,6 +11,7 @@
             AE.settings.load();
             AE.pageUtils.checkData();
             AE.playerState.initialize();
+            AE.storageBoost.initialize();
 
             this.checkVersion();
 
@@ -21,6 +22,7 @@
             AE.interval.add(AE.pageStyle.update.bind(AE.pageStyle), AE.config.uiUpdateInterval);
 
             AE.interval.add(AE.playerState.update.bind(AE.playerState), AE.config.minUpdateInterval);
+            AE.interval.add(AE.storageBoost.update.bind(AE.playerState), AE.config.minUpdateInterval);
 
             AE.interval.add(AE.tabStyle.update.bind(AE.tabStyle), AE.config.uiUpdateInterval);
 
@@ -31,6 +33,7 @@
 
             AE.interval.add(AE.tabStyleEquip.updateUI.bind(AE.tabStyleEquip), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleAdventure.updateUI.bind(AE.tabStyleAdventure), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleHome.updateUI.bind(AE.tabStyleHome), AE.config.uiUpdateInterval);
 
             //AE.interval.add(AE.sanctum.update.bind(AE.sanctum), AE.config.minUpdateInterval);
             //AE.interval.add(AE.sanctum.updateUI.bind(AE.sanctum), AE.config.uiUpdateInterval);

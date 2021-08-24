@@ -547,6 +547,10 @@ function validateAttackBlock(settings, value) {
                 break;
             }
 
+            case 'self.resist.shadow': {
+                break;
+            }
+
             default: {
                 console.log(value);
                 console.log(propertyValue);

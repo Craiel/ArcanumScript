@@ -16,6 +16,7 @@
                 quickSlotPresetNames: {},
                 mainScreenAlternateDisplay: false,
                 enchantScreenGroupedDisplay: false,
+                storageBoostApplied: false,
                 sanctum: {}
             };
         }

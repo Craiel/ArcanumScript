@@ -1,0 +1,66 @@
+[
+	{
+		"id": "sect_main",
+		"name": "main",
+		"locked": false
+	},
+	{
+		"id": "sect_skills",
+		"name": "skills",
+		"require": "apprentice"
+	},
+	{
+		"id": "sect_home",
+		"name": "home",
+		"require": "apprentice"
+	},
+	{
+		"id": "sect_raid",
+		"name": "adventure",
+		"require": "evt_helper"
+	},
+	{
+		"id": "sect_player",
+		"name": "player",
+		"locked": false
+	},
+	{
+		"id": "sect_spells",
+		"name": "spells",
+		"require": "g.spellbook.value>0"
+	},
+	{
+		"id": "sect_scraft",
+		"name": "spellcraft",
+		"require": "spellcraft"
+	},
+	{
+		"id": "sect_equip",
+		"name": "equip",
+		"require": "apprentice"
+	},
+	{
+		"id": "sect_bestiary",
+		"name": "bestiary",
+		"require": "g.bestiary>0||g.lore>=11"
+	},
+	{
+		"id": "sect_enchant",
+		"name": "enchanting",
+		"require": "enchanting"
+	},
+	{
+		"id": "sect_craft",
+		"name": "crafting"
+	},
+	{
+		"id": "sect_potions",
+		"name": "potions",
+		"require": "g.potions>0"
+	},
+	{
+		"id": "sect_minions",
+		"name": "minions",
+		"require": "g.minions>0"
+	}
+]

@@ -1,1 +1,1 @@
-node validate.js ../../Arcanum/data
+node validate.js ../GameData
