@@ -43,6 +43,7 @@
     };
 
     const CombatHitRegex = /(.*)\shits\s(strongly )*(.*?):\s*([0-9\.]+)\s*(\(absorb: ([0-9\.]+)%\))*/i;
+    const CombatHitRegex2 = /(.+?)\s+hits\s+(.+?)\s+for\s+(\d+\.?\d*)\s+damage/i;
     const CombatParryRegex = /(.*)\s(parries|dodges)\s(.*)/i;
     const CombatLifeStealRegex = /(.*)\ssteals\s([0-9\.]+)\slife/i;
 
@@ -76,19 +77,19 @@
         }
 
         updateUI(delta) {
+            // Only show in adventure tab
+            let root = $('div.adventure');
+            if(root.length === 0){
+                this.hide();
+                return;
+            }
+
             if(this.hasChanged === false) {
                 return;
             }
 
             let meter = $('#at_dmg_meter');
             if(meter.length === 0){
-                return;
-            }
-
-            // Only show in adventure tab
-            let root = $('div.adventure');
-            if(root.length === 0){
-                this.hide();
                 return;
             }
 
@@ -189,7 +190,7 @@
                 return;
             }
 
-            //friends are first group
+            // friends are first group
             let npcNames = [];
             $(groups[0]).find('span.name-span').each(function() {
                 let name = $(this).children()[0].innerText.trim();
@@ -351,6 +352,40 @@
             this.combatStats.otherFoe[id] += value;
         }
 
+        parseCombatLogLineHit(line){
+            let hitResult = CombatHitRegex.exec(line);
+            if(hitResult !== null) {
+                let result = {};
+                result.source = hitResult[1].trim();
+                result.strongHit = hitResult[2] !== undefined;
+                result.target = hitResult[3].trim();
+                result.dmg = parseFloat(hitResult[4]);
+
+                if(hitResult[6] !== undefined) {
+                    result.absorb = parseFloat(hitResult[6]);
+                } else {
+                    result.absorb = undefined;
+                }
+
+                return result;
+            }
+
+            hitResult = CombatHitRegex2.exec(line);
+            if(hitResult !== null) {
+                let result = {};
+                result.source = hitResult[1].trim();
+                result.strongHit = false;
+                result.target = hitResult[2].trim();
+                result.dmg = parseFloat(hitResult[3]);
+
+                result.absorb = undefined;
+
+                return result;
+            }
+
+            return null;
+        }
+
         parseCombatLogLine(line) {
             if(line === "") {
                 return false;
@@ -361,32 +396,22 @@
                 f: Object.keys(this.combatStats.foe)
             };
 
-            let hitResult = CombatHitRegex.exec(line);
+            let hitResult = this.parseCombatLogLineHit(line);
             if(hitResult !== null) {
                 lineStats.hit = true;
 
-                let source = hitResult[1].trim();
-                let strongHit = hitResult[2] !== undefined;
-                let target = hitResult[3].trim();
-                let dmg = parseFloat(hitResult[4]);
-
-                let absorb = undefined;
-                if(hitResult[6] !== undefined) {
-                    absorb = parseFloat(hitResult[6]);
-                }
-
                 let handled = false;
                 for(let name in this.combatStats.friend) {
-                    if (name === target) {
-                        this.combatStats.damage.received += dmg;
+                    if (name === hitResult.target) {
+                        this.combatStats.damage.received += hitResult.dmg;
 
-                        this.combatRegisterDamageTaken(source, dmg);
-                        if(strongHit === true) {
+                        this.combatRegisterDamageTaken(hitResult.source, hitResult.dmg);
+                        if(hitResult.strongHit === true) {
                             this.combatRegisterOtherFoe("crits");
                         }
 
-                        if(absorb !== undefined){
-                            this.combatRegisterOtherFriendly("absorb", absorb);
+                        if(hitResult.absorb !== undefined){
+                            this.combatRegisterOtherFriendly("absorb", hitResult.absorb);
                         }
 
                         handled = true;
@@ -394,16 +419,16 @@
                 }
 
                 for(let name in this.combatStats.foe) {
-                    if(name === target) {
-                        this.combatStats.damage.dealt += dmg;
+                    if(name === hitResult.target) {
+                        this.combatStats.damage.dealt += hitResult.dmg;
 
-                        this.combatRegisterDamageDone(source, dmg);
-                        if(strongHit === true) {
+                        this.combatRegisterDamageDone(hitResult.source, hitResult.dmg);
+                        if(hitResult.strongHit === true) {
                             this.combatRegisterOtherFriendly("crits");
                         }
 
-                        if(absorb !== undefined){
-                            this.combatRegisterOtherFoe("absorb", absorb);
+                        if(hitResult.absorb !== undefined){
+                            this.combatRegisterOtherFoe("absorb", hitResult.absorb);
                         }
 
                         handled = true;

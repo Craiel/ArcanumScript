@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      2021.0.10.4
+// @version      2025.0.11.1.3
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -21,6 +21,7 @@
 // ==/UserScript==
 
 // Game Addresses:
+// https://mathiashjelm.gitlab.io/arcanum/
 // https://www.lerpinglemur.com/arcanum/index.html
 // https://game312933.konggames.com/gamez/0031/2933/live/index.html
 
@@ -181,7 +182,10 @@ let AE = (function($){
         Main: 'main',
         Skills: 'skills',
         Home: 'home',
+        Furniture: 'furniture',
+        Converters: 'converters',
         Adventure: 'adventure',
+        Loot: 'loot',
         Player: 'player',
         Spells: 'spells',
         Spellcraft: 'spellcraft',
@@ -189,6 +193,7 @@ let AE = (function($){
         Bestiary: 'bestiary',
         Enchanting: 'enchanting',
         Potions: 'potions',
+        Glossary: 'glossary'
     };
 
     AE.data.ItemType = {
@@ -238,6 +243,7 @@ let AE = (function($){
         Waist: 'waist',
         Neck: 'neck',
         Finger: 'finger',
+        Trinket: 'trinket',
         Chest: 'chest',
         Shins: 'shins',
         Feet: 'feet'
@@ -246,19 +252,23 @@ let AE = (function($){
     AE.data.AccessorySubType = {
         Unknown: 'unknown',
         Ring: 'ring',
-        Neck: 'neck'
+        Neck: 'neck',
+        Trinket: 'trinket'
     };
 
     AE.data.Armor = {
         Gloves: {name: 'gloves', lvl: 1, subType: AE.data.ArmorSubType.Hands},
+        Gauntlets: {name: 'gauntlets', lvl: 5, subType: AE.data.ArmorSubType.Hands},
 
         Boots: {name: 'boots', lvl: 1, subType: AE.data.ArmorSubType.Feet},
 
         Greaves: {name: 'greaves', lvl: 1, subType: AE.data.ArmorSubType.Shins},
+        Pantaloons: {name: 'pantaloons', lvl: 1, subType: AE.data.ArmorSubType.Shins},
 
         Hat: {name: 'hat', lvl: 1, subType: AE.data.ArmorSubType.Head},
         Cap: {name: 'cap', lvl: 1, subType: AE.data.ArmorSubType.Head},
         Helm: {name: 'helm', lvl: 3, subType: AE.data.ArmorSubType.Head},
+        GoldHelm: {name: 'gold helm', lvl: 6, subType: AE.data.ArmorSubType.Head},
         ConicalHelm: {name: 'conical helm', lvl: 1, subType: AE.data.ArmorSubType.Head},
 
         Jerkin: {name: 'jerkin', lvl: 2, subType: AE.data.ArmorSubType.Chest},
@@ -285,11 +295,14 @@ let AE = (function($){
         Pendant: {name: 'pendant', lvl: 1, subType: AE.data.AccessorySubType.Neck},
         Collar: {name: 'collar', lvl: 1, subType: AE.data.AccessorySubType.Neck},
         Amulet: {name: 'amulet', lvl: 1, subType: AE.data.AccessorySubType.Neck},
-        Necklace: {name: 'necklace', lvl: 1, subType: AE.data.AccessorySubType.Neck}
+        Necklace: {name: 'necklace', lvl: 1, subType: AE.data.AccessorySubType.Neck},
+
+        ApprenticeQuill: {name: 'apprentice scribe\'s quill', lvl: 1, subType: AE.data.AccessorySubType.Trinket},
+        BotanicalKit: {name: 'botanical kit', lvl: 1, subType: AE.data.AccessorySubType.Trinket},
     };
 
     AE.data.Weapons = {
-        ShortSword: {name: 'shortsword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H},
+        Sword: {name: 'sword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H},
         Club: {name: 'club', lvl: 0, subType: AE.data.WeaponSubType.Mace1H},
         Cane: {name: 'cane', lvl: 1, subType: AE.data.WeaponSubType.Mace1H},
         Knife: {name: 'knife', lvl: 0, subType: AE.data.WeaponSubType.Dagger},
@@ -302,7 +315,10 @@ let AE = (function($){
         Mace: {name: 'mace', lvl: 3, subType: AE.data.WeaponSubType.Mace1H},
         WarHammer: {name: 'warhammer', lvl: 3, subType: AE.data.WeaponSubType.Mace2H},
         Spear: {name: 'spear', lvl: 2, subType: AE.data.WeaponSubType.Spear},
-        HomingDart: {name: 'homing dart', lvl: 0, subType: AE.data.WeaponSubType.Dagger }
+        HomingDart: {name: 'homing dart', lvl: 0, subType: AE.data.WeaponSubType.Dagger },
+        TrainingSword: {name: 'training sword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H },
+        TrainingHammer: {name: 'training hammer', lvl: 1, subType: AE.data.WeaponSubType.Mace2H },
+        TrainingKnife: {name: 'training knife', lvl: 1, subType: AE.data.WeaponSubType.Dagger },
     };
 
     AE.data.SpecialItems = {
@@ -343,7 +359,7 @@ let AE = (function($){
         'Alchemy and Potions': ['gatherherbs', 'alembic', 'herbbag', 'crucible', 'mortar', 'cauldron'],
         'Mounts and Travel': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
             'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1', 'tent'],
-        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies', 'fourleaf'],
+        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies', 'fourleaf', 'ablativebarrier'],
         'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich', 'proxies2'],
         'Class': AE.data.ClassUpgradeTasks,
 
@@ -598,6 +614,10 @@ let AE = (function($){
                     switch (subType) {
                         case AE.data.AccessorySubType.Neck: {
                             return [AE.data.ItemSlot.Neck];
+                        }
+
+                        case AE.data.AccessorySubType.Trinket: {
+                            return [AE.data.ItemSlot.Trinket];
                         }
 
                         case AE.data.AccessorySubType.Ring: {
@@ -1198,11 +1218,17 @@ let AE = (function($){
         }
 
         getEquippedItemToCompareFor(otherItem) {
-            if(otherItem.itemSlot === undefined){
+            let slots = otherItem.itemSlot;
+            if(slots === undefined){
                 return undefined;
             }
 
-            let equippedItems = this.getEquippedItems(otherItem.itemSlot);
+            if(slots.length === 1 && slots[0] === 'left' || slots[0] === 'right') {
+                // Always use both slots for weapons
+                slots = ['left', 'right'];
+            }
+
+            let equippedItems = this.getEquippedItems(slots);
             if(equippedItems === undefined || equippedItems.length === 0) {
                 return undefined;
             }
@@ -1377,6 +1403,7 @@ let AE = (function($){
     };
 
     const CombatHitRegex = /(.*)\shits\s(strongly )*(.*?):\s*([0-9\.]+)\s*(\(absorb: ([0-9\.]+)%\))*/i;
+    const CombatHitRegex2 = /(.+?)\s+hits\s+(.+?)\s+for\s+(\d+\.?\d*)\s+damage/i;
     const CombatParryRegex = /(.*)\s(parries|dodges)\s(.*)/i;
     const CombatLifeStealRegex = /(.*)\ssteals\s([0-9\.]+)\slife/i;
 
@@ -1410,19 +1437,19 @@ let AE = (function($){
         }
 
         updateUI(delta) {
+            // Only show in adventure tab
+            let root = $('div.adventure');
+            if(root.length === 0){
+                this.hide();
+                return;
+            }
+
             if(this.hasChanged === false) {
                 return;
             }
 
             let meter = $('#at_dmg_meter');
             if(meter.length === 0){
-                return;
-            }
-
-            // Only show in adventure tab
-            let root = $('div.adventure');
-            if(root.length === 0){
-                this.hide();
                 return;
             }
 
@@ -1523,7 +1550,7 @@ let AE = (function($){
                 return;
             }
 
-            //friends are first group
+            // friends are first group
             let npcNames = [];
             $(groups[0]).find('span.name-span').each(function() {
                 let name = $(this).children()[0].innerText.trim();
@@ -1685,6 +1712,40 @@ let AE = (function($){
             this.combatStats.otherFoe[id] += value;
         }
 
+        parseCombatLogLineHit(line){
+            let hitResult = CombatHitRegex.exec(line);
+            if(hitResult !== null) {
+                let result = {};
+                result.source = hitResult[1].trim();
+                result.strongHit = hitResult[2] !== undefined;
+                result.target = hitResult[3].trim();
+                result.dmg = parseFloat(hitResult[4]);
+
+                if(hitResult[6] !== undefined) {
+                    result.absorb = parseFloat(hitResult[6]);
+                } else {
+                    result.absorb = undefined;
+                }
+
+                return result;
+            }
+
+            hitResult = CombatHitRegex2.exec(line);
+            if(hitResult !== null) {
+                let result = {};
+                result.source = hitResult[1].trim();
+                result.strongHit = false;
+                result.target = hitResult[2].trim();
+                result.dmg = parseFloat(hitResult[3]);
+
+                result.absorb = undefined;
+
+                return result;
+            }
+
+            return null;
+        }
+
         parseCombatLogLine(line) {
             if(line === "") {
                 return false;
@@ -1695,32 +1756,22 @@ let AE = (function($){
                 f: Object.keys(this.combatStats.foe)
             };
 
-            let hitResult = CombatHitRegex.exec(line);
+            let hitResult = this.parseCombatLogLineHit(line);
             if(hitResult !== null) {
                 lineStats.hit = true;
 
-                let source = hitResult[1].trim();
-                let strongHit = hitResult[2] !== undefined;
-                let target = hitResult[3].trim();
-                let dmg = parseFloat(hitResult[4]);
-
-                let absorb = undefined;
-                if(hitResult[6] !== undefined) {
-                    absorb = parseFloat(hitResult[6]);
-                }
-
                 let handled = false;
                 for(let name in this.combatStats.friend) {
-                    if (name === target) {
-                        this.combatStats.damage.received += dmg;
+                    if (name === hitResult.target) {
+                        this.combatStats.damage.received += hitResult.dmg;
 
-                        this.combatRegisterDamageTaken(source, dmg);
-                        if(strongHit === true) {
+                        this.combatRegisterDamageTaken(hitResult.source, hitResult.dmg);
+                        if(hitResult.strongHit === true) {
                             this.combatRegisterOtherFoe("crits");
                         }
 
-                        if(absorb !== undefined){
-                            this.combatRegisterOtherFriendly("absorb", absorb);
+                        if(hitResult.absorb !== undefined){
+                            this.combatRegisterOtherFriendly("absorb", hitResult.absorb);
                         }
 
                         handled = true;
@@ -1728,16 +1779,16 @@ let AE = (function($){
                 }
 
                 for(let name in this.combatStats.foe) {
-                    if(name === target) {
-                        this.combatStats.damage.dealt += dmg;
+                    if(name === hitResult.target) {
+                        this.combatStats.damage.dealt += hitResult.dmg;
 
-                        this.combatRegisterDamageDone(source, dmg);
-                        if(strongHit === true) {
+                        this.combatRegisterDamageDone(hitResult.source, hitResult.dmg);
+                        if(hitResult.strongHit === true) {
                             this.combatRegisterOtherFriendly("crits");
                         }
 
-                        if(absorb !== undefined){
-                            this.combatRegisterOtherFoe("absorb", absorb);
+                        if(hitResult.absorb !== undefined){
+                            this.combatRegisterOtherFoe("absorb", hitResult.absorb);
                         }
 
                         handled = true;
@@ -2058,8 +2109,25 @@ let AE = (function($){
             for(let homeId in AE.data.HomeData) {
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let boostedValue = (10 + currentValue) * 5;
-                console.log(homeId + ": " + currentValue + " -> " + boostedValue);
+                if(AE.config.enableDebugMode === true) {
+                    console.log(homeId + ": " + currentValue + " -> " + boostedValue);
+                }
+
                 gameData[homeId].mod.space.max.value = boostedValue;
+            }
+
+            unsafeWindow.game.recalcSpace();
+
+            let spaceData = unsafeWindow.game.state.getData("homes");
+            for(let i = 0; i < spaceData.length; i++) {
+                let data = spaceData[i];
+                if(data.needORG === undefined) {
+                    data.needORG = data.need;
+                    data.need = function (t, o, _) {
+                        // Disable this check
+                        return true;
+                    }
+                }
             }
         }
 
@@ -2075,8 +2143,24 @@ let AE = (function($){
             for(let homeId in AE.data.HomeData) {
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let unboostedValue = (currentValue / 5) - 10;
-                console.log(homeId + ": " + currentValue + " -> " + unboostedValue);
+
+                if(AE.config.enableDebugMode === true) {
+                    console.log(homeId + ": " + currentValue + " -> " + unboostedValue);
+                }
+
                 gameData[homeId].mod.space.max.value = unboostedValue;
+            }
+
+            unsafeWindow.game.recalcSpace();
+
+            let spaceData = unsafeWindow.game.state.getData("homes");
+            for(let i = 0; i < spaceData.length; i++) {
+                let data = spaceData[i];
+                if(data.needORG !== undefined) {
+                    data.needORG = data.need;
+                    data.need = data.needORG;
+                    data.needORG = undefined;
+                }
             }
         }
     }
@@ -3304,7 +3388,9 @@ let AE = (function($){
         }
 
         updateUI(delta) {
-            if(AE.playerState.activeTab !== AE.data.GameTabs.Home) {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Home
+                && AE.playerState.activeTab != AE.data.GameTabs.Furniture
+                && AE.playerState.activeTab != AE.data.GameTabs.Converters) {
                 this.resetState();
                 return;
             }
@@ -3370,12 +3456,44 @@ let AE = (function($){
                     return;
                 }
 
-                button.text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
+                let homeSize = AE.data.HomeData[homeKey].size;
+                if(AE.settings.data.storageBoostApplied === true) {
+                    homeSize = (10 + homeSize) * 5;
+                }
+
+                button.text(buttonText + ' (' + homeSize + ')')
             });
         }
     }
 
     AE.tabStyleHome = new AETabStyleHome();
+
+})(window.jQuery); 
+ 
+// TabStyle - Equip
+(function($) {
+    'use strict';
+
+    class AETabStyleLoot {
+        constructor() {
+            this.resetState();
+        }
+
+        resetState() {
+        }
+
+        updateUI() {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Loot) {
+                this.resetState();
+                return;
+            }
+
+            AE.pageUtils.updateInventorySubContent({compareEquip: true});
+            AE.pageUtils.updateItemPopup();
+        }
+    }
+
+    AE.tabStyleLoot = new AETabStyleLoot();
 
 })(window.jQuery); 
  
@@ -3736,6 +3854,7 @@ let AE = (function($){
         }
 
         printDebugInfo() {
+            console.log(unsafeWindow.game);
             console.log(AE.damageMeter.combatStats);
         }
     }
@@ -3782,6 +3901,7 @@ let AE = (function($){
             AE.interval.add(AE.tabStyleEnchant.updateUI.bind(AE.tabStyleEnchant), AE.config.uiUpdateInterval);
 
             AE.interval.add(AE.tabStyleEquip.updateUI.bind(AE.tabStyleEquip), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleLoot.updateUI.bind(AE.tabStyleLoot), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleAdventure.updateUI.bind(AE.tabStyleAdventure), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleHome.updateUI.bind(AE.tabStyleHome), AE.config.uiUpdateInterval);
 

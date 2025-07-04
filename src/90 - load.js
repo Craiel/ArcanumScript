@@ -36,6 +36,7 @@
             AE.interval.add(AE.tabStyleEnchant.updateUI.bind(AE.tabStyleEnchant), AE.config.uiUpdateInterval);
 
             AE.interval.add(AE.tabStyleEquip.updateUI.bind(AE.tabStyleEquip), AE.config.uiUpdateInterval);
+            AE.interval.add(AE.tabStyleLoot.updateUI.bind(AE.tabStyleLoot), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleAdventure.updateUI.bind(AE.tabStyleAdventure), AE.config.uiUpdateInterval);
             AE.interval.add(AE.tabStyleHome.updateUI.bind(AE.tabStyleHome), AE.config.uiUpdateInterval);
 

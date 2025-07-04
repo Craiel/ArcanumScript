@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Arcanum Enhancements
-// @version      2021.0.10.4
+// @version      2025.0.11.1.3
 // @author       Craiel
 // @description  Automation
 // @updateURL    https://github.com/Craiel/ArcanumScript/raw/master/ArcanumEnhancements.user.js
@@ -21,6 +21,7 @@
 // ==/UserScript==
 
 // Game Addresses:
+// https://mathiashjelm.gitlab.io/arcanum/
 // https://www.lerpinglemur.com/arcanum/index.html
 // https://game312933.konggames.com/gamez/0031/2933/live/index.html
 

@@ -24,7 +24,10 @@
         Main: 'main',
         Skills: 'skills',
         Home: 'home',
+        Furniture: 'furniture',
+        Converters: 'converters',
         Adventure: 'adventure',
+        Loot: 'loot',
         Player: 'player',
         Spells: 'spells',
         Spellcraft: 'spellcraft',
@@ -32,6 +35,7 @@
         Bestiary: 'bestiary',
         Enchanting: 'enchanting',
         Potions: 'potions',
+        Glossary: 'glossary'
     };
 
     AE.data.ItemType = {
@@ -81,6 +85,7 @@
         Waist: 'waist',
         Neck: 'neck',
         Finger: 'finger',
+        Trinket: 'trinket',
         Chest: 'chest',
         Shins: 'shins',
         Feet: 'feet'
@@ -89,19 +94,23 @@
     AE.data.AccessorySubType = {
         Unknown: 'unknown',
         Ring: 'ring',
-        Neck: 'neck'
+        Neck: 'neck',
+        Trinket: 'trinket'
     };
 
     AE.data.Armor = {
         Gloves: {name: 'gloves', lvl: 1, subType: AE.data.ArmorSubType.Hands},
+        Gauntlets: {name: 'gauntlets', lvl: 5, subType: AE.data.ArmorSubType.Hands},
 
         Boots: {name: 'boots', lvl: 1, subType: AE.data.ArmorSubType.Feet},
 
         Greaves: {name: 'greaves', lvl: 1, subType: AE.data.ArmorSubType.Shins},
+        Pantaloons: {name: 'pantaloons', lvl: 1, subType: AE.data.ArmorSubType.Shins},
 
         Hat: {name: 'hat', lvl: 1, subType: AE.data.ArmorSubType.Head},
         Cap: {name: 'cap', lvl: 1, subType: AE.data.ArmorSubType.Head},
         Helm: {name: 'helm', lvl: 3, subType: AE.data.ArmorSubType.Head},
+        GoldHelm: {name: 'gold helm', lvl: 6, subType: AE.data.ArmorSubType.Head},
         ConicalHelm: {name: 'conical helm', lvl: 1, subType: AE.data.ArmorSubType.Head},
 
         Jerkin: {name: 'jerkin', lvl: 2, subType: AE.data.ArmorSubType.Chest},
@@ -128,11 +137,14 @@
         Pendant: {name: 'pendant', lvl: 1, subType: AE.data.AccessorySubType.Neck},
         Collar: {name: 'collar', lvl: 1, subType: AE.data.AccessorySubType.Neck},
         Amulet: {name: 'amulet', lvl: 1, subType: AE.data.AccessorySubType.Neck},
-        Necklace: {name: 'necklace', lvl: 1, subType: AE.data.AccessorySubType.Neck}
+        Necklace: {name: 'necklace', lvl: 1, subType: AE.data.AccessorySubType.Neck},
+
+        ApprenticeQuill: {name: 'apprentice scribe\'s quill', lvl: 1, subType: AE.data.AccessorySubType.Trinket},
+        BotanicalKit: {name: 'botanical kit', lvl: 1, subType: AE.data.AccessorySubType.Trinket},
     };
 
     AE.data.Weapons = {
-        ShortSword: {name: 'shortsword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H},
+        Sword: {name: 'sword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H},
         Club: {name: 'club', lvl: 0, subType: AE.data.WeaponSubType.Mace1H},
         Cane: {name: 'cane', lvl: 1, subType: AE.data.WeaponSubType.Mace1H},
         Knife: {name: 'knife', lvl: 0, subType: AE.data.WeaponSubType.Dagger},
@@ -145,7 +157,10 @@
         Mace: {name: 'mace', lvl: 3, subType: AE.data.WeaponSubType.Mace1H},
         WarHammer: {name: 'warhammer', lvl: 3, subType: AE.data.WeaponSubType.Mace2H},
         Spear: {name: 'spear', lvl: 2, subType: AE.data.WeaponSubType.Spear},
-        HomingDart: {name: 'homing dart', lvl: 0, subType: AE.data.WeaponSubType.Dagger }
+        HomingDart: {name: 'homing dart', lvl: 0, subType: AE.data.WeaponSubType.Dagger },
+        TrainingSword: {name: 'training sword', lvl: 1, subType: AE.data.WeaponSubType.Sword1H },
+        TrainingHammer: {name: 'training hammer', lvl: 1, subType: AE.data.WeaponSubType.Mace2H },
+        TrainingKnife: {name: 'training knife', lvl: 1, subType: AE.data.WeaponSubType.Dagger },
     };
 
     AE.data.SpecialItems = {
@@ -186,7 +201,7 @@
         'Alchemy and Potions': ['gatherherbs', 'alembic', 'herbbag', 'crucible', 'mortar', 'cauldron'],
         'Mounts and Travel': ['flyingcarpet', 'mule', 'oldnag', 'gelding', 'bayhorse', 'firecharger', 'fly', 'gryffonmount', 'firechariot', 'magicbroomstick',
             'ebonwoodbroomstick', 'pegasusmount', 'up_pack', 'up_ten_map', 'magichorseshoe', 'up_map1', 'tent'],
-        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies', 'fourleaf'],
+        'Stats': ['crystalmind', 'arcanebody', 'occultendure', 'carddeck', 'waxcandle', 'pot', 'proxies', 'celerity', 'puppetspies', 'fourleaf', 'ablativebarrier'],
         'Combat and Spells': ['codexannih', 'markhulcodex', 'maketitanhammer', 'up_lich', 'proxies2'],
         'Class': AE.data.ClassUpgradeTasks,
 

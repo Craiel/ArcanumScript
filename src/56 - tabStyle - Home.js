@@ -11,7 +11,9 @@
         }
 
         updateUI(delta) {
-            if(AE.playerState.activeTab !== AE.data.GameTabs.Home) {
+            if(AE.playerState.activeTab !== AE.data.GameTabs.Home
+                && AE.playerState.activeTab != AE.data.GameTabs.Furniture
+                && AE.playerState.activeTab != AE.data.GameTabs.Converters) {
                 this.resetState();
                 return;
             }
@@ -77,7 +79,12 @@
                     return;
                 }
 
-                button.text(buttonText + ' (' + AE.data.HomeData[homeKey].size + ')')
+                let homeSize = AE.data.HomeData[homeKey].size;
+                if(AE.settings.data.storageBoostApplied === true) {
+                    homeSize = (10 + homeSize) * 5;
+                }
+
+                button.text(buttonText + ' (' + homeSize + ')')
             });
         }
     }

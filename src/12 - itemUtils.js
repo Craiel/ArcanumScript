@@ -198,6 +198,10 @@
                             return [AE.data.ItemSlot.Neck];
                         }
 
+                        case AE.data.AccessorySubType.Trinket: {
+                            return [AE.data.ItemSlot.Trinket];
+                        }
+
                         case AE.data.AccessorySubType.Ring: {
                             return [AE.data.ItemSlot.Finger];
                         }

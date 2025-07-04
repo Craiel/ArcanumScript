@@ -97,11 +97,17 @@
         }
 
         getEquippedItemToCompareFor(otherItem) {
-            if(otherItem.itemSlot === undefined){
+            let slots = otherItem.itemSlot;
+            if(slots === undefined){
                 return undefined;
             }
 
-            let equippedItems = this.getEquippedItems(otherItem.itemSlot);
+            if(slots.length === 1 && slots[0] === 'left' || slots[0] === 'right') {
+                // Always use both slots for weapons
+                slots = ['left', 'right'];
+            }
+
+            let equippedItems = this.getEquippedItems(slots);
             if(equippedItems === undefined || equippedItems.length === 0) {
                 return undefined;
             }

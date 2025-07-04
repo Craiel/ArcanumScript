@@ -18,6 +18,7 @@
         }
 
         printDebugInfo() {
+            console.log(unsafeWindow.game);
             console.log(AE.damageMeter.combatStats);
         }
     }
