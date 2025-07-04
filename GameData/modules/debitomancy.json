@@ -1,0 +1,607 @@
+{
+	"module": "debitomancy",
+	"author": "wunarg, draxius",
+	"data": {
+		"skills": [
+			{
+				"id": "debitomancy",
+				"require": "g.debt>=10&&g.tier1>0",
+				"desc": "Master that which is owed, and those who owe it",
+				"level": 5,
+				"run": {
+					"stamina": 0.3,
+					"debt": 1
+				},
+				"result": {
+					"sp": 0.05
+				},
+				"mod": {
+					"research.max": 5,
+					"debt.max": 100
+				}
+			}
+		],
+		"tasks": [
+			{
+				"id": "burningrecords",
+				"name": "ever burning records",
+				"actname": "burning records",
+				"desc": "Accumulated records of your debt, forever burning, erasing",
+				"flavor": "The unending scroll's malicious counterpart.",
+				"require": "g.debitomancy>=6&&g.firelore>=7&&g.languages>=7",
+				"max": 1,
+				"length": 120,
+				"cost": {
+					"tomes": 2
+				},
+				"run": {
+					"stamina": 2,
+					"scrolls": 1,
+					"fire": 0.5
+				},
+				"effect": {
+					"debitomancy.exp": "g.debitomancy.rate*0.2"
+				},
+				"mod": {
+					"debt.convert.output.effect.debt": -0.00015,
+					"debitomancy.max": 2,
+					"debitomancy.rate": 0.2,
+					"firelore.max": 1,
+					"firelore.rate": 0.1
+				},
+				"group": "debt"
+			},
+			{
+				"id": "borrowmoney",
+				"name": "Borrow Money",
+				"verb": "borrowing",
+				"desc": "Borrow some fast money from people you know",
+				"require": "g.shopkeeping>=6||g.debitomancy>=1",
+				"perpetual": true,
+				"run": {
+					"debt": 20
+				},
+				"effect": {
+					"gold": 20,
+					"debitomancy.exp": "g.debitomancy.rate*0.2"
+				},
+				"group": "affluence"
+			},
+			{
+				"id": "prisonlabor",
+				"name": "prison Labor",
+				"verb": "cracking rocks",
+				"desc": "Manual labor to pay off your debt, a horrific thought for any self-respecting wizard",
+				"flavor": "No magic allowed, since the chronomancy incident.",
+				"require": "g.debitomancy>=1",
+				"need": "g.debt>=1",
+				"perpetual": true,
+				"length": 20,
+				"run": {
+					"stamina": 1,
+					"hp": 0.1
+				},
+				"result": {
+					"debt": -10
+				},
+				"at": {
+					"20": {
+						"run.stamina": -0.2
+					},
+					"50": {
+						"result.debt": -5
+					}
+				},
+				"group": "affluence"
+			},
+			{
+				"id": "encase_debt",
+				"name": "Expand Accounting Logs",
+				"verb": "inking papers",
+				"desc": "Perhaps another set of books can throw off the debt collectors?",
+				"flavor": "This paper trail never seems to end... and keeps getting more expensive!",
+				"tags": "t_languagework",
+				"require": "g.debitomancy>=10",
+				"perpetual": true,
+				"length": 15,
+				"cost": {
+					"scrolls": "Math.min(5+g.encase_debt*0.5, 130)",
+					"codices": "Math.min(1+g.encase_debt*0.1, 26)",
+					"tomes": "Math.min(0.1+g.encase_debt*0.01, 2.6)"
+				},
+				"run": {
+					"stamina": 1,
+					"research": 5
+				},
+				"mod": {
+					"debitomancy.max": "0.02//250/5",
+					"encase_debt.run.research": "0.5//250/1",
+					"encase_debt.length": "5//237/1",
+					"encase_debt.result.debt": -1
+				},
+				"effect": {
+					"debt": -1
+				},
+				"result": {
+					"debt": -1
+				},
+				"at": {
+					"100": {
+						"effect.debt": -1
+					},
+					"200": {
+						"effect.debt": -1
+					},
+					"300": {
+						"effect.debt": -1
+					},
+					"400": {
+						"effect.debt": -1
+					}
+				},
+				"group": "affluence"
+			},
+			{
+				"id": "lendgold",
+				"name": "lend Gold",
+				"verb": "moneylending",
+				"desc": "Lend gold to needy and foolish",
+				"tags": "t_languagework",
+				"require": "g.debitomancy>=3",
+				"length": 20,
+				"cost": {
+					"gold": 200
+				},
+				"run": {
+					"stamina": 1
+				},
+				"result": {
+					"gold": "150~300"
+				},
+				"at": {
+					"20": {
+						"length": -2,
+						"run.stamina": -0.2
+					}
+				},
+				"group": "affluence"
+			}
+		],
+		"upgrades": [
+			{
+				"id": "moredebt",
+				"name": "more lenders",
+				"desc": "Find more people to lend you money",
+				"require": "g.debitomancy>=2",
+				"max": 5,
+				"cost": {
+					"research": 1000,
+					"gold": 500,
+					"gems": 10
+				},
+				"mod": {
+					"debt.max": 500,
+					"debitomancy.max": 1,
+					"borrowmoney.run.debt": 10,
+					"borrowmoney.effect.gold": 10
+				},
+				"group": "debt"
+			},
+			{
+				"id": "creativeaccounting",
+				"name": "creative accounting",
+				"desc": "Just a few rounding errors here and there",
+				"require": "g.debitomancy>=4",
+				"max": 1,
+				"cost": {
+					"research": 1000,
+					"gold": 500,
+					"scrolls": 40
+				},
+				"mod": {
+					"debt.convert.output.effect.debt": -0.0001
+				},
+				"group": "debt"
+			},
+			{
+				"id": "cheaperdebt",
+				"name": "better lenders",
+				"desc": "With enough research you can find money lenders which don't have such ridiculous interest rates",
+				"require": "g.debitomancy>=6",
+				"max": 1,
+				"cost": {
+					"research": 2000
+				},
+				"mod": {
+					"debt.convert.input.gold": -0.0001,
+					"debitomancy.max": 1
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debttravel",
+				"name": "debtor's travels",
+				"desc": "If you travel far enough surely they can't find you again",
+				"require": "g.debitomancy>=3&&g.a_travel>0",
+				"max": 1,
+				"cost": {
+					"research": 500
+				},
+				"mod": {
+					"a_travel.effect.debt": -0.5,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debttrickery",
+				"name": "debtor's trickery",
+				"desc": "Fast money and faster hands make your debt disappear more quickly.",
+				"flavor": "Fake names, fake thoughts, whatever is needed to escape the debt",
+				"warn": true,
+				"warnMsg": "Debt and gold decreases from removing debt will both be faster with this upgrade",
+				"require": "g.debitomancy>=5&&g.trickery>=2",
+				"max": 1,
+				"cost": {
+					"research": 500
+				},
+				"mod": {
+					"trickery.mod.debt.convert.output.effect.debt": -0.0001,
+					"trickery.mod.debt.convert.input.gold": 0.0001,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debtgeomancy",
+				"name": "enchanted shackles",
+				"desc": "Sneak a geomancy enchantment into the prison labor camps to make it a bit easier",
+				"group": "debt",
+				"require": "g.earthlore>=7&&g.debitomancy>=6",
+				"max": 1,
+				"cost": {
+					"earthgem": 2,
+					"research": 500
+				},
+				"mod": {
+					"prisonlabor.run.stamina": -0.5,
+					"prisonlabor.result.debt": -5,
+					"debitomancy.max": 0.5
+				}
+			},
+			{
+				"id": "debtmurder",
+				"name": "debtor's murder",
+				"desc": "You don't owe debts to corpses",
+				"group": "debt",
+				"require": "g.debitomancy>=2&&g.murder>0",
+				"max": 1,
+				"cost": {
+					"research": 350
+				},
+				"result": {
+					"evilamt": 20
+				},
+				"mod": {
+					"murder.result.debt": -2,
+					"debitomancy.max": 0.5
+				}
+			},
+			{
+				"id": "debtdemon",
+				"name": "demonic money lending",
+				"desc": "Alternative collaterals are totally acceptable",
+				"flavor": "The pound of flesh, which I demand of him, is dearly bought; 'tis mine and I will have it.",
+				"require": "g.debitomancy>=2&&g.demonology>=7",
+				"max": 1,
+				"cost": {
+					"research": 1200
+				},
+				"mod": {
+					"lendgold.result.bloodgem": 0.2,
+					"debt.max": 250,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debtvirtuous",
+				"name": "virtuous credibility",
+				"desc": "When people trust you debt payments can be slowed a bit",
+				"need": "(g.virtue - g.evilamt)>=50",
+				"needtext": "Must have 50 more virtue than evil",
+				"require": "g.debitomancy>=4&&g.evil2==0&&g.good1==1",
+				"max": 1,
+				"cost": {
+					"research": 500,
+					"gold": 1000
+				},
+				"mod": {
+					"debt.convert.input.gold": -0.0002,
+					"debt.max": 250,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "curselendgold",
+				"name": "cursed gold",
+				"desc": "Mark your gold with terrible curses befalling those who don't pay back their debts to you",
+				"require": "g.debitomancy>=4&&g.shadowlore>=6",
+				"max": 1,
+				"cost": {
+					"research": 1000,
+					"gold": 300,
+					"shadowgem": 5
+				},
+				"mod": {
+					"lendgold.result.gold.min": 50,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "planarlendgold",
+				"name": "interplanar lending",
+				"desc": "Extend your money lending services to other planes",
+				"require": "g.debitomancy>=5&&g.planeslore>=10",
+				"max": 1,
+				"cost": {
+					"research": 2000,
+					"gold": 1000,
+					"managem": 5
+				},
+				"mod": {
+					"lendgold.result.gold.max": 250,
+					"lendgold.result.gold.min": 200,
+					"lendgold.cost.gold": 200,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "animallendgold",
+				"name": "ursine enforcement clause",
+				"desc": "Pursuant to the clause 3:3:63 of the standard lending contract, lapses in repayment may result in punitive damages to be delivered by ursa horribilis.",
+				"flavor": "Debtors exit, pursued by a bear.",
+				"require": "g.debitomancy>=9&&g.animals>=12",
+				"max": 1,
+				"cost": {
+					"research": 4000,
+					"gold": 3000,
+					"naturegem": 10
+				},
+				"mod": {
+					"lendgold.result.gold.max": 150,
+					"lendgold.cost.herbs": 1,
+					"debitomancy.max": 0.5
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debtrevelation",
+				"name": "debtor's revelation",
+				"desc": "What happens when you have less than nothing",
+				"require": "g.debitomancy>=5&&g.voidlore>0",
+				"warn": true,
+				"max": 1,
+				"cost": {
+					"research": 10000,
+					"managem": 20,
+					"debt": 100
+				},
+				"mod": {
+					"debt.rate": 0.1,
+					"debt.mod.research.rate": 0.01
+				},
+				"convert": {
+					"input": {
+						"gold": 0.01
+					},
+					"output": {
+						"effect": {
+							"debt": -0.01
+						}
+					}
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debtrevelation2",
+				"name": "debtor's epiphany",
+				"desc": "Imagination takes on substance",
+				"require": "g.debtrevelation>0",
+				"need": "g.debt>=2500",
+				"needtext": "Must have 2500 or more debt",
+				"max": 1,
+				"mod": {
+					"voidlore.max": 1
+				},
+				"group": "debt"
+			},
+			{
+				"id": "debtrevelation3",
+				"name": "debtor's enlightenment",
+				"desc": "An inverted world reveals itself on the other side of nothingness",
+				"require": "g.debtrevelation2>0",
+				"need": "g.debt>=5000",
+				"needtext": "Must have 5000 or more debt",
+				"max": 1,
+				"mod": {
+					"voidlore.max": 1
+				},
+				"group": "debt"
+			},
+			{
+				"id": "ashdebtrevelation1",
+				"name": "ashen truth",
+				"desc": "Amidst the charred ledgers, you realize the true banality of material possessions.",
+				"require": "g.debtrevelation>0&&g.encase_debt>=10",
+				"need": "g.encase_debt>=250",
+				"needtext": "Must have expanded accounting logs 250 or more times.",
+				"max": 1,
+				"mod": {
+					"voidlore.max": 1
+				},
+				"group": "debt"
+			},
+			{
+				"id": "ashdebtrevelation2",
+				"name": "ashen bliss",
+				"desc": "You liberate yourself from the chains of material existence as you destroy all records of yourself.",
+				"require": "g.ashdebtrevelation1>0",
+				"need": "g.encase_debt>=500",
+				"needtext": "Must have expanded accounting logs 500 or more times.",
+				"max": 1,
+				"mod": {
+					"voidlore.max": 1
+				},
+				"group": "debt"
+			}
+
+		],
+		"furniture": [
+			{
+				"id": "debttransmuter",
+				"name": "debt transmuter",
+				"desc": "Turn debt and gold into nothing",
+				"require": "g.debitomancy>=5&&g.voidlore>=3&&g.debtrevelation>0",
+				"max": 3,
+				"cost": {
+					"gold": 1000,
+					"gems": 40,
+					"arcana": 5,
+					"managem": 10
+				},
+				"convert": {
+					"input": {
+						"gold": 0.03,
+						"debt": -0.03
+					},
+					"output": {
+						"mod": {
+							"void.rate": 0.03
+						}
+					}
+				},
+				"mod": {
+					"space": 3,
+					"debitomancy.mod.debt.max": 3
+				}
+			}
+		],
+		"resources": [
+			{
+				"id": "debt",
+				"group": "adversities",
+				"desc": "Debt is gnawing at you",
+				"require": "g.debt>=1",
+				"max": 500,
+				"sortOrder": 805,
+				"reverse": true,
+				"convert": {
+					"input": {
+						"gold": 0.002
+					},
+					"output": {
+						"effect": {
+							"debt": -0.001
+						}
+					}
+				}
+			}
+		],
+		"spells": [
+			{
+				"id": "mk_loan_shark",
+				"name": "summon loan shark",
+				"desc": "Summon a loan shark to track down your debtors. Comes with a suit and country club membership.",
+				"sortOrder": 1799,
+				"level": 7,
+				"school": "summoning",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.debitomancy>=10&&g.tier2>0",
+				"buy": {
+					"research": 4000,
+					"gold": 2500,
+					"tomes": 10
+				},
+				"cost": {
+					"debt": 250
+				},
+				"cd": 5,
+				"summon": [
+					{
+						"id": "sum_loan_shark",
+						"count": 1,
+						"max": 3
+					}
+				]
+			},
+			{
+				"id": "mon_pilfer_gold",
+				"name": "pilfer",
+				"level": 3,
+				"school": "arcane",
+				"keywords": {
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["resource"]
+				},
+				"require": "g.lore>999",
+				"attack": {
+					"targetspec": {
+						"notaffectedby": {
+							"condition": ["pilfered_dot"],
+							"strict": "true",
+							"conditiontext": "having their valuables stolen"
+						}
+					},
+					"dot": {
+						"id": "pilfered_dot",
+						"kind": "chaos",
+						"name": "missing valuables"
+					},
+					"damage": "t.hp.max/100",
+					"acquire": {
+						"gold": "(10+Math.pow(t.level,1.3))*(0.8+0.5*Math.random())"
+					}
+				}		
+			}
+		],
+		"monsters": [
+			{
+				"id": "sum_loan_shark",
+				"name": "loan shark",
+				"tags": "t_summon",
+				"kind": "demon",
+				"level": 10,
+				"desc": "It can smell desperation in the water from seven leagues away.",
+				"hp": 73,
+				"noproc": true,
+				"defense": 30,
+				"spells": "mon_pilfer_gold,perfectstrike",
+				"resist": {
+					"water": 50
+				},
+				"attack": {
+					"name": "chomp",
+					"kind": "pierce",
+					"damage": "10~15",
+					"leech": 0.5,
+					"dot": {
+						"id": "bleed",
+						"damage": "1~5",
+						"duration": 10
+					}
+				}
+			}
+		]
+	}
+}

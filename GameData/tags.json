@@ -1,0 +1,801 @@
+[
+	{
+		"id": "magicgems",
+		"name": "Magic Gems"
+	},
+	{
+		"id": "gemimbue",
+		"name": "Imbue Gem"
+	},
+	{
+		"id": "manas",
+		"name": "Mana Energies"
+	},
+	{
+		"id": "fundamentalgems",
+		"name": "fundamental Gems"
+	},
+	{
+		"id": "prismaticgems",
+		"name": "Prismatic Gems"
+	},
+	{
+		"id": "elementalgems",
+		"name": "Elemental Gems"
+	},
+	{
+		"id": "primalgems",
+		"name": "Primal Gems"
+	},
+	{
+		"id": "fundamentalrunes",
+		"name": "fundamental Runes"
+	},
+	{
+		"id": "prismaticrunes",
+		"name": "Prismatic Runes"
+	},
+	{
+		"id": "elementalrunes",
+		"name": "Elemental Runes"
+	},
+	{
+		"id": "t_runic",
+		"name": "runic",
+		"hide": true
+	},
+	{
+		"id": "t_mithril",
+		"hide": true
+	},
+	{
+		"id": "d_runic",
+		"name": "runic drops",
+		"hide": true
+	},
+	{
+		"id": "d_runic_sword",
+		"name": "runic sword drops",
+		"hide": true
+	},
+	{
+		"id": "d_runic_rapier",
+		"name": "runic rapier drops",
+		"hide": true
+	},
+	{
+		"id": "t_nospellcraft",
+		"name": "Cannot spellcraft"
+	},
+	{
+		"id": "t_swords",
+		"hide": true
+	},
+	{
+		"id": "t_axes",
+		"hide": true
+	},
+	{
+		"id": "t_staves",
+		"hide": true
+	},
+	{
+		"id": "t_blunt",
+		"name": "blunt weapon",
+		"hide": true
+	},
+	{
+		"id": "t_pierce",
+		"name": "pierce weapon",
+		"hide": true
+	},
+	{
+		"id": "t_slash",
+		"name": "slash weapon",
+		"hide": true
+	},
+	{
+		"id": "d_shortsword",
+		"name": "Shortsword Drops",
+		"hide": true
+	},
+	{
+		"id": "d_sword",
+		"name": "Sword Drops",
+		"hide": true
+	},
+	{
+		"id": "d_longsword",
+		"name": "Longsword Drops",
+		"hide": true
+	},
+	{
+		"id": "d_swords",
+		"name": "All Sword Drops",
+		"hide": true
+	},
+	{
+		"id": "d_club",
+		"name": "Club Drops",
+		"hide": true
+	},
+	{
+		"id": "d_cane",
+		"name": "Cane Drops",
+		"hide": true
+	},
+	{
+		"id": "d_knife",
+		"name": "Knife Drops",
+		"hide": true
+	},
+	{
+		"id": "d_staff",
+		"name": "Staff Drops",
+		"hide": true
+	},
+	{
+		"id": "d_greatstaff",
+		"name": "Greatstaff Drops",
+		"hide": true
+	},
+	{
+		"id": "d_staves",
+		"name": "All Staff Drops",
+		"hide": true
+	},
+	{
+		"id": "d_broomstick",
+		"name": "Broomstick Drops",
+		"hide": true
+	},
+	{
+		"id": "d_wand",
+		"name": "Wand Drops",
+		"hide": true
+	},
+	{
+		"id": "d_rod",
+		"name": "Rod Drops",
+		"hide": true
+	},
+	{
+		"id": "d_fetish",
+		"name": "Fetish Drops",
+		"hide": true
+	},
+	{
+		"id": "d_orb",
+		"name": "Orb Drops",
+		"hide": true
+	},
+	{
+		"id": "d_magic",
+		"name": "Magical Item Drops",
+		"hide": true
+	},
+	{
+		"id": "d_dagger",
+		"name": "Dagger Drops",
+		"hide": true
+	},
+	{
+		"id": "d_axe",
+		"name": "Axe Drops",
+		"hide": true
+	},
+	{
+		"id": "d_battleaxe",
+		"name": "Battleaxe Drops",
+		"hide": true
+	},
+	{
+		"id": "d_axes",
+		"name": "All Axe Drops",
+		"hide": true
+	},
+	{
+		"id": "d_mace",
+		"name": "Mace Drops",
+		"hide": true
+	},
+	{
+		"id": "d_warhammer",
+		"name": "Warhammer Drops",
+		"hide": true
+	},
+	{
+		"id": "d_spear",
+		"name": "Spear Drops",
+		"hide": true
+	},
+	{
+		"id": "d_gloves",
+		"name": "Glove Drops",
+		"hide": true
+	},
+	{
+		"id": "d_boots",
+		"name": "Boot Drops",
+		"hide": true
+	},
+	{
+		"id": "d_hat",
+		"name": "Hat Drops",
+		"hide": true
+	},
+	{
+		"id": "d_cap",
+		"name": "Cap Drops",
+		"hide": true
+	},
+	{
+		"id": "d_helm",
+		"name": "Helm Drops",
+		"hide": true
+	},
+	{
+		"id": "d_jerkin",
+		"name": "Jerkin Drops",
+		"hide": true
+	},
+	{
+		"id": "d_paddedarmor",
+		"name": "Padded Armor Drops",
+		"hide": true
+	},
+	{
+		"id": "d_chainmail",
+		"name": "Chainmail Drops",
+		"hide": true
+	},
+	{
+		"id": "d_platemail",
+		"name": "Plate Mail Drops",
+		"hide": true
+	},
+	{
+		"id": "d_robe",
+		"name": "Robe Drops",
+		"hide": true
+	},
+	{
+		"id": "d_conicalhelm",
+		"name": "Conical Helm Drops",
+		"hide": true
+	},
+	{
+		"id": "d_belt",
+		"name": "Belt Drops",
+		"hide": true
+	},
+	{
+		"id": "d_girdle",
+		"name": "Girdle Drops",
+		"hide": true
+	},
+	{
+		"id": "d_cincture",
+		"name": "Cincture Drops",
+		"hide": true
+	},
+	{
+		"id": "d_sash",
+		"name": "Sash Drops",
+		"hide": true
+	},
+	{
+		"id": "d_cape",
+		"name": "Cape Drops",
+		"hide": true
+	},
+	{
+		"id": "d_cloak",
+		"name": "Cloak Drops",
+		"hide": true
+	},
+	{
+		"id": "d_greaves",
+		"name": "Greave Drops",
+		"hide": true
+	},
+	{
+		"id": "d_pendant",
+		"name": "Pendant Drops",
+		"hide": true
+	},
+	{
+		"id": "d_collar",
+		"name": "Collar Drops",
+		"hide": true
+	},
+	{
+		"id": "d_amulet",
+		"name": "Amulet Drops",
+		"hide": true
+	},
+	{
+		"id": "d_necklace",
+		"name": "Necklace Drops",
+		"hide": true
+	},
+	{
+		"id": "d_band",
+		"name": "Band Drops",
+		"hide": true
+	},
+	{
+		"id": "d_loop",
+		"name": "Loop Drops",
+		"hide": true
+	},
+	{
+		"id": "d_ring",
+		"name": "Ring Drops",
+		"hide": true
+	},
+	{
+		"id": "d_wings",
+		"name": "Wing Drops",
+		"hide": true
+	},
+	{
+		"id": "t_rest",
+		"name": "Resting"
+	},
+	{
+		"id": "t_restmod",
+		"name": "Leisure focus"
+	},
+	{
+		"id": "manadot",
+		"name": "Mana"
+	},
+	{
+		"id": "stamdot",
+		"name": "Fount"
+	},
+	{
+		"id": "whirlingstep",
+		"name": "Whirling Step"
+	},
+	{
+		"id": "toughskin",
+		"name": "Tough Skin"
+	},
+	{
+		"id": "lightregen",
+		"name": "Pulsing Light"
+	},
+	{
+		"id": "strike",
+		"name": "Enhanced Strike"
+	},
+	{
+		"id": "bloodbuff",
+		"name": "Defiant"
+	},
+	{
+		"id": "t_animalcompanion",
+		"name": "animal companion"
+	},
+	{
+		"id": "t_goodcompanion",
+		"name": "good-aligned companion"
+	},
+	{
+		"id": "t_extremegood",
+		"name": "Virtuous Acts"
+	},
+	{
+		"id": "t_extremeevil",
+		"name": "Vile Acts"
+	},
+	{
+		"id": "t_goodact",
+		"name": "Good Acts"
+	},
+	{
+		"id": "t_evilact",
+		"name": "Evil Acts"
+	},
+	{
+		"id": "t_graveyard_remodel",
+		"name": "Graveyard Remodeling"
+	},
+	{
+		"id": "t_healspell",
+		"name": "Healing Spell"
+	},
+	{
+		"id": "t_furn_portal",
+		"name": "home portal"
+	},
+	{
+		"id": "t_furn_researchable",
+		"name": "research object"
+	},
+	{
+		"id": "t_infusion",
+		"name": "infusion",
+		"sharecd": true
+	},
+	{
+		"id": "t_glossary_entry",
+		"name": "glossary entry"
+	},
+	{
+		"id": "t_gloss_tasks",
+		"name": "tasks"
+	},
+	{
+		"id": "t_gloss_school",
+		"name": "spell school"
+	},
+	{
+		"id": "t_gloss_animation",
+		"name": "animation"
+	},
+	{
+		"id": "t_gloss_crafting",
+		"name": "crafting"
+	},
+	{
+		"id": "t_gloss_minions",
+		"name": "minions"
+	},
+	{
+		"id": "t_gloss_skill",
+		"name": "skill"
+	},
+	{
+		"id": "t_gloss_resource",
+		"name": "resource"
+	},
+	{
+		"id": "t_gloss_hall",
+		"name": "hall"
+	},
+	{
+		"id": "t_gloss_player",
+		"name": "player"
+	},
+	{
+		"id": "t_gloss_action",
+		"name": "action"
+	},
+	{
+		"id": "t_gloss_enchant",
+		"name": "enchant"
+	},
+	{
+		"id": "t_gloss_combat",
+		"name": "combat"
+	},
+	{
+		"id": "t_gloss_exploration",
+		"name": "exploration"
+	},
+	{
+		"id": "t_gloss_chaos",
+		"name": "chaos"
+	},
+	{
+		"id": "t_summon",
+		"name": "summon"
+	},
+	{
+		"id": "t_healthpot",
+		"name": "health potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_manapot",
+		"name": "mana potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_stampot",
+		"name": "stamina potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_combatpot",
+		"name": "combat potion"
+	},
+	{
+		"id": "t_explodypot",
+		"name": "explosive potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_statuspot",
+		"name": "status recovery potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_coating",
+		"name": "coating",
+		"sharecd": true
+	},
+	{
+		"id": "t_oneiropot",
+		"name": "oneiric potion",
+		"sharecd": true
+	},
+	{
+		"id": "t_speeddown",
+		"name": "speed reduction"
+	},
+	{
+		"id": "t_tohitdown",
+		"name": "accuracy reduction"
+	},
+	{
+		"id": "t_tohitup",
+		"name": "accuracy increase"
+	},
+	{
+		"id": "t_speedup",
+		"name": "speed increase"
+	},
+	{
+		"id": "t_dueling",
+		"name": "dueling weapon"
+	},
+	{
+		"id": "t_craftwork",
+		"name": "craftwork"
+	},
+	{
+		"id": "t_languagework",
+		"name": "wordplay"
+	},
+	{
+		"id": "t_enchantment",
+		"name": "enchantment"
+	},
+	{
+		"id": "t_stambuff",
+		"name": "stamina buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_dodgebuff",
+		"name": "dodge buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_manabuff",
+		"name": "mana buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_regenbuff",
+		"name": "regen buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_defbuff",
+		"name": "defence buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_speedbuff",
+		"name": "speed buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_accuracybuff",
+		"name": "accuracy buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_immunitybuff",
+		"name": "immunity buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_waterhealbuff",
+		"name": "water heal buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_naturehealbuff",
+		"name": "nature heal buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_obscurebuff",
+		"name": "obscuring buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_etherealbuff",
+		"name": "ethereal buff",
+		"sharecd": true
+	},
+	{
+		"id": "t_silencespell",
+		"name": "silence spell",
+		"sharecd": true
+	},
+	{
+		"id": "t_confusespell",
+		"name": "confusion spell",
+		"sharecd": true
+	},
+	{
+		"id": "t_resist_debuff",
+		"name": "resistance debuff",
+		"sharecd": true
+	},
+	{
+		"id": "t_actionexpansion",
+		"name": "advanced extra action upgrade"
+	},
+	{
+		"id": "t_bulk_sale_task",
+		"name": "bulk sale task"
+	},
+	{
+		"id": "t_quest",
+		"name": "questing"
+	},
+	{
+		"id": "t_chaosclass",
+		"name": "master of chaos"
+	},
+	{
+		"id": "t_lightclass",
+		"name": "master of light"
+	},
+	{
+		"id": "t_mobilehome",
+		"name": "mobile home"
+	},
+	{
+		"id": "t_underground",
+		"name": "underground"
+	},
+	{
+		"id": "t_natureclass",
+		"name": "master of nature"
+	},
+	{
+		"id": "t_earthclass",
+		"name": "master of earth"
+	},
+	{
+		"id": "t_waterclass",
+		"name": "master of water"
+	},
+	{
+		"id": "t_airclass",
+		"name": "master of air"
+	},
+	{
+		"id": "t_fireclass",
+		"name": "master of fire"
+	},
+	{
+		"id": "t_elementalclass",
+		"name": "master of elements"
+	},
+	{
+		"id": "t_divinationclass",
+		"name": "master of divination"
+	},
+	{
+		"id": "t_manaclass",
+		"name": "master of the arcane"
+	},
+	{
+		"id": "t_knowledgeclass",
+		"name": "master of knowledge"
+	},
+	{
+		"id": "t_shadowclass",
+		"name": "master of shadow"
+	},
+	{
+		"id": "t_demonclass",
+		"name": "master of demonology"
+	},
+	{
+		"id": "t_healingclass",
+		"name": "master of healing"
+	},
+	{
+		"id": "t_necroclass",
+		"name": "master of necromancy"
+	},
+	{
+		"id": "t_spiritclass",
+		"name": "master of spirits"
+	},
+	{
+		"id": "t_swordclass",
+		"name": "master of swords"
+	},
+	{
+		"id": "t_hammerclass",
+		"name": "master of hammers"
+	},
+	{
+		"id": "t_bloodclass",
+		"name": "master of blood"
+	},
+	{
+		"id": "t_summonclass",
+		"name": "master of summoning"
+	},
+	{
+		"id": "t_minionclass",
+		"name": "master of minions"
+	},
+	{
+		"id": "t_potionclass",
+		"name": "master of potions"
+	},
+	{
+		"id": "t_craftingclass",
+		"name": "master of crafting"
+	},
+	{
+		"id": "t_enchantingclass",
+		"name": "master of enchanting"
+	},
+	{
+		"id": "t_mechaclass",
+		"name": "master of mechanics"
+	},
+	{
+		"id": "t_body_preparation",
+		"name": "body preparation"
+	},
+	{
+		"id": "t_omendot",
+		"name": "omen"
+	},
+	{
+		"id": "t_fortunedot",
+		"name": "fortune"
+	},
+	{
+		"id": "t_misfortunedot",
+		"name": "misfortune"
+	},
+	{
+		"id": "t_prophecydot",
+		"name": "prophecy"
+	},
+	{
+		"id": "t_brand",
+		"name": "brand"
+	},
+	{
+		"id": "t_birthsign",
+		"name": "birth signs"
+	},
+	{
+		"id": "t_school",
+		"name": "School of Magic"
+	},
+	{
+		"id": "t_locale",
+		"name": "Exploration Adventure"
+	},
+	{
+		"id": "t_craftedbag",
+		"name": "Illicit Sack"
+	},
+	{
+		"id": "enc_site_of_learning",
+		"name": "Site of Learning"
+	},
+	{
+		"id": "loot_equip_gen",
+		"name": "Loot Generator"
+	}
+]

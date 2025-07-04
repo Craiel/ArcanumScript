@@ -1,13 +1,11 @@
 [
 	{
 		"id": "apprentice",
-		"desc": "Apprentice to a notable wizard",
+		"desc": "Apprentice to a notable wizard.",
 		"actname": "Apprenticeship",
 		"actdesc": "Become an apprentice.",
 		"require": "research",
-		"disable": [
-			"cleanstables"
-		],
+		"disable": ["cleanstables"],
 		"warn": false,
 		"log": {
 			"name": "Apprentice",
@@ -39,12 +37,10 @@
 			"player.exp": 10
 		},
 		"mod": {
-			"lore.max": 1,
-			"gold.rate": 0.07,
+			"gold.rate": 0.1,
+			"lore.max": 2,
 			"animals.max": 3,
-			"animals.rate": 0.2,
-			"nature.max": 2,
-			"nature.rate": 0.1
+			"nature.max": 2
 		}
 	},
 	{
@@ -63,11 +59,9 @@
 			"player.exp": 10
 		},
 		"mod": {
-			"lore.max": 1,
-			"gold.rate": 0.08,
-			"herbalism.rate": 0.2,
+			"gold.rate": 0.1,
+			"lore.max": 2,
 			"herbalism.max": 3,
-			"alchemy.rate": 0.1,
 			"alchemy.max": 2
 		}
 	},
@@ -86,19 +80,18 @@
 			"sp": 1
 		},
 		"mod": {
-			"lore.max": 1.5,
-			"arcana.rate": 0.0001,
-			"research.max": 10,
-			"history.max": 1,
 			"gold.rate": 0.1,
-			"lore.rate": 0.2
+			"research.max": 10,
+			"arcana.rate": 0.0001,
+			"lore.max": 2.5,
+			"history.max": 1
 		},
 		"flavor": "When I get a little money I buy books, and if any is left I buy food and clothes."
 	},
 	{
 		"id": "neophyte",
 		"actdesc": "The final step on the twisting stairwell of apprenticeship.",
-		"require": "(g.evt_helper>0)&&g.research.max>=125&&g.spellbook.value>0",
+		"require": "(g.evt_helper>0)&&g.research.max>=125&&g.spellbook>0",
 		"log": {
 			"name": "Neophyte",
 			"desc": "Your master has decided you are ready to take the next step on the path of wizardry."
@@ -116,8 +109,7 @@
 		"mod": {
 			"research.max": 10,
 			"arcana.rate": 0.0001,
-			"lore.max": 1,
-			"lore.rate": 0.2
+			"lore.max": 1
 		}
 	},
 	{
@@ -125,14 +117,16 @@
 		"name": "adept",
 		"tags": "t_tier0",
 		"desc": "Your master behind you, you set off into the world alone. You had better find a new place to stay.",
-		"mod": "tier0"
+		"mod": {
+			"tier0": true
+		}
 	},
 	{
 		"id": "blueadept",
 		"name": "blue adept",
 		"desc": "Dedicate yourself to putting the world in order.",
 		"secret": true,
-		"require": "g.neophyte>0&&g.virtue>=200",
+		"require": "g.arcanaaction>0&&g.virtue>=200",
 		"tags": "t_tier0",
 		"cost": {
 			"arcana": 7
@@ -142,7 +136,7 @@
 			"history.max": 1,
 			"waterlore.max": 1,
 			"airlore.max": 1,
-			"dissection.max": -1,
+			"shadowlore.max": -1,
 			"naturelore.max": -1
 		}
 	},
@@ -153,7 +147,7 @@
 		"secret": true,
 		"buyname": "Forgo Studies",
 		"tags": "t_tier0",
-		"require": "g.study<=0&&g.neophyte>0&&g.arcana>=5",
+		"require": "g.arcanaaction>0&&g.study<=0&&g.arcana>=5",
 		"cost": {
 			"arcana": 7
 		},
@@ -162,22 +156,19 @@
 		},
 		"mod": {
 			"tier0": true,
-			"lore.max": -1,
-			"history.max": -1,
-			"lore.rate": "-2%",
 			"research.rate": 0.2,
-			"conjuration.max": 1,
 			"mana.max": 1,
-			"spiritlore.max": 1,
 			"mysticism.max": 2,
-			"mysticism.rate": 0.1
+			"conjuration.max": 1,
+			"spiritlore.max": 1,
+			"lore.max": -1,
+			"history.max": -1
 		}
 	},
 	{
 		"id": "magician",
-		"tags": "t_tier1",
+		"tags": "t_tier1,t_manaclass,t_knowledgeclass",
 		"desc": "Magic in its purest form.",
-		"actname": "The Prestige",
 		"actdesc": "Pursue the path of pure magic.",
 		"require": "g.tier0>0&&g.lore>=10",
 		"cost": {
@@ -191,80 +182,21 @@
 		"mod": {
 			"tier1": true,
 			"research.max": 100,
-			"lore.max": 1,
-			"lore.rate": "5%",
-			"astronomy.max": 1,
-			"languages.max": 1,
 			"arcana.rate": 0.001,
 			"mana.max": 2,
-			"mana.rate": 0.02
-		}
-	},
-	{
-		"id": "darkmagician",
-		"name": "dark magician",
-		"tags": "t_tier1",
-		"desc": "A devotee of black magic.",
-		"require": "g.tier0>0&&(g.shadowlore>=7)",
-		"cost": {
-			"research": 400,
-			"arcana": 13,
-			"gold": 300,
-			"bones": 10,
-			"gems": 10
-		},
-		"result": {
-			"sp": 1
-		},
-		"mod": {
-			"tier1": true,
-			"evilamt": 5,
-			"research.max": 100,
-			"demonology.max": 2,
+			"mana.rate": 0.4,
+			"mysticism.mod.mana.rate": 0.05,
 			"lore.max": 1,
-			"lore.rate": "5%",
-			"mana.max": 1,
-			"mana.rate": 0.01,
-			"shadowlore.max": 1,
-			"shadowlore.rate": "0.1+5%"
+			"astronomy.max": 1,
+			"languages.max": 1
 		}
-	},
-	{
-		"id": "reanimator",
-		"tags": "t_tier1",
-		"desc": "Create and ressurect living materials.",
-		"require": "g.tier0>0&&g.reanimation>2",
-		"cost": {
-			"research": 500,
-			"bones": 10,
-			"bonedust": 10,
-			"arcana": 11
-		},
-		"result": {
-			"sp": 2
-		},
-		"disable": "pace",
-		"mod": {
-			"tier1": true,
-			"mana.max": 1,
-			"research.max": 10,
-			"embalming.max": 1,
-			"reanimation.max": 3,
-			"shadowlore.max": 2,
-			"potions.max": 3,
-			"spiritlore.max": 2
-		},
-		"flavor": "Even the dead have their uses"
 	},
 	{
 		"id": "witch",
-		"tags": "t_tier1",
-		"desc": "Witch",
-		"name": "witchcraft",
-		"actname": "The Craft",
 		"actdesc": "Enter into the practice of witchcraft.",
-		"require": "g.tier0>0&&g.animals>=2&&g.potions>=3&&g.tier1==0",
 		"flavor": "'What is't you do?' 'A deed without a name'",
+		"tags": "t_tier1,t_shadowclass,t_demonclass,t_potionclass",
+		"require": "g.tier0>0&&g.animals>=2&&g.potions>=3&&g.tier1==0",
 		"cost": {
 			"research": 350,
 			"gold": 200,
@@ -273,16 +205,278 @@
 		"result": {
 			"sp": 2
 		},
-		"disable": "pace",
 		"mod": {
 			"tier1": true,
 			"research.max": 10,
-			"naturelore.max": 1,
-			"naturelore.rate": "10%",
-			"animals.max": 1,
-			"animals.rate": "10%",
+			"demonology.max": 2,
 			"potions.max": 2,
-			"potions.rate": "15%",
+			"spiritlore.max": 2
+		}
+	},
+	{
+		"id": "darkmagician",
+		"name": "dark magician",
+		"desc": "A devotee of black magic.",
+		"tags": "t_tier2,t_shadowclass,t_demonclass,t_knowledgeclass",
+		"require": "g.tier1>0&&g.shadowlore>=10",
+		"cost": {
+			"research": 1000,
+			"arcana": 13,
+			"gold": 300,
+			"gems": 10
+		},
+		"result": {
+			"sp": 1
+		},
+		"mod": {
+			"tier2": true,
+			"evilamt": 5,
+			"research.max": 100,
+			"mana.max": 3,
+			"mana.rate": 0.2,
+			"shadowlore.mod.mana.rate": 0.02,
+			"shadowlore.max": 1,
+			"demonology.max": 2,
+			"lore.max": 1
+		}
+	},
+	{
+		"id": "dreadlord",
+		"desc": "Harbinger of destruction.",
+		"tags": "t_tier3,t_shadowclass,t_swordclass",
+		"require": "g.tier2>0&&g.evil2>0&&g.hp>=100&&g.player.level>=17",
+		"cost": {
+			"research": 1500,
+			"shadowgem": 10,
+			"arcana": 20
+		},
+		"result": {
+			"sp": 1
+		},
+		"mod": {
+			"tier3": true,
+			"player.tohit": 1,
+			"hp.max": "10%",
+			"arcanebody.max": 1,
+			"arcanebody2.max": 1,
+			"bladelore.max": 1,
+			"shadowlore.max": 2
+		}
+	},
+	{
+		"id": "warlock",
+		"desc": "Master of demons and demonic magic.",
+		"tags": "t_tier4,t_shadowclass,t_demonclass,t_summonclass",
+		"require": "g.tier3>0&&g.evil2>0",
+		"cost": {
+			"research": 4000,
+			"arcana": 25,
+			"tomes": 10,
+			"runestones": 5
+		},
+		"result": {
+			"sp": 1
+		},
+		"mod": {
+			"tier4": true,
+			"anatomy.max": 3,
+			"lore.rate": "10%",
+			"lore.max": 2,
+			"firelore.max": 1,
+			"shadowlore.max": 2,
+			"demonology.max": 3
+		}
+	},
+	{
+		"id": "archlock",
+		"desc": "Master of demons and demonic magic.",
+		"flavor": "In the War of the Locks the Seven raged for Power Absolute, and Dhrune trembled in their wake.",
+		"tags": "t_tier5,t_shadowclass,t_demonclass,t_summonclass",
+		"require": "g.warlock>0&&g.demonology>=12&&g.evil3>0",
+		"cost": {
+			"research": 15000,
+			"tomes": 25,
+			"arcana": 25,
+			"runestones": 10
+		},
+		"mod": {
+			"tier5": true,
+			"lore.max": 2,
+			"firelore.max": 3,
+			"demonology.max": 5
+		}
+	},
+	{
+		"id": "deathlock",
+		"name": "death lock",
+		"desc": "An unholy synthesis of wizardry and demonology.",
+		"flavor": "Narz, Bodias, Vezial. Even among the Archlocks, some names stood in abject terror.",
+		"tags": "t_tier6,t_shadowclass,t_demonclass,t_summonclass",
+		"require": "g.tier5>0&&g.demonology>=19&&g.evil3>0",
+		"cost": {
+			"research": 20000,
+			"tomes": 50,
+			"arcana": 60,
+			"firerune": 10,
+			"runestones": 20
+		},
+		"mod": {
+			"tier6": true,
+			"earthlore.max": 2,
+			"firelore.max": 3,
+			"shadowlore.max": 3,
+			"demonology.max": 5
+		}
+	},
+	{
+		"id": "reanimator",
+		"desc": "Create and resurrect living materials.",
+		"flavor": "Even the dead have their uses.",
+		"tags": "t_tier1,t_shadowclass,t_necroclass",
+		"require": "g.tier0>0&&g.evil1>0&&g.good2==0",
+		"cost": {
+			"research": 500,
+			"gold": 300,
+			"arcana": 11
+		},
+		"result": {
+			"sp": 2
+		},
+		"mod": {
+			"tier1": true,
+			"research.max": 10,
+			"mana.max": 1,
+			"reanimation.max": 3,
+			"embalming.max": 1,
+			"shadowlore.max": 2,
+			"spiritlore.max": 2,
+			"potions.max": 1
+		}
+	},
+	{
+		"id": "bonemonger",
+		"desc": "Extend your life with spare parts from the dead.",
+		"flavor": "Even the dead have their uses.",
+		"tags": "t_tier2,t_shadowclass,t_necroclass",
+		"require": "g.tier1>0&&g.t_necroclass>0&&g.evil1>0",
+		"cost": {
+			"research": 800,
+			"bodies": 3,
+			"bones": 10,
+			"bonedust": 15,
+			"arcana": 7
+		},
+		"result": {
+			"sp": 2
+		},
+		"mod": {
+			"tier2": true,
+			"evilamt": 10,
+			"research.max": 10,
+			"reanimation.max": 2,
+			"embalming.max": 1,
+			"shadowlore.max": 3,
+			"spiritlore.max": 1,
+			"potions.max": 1
+		}
+	},
+	{
+		"id": "thanophage",
+		"desc": "Drain corpses of their lingering life-force to prolong your bleak existence.",
+		"tags": "t_tier3,t_shadowclass,t_bloodclass",
+		"require": "g.tier2>0&&g.evil2>0",
+		"cost": {
+			"research": 1500,
+			"bloodgem": 10,
+			"arcana": 15
+		},
+		"result": {
+			"sp": 2
+		},
+		"mod": {
+			"tier3": true,
+			"evilamt": 20,
+			"bloodgem.max": 10,
+			"bodies.mod.bloodsiphon.effect.hp": 0.05,
+			"research.max": 25,
+			"shadowlore.max": 2,
+			"anatomy.max": 3,
+			"lore.max": 2
+		}
+	},
+	{
+		"id": "necromancer",
+		"desc": "A master of death magic.",
+		"tags": "t_tier4,t_shadowclass,t_necroclass,t_minionclass",
+		"require": "g.tier3>0&&g.evil2>0&&g.shadowlore>=17",
+		"cost": {
+			"research": 2000,
+			"bloodgem": 30,
+			"shadowgem": 30,
+			"arcana": 10,
+			"runestones": 5
+		},
+		"result": {
+			"sp": 2
+		},
+		"mod": {
+			"tier4": true,
+			"embalming.max": 1,
+			"reanimation.max": 2,
+			"shadowlore.max": 2,
+			"potions.max": 1,
+			"necromancy.max": 3,
+			"spiritlore.max": 2
+		}
+	},
+	{
+		"id": "greynecromancer",
+		"name": "grey necromancer",
+		"desc": "Disciple of death.",
+		"tags": "t_tier5,t_shadowclass,t_necroclass,t_minionclass",
+		"require": "g.tier4>0&&g.phylactory>0",
+		"cost": {
+			"research": 17000,
+			"bones": 100,
+			"bodies": 50,
+			"souls": 100,
+			"arcana": 10,
+			"runestones": 10
+		},
+		"mod": {
+			"tier5": true,
+			"lore.max": 2,
+			"embalming.max": 2,
+			"necromancy.max": 3,
+			"reanimation.max": 3,
+			"shadowlore.max": 2,
+			"spiritlore.max": 2
+		}
+	},
+	{
+		"id": "necro3",
+		"name": "vile necromancer",
+		"desc": "In every epoch, Death appoints her viceroy.",
+		"flavor": "The greys bowed their heads in fear.",
+		"tags": "t_tier6,t_shadowclass,t_necroclass,t_minionclass",
+		"require": "g.tier5>0&&g.up_lich>0",
+		"cost": {
+			"research": 17000,
+			"bones": 100,
+			"bodies": 50,
+			"souls": 100,
+			"arcana": 25,
+			"earthrune": 10,
+			"runestones": 10
+		},
+		"mod": {
+			"tier6": true,
+			"lore.max": 1,
+			"spellcraft.max": 1,
+			"embalming.max": 1,
+			"necromancy.max": 3,
+			"reanimation.max": 3,
+			"shadowlore.max": 2,
 			"spiritlore.max": 2
 		}
 	},
@@ -292,7 +486,7 @@
 		"desc": "Use magic for deceit and trickery.",
 		"secret": true,
 		"buyname": "Path of Trickery",
-		"tags": "t_tier1",
+		"tags": "t_tier1,t_chaosclass",
 		"require": "g.trickery>=4&&g.tier0>0&&g.tier1==0",
 		"cost": {
 			"research": 250,
@@ -306,24 +500,23 @@
 		},
 		"mod": {
 			"tier1": true,
-			"gold.max": 10,
+			"player.dodge": 2.2,
 			"research.max": 2,
-			"trickery.max": 2,
-			"trickery.rate": "10%",
-			"conjuration.max": 1,
 			"mana.max": 2,
 			"chaos.max": 3,
 			"chaos.rate": 0.1,
-			"potions.max": 1,
-			"spiritlore.max": 1
+			"trickery.max": 2,
+			"conjuration.max": 1,
+			"spiritlore.max": 1,
+			"potions.max": 1
 		}
 	},
 	{
 		"id": "madcap",
 		"name": "mystic madcap",
-		"desc": "A penchant for chaos",
+		"desc": "A penchant for chaos.",
 		"secret": true,
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_chaosclass",
 		"require": "g.trickery>=7&&g.tier1>0&&g.tier2==0",
 		"cost": {
 			"research": 777,
@@ -340,74 +533,52 @@
 		},
 		"mod": {
 			"tier2": true,
-			"gold.max": 50,
+			"player.dodge": 2.2,
+			"gold.max": "5%",
 			"trickery.max": 2,
-			"trickery.rate": "10%",
 			"conjuration.max": 1,
-			"lore.max": 1,
-			"potions.max": 1,
 			"mysticism.max": 1,
-			"mysticism.rate": "5%"
+			"potions.max": 1,
+			"lore.max": 1
 		}
 	},
 	{
-		"id": "bonemonger",
-		"tags": "t_tier2",
-		"desc": "Extend your life with spare parts from the dead.",
-		"require": "g.tier1>0&&g.reanimator>=1&&g.evil>0&&g.tier2==0",
+		"id": "jester",
+		"name": "jester",
+		"desc": "Elevate pranks to a new height of artform and wizardry.",
+		"secret": true,
+		"buyname": "Infinite Jest",
+		"tags": "t_tier4,t_chaosclass",
+		"require": "g.trickery>=15&&g.t_chaosclass>0&&g.tier3>0&&g.tier4==0",
 		"cost": {
-			"research": 800,
-			"bodies": 3,
-			"bones": 10,
-			"bonedust": 15,
-			"arcana": 7
+			"research": 1313,
+			"gems": 13,
+			"managem": 13,
+			"airgem": 13,
+			"watergem": 13,
+			"tomes": 13,
+			"gold": 1313,
+			"arcana": 13
 		},
 		"result": {
-			"sp": 2
+			"sp": 3
 		},
 		"mod": {
-			"tier2": true,
-			"evilamt": 10,
-			"research.max": 10,
-			"embalming.max": 1,
-			"reanimation.max": 2,
-			"shadowlore.max": 3,
-			"potions.max": 2,
-			"spiritlore.max": 1
-		},
-		"flavor": "Even the dead have their uses"
-	},
-	{
-		"id": "thanophage",
-		"tags": "t_tier3",
-		"desc": "Drain corpses of their lingering life-force to prolong your bleak existence.",
-		"require": "g.tier2>0&&g.evil>0&&g.tier3==0",
-		"cost": {
-			"research": 1500,
-			"bones": 100,
-			"bodies": 50,
-			"bonedust": 25,
-			"arcana": 15
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier3": true,
-			"evilamt": 20,
+			"tier4": true,
+			"player.dodge": 2.6,
+			"gold.max": "10%",
+			"facemuseum.mod.space.max": 20,
+			"trickery.max": 3,
+			"conjuration.max": 2,
 			"lore.max": 2,
-			"research.max": 25,
-			"embalming.max": 1,
-			"reanimation.max": 2,
-			"reanimation.rate": "5%",
-			"shadowlore.max": 2,
-			"shadowlore.rate": "5%"
+			"chaoslore.max": 1,
+			"mysticism.max": 1
 		}
 	},
 	{
 		"id": "battlemage",
 		"name": "battle mage",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_swordclass,t_manaclass",
 		"actdesc": "Pursue the path of battle.",
 		"require": "g.tier1>0&&g.player.level>=10&&g.armory>0&&g.tier2==0",
 		"cost": {
@@ -421,182 +592,18 @@
 		},
 		"mod": {
 			"tier2": true,
-			"research.max": -50,
-			"mana.max": 1,
-			"mana.rate": 0.1,
+			"mana.max": 4,
+			"mana.rate": 0.5,
 			"firelore.max": 2,
-			"firelore.rate": 0.1,
 			"earthlore.max": 1
-		}
-	},
-	{
-		"id": "bladeweaver",
-		"tags": "t_tier4",
-		"desc": "You have taken your training further, weaving magic and steel with a flourish of magical grace.",
-		"require": "g.tier3>0&&g.spellblade>0&&g.tier4==0",
-		"cost": {
-			"research": 5000,
-			"arcana": 20,
-			"gold": 2500,
-			"airgem": 10,
-			"firegem": 5,
-			"earthgem": 5,
-			"watergem": 5
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier4": true,
-			"player.tohit": "15%",
-			"history.max": 1,
-			"enchanting.max": 1,
-			"elemental.max": 1,
-			"bladelore.max": 2,
-			"anatomy.max": 1,
-			"arcanebody2.max": 1
-		}
-	},
-	{
-		"id": "arcanedervish",
-		"name": "arcane dervish",
-		"tags": "t_tier5",
-		"desc": "Your skills with blade and magic blend together in a blur, each stroke seeming like a step in a dance.",
-		"require": "g.tier4>0&&g.spellblade>0&&g.tier5==0",
-		"cost": {
-			"research": 10000,
-			"arcana": 20,
-			"gold": 4000,
-			"airgem": 20,
-			"firegem": 10,
-			"earthgem": 10,
-			"watergem": 10
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier5": true,
-			"player.tohit": "15%",
-			"history.max": 1,
-			"enchanting.max": 1,
-			"elemental.max": 1,
-			"bladelore.max": 2,
-			"anatomy.max": 1,
-			"arcanebody2.max": 1
-		}
-	},
-	{
-		"id": "eldritchknight",
-		"name": "eldritch knight",
-		"tags": "t_tier6",
-		"desc": "You have reached the pinnacle of blending steel and sorcery, and your sword strokes seem to cleave the air itself.",
-		"require": "g.tier5>0&&g.spellblade>0&&g.tier6==0",
-		"cost": {
-			"research": 15000,
-			"arcana": 20,
-			"gold": 7500,
-			"airgem": 40,
-			"firegem": 20,
-			"earthgem": 20,
-			"watergem": 20
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier6": true,
-			"player.tohit": "15%",
-			"history.max": 1,
-			"enchanting.max": 1,
-			"bladelore.max": 2,
-			"elemental.max": 1,
-			"anatomy.max": 1,
-			"arcanebody2.max": 1
-		}
-	},
-	{
-		"id": "spellblade",
-		"name": "spell blade",
-		"tags": "t_tier3",
-		"desc": "",
-		"require": "g.tier2>0&&g.enchanting>=7&&g.player.tohit>=10&&g.tier3==0",
-		"cost": {
-			"research": 3000,
-			"arcana": 20,
-			"gold": 1000
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier3": true,
-			"player.tohit": "15%",
-			"history.max": 1,
-			"enchanting.max": 2,
-			"bladelore.max": 2,
-			"anatomy.max": 1,
-			"arcanebody2.max": 1
-		}
-	},
-	{
-		"id": "dreadlord",
-		"desc": "Harbinger of destruction",
-		"tags": "t_tier3",
-		"require": "g.tier2>0&&g.evil>0&&g.hp>=100&&g.player.level>=17&&g.tier3==0",
-		"cost": {
-			"research": 1500,
-			"bones": 100,
-			"bodies": 50,
-			"arcana": 20
-		},
-		"result": {
-			"sp": 1
-		},
-		"mod": {
-			"tier3": true,
-			"player.tohit": "10%",
-			"hp.max": "10%",
-			"bladelore.max": 1,
-			"shadowlore.max": 2,
-			"shadowlore.rate": "1%",
-			"arcanebody.max": 1,
-			"arcanebody2.max": 1
-		}
-	},
-	{
-		"id": "warlock",
-		"tags": "t_tier4",
-		"desc": "Master of demons and demonic magic",
-		"require": "g.tier3>0&&g.evil>0&&g.demonology>=10&&g.tier4==0",
-		"cost": {
-			"research": 4000,
-			"souls": 50,
-			"arcana": 25,
-			"tomes": 10,
-			"runestones": 5
-		},
-		"result": {
-			"sp": 1
-		},
-		"mod": {
-			"tier4": true,
-			"anatomy.max": 3,
-			"lore.rate": "10%",
-			"lore.max": 2,
-			"firelore.max": 1,
-			"necromancy.max": 1,
-			"firelore.rate": 0.2,
-			"shadowlore.max": 2,
-			"demonology.max": 3
 		}
 	},
 	{
 		"id": "bloodmage",
 		"name": "blood mage",
-		"tags": "t_tier3",
-		"desc": "The magic in your veins",
-		"require": "g.tier2>0&&(g.battlemage>0||g.hp.max>150)&&g.tier3==0",
+		"tags": "t_tier3,t_bloodclass,t_manaclass",
+		"desc": "The magic in your veins.",
+		"require": "g.tier2>0&&(g.battlemage>0||g.hp.max>=150)&&g.tier3==0",
 		"cost": {
 			"research": 1500,
 			"arcana": 8,
@@ -608,23 +615,20 @@
 		},
 		"mod": {
 			"tier3": true,
-			"research.max": -50,
 			"bloodgem.max": 10,
-			"mana.max": 1,
-			"mana.rate": 0.1,
+			"bloodgem.mod.bloodsiphon.effect.hp": 0.02,
+			"mana.max": 2,
+			"mana.rate": 0.5,
 			"anatomy.max": 3,
-			"anatomy.rate": "10%",
 			"earthlore.max": 2,
-			"earthlore.rate": "5%",
-			"waterlore.max": 1,
-			"waterlore.rate": "5%"
+			"waterlore.max": 1
 		}
 	},
 	{
 		"id": "summoner",
-		"tags": "t_tier3",
+		"tags": "t_tier3,t_summonclass",
 		"desc": "Alone or with friends, a summoner is never without an army.",
-		"require": "g.minions>4&&g.tier2>0&&g.lore>=20",
+		"require": "g.summoning>=5&&g.tier2>0&&g.lore>=20",
 		"cost": {
 			"research": 2000,
 			"arcana": 20,
@@ -636,23 +640,19 @@
 		"mod": {
 			"tier3": true,
 			"minions.max": 1,
-			"conjuration.max": 2,
-			"conjuration.rate": "2%",
-			"charms.max": 1,
-			"lore.max": 2,
-			"lore.rate": "5%",
 			"mana.max": 2,
 			"summoning.max": 4,
-			"summoning.rate": "20%"
+			"conjuration.max": 2,
+			"charms.max": 1,
+			"lore.max": 2
 		},
 		"flavor": "How you do I; hope you've met my..."
 	},
 	{
 		"id": "warden",
-		"desc": "A keeper of the forests, mountains, and hills. Only those living in the wild may become wardens.",
-		"tags": "t_tier2",
+		"desc": "A keeper of the forests, mountains, and hills. Only those who make forest their home can become one.",
+		"tags": "t_tier2,t_natureclass",
 		"require": "g.tier1>0&&g.naturelore>=12",
-		"need": "(g.outdoors+g.lodge)>0",
 		"cost": {
 			"research": 1500,
 			"naturegem": 15,
@@ -666,14 +666,13 @@
 			"tier2": true,
 			"research.max": 5,
 			"naturelore.max": 3,
-			"naturelore.rate": "1+15%",
 			"animals.max": 3,
 			"potions.max": 1
 		}
 	},
 	{
 		"id": "alchemist",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_bloodclass,t_potionclass,t_craftingclass",
 		"desc": "An alchemist uses magical knowledge to craft wonders.",
 		"require": "g.tier1>0&&g.potions>=4&&g.alchemy>=5",
 		"cost": {
@@ -691,20 +690,17 @@
 			"tier2": true,
 			"research.max": 100,
 			"crafting.max": 3,
-			"crafting.rate": 0.3,
 			"potions.max": 3,
-			"potions.rate": "5%",
+			"potionessence.rate": 0.00028,
 			"alchemy.max": 3,
-			"alchemy.rate": "5%",
-			"lore.max": 1,
-			"lore.rate": 0.3
+			"lore.max": 1
 		}
 	},
 	{
 		"id": "enchanter",
 		"desc": "A master of charms and enchantments.",
 		"require": "g.tier1>0&&g.enchanting>=6&&g.charms>=3",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_craftingclass,t_enchantingclass",
 		"cost": {
 			"research": 1200,
 			"managem": 10,
@@ -728,9 +724,9 @@
 	{
 		"id": "geomancer",
 		"desc": "Lord of rocks.",
-		"tags": "t_tier2",
-		"actdesc": "Become a geomancer, a master of perseverance.",
-		"require": "g.tier1>0&&g.earthlore>=10&&g.tier2==0",
+		"tags": "t_tier2,t_earthclass,t_hammerclass",
+		"actdesc": "A mage specialising in earth manipulation and endurance.",
+		"require": "g.tier1>0&&g.earthlore>=7&&g.tier2==0",
 		"cost": {
 			"research": 1000,
 			"arcana": 15,
@@ -748,14 +744,14 @@
 			"mana.max": 2,
 			"earthspire.mod.space.max": 50
 		},
-		"flavor": "Your empire of dirt"
+		"flavor": "Your empire of dirt."
 	},
 	{
 		"id": "earthshaker",
 		"desc": "Master of the tectonics.",
-		"tags": "t_tier4",
-		"actdesc": "Become an earthshaker.",
-		"require": "g.tier3>0&&g.earthlore>=20&&g.tier4==0",
+		"tags": "t_tier4,t_earthclass,t_hammerclass",
+		"actdesc": "A supreme master of earth's destructive magics.",
+		"require": "g.tier3>0&&g.earthlore>=11&&g.tier4==0",
 		"cost": {
 			"research": 4000,
 			"arcana": 25,
@@ -778,9 +774,9 @@
 	{
 		"id": "titan",
 		"desc": "A mantle of metal and stone.",
-		"tags": "t_tier6",
-		"actdesc": "Become a titan.",
-		"require": "g.tier5>0&&(g.earthshaker+g.geomancer)>0&&g.hammerlore>=10&&g.geosculpting>=10&&g.tier6==0",
+		"tags": "t_tier6,t_earthclass,t_hammerclass",
+		"actdesc": "An unstoppable force of nature, a Titan is Will incarnate.",
+		"require": "g.tier5>0&&g.t_earthclass>0&&g.hammerlore>=10&&g.geosculpting>=10&&g.tier6==0",
 		"cost": {
 			"research": 10000,
 			"arcana": 50,
@@ -799,12 +795,12 @@
 			"hammerlore.max": 3,
 			"earthspire.mod.space.max": 100
 		},
-		"flavor": "No stone left unturned"
+		"flavor": "When in good moods, Titans sculpted mountains. In bad ones, nations became craters."
 	},
 	{
 		"id": "pyromancer",
 		"desc": "Shaper of fire",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_fireclass",
 		"actdesc": "Become a pyromancer.",
 		"require": "g.tier1>0&&g.firelore>=10",
 		"cost": {
@@ -827,9 +823,9 @@
 	},
 	{
 		"id": "hydromancer",
-		"desc": "Master of water",
-		"tags": "t_tier2",
-		"actdesc": "Become a hydromancer.",
+		"desc": "Master of water.",
+		"tags": "t_tier2,t_waterclass",
+		"actdesc": "A mage specialising in water manipulation and adaptability.",
 		"require": "g.tier1>0&&g.waterlore>=10",
 		"cost": {
 			"research": 1000,
@@ -843,7 +839,6 @@
 		"mod": {
 			"tier2": true,
 			"waterlore.max": 2,
-			"waterlore.rate": "10%",
 			"dodge": "10%",
 			"mana.max": 2
 		},
@@ -852,9 +847,9 @@
 	{
 		"id": "windmage",
 		"name": "wind mage",
-		"desc": "To walk on the wind",
-		"tags": "t_tier2",
-		"actdesc": "Become a wind mage.",
+		"desc": "To walk on the wind.",
+		"tags": "t_tier2,t_airclass",
+		"actdesc": "A mage specialising in air manipulation and intuition.",
 		"require": "g.tier1>0&&g.airlore>=10",
 		"cost": {
 			"research": 1000,
@@ -868,16 +863,16 @@
 		"mod": {
 			"tier2": true,
 			"airlore.max": 2,
-			"airlore.rate": "10%",
 			"dodge": "10%",
 			"mana.max": 2
 		},
-		"flavor": "There's a storm coming"
+		"flavor": "There's a storm coming."
 	},
 	{
 		"id": "stormcaller",
-		"require": "g.hydromancer>0||g.windmage>0",
-		"tags": "t_tier3",
+		"desc": "Harness the violence of natural forces.",
+		"require": "g.t_waterclass>0||g.t_airclass>0",
+		"tags": "t_tier3,t_waterclass,t_airclass",
 		"cost": {
 			"research": 3000,
 			"arcana": 25,
@@ -893,17 +888,15 @@
 			"lore.max": 1,
 			"mana.max": 2,
 			"airlore.max": 3,
-			"waterlore.max": 3,
-			"airlore.rate": "15%",
-			"waterlore.rate": "15%"
+			"waterlore.max": 3
 		},
-		"flavor": "I am the storm"
+		"flavor": "I am the storm."
 	},
 	{
 		"id": "elementalist",
 		"desc": "Master of elemental forces.",
-		"require": "g.tier0>0&&g.airlore>2&&g.firelore>2&&g.earthlore>2&&g.waterlore>2",
-		"tags": "t_tier1",
+		"require": "g.tier0>0&&g.airlore>=3&&g.firelore>=3&&g.earthlore>=3&&g.waterlore>=3",
+		"tags": "t_tier1,t_elementalclass",
 		"cost": {
 			"arcana": 12,
 			"research": 1000,
@@ -923,9 +916,8 @@
 	{
 		"id": "sorcerer",
 		"desc": "A wielder of raw magical power.",
-		"require": "g.tier3>0&&(g.earthlore>=15||g.waterlore>=15||g.firelore>=15)&&(g.elementalist+g.highelemental)>0",
-		"tags": "t_tier4",
-		"disable": [],
+		"require": "g.tier3>0&&(g.earthlore>=15||g.waterlore>=15||g.firelore>=15)&&(g.t_elementalclass+g.t_fireclass+g.t_waterclass+g.t_earthclass)>0",
+		"tags": "t_tier4,t_elementalclass",
 		"cost": {
 			"research": 3000,
 			"managem": 5,
@@ -942,17 +934,14 @@
 			"lore.max": 1,
 			"mana.max": 1,
 			"earthlore.max": 2,
-			"earthlore.rate": "10%",
 			"waterlore.max": 2,
-			"waterlore.rate": "10%",
-			"firelore.max": 2,
-			"firelore.rate": "10%"
+			"firelore.max": 2
 		}
 	},
 	{
 		"id": "druid",
-		"desc": "A spellcaster dedicated to the natural world",
-		"tags": "t_tier3",
+		"desc": "A spellcaster dedicated to the natural world.",
+		"tags": "t_tier3,t_natureclass",
 		"require": "g.tier2>0&&g.naturelore>=15",
 		"cost": {
 			"research": 1000,
@@ -966,19 +955,17 @@
 		"mod": {
 			"tier3": true,
 			"naturelore.max": 3,
-			"naturelore.rate": "0.2+5%",
 			"animals.max": 2,
 			"herbalism.max": 2,
-			"herbalism.rate": "10%",
-			"potions.max": 1,
-			"potions.rate": 0.4
+			"potions.max": 1
 		}
 	},
 	{
 		"id": "highelemental",
-		"tags": "t_tier3",
-		"desc": "Lord of the elements",
-		"require": "g.tier2>0&&g.airlore>7&&g.firelore>7&&g.waterlore>7&&g.earthlore>7",
+		"name": "high elementalist",
+		"tags": "t_tier3,t_elementalclass",
+		"desc": "Lord of the elements.",
+		"require": "g.tier2>0&&g.airlore>=8&&g.firelore>=8&&g.waterlore>=8&&g.earthlore>=8",
 		"cost": {
 			"arcana": 15,
 			"tomes": 10,
@@ -1003,8 +990,8 @@
 	},
 	{
 		"id": "oracle",
-		"tags": "t_tier1",
-		"desc": "A diviner.",
+		"tags": "t_tier1,t_divinationclass",
+		"desc": "Fortune and misfortune are merely expressions of cause and effect.",
 		"require": "g.tier0>0&&g.spiritlore>=5&&g.divination>=5",
 		"cost": {
 			"research": 750,
@@ -1023,17 +1010,15 @@
 			"scrying.max": 2,
 			"mana.max": 3,
 			"divination.max": 2,
-			"divination.rate": 0.1,
 			"airlore.max": 1,
-			"spiritlore.max": 1,
-			"spiritlore.rate": 0.1
+			"spiritlore.max": 1
 		}
 	},
 	{
 		"id": "seer",
-		"desc": "A diviner.",
+		"desc": "Read the room, read the person, divine their future.",
 		"require": "g.tier1>0&&g.divination>=10",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_divinationclass",
 		"cost": {
 			"codices": 20,
 			"tomes": 5,
@@ -1050,14 +1035,13 @@
 			"mana.max": 3,
 			"divination.max": 2,
 			"scrying.max": 2,
-			"spiritlore.max": 2,
-			"spiritlore.rate": 0.1
+			"spiritlore.max": 2
 		}
 	},
 	{
 		"id": "mage",
 		"desc": "Member of an arcane order.",
-		"tags": "t_tier2",
+		"tags": "t_tier2,t_manaclass,t_knowledgeclass",
 		"require": "g.tier1>0&&g.lore>=17",
 		"cost": {
 			"research": 2000,
@@ -1074,7 +1058,6 @@
 			"mysticism.max": 2,
 			"enchanting.max": 1,
 			"lore.max": 2,
-			"lore.rate": 0.4,
 			"mana.max": 3
 		}
 	},
@@ -1082,7 +1065,7 @@
 		"id": "highmage",
 		"name": "high mage",
 		"desc": "Elite of an arcane order.",
-		"tags": "t_tier3",
+		"tags": "t_tier3,t_manaclass,t_knowledgeclass",
 		"require": "g.tier2>0&&g.lore>=21",
 		"cost": {
 			"research": 5000,
@@ -1105,9 +1088,9 @@
 	},
 	{
 		"id": "doomsayer",
-		"desc": "Harbinger of ruin",
+		"desc": "Harbinger of ruin.",
 		"require": "g.tier2>0&&g.spirit>=12&&g.divination>=12",
-		"tags": "t_tier3",
+		"tags": "t_tier3,t_divinationclass",
 		"cost": {
 			"research": 2000,
 			"arcana": 15,
@@ -1124,16 +1107,15 @@
 			"planeslore.max": 1,
 			"scrying.max": 2,
 			"lore.max": 2,
-			"lore.rate": "10%",
 			"mana.max": 1
 		},
 		"flavor": "You call it an empire, but in the gloaming I see only heaps of crumbled stone."
 	},
 	{
 		"id": "fey",
-		"desc": "A being of wild and natural magic",
-		"tags": "t_tier4",
-		"require": "g.tier3>0&&g.naturelore>=19&&(g.witch+g.druid+g.elementalist)>0",
+		"desc": "A being of wild and natural magic.",
+		"tags": "t_tier4,t_chaosclass,t_natureclass",
+		"require": "g.tier3>0&&g.naturelore>=18&&(g.t_natureclass+g.t_elementalclass+g.neutral+g.t_chaosclass)>=2",
 		"cost": {
 			"research": 5000,
 			"naturegem": 30,
@@ -1150,19 +1132,18 @@
 			"earthlore.max": 2,
 			"airlore.max": 2,
 			"naturelore.max": 3,
-			"naturelore.rate": "1+10%",
 			"animals.max": 2,
-			"animals.rate": "1+10%",
-			"herbalism.max": 2,
-			"herbalism.rate": "1+10%"
+			"herbalism.max": 2
 		},
 		"flavor": "'Will you drink from the goblet?' she asked. 'The transformation cannot be undone.'"
 	},
 	{
-		"id": "thaumaturge",
+		"id": "destined",
+		"alias": "thaumaturge",
+		"name": "destined",
 		"desc": "A maker of miracles",
 		"require": "g.tier3>0&&g.spirit>=15&&g.divination>=15",
-		"tags": "t_tier4",
+		"tags": "t_tier4,t_enchantingclass,t_divinationclass",
 		"cost": {
 			"research": 5000,
 			"arcana": 25,
@@ -1178,50 +1159,17 @@
 			"spiritlore.max": 2,
 			"divination.max": 3,
 			"spellcraft.max": 2,
-			"spellcraft.rate": "0.3+5%",
 			"lore.max": 2,
 			"light.max": 2,
 			"light.rate": "0.2+5%",
-			"lore.rate": "0.4+5%",
 			"mana.max": 3
 		}
 	},
 	{
-		"id": "necromancer",
-		"tags": "t_tier4",
-		"desc": "A master of death magic",
-		"require": "g.tier3>0&&g.evil>0&&g.shadowlore>=17",
-		"cost": {
-			"research": 2000,
-			"bones": 100,
-			"bodies": 50,
-			"souls": 40,
-			"arcana": 10,
-			"runestones": 5
-		},
-		"result": {
-			"sp": 2
-		},
-		"mod": {
-			"tier4": true,
-			"embalming.max": 1,
-			"reanimation.max": 2,
-			"reanimation.rate": "10%",
-			"shadowlore.max": 2,
-			"shadowlore.rate": "0.2+5%",
-			"potions.max": 1,
-			"necromancy.max": 3,
-			"necromancy.rate": "10%",
-			"spiritlore.max": 2,
-			"spiritlore.rate": "10%"
-		}
-	},
-	{
 		"id": "wizard",
-		"desc": "Raw magic power",
-		"tags": "t_tier4",
-		"require": "g.evil<=0&&g.tier3>0&&g.lore>=25",
-		"need": "g.evil<=0",
+		"desc": "Raw magic power.",
+		"tags": "t_tier4,t_manaclass,t_knowledgeclass",
+		"require": "g.tier3>0&&g.lore>=25&&(g.evil1==0||g.good2==1)",
 		"cost": {
 			"research": 5000,
 			"arcana": 25,
@@ -1238,9 +1186,10 @@
 			"crafting.max": 1,
 			"lore.max": 3,
 			"spellcraft.max": 3,
-			"spellcraft.rate": 0.5,
-			"lore.rate": "10%",
-			"mana.max": 3
+			"mana.max": 4,
+			"mana.rate": "5%",
+			"mysticism.max": 1,
+			"spelllist.max": 5
 		},
 		"flavor": "'Do not take me for some conjurer of cheap tricks.'"
 	},
@@ -1248,8 +1197,8 @@
 		"id": "wizard2",
 		"alias": "dhrunic wizard",
 		"name": "dhrunic wizard",
-		"desc": "Raw magic power",
-		"tags": "t_tier5",
+		"desc": "Raw magic power.",
+		"tags": "t_tier5,t_manaclass,t_knowledgeclass",
 		"require": "g.tier4>0&&g.lore>=30",
 		"cost": {
 			"research": 20000,
@@ -1261,23 +1210,24 @@
 			"tier5": true,
 			"languages.max": 2,
 			"firelore.max": 1,
-			"firelore.rate": "1%",
 			"waterlore.max": 1,
 			"airlore.max": 1,
-			"airlore.rate": "1%",
 			"lightlore.max": 1,
 			"crafting.max": 2,
 			"lore.max": 5,
-			"lore.rate": "10%",
-			"mana.max": 3
+			"mana.max": 4,
+			"mana.rate": "10%",
+			"mysticism.max": 1,
+			"mysticism.mod.mana.rate": 0.05,
+			"spelllist.max": 5
 		},
 		"flavor": "In the end it was three Thule Wizards and The Necromancer who brought the locks to heel."
 	},
 	{
 		"id": "kell",
-		"desc": "Immortal spirits of nature, even the weakest Kell are beings to rival wizards",
-		"tags": "t_tier5",
-		"require": "g.tier4>0&&g.naturelore>=23&&(g.witch+g.fey+g.highelemental)>0",
+		"desc": "Immortal spirits of nature, even the weakest Kell are beings to rival wizards.",
+		"tags": "t_tier5,t_natureclass",
+		"require": "g.tier4>0&&g.naturelore>=21&&((g.neutral+g.t_natureclass)>=2||g.fey>0||g.druid>0)",
 		"cost": {
 			"research": 15000,
 			"naturegem": 50,
@@ -1288,77 +1238,18 @@
 		"mod": {
 			"tier5": true,
 			"lore.max": 2,
-			"lore.rate": "10%",
 			"airlore.max": 2,
-			"airlore.rate": "10%",
 			"naturelore.max": 3,
-			"naturelore.rate": "15%",
 			"animals.max": 2,
-			"animals.rate": "10%",
-			"herbalism.max": 1,
-			"herbalism.rate": "15%"
+			"herbalism.max": 1
 		},
 		"flavor": "Kell are not of mortal blood, and only potent magics can imbue a mortal with their essence."
-	},
-	{
-		"id": "greynecromancer",
-		"name": "grey necromancer",
-		"tags": "t_tier5",
-		"desc": "Disciple of death",
-		"require": "g.tier4>0&&g.evil>0&&g.spiritlore>=15&&g.shadowlore>=24",
-		"cost": {
-			"research": 17000,
-			"bones": 100,
-			"bodies": 50,
-			"souls": 100,
-			"arcana": 10,
-			"runestones": 10
-		},
-		"mod": {
-			"tier5": true,
-			"lore.max": 2,
-			"lore.rate": "10%",
-			"embalming.max": 2,
-			"necromancy.max": 3,
-			"necromancy.rate": "10%",
-			"reanimation.max": 3,
-			"reanimation.rate": "10%",
-			"shadowlore.max": 2,
-			"shadowlore.rate": "5%",
-			"spiritlore.max": 2,
-			"spiritlore.rate": "10%"
-		}
-	},
-	{
-		"id": "archlock",
-		"desc": "Master of demons and demonic magic",
-		"tags": "t_tier5",
-		"require": "g.warlock>0&&g.demonology>=20",
-		"cost": {
-			"research": 15000,
-			"souls": 75,
-			"bodies": 10,
-			"tomes": 25,
-			"arcana": 25,
-			"runestones": 10
-		},
-		"mod": {
-			"tier5": true,
-			"lore.max": 2,
-			"necromancy.max": 1,
-			"lore.rate": "10%",
-			"firelore.max": 3,
-			"firelore.rate": "20%",
-			"demonology.max": 5,
-			"demonology.rate": "20%"
-		},
-		"flavor": "In the War of the Locks the Seven raged for Power Absolute, and Dhrune trembled in their wake."
 	},
 	{
 		"id": "heresiarch",
 		"desc": "A reckoning comes.",
 		"require": "g.tier4>0&&g.spirit>=15&&g.divination>=17",
-		"tags": "t_tier5",
+		"tags": "t_tier5,t_divinationclass",
 		"cost": {
 			"research": 15000,
 			"arcana": 25,
@@ -1372,20 +1263,17 @@
 		"mod": {
 			"tier5": true,
 			"spiritlore.max": 3,
-			"spiritlore.rate": "12%",
 			"divination.max": 3,
-			"divination.rate": "10%",
 			"scrying.max": 2,
-			"lore.max": 2,
-			"lore.rate": "10%"
+			"lore.max": 2
 		},
-		"flavor": "It waits in time"
+		"flavor": "It waits in time."
 	},
 	{
 		"id": "highkell",
 		"name": "high kell",
-		"desc": "The ranks of the Kell range from the lesser Fey and forest Delki, to ancient spirits, old and indominable.",
-		"tags": "t_tier6",
+		"desc": "The ranks of the Kell range from the lesser Fey and forest Delki, to ancient spirits, old and indomitable.",
+		"tags": "t_tier6,t_natureclass",
 		"require": "g.tier5>0&&(g.fey+g.kell)>0",
 		"cost": {
 			"research": 15000,
@@ -1398,82 +1286,18 @@
 		"mod": {
 			"tier6": true,
 			"airlore.max": 2,
-			"airlore.rate": "10%",
 			"naturelore.max": 3,
-			"naturelore.rate": "15%",
 			"animals.max": 2,
-			"animals.rate": "10%",
-			"earthlore.max": 1,
-			"earthlore.rate": "15%"
+			"earthlore.max": 1
 		},
 		"flavor": "'It's of no consequence to me,' replied Jora. 'I do not die Trill, and there are few things in this world that could do the trick."
-	},
-	{
-		"id": "necro3",
-		"name": "vile necromancer",
-		"tags": "t_tier6",
-		"desc": "In every epoch, Death appoints her viceroy.",
-		"require": "g.tier5>0&&g.phylactory>0&&g.spiritlore>=15&&g.shadowlore>=24",
-		"cost": {
-			"research": 17000,
-			"bones": 100,
-			"bodies": 50,
-			"souls": 100,
-			"arcana": 25,
-			"earthrune": 10,
-			"runestones": 10
-		},
-		"mod": {
-			"tier6": true,
-			"lore.max": 1,
-			"spellcraft.max": 1,
-			"embalming.max": 1,
-			"necromancy.max": 3,
-			"necromancy.rate": "10%",
-			"reanimation.max": 3,
-			"reanimation.rate": "10%",
-			"shadowlore.max": 2,
-			"shadowlore.rate": "5%",
-			"spiritlore.max": 2,
-			"spiritlore.rate": "10%"
-		},
-		"flavor": "The greys bowed their heads in fear."
-	},
-	{
-		"id": "deathlock",
-		"name": "death lock",
-		"desc": "An unholy synthesis of wizardry and demonology.",
-		"tags": "t_tier6",
-		"require": "g.tier5>0&&g.phylactory>0",
-		"cost": {
-			"research": 20000,
-			"souls": 100,
-			"bodies": 100,
-			"tomes": 50,
-			"arcana": 60,
-			"firerune": 10,
-			"runestones": 20
-		},
-		"mod": {
-			"tier6": true,
-			"necromancy.max": 2,
-			"earthlore.max": 2,
-			"firelore.max": 3,
-			"firelore.rate": "20%",
-			"shadowlore.max": 3,
-			"shadowlore.rate": "0.1+5%",
-			"demonology.max": 5,
-			"demonology.rate": "20%"
-		},
-		"flavor": "Narz, Bodias, Vezial. Even among the Archlocks, some names stood in abject terror."
 	},
 	{
 		"id": "wizard3",
 		"name": "mythic wizard",
 		"desc": "Their names reappear throughout the ages, and few believe they ever existed.",
-		"tags": "t_tier6",
-		"require": "g.tier5>0&&g.lore>=35&&g.spellcraft>=10&&g.evil==0",
-		"need": "g.evil<=0",
+		"tags": "t_tier6,t_manaclass,t_knowledgeclass",
+		"require": "g.tier5>0&&g.lore>=35&&g.spellcraft>=10&&(g.evil1==0||g.good2==1)",
 		"cost": {
 			"research": 20000,
 			"arcana": 75,
@@ -1487,49 +1311,49 @@
 			"firelore.max": 1,
 			"enchanting.max": 1,
 			"waterlore.max": 1,
-			"waterlore.rate": "1%",
 			"earthlore.max": 1,
 			"crafting.max": 2,
 			"history.max": 1,
 			"potions.max": 1,
-			"alchemy.max": 1
-		}
+			"alchemy.max": 1,
+			"mana.max": 5,
+			"mana.rate": "15%",
+			"mysticism.max": 2,
+			"spelllist.max": 5
+		},
+		"flavor": "After a mythic ascends, even the Archlocks curb their appetites."
 	},
 	{
 		"id": "astralseer",
 		"name": "astral seer",
 		"desc": "The stars are an open book, to those who can read.",
 		"tags": "t_tier6",
-		"require": "g.tier5>0&&g.astronomy>=15&&g.planeslore>=15",
+		"require": "g.tier5>0&&g.astronomy>=15&&g.planeslore>=12",
 		"cost": {
 			"research": 17000,
 			"arcana": 75,
 			"tomes": 50,
-			"sindel": 3,
-			"starcharts": 50
+			"sindel": 3
 		},
 		"mod": {
 			"tier6": true,
+			"manadmg": 5,
 			"spellcraft.max": 1,
 			"planeslore.max": 2,
-			"planeslore.rate": "2%",
-			"player.bonuses.mana": 2,
 			"astronomy.max": 2,
-			"astronomy.rate": "1%",
 			"scrying.max": 1,
-			"scrying.rate": "2%",
 			"sindel.rate": "5%",
 			"mysticism.max": 2,
-			"mysticism.rate": 0.5,
 			"crafting.max": 2
-		}
+		},
+		"flavor": "Standing in the distant light of celestials, the mortal world seems so... Petty."
 	},
 	{
 		"id": "c_avatar",
 		"name": "avatar",
 		"desc": "An incarnation of raw, elemental forces.",
-		"tags": "t_tier6",
-		"require": "g.tier5>0&&(g.highelemental+g.kell+g.heresiarch+g.thaumaturge)>0",
+		"tags": "t_tier6,t_elementalclass",
+		"require": "g.tier5>0&&(g.t_elementalclass+g.t_natureclass+g.heresiarch+g.destined)>=2",
 		"cost": {
 			"research": 20000,
 			"sindel": 3,
@@ -1545,14 +1369,34 @@
 		"mod": {
 			"tier6": true,
 			"airlore.max": 2,
-			"airlore.rate": "10%",
 			"earthlore.max": 3,
-			"earthlore.rate": "15%",
 			"waterlore.max": 2,
-			"waterlore.rate": "10%",
-			"firelore.max": 1,
-			"firelore.rate": "15%"
+			"firelore.max": 1
 		},
-		"flavor": ""
+		"flavor": "'I am the flood and the tempest, the whisper-wind and the inferno'."
+	},
+	{
+		"id": "conjurer",
+		"tags": "t_tier1,t_summonclass",
+		"desc": "A master of quickly moving things from one place to another.",
+		"require": "g.conjuration>=5&&g.tier0>0",
+		"cost": {
+			"research": 500,
+			"arcana": 10,
+			"codices": 5
+		},
+		"result": {
+			"sp": 1
+		},
+		"mod": {
+			"tier1": true,
+			"minions.max": 1,
+			"summoning.max": 2,
+			"charms.max": 1,
+			"lore.max": 2,
+			"mana.max": 2,
+			"conjuration.max": 4
+		},
+		"flavor": "Surely they can't 'just appear'..."
 	}
 ]

@@ -1,0 +1,856 @@
+{
+	"module": "swordplay",
+	"author": "dfirestorm",
+	"data": {
+		"skills": [
+			{
+				"id": "bladelore",
+				"name": "swordplay",
+				"desc": "Incorporate swordplay into your magic, and vice versa.",
+				"require": "g.t_swordclass>0",
+				"need": "armssource",
+				"level": 5,
+				"buy": {
+					"sp": 2
+				},
+				"run": {
+					"stamina": 1.5
+				},
+				"result": {
+					"sp": 0.05
+				},
+				"mod": {
+					"sworddmg": 3,
+					"sword_lessons.max": 1,
+					"player.hits.slash": 0.4
+				}
+			}
+		],
+		"upgrades": [
+			{
+				"id": "bladeweaver_upgrade",
+				"name": "sword weaving",
+				"require": "g.bladelore>=5&&g.bladeweaver>0",
+				"desc": "Weave slashes in combat like threads into fabric.",
+				"max": 1,
+				"cost": {
+					"codices": 15,
+					"research": 1000,
+					"spinwheel": 1
+				},
+				"mod": {
+					"weaving.max": 2,
+					"weaving.mod.sworddmg": 0.5
+				},
+				"flavor": "The local weavers tell stories of war when spinning yarn.",
+				"group": "martial"
+			},
+			{
+				"id": "defensive_dance",
+				"name": "defensive dance",
+				"require": "g.bladelore>=7&&g.arcanedervish>0",
+				"desc": "Use your combat prowess to resist physical blows.",
+				"max": 1,
+				"cost": {
+					"tomes": 25,
+					"research": 10000
+				},
+				"mod": {
+					"player.resist.blunt": 5,
+					"player.resist.pierce": 5,
+					"player.resist.slash": 5
+				},
+				"flavor": "A glancing blow is better than a solid hit.",
+				"group": "martial"
+			},
+			{
+				"id": "divine_wind",
+				"name": "divine wind",
+				"require": "g.bladelore>=9&&g.eldritchknight>0",
+				"desc": "Learn to avoid entanglement with your speed",
+				"max": 1,
+				"cost": {
+					"tomes": 45,
+					"research": 15000
+				},
+				"mod": {
+					"player.resist.entangle": 15
+				},
+				"flavor": "Cut through anything tying you up.",
+				"group": "martial"
+			}
+		],
+		"tasks": [
+			{
+				"id": "sword_basics",
+				"name": "training dummy practice",
+				"craftable": true,
+				"require": "g.bladelore>=1",
+				"need": "trainingdummy",
+				"needtext": "Needs a training dummy",
+				"desc": "Refine your sword use against an immobile enemy. Costs more and takes longer with each session.",
+				"max": 5,
+				"length": 15,
+				"cost": {
+					"codices": "2+g.sword_basics*2",
+					"research": "200+g.sword_basics*150",
+					"gold": "500+g.sword_basics*10"
+				},
+				"run": {
+					"stamina": 2,
+					"research": 5
+				},
+				"mod": {
+					"bladelore.max": 0.2,
+					"bladelore.rate": 0.2,
+					"slashdmg": 1,
+					"sworddmg": 1,
+					"sword_basics.length": 5
+				},
+				"flavor": "Your sparring partner doesn't move much, do they?",
+				"group": "martial"
+			},
+			{
+				"id": "sword_lessons",
+				"name": "swordplay lessons",
+				"craftable": true,
+				"require": "g.bladelore>=5",
+				"need": "armssource",
+				"desc": "Take additional lessons in striking with a sword. Costs more and takes longer with each session.",
+				"max": 2,
+				"length": 30,
+				"cost": {
+					"tomes": "1+g.sword_lessons",
+					"research": "1000+g.sword_lessons*1000",
+					"gold": "500+g.sword_lessons*500"
+				},
+				"run": {
+					"stamina": 2,
+					"research": 5
+				},
+				"mod": {
+					"bladelore.rate": 0.2,
+					"player.tohit": 0.2,
+					"stamina.max": 0.5,
+					"vigor.max": 0.5,
+					"sword_lessons.length": 5,
+					"blade_endure.max": 0.2
+				},
+				"flavor": "Learning the way of the blade takes time and dedication.",
+				"group": "martial"
+			},
+			{
+				"id": "blade_spellbook",
+				"name": "spellbook of Striking",
+				"require": "g.bladelore>=5&&(g.spellblade+g.bladeweaver+g.arcanedervish+g.eldritchknight)>0",
+				"craftable": true,
+				"desc": "Compile methods of using a blade to cast and enhance spells.",
+				"max": 0,
+				"length": 30,
+				"cost": {
+					"tomes": 25,
+					"research": 10000
+				},
+				"run": {
+					"stamina": 0.5,
+					"research": 10
+				},
+				"mod": {
+					"bladelore.rate": 1,
+					"player.resist.silence": 2.5,
+					"sworddmg": 2,
+					"spelldmg": 3.75
+				},
+				"flavor": "Your sword and spells become unified, and grow stronger together.",
+				"group": "martial"
+			},
+			{
+				"id": "blade_endure",
+				"name": "strenuous training",
+				"require": "g.sword_lessons>=5",
+				"need": "armssource",
+				"craftable": true,
+				"desc": "Enhance your endurance through extensive training.",
+				"max": 2,
+				"length": 300,
+				"cost": {
+					"stamina": 25,
+					"vigor": 15
+				},
+				"run": {
+					"stamina": 7,
+					"vigor": 1
+				},
+				"mod": {
+					"bladelore.rate": 0.2,
+					"dodge": 0.5,
+					"speed": 1,
+					"stamina.max": "5%",
+					"stamina.rate": "2%",
+					"vigor.max": "5%",
+					"vigor.rate": "2%"
+				},
+				"flavor": "Exhausting work has led to great results.",
+				"group": "body"
+			}
+		],
+		"classes": [
+			{
+				"id": "spellblade",
+				"name": "spell blade",
+				"tags": "t_tier3,t_swordclass",
+				"desc": "A combat specialist, melding sorcery with traditional martial techniques.",
+				"require": "g.tier2>0&&g.enchanting>=7&&g.weaponlore>=8&&g.tier3==0",
+				"cost": {
+					"research": 3000,
+					"arcana": 20,
+					"gold": 1000
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier3": true,
+					"sworddmg": 3,
+					"player.speed": 1,
+					"player.tohit": 1,
+					"history.max": 1,
+					"enchanting.max": 2,
+					"bladelore.max": 2,
+					"blade_spellbook.max": 1,
+					"anatomy.max": 1,
+					"arcanebody2.max": 1,
+					"vivification.max": 1
+				}
+			},
+			{
+				"id": "bladeweaver",
+				"tags": "t_tier4,t_swordclass",
+				"desc": "You have taken your training further, weaving magic and steel with a flourish of magical grace.",
+				"require": "g.tier3>0&&(g.bladelore+g.weaponlore)>=10&&g.tier4==0&&g.weaving>=5",
+				"cost": {
+					"research": 5000,
+					"arcana": 20,
+					"gold": 2500,
+					"airgem": 10,
+					"firegem": 5,
+					"earthgem": 5,
+					"watergem": 5
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier4": true,
+					"player.dodge": 2,
+					"player.speed": "3%",
+					"history.max": 1,
+					"enchanting.max": 1,
+					"elemental.max": 1,
+					"bladelore.max": 2,
+					"blade_spellbook.max": 1,
+					"anatomy.max": 1,
+					"arcanebody2.max": 1,
+					"vivification.max": 1
+				}
+			},
+			{
+				"id": "arcanedervish",
+				"name": "arcane dervish",
+				"tags": "t_tier5,t_swordclass",
+				"desc": "Your skills with blade and magic blend together in a blur, each stroke seeming like a step in a dance.",
+				"require": "g.tier4>0&&g.bladelore>=7&&g.tier5==0",
+				"cost": {
+					"research": 10000,
+					"arcana": 20,
+					"gold": 4000,
+					"airgem": 20,
+					"firegem": 10,
+					"earthgem": 10,
+					"watergem": 10
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier5": true,
+					"stamina.rate": "0.3",
+					"vigor.rate": "0.03",
+					"player.dodge": "5%",
+					"history.max": 1,
+					"enchanting.max": 1,
+					"elemental.max": 1,
+					"bladelore.max": 2,
+					"blade_spellbook.max": 1,
+					"anatomy.max": 1,
+					"arcanebody2.max": 1,
+					"vivification.max": 2
+				}
+			},
+			{
+				"id": "eldritchknight",
+				"name": "eldritch knight",
+				"tags": "t_tier6,t_swordclass",
+				"desc": "You have reached the pinnacle of blending steel and sorcery, and your sword strokes seem to cleave the air itself.",
+				"require": "g.tier5>0&&g.t_swordclass>0&&(g.bladelore+g.weaponlore)>=12&&g.tier6==0",
+				"cost": {
+					"research": 15000,
+					"arcana": 20,
+					"gold": 7500,
+					"airgem": 40,
+					"firegem": 20,
+					"earthgem": 20,
+					"watergem": 20
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier6": true,
+					"stamina.rate": "0.5+2%",
+					"vigor.rate": "0.05+2%",
+					"history.max": 1,
+					"enchanting.max": 1,
+					"bladelore.max": 2,
+					"blade_spellbook.max": 1,
+					"elemental.max": 1,
+					"anatomy.max": 1,
+					"arcanebody2.max": 1,
+					"vivification.max": 2
+				},
+				"flavor": "Mithril parts with but a gesture. Flesh and bone, barely even a thought."
+			}
+		],
+		"tags": [
+			{
+				"id": "t_blade",
+				"name": "blade spells",
+				"hide": true
+			}
+		],
+		"spells": [
+			{
+				"id": "mk_blade",
+				"name": "summon blade",
+				"desc": "In combat, summon a magical blade to fight for you.",
+				"sortOrder": 1762,
+				"level": 7,
+				"school": "summoning",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "(g.bladelore>=7&&g.summoning>=5)||g.t_summonclass>=2",
+				"buy": {
+					"research": 5000,
+					"tomes": 5
+				},
+				"cost": {
+					"mana": 10
+				},
+				"result": {
+					"summoning.exp": 1
+				},
+				"summon": [
+					{
+						"id": "sum_magicblade",
+						"count": 1
+					}
+				]
+			},
+			{
+				"id": "blade_buff",
+				"name": "sharpened blades",
+				"sortOrder": 386,
+				"level": 5,
+				"school": "martial",
+				"keywords": {
+					"type": ["buff"],
+					"target": ["ally"],
+					"targets": ["multiple"],
+					"delivery": ["over time"]
+				},
+				"require": "g.enchanting>=6&&g.summoning>=5&&g.mk_blade>0",
+				"buy": {
+					"tomes": 1,
+					"research": 100,
+					"spiritgem": 5
+				},
+				"cost": {
+					"spirit": 6,
+					"vigor": 2
+				},
+				"cd": 25,
+				"result": {
+					"enchanting.exp": 0.8
+				},
+				"attack": {
+					"targets": "minions",
+					"harmless": true,
+					"dot": {
+						"name": "sharpened blades",
+						"duration": 45,
+						"mod": {
+							"self.bonuses.slash": 7
+						}
+					}
+				}
+			},
+			{
+				"id": "tide_blows",
+				"name": "tidal blows",
+				"desc": "Cut down a group of foes with the power of the ocean.",
+				"sortOrder": 323,
+				"level": 7,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["multiple"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.bladelore>=10&&g.waterlore>=8",
+				"buy": {
+					"arcana": 5,
+					"tomes": 5,
+					"watergem": 10
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"water": 7,
+					"vigor": 7
+				},
+				"cd": 4,
+				"result": {
+					"waterlore.exp": 0.7,
+					"bladelore.exp": 0.7
+				},
+				"attack": {
+					"targets": "enemies",
+					"kind": "water",
+					"tohit": 2,
+					"damage": "(a.weapon.damage||0)*0.8",
+					"potencies": ["physdmg", "sworddmg", "waterdmg"],
+					"dot": {
+						"name": "riptide",
+						"kind": "water",
+						"damage": "0~6",
+						"duration": 20,
+						"mod": {
+							"self.speed": -3
+						},
+						"potencies": ["spelldmg", "waterdmg"]
+					}
+				}
+			},
+			{
+				"id": "mana_slash",
+				"name": "arcane slash",
+				"desc": "Imbue your blade with mana to enhance your power.",
+				"sortOrder": 322,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.bladelore>=3&&g.lore>=8",
+				"buy": {
+					"arcana": 1,
+					"codices": 5,
+					"managem": 7
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"mana": 4,
+					"vigor": 3
+				},
+				"cd": 2,
+				"result": {
+					"lore.exp": 0.4,
+					"bladelore.exp": 0.3
+				},
+				"attack": {
+					"kind": "mana",
+					"tohit": 3,
+					"damage": "(a.weapon.damage||0)*1.4",
+					"potencies": ["physdmg", "sworddmg", "manadmg"]
+				}
+			},
+			{
+				"id": "whirl_slices",
+				"name": "whirlwind slices",
+				"desc": "Cleave the air to harm multiple foes.",
+				"sortOrder": 324,
+				"level": 6,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage", "buff"],
+					"target": ["self", "enemy"],
+					"targets": ["multiple"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.bladelore>=8&&g.airlore>=8",
+				"cd": 2,
+				"buy": {
+					"arcana": 4,
+					"tomes": 5,
+					"airgem": 10
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"air": 6,
+					"vigor": 6
+				},
+				"result": {
+					"airlore.exp": 0.6,
+					"bladelore.exp": 0.6
+				},
+				"dot": {
+					"tags": "whirlingstep",
+					"duration": 15,
+					"mod": {
+						"self.speed": 7,
+						"self.dodge": 3
+					}
+				},
+				"attack": {
+					"targets": "enemies",
+					"kind": "air",
+					"tohit": 3,
+					"damage": "(a.weapon.damage||0)*1.0",
+					"potencies": ["sworddmg", "spelldmg", "airdmg"]
+				},
+				"flavor": "Spinning is a good trick"
+			},
+			{
+				"id": "spirit_strike",
+				"name": "spirit strike",
+				"desc": "Lock on to your foes and attack them precisely.",
+				"sortOrder": 327,
+				"level": 2,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage", "buff"],
+					"target": ["self", "enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.bladelore>=2&&g.scrying>=5&&g.spiritlore>=6",
+				"buy": {
+					"arcana": 1,
+					"codices": 5,
+					"spiritgem": 7
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"spirit": 3,
+					"vigor": 1
+				},
+				"cd": 0.25,
+				"result": {
+					"spiritlore.exp": 0.3,
+					"bladelore.exp": 0.1
+				},
+				"dot": {
+					"duration": 30,
+					"tags": "strike",
+					"mod": {
+						"self.tohit": 3
+					}
+				},
+				"attack": {
+					"kind": "spirit",
+					"tohit": 5,
+					"damage": "3+(a.weapon.damage||0)*0.6",
+					"potencies": ["physdmg", "sworddmg", "spiritdmg"]
+				}
+			},
+			{
+				"id": "blind_sword",
+				"name": "blinding blade",
+				"desc": "Reflect the sun off your blade to blind your foes.",
+				"sortOrder": 328,
+				"level": 5,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.bladelore>=7&&g.lightlore>=8",
+				"buy": {
+					"arcana": 2,
+					"tomes": 5,
+					"lightgem": 10
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"light": 6,
+					"vigor": 4
+				},
+				"cd": 2,
+				"result": {
+					"lightlore.exp": 0.6,
+					"bladelore.exp": 0.4
+				},
+				"attack": {
+					"kind": "light",
+					"tohit": 2,
+					"damage": "(a.weapon.damage||0)*1.2",
+					"potencies": ["spelldmg", "sworddmg", "lightdmg"],
+					"dot": {
+						"name": "blind",
+						"tags": "t_tohitdown",
+						"kind": "light",
+						"duration": 30,
+						"mod": {
+							"self.tohit": -3
+						}
+					}
+				}
+			},
+			{
+				"id": "poison_blade",
+				"name": "poisoned blade",
+				"desc": "Leave your enemies something to remember your sword by.",
+				"sortOrder": 326,
+				"level": 8,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"]
+				},
+				"require": "g.bladelore>=9&&g.naturelore>=8",
+				"buy": {
+					"arcana": 5,
+					"tomes": 5,
+					"naturegem": 10
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"nature": 6,
+					"vigor": 5
+				},
+				"cd": 2,
+				"result": {
+					"naturelore.exp": 0.6,
+					"bladelore.exp": 0.5
+				},
+				"attack": {
+					"kind": "nature",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.5",
+					"potencies": ["physdmg", "sworddmg", "naturedmg"],
+					"dot": {
+						"name": "poisoned wound",
+						"kind": "poison",
+						"duration": 20,
+						"damage": "4~6",
+						"potencies": ["sworddmg", "naturedmg", "poisondmg"]
+					}
+				}
+			},
+			{
+				"id": "drain_slash",
+				"name": "draining slash",
+				"desc": "Sap an enemy's life force through your blade.",
+				"sortOrder": 329,
+				"level": 6,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"]
+				},
+				"require": "g.bladelore>=6&&g.shadowlore>=8",
+				"buy": {
+					"arcana": 3,
+					"tomes": 5,
+					"shadowgem": 10
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"shadow": 5,
+					"vigor": 4
+				},
+				"cd": 2,
+				"result": {
+					"shadowlore.exp": 0.5,
+					"bladelore.exp": 0.4
+				},
+				"attack": {
+					"kind": "shadow",
+					"tohit": 2,
+					"damage": "(a.weapon.damage||0)*0.8",
+					"potencies": ["physdmg", "sworddmg", "shadowdmg"],
+					"dot": {
+						"kind": "drain",
+						"duration": 40,
+						"damage": 3,
+						"potencies": ["shadowdmg", "spelldmg"]
+					}
+				}
+			},
+			{
+				"id": "flameslash",
+				"name": "flameslash",
+				"desc": "Send streams of fire at enemies with your sword.",
+				"sortOrder": 325,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"]
+				},
+				"require": "g.bladelore>=3&&g.firelore>=8",
+				"buy": {
+					"arcana": 3,
+					"codices": 5,
+					"firegem": 10
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"fire": 6,
+					"vigor": 4
+				},
+				"cd": 2,
+				"result": {
+					"firelore.exp": 0.6,
+					"bladelore.exp": 0.4
+				},
+				"attack": {
+					"kind": "fire",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.9",
+					"potencies": ["spelldmg", "sworddmg", "firedmg"],
+					"dot": {
+						"name": "burning",
+						"kind": "fire",
+						"duration": 5,
+						"damage": "5~7",
+						"potencies": ["sworddmg", "firedmg", "spelldmg"]
+					}
+				}
+			},
+			{
+				"id": "cut_time",
+				"name": "cut time",
+				"desc": "Take a break from the time stream.",
+				"sortOrder": 384,
+				"level": 15,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["buff", "debuff"],
+					"target": ["self"],
+					"targets": ["single"],
+					"delivery": ["over time"]
+				},
+				"require": "g.bladelore>=10&&g.chronomancy>=7",
+				"buy": {
+					"tomes": 25,
+					"timegem": 3,
+					"clepsydra": 3
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"tempus": 20
+				},
+				"cd": 60,
+				"result": {
+					"bladelore.exp": 20
+				},
+				"dot": {
+					"name": "paused",
+					"duration": 5,
+					"mod": {
+						"vigor.rate": 8,
+						"self.speed": -60,
+						"self.dodge": 20
+					}
+				}
+			},
+			{
+				"id": "blood_slice",
+				"name": "slice of life",
+				"desc": "Use your blood to empower a strike.",
+				"sortOrder": 321,
+				"level": 2,
+				"school": "martial",
+				"tags": ["t_nospellcraft", "t_blade"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.bladelore>=2&&g.bloodlore>=5",
+				"buy": {
+					"arcana": 1,
+					"codices": 5,
+					"bloodgem": 10
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_swords')",
+				"needtext": "Currently equipped weapon must be a sword",
+				"cost": {
+					"hp": 20,
+					"vigor": 3
+				},
+				"cd": 4,
+				"result": {
+					"bloodlore.exp": 2,
+					"bladelore.exp": 0.3
+				},
+				"attack": {
+					"kind": "blood",
+					"tohit": 4,
+					"damage": "10+(a.weapon.damage||0)*0.7",
+					"potencies": ["physdmg", "sworddmg", "blooddmg"]
+				}
+			}
+		]
+	}
+}

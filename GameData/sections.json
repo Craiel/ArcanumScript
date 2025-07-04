@@ -20,6 +20,11 @@
 		"require": "evt_helper"
 	},
 	{
+		"id": "sect_loot",
+		"name": "loot",
+		"require": "evt_helper"
+	},
+	{
 		"id": "sect_player",
 		"name": "player",
 		"locked": false
@@ -27,7 +32,7 @@
 	{
 		"id": "sect_spells",
 		"name": "spells",
-		"require": "g.spellbook.value>0"
+		"require": "g.spellbook.value>0||g.weaponlore>0"
 	},
 	{
 		"id": "sect_scraft",
@@ -43,6 +48,11 @@
 		"id": "sect_bestiary",
 		"name": "bestiary",
 		"require": "g.bestiary>0||g.lore>=11"
+	},
+	{
+		"id": "sect_travelogue",
+		"name": "travelogue",
+		"require": "g.travelogue>0"
 	},
 	{
 		"id": "sect_enchant",
@@ -62,5 +72,22 @@
 		"id": "sect_minions",
 		"name": "minions",
 		"require": "g.minions>0"
+	},
+	{
+		"id": "sect_furniture",
+		"name": "furniture",
+		"locked": false,
+		"parent": "home"
+	},
+	{
+		"id": "sect_converters",
+		"name": "converters",
+		"locked": false,
+		"parent": "home"
+	},
+	{
+		"id": "sect_glossary",
+		"name": "glossary",
+		"require": "apprentice"
 	}
 ]

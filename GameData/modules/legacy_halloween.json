@@ -1,0 +1,420 @@
+{
+	"module": "legacy_halloween",
+	"data": {
+		"potions": [
+			{
+				"id": "pumpcider",
+				"name": "spoiled pumpkin cider",
+				"level": 1,
+				"cost": {
+					"gold": 1
+				},
+				"use": {
+					"dot": {
+						"duration": 45,
+						"effect": {
+							"hp": -1
+						}
+					}
+				},
+				"flavor": "Used to be a refreshing brew, now nothing more than a bottle of rot."
+			},
+			{
+				"id": "bubblebrew",
+				"name": "once-bubbling brew",
+				"level": 1,
+				"cost": {
+					"herbs": 1
+				},
+				"use": {
+					"hp": -1
+				},
+				"flavor": "Flat and flavorless."
+			}
+		],
+		"encounters": [
+			{
+				"id": "enc_blackcat",
+				"name": "black cat",
+				"desc": "A black cat is an omen to be studied seriously",
+				"tags": "enc_site_of_learning",
+				"effect": {
+					"unease": "1~4",
+					"rage": "2~4",
+					"divination.exp": 5,
+					"scrying.exp": 5
+				},
+				"result": {
+					"arcana": 0.04
+				},
+				"mod": {
+					"spiritlore.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "enc_hest_ward",
+				"name": "warding charm",
+				"desc": "A hanging charm wards away the borgles and grimstalks.",
+				"effect": {
+					"unease": "1~5",
+					"bf": "1~5",
+					"charms.exp": 5,
+					"enchanting.exp": 5
+				},
+				"mod": {
+					"enchanting.max": "0.05//20/-10",
+					"charms.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "enc_cauldron",
+				"name": "bubbling cauldron",
+				"desc": "The cauldron bubbles and glows with a odorous brew.",
+				"effect": {
+					"unease": "0~2",
+					"weary": "1~3",
+					"bf": "-1~2.5",
+					"potions.exp": 5,
+					"alchemy.exp": 5,
+					"crafting.exp": 5
+				},
+				"mod": {
+					"potions.max": "0.05//20/-10"
+				},
+				"loot": "hestiabrew"
+			},
+			{
+				"id": "enc_hestia",
+				"name": "Hestia",
+				"desc": "Hestia has no interest in the world outside Thangmor, but will teach those who come to her.",
+				"effect": {
+					"unease": "2~4",
+					"bf": "-2~3",
+					"herbalism.exp": 1
+				},
+				"result": {
+					"potions.exp": 50,
+					"arcana": 0.01
+				},
+				"mod": {
+					"scrying.max": "0.05//20/-10",
+					"history.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_resident",
+				"name": "Old Harold",
+				"desc": "It's unnatural i tells ya, why, back in my day a wolf near a village would just become a fine pelt in a moment, youngsters these days just have no use, no use at all, a whole wolf gets into the granary and nobody bats an eye i tells ya, what would a wolf even want with a grain anyway, y'know back in my day...",
+				"effect": {
+					"weary": "1~2"
+				},
+				"mod": {
+					"languages.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_resident_doppel",
+				"name": "Old Harold",
+				"desc": "Hello there sonny, listen to this old man for a moment would you? This village's been awful, awful quiet lately, 'cept for the house of that one scoundrel we hung a few months ago and i could really use the company. Here's a little treat for you...",
+				"effect": {
+					"bf": "1~2"
+				},
+				"result": {
+					"res_treat": 1
+				}
+			},
+			{
+				"id": "hal_fox",
+				"name": "Fox",
+				"desc": "There is a minor commotion as a fox successfully claims a chicken from an unguarded coop.",
+				"effect": {
+					"unease": "1~2"
+				},
+				"mod": {
+					"animals.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_fox_doppel",
+				"name": "Fox",
+				"desc": "You notice a fox furiously scratching at a house door.",
+				"effect": {
+					"bf": "1~2"
+				}
+			},
+			{
+				"id": "hal_grumpy",
+				"name": "Grumpy Granny",
+				"desc": "It takes you half an hour after the fact, but you manage to figure out that ████ ███ ███ █████ █████ meant that she was attempting to dissuade you from stealing any more of her crops. You do not recall stealing any.",
+				"effect": {
+					"unease": "1~2"
+				},
+				"mod": {
+					"languages.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_grumpy_doppel",
+				"name": "Grumpy Granny",
+				"desc": "█████████████ and i better not see you visiting that old house on the outskirts!!!",
+				"effect": {
+					"bf": "1~2"
+				},
+				"result": {
+					"gold": 1
+				}
+			},
+			{
+				"id": "hal_stranger",
+				"name": "Outsider",
+				"desc": "A man stands just outside the village, visibly shaken. As you approach him, he warns you that something strange is going on in Hallomar.",
+				"effect": {
+					"madness": "0~2"
+				},
+				"result": {
+					"hal_suspicion": true
+				},
+				"mod": {
+					"history.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_missing",
+				"name": "Headcount",
+				"desc": "A headcount of all the residents reveals that nobody has seen Hank for a few days. He was last seen heading north out of the village.",
+				"effect": {
+					"weary": "1~2"
+				}
+			},
+			{
+				"id": "hal_missing2",
+				"name": "Headcount",
+				"desc": "A headcount of all the residents reveals that the number of villagers is exactly as expected. Yet, you can't seem to shake the feeling that you made a mistake.",
+				"effect": {
+					"madness": "1~2"
+				}
+			},
+			{
+				"id": "hal_scratches",
+				"name": "Subtle scratches",
+				"desc": "A close inspection of the houses reveals that that different symbols have been carved into the wood. The symbols on the houses of loners are different",
+				"effect": {
+					"rage": "1~2"
+				}
+			},
+			{
+				"id": "hal_footprints",
+				"name": "Footprints",
+				"desc": "A series of muddy footprints points northwards, towards a long-abandoned windmill.",
+				"effect": {
+					"weary": "1~2"
+				}
+			},
+			{
+				"id": "hal_age",
+				"name": "Berta",
+				"desc": "An old woman by the name of Berta tells you a story of how even after the miller died, the mill miracuously still works, even after several years of neglect.",
+				"effect": {
+					"madness": "1~2"
+				},
+				"mod": {
+					"crafting.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "hal_age_doppel",
+				"name": "Berta",
+				"desc": "A young woman by the name of Berta confides that she was visited by a ghost of a recently executed thief, who said that he will visit terrible vengeance on the village.",
+				"effect": {
+					"bf": "1~2"
+				}
+			},
+			{
+				"id": "enc_hal_hest_talk",
+				"name": "talk to hestia",
+				"desc": "Hestia is busy concocting a special pumpkin brew.",
+				"effect": {
+					"bf": "0~2",
+					"weary": "0~2",
+					"potions.exp": 1
+				},
+				"loot": {
+					"pumpcider": 1
+				},
+				"result": {
+					"pumpcider": true
+				},
+				"mod": {
+					"crafting.max": "0.05//20/-10"
+				}
+			},
+			{
+				"id": "en_pumppatch",
+				"name": "pumpkin patch",
+				"desc": "Hallomar's autumn fields grow some of the largest pumpkins to be found.",
+				"effect": {
+					"weary": "1~2",
+					"rage": "1~2",
+					"herbalism.exp": 1,
+					"spiritlore.exp": 1
+				},
+				"loot": {
+					"evt_hal_imp": "15%",
+					"cobwebs": "0~2",
+					"pumpkins": 1
+				},
+				"mod": {
+					"spiritlore.max": "0.05//20/-10"
+				}
+			}
+		],
+		"rares": [
+			{
+				"id": "vorpal_sword",
+				"alias": "vorpal",
+				"sym": "🎃",
+				"name": "vorpal blade",
+				"level": 8,
+				"type": "weapon",
+				"tags": "t_martial,t_slash,t_longsword,t_swords",
+				"damage": "8~10",
+				"attack": {
+					"kind": "slash",
+					"damage": "i.damage||0",
+					"nodefense": true,
+					"potencies": ["sworddmg", "slashdmg", "physdmg"]
+				}
+			},
+			{
+				"id": "vorpal_sword2",
+				"sym": "🎃",
+				"name": "midnight vorpal blade",
+				"level": 14,
+				"type": "weapon",
+				"tags": "t_martial,t_slash,t_longsword,t_swords",
+				"damage": "10~20",
+				"attack": [
+					{
+						"name": "snicker-snack",
+						"kind": "void",
+						"targets": "enemyleader",
+						"damage": "(i.damage||0)*2",
+						"nodefense": true,
+						"potencies": ["physdmg", "voiddmg", "sworddmg"]
+					},
+					{
+						"name": "behead",
+						"kind": "void",
+						"targets": "flunky",
+						"damage": "(i.damage||0)*5",
+						"nodefense": true,
+						"potencies": ["physdmg", "voiddmg", "sworddmg"]
+					},
+					{
+						"name": "midnight hour",
+						"targets": "self",
+						"dot": {
+							"id": "hal_midnight",
+							"name": "midnight hour",
+							"duration": 12,
+							"mod": {
+								"self.defense": 12,
+								"self.dodge": 1.2,
+								"self.tohit": 1.2,
+								"physdmg": 12,
+								"spelldmg": 12
+							}
+						}
+					}
+				]
+			},
+			{
+				"id": "bdagg",
+				"sym": "🎃",
+				"name": "necrotic dagger",
+				"material": "bone",
+				"type": "weapon",
+				"tags": "t_martial,t_pierce,t_dagger",
+				"tohit": 2,
+				"attack": {
+					"kind": "pierce",
+					"damage": "2~4",
+					"potencies": ["physdmg", "piercedmg"],
+					"dot": {
+						"duration": 3,
+						"damage": "2~3",
+						"name": "necrosis",
+						"kind": "necrotic",
+						"potencies": ["physdmg"]
+					}
+				},
+				"cost": 20,
+				"level": 3
+			},
+			{
+				"id": "hal_amulet",
+				"sym": "🎃",
+				"name": "hestia's charm",
+				"desc": "Hestia's amulet throbs with a dull purple light.",
+				"type": "armor",
+				"armor": 2,
+				"slot": "neck",
+				"alter": {
+					"mod": {
+						"player.resist.necrotic": 10
+					}
+				}
+			},
+			{
+				"id": "nymiescharm",
+				"sym": "🎃",
+				"name": "nymie's charm",
+				"desc": "A small figurine of a black cat.",
+				"level": 20,
+				"type": "armor",
+				"slot": "trinket",
+				"enchants": 0
+			}
+		],
+		"hall": {
+			"data": {
+				"upgrades": [
+					{
+						"id": "hal_trick_pumpkin",
+						"name": "mischievous wisps",
+						"sym": "🏰🎃",
+						"tags": "hall",
+						"desc": "The heart of the horseman has finally dissipated. Only the faintest trace of mischief remains.",
+						"require": "g.lore>999",
+						"max": 1
+					},
+					{
+						"id": "pumpkinharvest",
+						"name": "pumpkin harvest",
+						"sym": "🏰🎃",
+						"require": "g.f_pumppatch>0",
+						"desc": "All these pumpkins... what other possibilities do gourds hold?",
+						"max": 1,
+						"cost": {
+							"research": 100
+						},
+						"mod": {
+							"herbalism.max": 1
+						}
+					}
+				]
+			}
+		},
+		"events": [
+			{
+				"id": "trick_unlock",
+				"name": "Mischievous spirit",
+				"desc": "Peculiar energies permeate the hall, driving all to mischief.",
+				"require": "g.hal_trick_pumpkin>0&&g.apprentice>0&&g.trickery==0",
+				"result": {
+					"trickery": true
+				}
+			}
+		]
+	}
+}

@@ -159,11 +159,9 @@
 		"name": "masterly",
 		"priceMod": 100,
 		"level": 3,
-		"only": [
-			"wand,weap_orb,rod,staff"
-		],
+		"only": ["wand,weap_orb,rod,staff"],
 		"mod": {
-			"self.allies.max": "1",
+			"self.allies.max": 1,
 			"self.minions.max": 1
 		}
 	},
@@ -194,9 +192,7 @@
 		"name": "gloomy",
 		"priceMod": 100,
 		"level": 8,
-		"only": [
-			"fetish,greatstaff,staff"
-		],
+		"only": ["fetish,greatstaff,staff"],
 		"mod": {
 			"self.bonuses.shadow": "1%",
 			"shadow.max": "1%",

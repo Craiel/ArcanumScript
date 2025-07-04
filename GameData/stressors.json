@@ -3,13 +3,13 @@
 		"id": "bf",
 		"tags": "stress",
 		"name": "befuddlement",
-		"desc": "Outright confusion in your studies",
+		"desc": "Outright confusion in your studies.",
 		"reverse": true,
 		"max": 10
 	},
 	{
 		"id": "unease",
-		"desc": "A general feeling of unwell",
+		"desc": "A general feeling of unwell.",
 		"tags": "stress",
 		"reverse": true,
 		"max": 10
@@ -17,7 +17,7 @@
 	{
 		"id": "weary",
 		"name": "weariness",
-		"desc": "The fatigue of mental strain",
+		"desc": "The fatigue of mental strain.",
 		"tags": "stress",
 		"reverse": true,
 		"max": 10
@@ -25,14 +25,14 @@
 	{
 		"id": "rage",
 		"name": "frustration",
-		"desc": "Rising book-throwing urges",
+		"desc": "Rising book-throwing urges.",
 		"tags": "stress",
 		"reverse": true,
 		"max": 10
 	},
 	{
 		"id": "madness",
-		"desc": "Warping of your mind under magical influences",
+		"desc": "Warping of your mind under magical influences.",
 		"tags": "stress",
 		"reverse": true,
 		"max": 10

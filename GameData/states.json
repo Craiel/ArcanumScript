@@ -3,75 +3,118 @@
 		"id": "charmed",
 		"flags": "charmed",
 		"kind": "charm",
+		"tags": "t_charmed",
+		"sym": "😳",
 		"mod": {
-			"tohit": -5
+			"self.tohit": -2
 		}
 	},
 	{
 		"id": "disgust",
 		"adj": "disgusted",
 		"kind": "disgust",
+		"tags": "t_disgust",
+		"sym": "🤢🚷",
 		"flags": "noattack"
 	},
 	{
 		"id": "enrage",
 		"adj": "enraged",
 		"kind": "rage",
+		"tags": "t_enrage",
+		"sym": "😡",
 		"flags": "nodefend"
 	},
 	{
 		"id": "entangle",
 		"adj": "entangled",
 		"kind": "entangle",
+		"tags": "t_entangle",
+		"sym": "🚷",
 		"flags": "noattack"
 	},
 	{
 		"id": "fear",
 		"adj": "afraid",
 		"kind": "fear",
+		"tags": "t_fear",
+		"sym": "😨🚷",
 		"flags": "noattack",
 		"mod": {
-			"defense": -5
+			"self.defense": -5
 		}
 	},
 	{
 		"id": "paralyze",
 		"adj": "paralyzed",
 		"kind": "paralysis",
+		"tags": "t_paralysis",
+		"sym": "🚫",
 		"flags": "noact"
 	},
 	{
 		"id": "prone",
 		"adj": "prone",
 		"kind": "knockdown",
+		"tags": "t_knockdown",
+		"sym": "🚫",
 		"flags": "noact"
 	},
 	{
 		"id": "sacked",
+		"sym": "🚷",
 		"flags": "noattack,nodefend",
+		"tags": "t_sacked",
 		"mod": {
-			"tohit": -10
+			"self.tohit": -10
 		}
 	},
 	{
 		"id": "sick",
 		"kind": "sickness",
+		"sym": "🤮",
+		"tags": "t_sick",
 		"duration": 20,
 		"mod": {
-			"tohit": -5,
-			"defense": -5
+			"self.tohit": -2,
+			"self.defense": -5
 		}
 	},
 	{
 		"id": "silence",
 		"adj": "silenced",
 		"kind": "silence",
+		"tags": "t_silence",
+		"sym": "😶",
 		"flags": "nocast"
 	},
 	{
 		"id": "sleep",
 		"adj": "asleep",
 		"kind": "sleep",
+		"tags": "t_sleep",
+		"sym": "💤🚫",
 		"flags": "noact"
+	},
+	{
+		"id": "taunt",
+		"adj": "provoking",
+		"kind": "taunt",
+		"tags": "t_taunt",
+		"flags": "taunt"
+	},
+	{
+		"id": "hide",
+		"adj": "hiding",
+		"kind": "hiding",
+		"tags": "t_hiding",
+		"flags": "hiding"
+	},
+	{
+		"id": "defensive",
+		"adj": "defending",
+		"kind": "defending",
+		"tags": "t_defending",
+		"flags": "defensive"
 	}
 ]

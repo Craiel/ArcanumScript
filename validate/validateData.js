@@ -52,7 +52,7 @@ exports.StatType = {
     String: 'string'
 };
 
-exports.HardCodedStats = ["tohit", "defense", "armor", 'notoriety', 'regen', 'skill', 'runner', 'title'];
+exports.HardCodedStats = ["armor", 'notoriety', 'regen', 'skill', 'runner', 'title'];
 
 exports.MetaResources = ["minions", "allies", "spelllist", "enchantslots", 'inv', 'userSpells', 'pursuits'];
 

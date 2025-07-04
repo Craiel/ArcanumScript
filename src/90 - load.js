@@ -2,7 +2,11 @@
 (function($) {
     'use strict';
 
-    const ValidGameVersions = ['vers pseudo_stable 0.8.1', 'vers 0.8.0', 'Version: pseudo_stable 0.10.4'];
+    const ValidGameVersions = [
+        'vers pseudo_stable 0.8.1',
+        'vers 0.8.0',
+        'Version: pseudo_stable 0.10.4',
+        'Version: stable 0.11.1.3'];
 
     class AELoader {
         load() {

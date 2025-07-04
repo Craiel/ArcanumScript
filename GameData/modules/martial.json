@@ -1,0 +1,1005 @@
+{
+	"module": "martial",
+	"author": "dfirestorm",
+	"data": {
+		"skills": [
+			{
+				"id": "weaponlore",
+				"name": "martial",
+				"desc": "Incorporate martial weapons into your magic.",
+				"need": "armssource",
+				"buy": {
+					"vigor": 5
+				},
+				"run": {
+					"stamina": 0.6,
+					"vigor": 0.12
+				},
+				"result": {
+					"sp": 0.05
+				},
+				"once": {
+					"loot": {
+						"trainingknife": 1,
+						"traininghammer2": 1,
+						"trainingsword": 1
+					}
+				},
+				"mod": {
+					"physdmg": 1,
+					"bluntdmg": 0.4,
+					"piercedmg": 0.4,
+					"slashdmg": 0.4,
+					"player.hits.blunt": 0.2,
+					"player.hits.slash": 0.2,
+					"player.hits.pierce": 0.2
+				}
+			}
+		],
+		"rares": [
+			{
+				"id": "trainingsword",
+				"name": "training sword",
+				"desc": "a plain wooden sword",
+				"level": 1,
+				"tags": "t_slash,t_martial,t_sword,t_training",
+				"type": "weapon",
+				"material": "wood",
+				"hands": 1,
+				"enchants": 1,
+				"attack": {
+					"kind": "slash",
+					"tohit": 1,
+					"dmg": "1~2",
+					"potencies": ["slashdmg", "sworddmg", "physdmg"]
+				}
+			},
+			{
+				"id": "trainingknife",
+				"name": "training knife",
+				"desc": "a plain wooden knife",
+				"level": 1,
+				"tags": "t_pierce,t_martial,t_knife,t_training",
+				"type": "weapon",
+				"material": "wood",
+				"hands": 1,
+				"enchants": 1,
+				"attack": {
+					"kind": "pierce",
+					"tohit": 1,
+					"dmg": "1~2",
+					"potencies": ["piercedmg", "physdmg"]
+				}
+			},
+			{
+				"id": "traininghammer2",
+				"name": "training hammer",
+				"desc": "a plain wooden hammer",
+				"level": 1,
+				"tags": "t_blunt,t_martial,t_hammer,t_training",
+				"type": "weapon",
+				"material": "wood",
+				"hands": 1,
+				"enchants": 1,
+				"attack": {
+					"kind": "blunt",
+					"tohit": 1,
+					"dmg": "1~2",
+					"potencies": ["hammerdmg", "bluntdmg", "physdmg"]
+				}
+			}
+		],
+		"furniture": [
+			{
+				"id": "trainingdummy",
+				"name": "training dummy",
+				"desc": "a way to practice your skills",
+				"tags": "armssource",
+				"require": "g.evt_helper>0",
+				"repeat": true,
+				"cost": {
+					"gold": 15
+				},
+				"mod": {
+					"inv.max": 1,
+					"space": 1
+				}
+			}
+		],
+		"states": [
+			{
+				"id": "disarm",
+				"adj": "disarmed",
+				"kind": "disarm",
+				"flags": "noattack"
+			},
+			{
+				"id": "stun",
+				"adj": "stunned",
+				"kind": "stun",
+				"flags": "noact"
+			},
+			{
+				"id": "maim",
+				"kind": "maim",
+				"adj": "maimed",
+				"mod": {
+					"self.tohit": -1,
+					"self.speed": -2
+				}
+			},
+			{
+				"id": "weak",
+				"kind": "weak",
+				"adj": "weakened",
+				"mod": {
+					"self.tohit": -1,
+					"self.bonuses.blunt": -0.5,
+					"self.bonuses.pierce": -0.5,
+					"self.bonuses.slash": -0.5
+				}
+			}
+		],
+		"upgrades": [
+			{
+				"id": "weapon_care",
+				"name": "weapon Servicing",
+				"require": "g.weaponlore>=2&&g.player.weapon.damage>=8",
+				"desc": "Clean and service your weapon.",
+				"need": "armssource",
+				"max": 3,
+				"cost": {
+					"research": "200+g.weapon_care*200",
+					"water": 4
+				},
+				"mod": {
+					"weaponlore.max": 0.5,
+					"weaponlore.rate": 0.1,
+					"player.tohit": 0.1,
+					"weaponlore.mod.player.hits.blunt": 0.03,
+					"weaponlore.mod.player.hits.slash": 0.03,
+					"weaponlore.mod.player.hits.pierce": 0.03
+				},
+				"flavor": "Take care of your weapon and it will take care of you.",
+				"group": "martial"
+			},
+			{
+				"id": "weapon_attune",
+				"name": "weapon Attunement",
+				"require": "g.weaponlore>=6&&g.spiritlore>=8",
+				"desc": "Open yourself to forging a connection with your weapon.",
+				"max": 1,
+				"cost": {
+					"research": 1000,
+					"mana": 10
+				},
+				"mod": {
+					"weaponlore.max": 1,
+					"weaponlore.rate": 0.2,
+					"player.tohit": 0.3,
+					"weaponlore.mod.player.hits.blunt": 0.1,
+					"weaponlore.mod.player.hits.slash": 0.1,
+					"weaponlore.mod.player.hits.pierce": 0.1
+				},
+				"flavor": "Investing time to produce better results",
+				"group": "martial"
+			},
+			{
+				"id": "spec_blunt",
+				"name": "blunt Specialization",
+				"tags": "t_martial_spec",
+				"desc": "Specialize in blunt weapons like hammers and canes.",
+				"require": "g.arms_tome>0&&g.tier2>0",
+				"warn": true,
+				"lock": ["t_martial_spec"],
+				"cost": {
+					"gold": 1000,
+					"vigor": 10
+				},
+				"mod": {
+					"bluntdmg": 5,
+					"player.defense": 5
+				},
+				"group": "martial"
+			},
+			{
+				"id": "spec_pierce",
+				"name": "piercing Specialization",
+				"tags": "t_martial_spec",
+				"desc": "Specialize in piercing weapons like spears and daggers.",
+				"require": "g.arms_tome>0&&g.tier2>0",
+				"warn": true,
+				"lock": ["t_martial_spec"],
+				"cost": {
+					"gold": 1000,
+					"vigor": 10
+				},
+				"mod": {
+					"piercedmg": 5,
+					"player.tohit": 1
+				},
+				"group": "martial"
+			},
+			{
+				"id": "spec_slash",
+				"name": "slashing Specialization",
+				"tags": "t_martial_spec",
+				"desc": "Specialize in slashing weapons like swords and axes.",
+				"require": "g.arms_tome>0&&g.tier2>0",
+				"warn": true,
+				"lock": ["t_martial_spec"],
+				"cost": {
+					"gold": 1000,
+					"vigor": 10
+				},
+				"mod": {
+					"slashdmg": 5,
+					"player.speed": 2
+				},
+				"group": "martial"
+			}
+		],
+		"tasks": [
+			{
+				"id": "martial_basics",
+				"name": "training spars",
+				"craftable": true,
+				"require": "g.weaponlore>=1&&g.tier1>0",
+				"need": "armssource",
+				"desc": "Refine your weapon use against a friendly opponent. Costs more and takes longer with each session.",
+				"max": 5,
+				"length": 15,
+				"cost": {
+					"codices": "2+g.martial_basics*2",
+					"research": "200+g.martial_basics*150",
+					"gold": "250+g.martial_basics*20"
+				},
+				"run": {
+					"stamina": 2,
+					"research": 5
+				},
+				"mod": {
+					"physdmg": 1,
+					"weaponlore.max": 0.2,
+					"weaponlore.rate": 0.2,
+					"stamina.max": 0.2,
+					"vigor.max": 0.2,
+					"martial_basics.length": 5,
+					"weaponlore.mod.player.hits.blunt": 0.01,
+					"weaponlore.mod.player.hits.slash": 0.01,
+					"weaponlore.mod.player.hits.pierce": 0.01
+				},
+				"flavor": "Not much help, but better than a dummy.",
+				"group": "martial"
+			},
+			{
+				"id": "martial_defense",
+				"name": "defensive training",
+				"craftable": true,
+				"require": "g.weaponlore>=2&&g.martial_basics>0",
+				"need": "armssource",
+				"desc": "Learn to take a hit from an experienced weaponmaster. Costs more and takes longer with each session.",
+				"max": 5,
+				"length": 15,
+				"cost": {
+					"codices": "2+g.martial_defense*2",
+					"research": "200+g.martial_defense*150",
+					"gold": "500+g.martial_defense*10"
+				},
+				"run": {
+					"stamina": 2,
+					"research": 5
+				},
+				"mod": {
+					"player.resist.blunt": 1,
+					"player.resist.pierce": 1,
+					"player.resist.slash": 1,
+					"hp.max": 0.5,
+					"martial_defense.length": 5
+				},
+				"flavor": "Take the hits now so you don't take them later.",
+				"group": "martial"
+			},
+			{
+				"id": "arms_tome",
+				"name": "manual of arms",
+				"craftable": true,
+				"require": "g.weaponlore>=5&&g.tier1>0",
+				"need": "armssource",
+				"desc": "Enlighten yourself to the multitude of weapons",
+				"max": 1,
+				"length": 150,
+				"cost": {
+					"tomes": 10,
+					"research": 3000,
+					"gold": 1800
+				},
+				"run": {
+					"stamina": 2,
+					"research": 7
+				},
+				"mod": {
+					"weaponlore.max": 1.5,
+					"weaponlore.rate": 0.5,
+					"slashdmg": 1,
+					"piercedmg": 1,
+					"bluntdmg": 1,
+					"weaponlore.mod.player.hits.blunt": 0.05,
+					"weaponlore.mod.player.hits.slash": 0.05,
+					"weaponlore.mod.player.hits.pierce": 0.05
+				},
+				"flavor": "Write down the techniques in a large book.",
+				"group": "martial"
+			},
+			{
+				"id": "legs_tome",
+				"name": "manual of legs",
+				"craftable": true,
+				"require": "g.arms_tome>0&&(g.martial_defense+g.martial_basics)>=10",
+				"need": "legssource",
+				"desc": "All this training has gotten your legs into fantastic shape. Figure out how to put them to work.",
+				"max": 1,
+				"length": 150,
+				"cost": {
+					"tomes": 10,
+					"research": 3000,
+					"gold": 1800
+				},
+				"run": {
+					"stamina": 2,
+					"research": 7
+				},
+				"mod": {
+					"s_travel.max": 1,
+					"s_travel.mod.dist": "0.5%",
+					"dist": 50,
+					"speed": 1
+				},
+				"flavor": "All the writing is a nice cooldown for your legs to stop aching.",
+				"group": "martial"
+			}
+		],
+		"potencies": [
+			{
+				"id": "sworddmg",
+				"name": "sword damage",
+				"value": 100,
+				"damage": "Math.max((i.value/100)||0,0)"
+			},
+			{
+				"id": "hammerdmg",
+				"name": "hammer damage",
+				"value": 100,
+				"damage": "Math.max((i.value/100)||0,0)"
+			}
+		],
+		"tags": [
+			{
+				"id": "t_martial_spec",
+				"name": "martial specialization"
+			}
+		],
+		"spells": [
+			{
+				"id": "blunt_simple",
+				"name": "simple bash",
+				"desc": "Use your training to bash a foe.",
+				"sortOrder": 373,
+				"level": 2,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=1",
+				"buy": {
+					"arcana": 0,
+					"vigor": 4
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_blunt')",
+				"needtext": "Currently equipped weapon must be blunt",
+				"cost": {
+					"vigor": 3
+				},
+				"cd": 0.25,
+				"result": {
+					"weaponlore.exp": 0.3
+				},
+				"attack": {
+					"kind": "blunt",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.9",
+					"potencies": ["physdmg", "bluntdmg"]
+				}
+			},
+			{
+				"id": "pierce_simple",
+				"name": "simple thrust",
+				"desc": "Use your training to thrust at a foe.",
+				"sortOrder": 358,
+				"level": 2,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=1",
+				"buy": {
+					"arcana": 0,
+					"vigor": 4
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_pierce')",
+				"needtext": "Currently equipped weapon must be piercing",
+				"cost": {
+					"vigor": 3
+				},
+				"cd": 0.25,
+				"result": {
+					"weaponlore.exp": 0.3
+				},
+				"attack": {
+					"kind": "pierce",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.9",
+					"potencies": ["physdmg", "piercedmg"]
+				}
+			},
+			{
+				"id": "slash_simple",
+				"name": "simple slash",
+				"desc": "Use your training to slash at a foe.",
+				"sortOrder": 337,
+				"level": 2,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=1",
+				"buy": {
+					"arcana": 0,
+					"vigor": 4
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_slash')",
+				"needtext": "Currently equipped weapon must be slashing",
+				"cost": {
+					"vigor": 3
+				},
+				"cd": 0.25,
+				"result": {
+					"weaponlore.exp": 0.3
+				},
+				"attack": {
+					"kind": "slash",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.9",
+					"potencies": ["physdmg", "slashdmg"]
+				}
+			},
+			{
+				"id": "defense_stance",
+				"name": "protective stance",
+				"desc": "Enhance your defense for a limited time.",
+				"sortOrder": 391,
+				"level": 3,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["buff"],
+					"target": ["self"],
+					"targets": ["single"],
+					"delivery": ["over time"]
+				},
+				"require": "g.weaponlore>=2",
+				"buy": {
+					"scrolls": 2,
+					"vigor": 4
+				},
+				"cost": {
+					"vigor": 3
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"result": {
+					"weaponlore.exp": 0.3
+				},
+				"dot": {
+					"name": "protective stance",
+					"duration": 10,
+					"mod": {
+						"self.defense": 10,
+						"self.dodge": 1,
+						"self.speed": -5
+					}
+				}
+			},
+			{
+				"id": "mana_martial",
+				"name": "imbued attack",
+				"desc": "Charge your weapon with mana before attacking.",
+				"flavor": "Magic and a weapon, deals magic damage.",
+				"sortOrder": 317,
+				"level": 3,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.spellbook.value>0&&g.weaponlore>=3&&g.lore>=5",
+				"buy": {
+					"arcana": 2,
+					"scrolls": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1, 4],
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"cost": {
+					"vigor": 4,
+					"mana": 3
+				},
+				"cd": 1,
+				"result": {
+					"weaponlore.exp": 0.5
+				},
+				"attack": {
+					"kind": "mana",
+					"tohit": 1,
+					"damage": "3+(a.weapon.damage||0)*0.75",
+					"potencies": ["physdmg", "manadmg"]
+				}
+			},
+			{
+				"id": "mana_double",
+				"name": "charged combo",
+				"desc": "Imbue your weapon with mana, then strike twice.",
+				"flavor": "Set them up, then knock them down.",
+				"sortOrder": 316,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.spellbook.value>0&&g.arms_tome>0",
+				"caststoppers": [1, 4],
+				"buy": {
+					"arcana": 3,
+					"codices": 2,
+					"vigor": 8,
+					"managem": 1
+				},
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"cost": {
+					"vigor": 6,
+					"mana": 4
+				},
+				"cd": 5,
+				"result": {
+					"weaponlore.exp": 0.7
+				},
+				"attack": {
+					"hits": [
+						{
+							"kind": "mana",
+							"tohit": 1,
+							"damage": "2+(a.weapon.damage||0)*0.65",
+							"potencies": ["physdmg", "manadmg"]
+						},
+						{
+							"kind": "mana",
+							"tohit": 1,
+							"damage": "1+(a.weapon.damage||0)*0.85",
+							"potencies": ["physdmg", "manadmg"]
+						}
+					]
+				}
+			},
+			{
+				"id": "pommel_strike",
+				"name": "pommel strike",
+				"desc": "Use your weapon's pommel to stun an enemy.",
+				"flavor": "deal 9 damage, draw a card.",
+				"sortOrder": 372,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=4",
+				"buy": {
+					"arcana": 1,
+					"scrolls": 5,
+					"vigor": 7
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"cost": {
+					"vigor": 5
+				},
+				"cd": 10,
+				"result": {
+					"weaponlore.exp": 0.4
+				},
+				"attack": {
+					"kind": "blunt",
+					"tohit": 1,
+					"damage": "(a.weapon.damage||0)*0.8",
+					"potencies": ["physdmg", "bluntdmg"],
+					"dot": {
+						"id": "stun",
+						"duration": 1.2
+					}
+				}
+			},
+			{
+				"id": "disarm_martial",
+				"name": "disarming blow",
+				"desc": "Remove your opponent's weapon from their hands.",
+				"flavor": "Hey, where'd your sword go?",
+				"sortOrder": 336,
+				"level": 5,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=3",
+				"buy": {
+					"arcana": 2,
+					"scrolls": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"cost": {
+					"vigor": 4
+				},
+				"cd": 20,
+				"result": {
+					"weaponlore.exp": 0.4
+				},
+				"attack": {
+					"kind": "slash",
+					"tohit": -1,
+					"damage": "(a.weapon.damage||0)*0.85",
+					"potencies": ["physdmg", "slashdmg"],
+					"dot": {
+						"id": "disarm",
+						"duration": 2
+					}
+				}
+			},
+			{
+				"id": "pierce_bleed",
+				"name": "stab wound",
+				"desc": "Aim for the vital organs for a lasting impression.",
+				"flavor": "Holes in armor tend to be a really bad idea.",
+				"sortOrder": 357,
+				"level": 3,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.weaponlore>=2",
+				"buy": {
+					"arcana": 1,
+					"scrolls": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_martial')",
+				"needtext": "Currently equipped weapon must be martial",
+				"cost": {
+					"vigor": 3
+				},
+				"cd": 2,
+				"result": {
+					"weaponlore.exp": 0.3
+				},
+				"attack": {
+					"kind": "pierce",
+					"tohit": 1,
+					"damage": "((a.weapon.damage||0)*0.7)",
+					"potencies": ["physdmg", "piercedmg"],
+					"dot": {
+						"name": "bleed",
+						"damage": "3~6",
+						"duration": 10,
+						"potencies": ["physdmg", "piercedmg"]
+					}
+				}
+			},
+			{
+				"id": "pierce_thrust",
+				"name": "precise thrust",
+				"desc": "Put some power behind your thrusts.",
+				"flavor": "Not just a gentle poke.",
+				"sortOrder": 356,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_pierce>0",
+				"buy": {
+					"arcana": 2,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_pierce')",
+				"needtext": "Currently equipped weapon must be piercing",
+				"cost": {
+					"vigor": 4
+				},
+				"cd": 5,
+				"result": {
+					"weaponlore.exp": 0.4
+				},
+				"attack": {
+					"kind": "pierce",
+					"tohit": 1,
+					"damage": "4+((a.weapon.damage||0)*1.2)",
+					"potencies": ["physdmg", "piercedmg"]
+				}
+			},
+			{
+				"id": "pierce_armor",
+				"name": "armor piercer",
+				"desc": "Leave a hole in your foe's armor.",
+				"flavor": "Holes in armor are sometimes a really good idea.",
+				"sortOrder": 355,
+				"level": 6,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_pierce>0&&g.weaponlore>=6",
+				"cd": 5,
+				"buy": {
+					"arcana": 3,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_pierce')",
+				"needtext": "Currently equipped weapon must be piercing",
+				"cost": {
+					"vigor": 6
+				},
+				"result": {
+					"weaponlore.exp": 0.6
+				},
+				"attack": {
+					"kind": "pierce",
+					"tohit": 1,
+					"damage": "((a.weapon.damage||0)*1.0)",
+					"potencies": ["physdmg", "piercedmg"],
+					"dot": {
+						"name": "pierced armor",
+						"duration": 20,
+						"mod": {
+							"self.defense": -5
+						}
+					}
+				}
+			},
+			{
+				"id": "blunt_heavy",
+				"name": "heavy slam",
+				"desc": "A thunderous blow that does impressive damage.",
+				"flavor": "That's gonna leave a bruise in the morning.",
+				"sortOrder": 371,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_blunt>0",
+				"buy": {
+					"arcana": 2,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_blunt')",
+				"needtext": "Currently equipped weapon must be blunt",
+				"cost": {
+					"vigor": 4
+				},
+				"cd": 5,
+				"result": {
+					"weaponlore.exp": 0.4
+				},
+				"attack": {
+					"kind": "blunt",
+					"tohit": 1,
+					"damage": "((a.weapon.damage||0)*1.5)",
+					"potencies": ["physdmg", "bluntdmg"]
+				}
+			},
+			{
+				"id": "blunt_crush",
+				"name": "crushing blow",
+				"desc": "A swing designed to crush armor and whatever's behind it.",
+				"flavor": "Keeping the local armorsmith in business.",
+				"sortOrder": 370,
+				"level": 6,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_blunt>0&&g.weaponlore>=6",
+				"buy": {
+					"arcana": 3,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_blunt')",
+				"needtext": "Currently equipped weapon must be blunt",
+				"cost": {
+					"vigor": 6
+				},
+				"cd": 10,
+				"result": {
+					"weaponlore.exp": 0.6
+				},
+				"attack": {
+					"kind": "blunt",
+					"tohit": 1,
+					"damage": "5+((a.weapon.damage||0)*0.7)",
+					"potencies": ["physdmg", "bluntdmg"],
+					"dot": {
+						"id": "maim",
+						"duration": 10
+					}
+				}
+			},
+			{
+				"id": "slash_twohand",
+				"name": "two-handed slash",
+				"desc": "Use your strength to deal a forceful strike.",
+				"flavor": "A sharp blade goes through like butter.",
+				"sortOrder": 335,
+				"level": 4,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_slash>0",
+				"buy": {
+					"arcana": 2,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_slash')",
+				"needtext": "Currently equipped weapon must be slashing",
+				"cost": {
+					"vigor": 4
+				},
+				"cd": 1,
+				"result": {
+					"weaponlore.exp": 0.4
+				},
+				"attack": {
+					"kind": "slash",
+					"tohit": 1,
+					"damage": "2+((a.weapon.damage||0)*1.35)",
+					"potencies": ["physdmg", "slashdmg"]
+				}
+			},
+			{
+				"id": "slash_weaken",
+				"name": "weakening slash",
+				"desc": "Aim for the tendons and joints to weaken your enemy's attacks.",
+				"flavor": "Cut them off at the kneecaps, or the elbows, or whatever they happen to have.",
+				"sortOrder": 334,
+				"level": 6,
+				"school": "martial",
+				"tags": ["t_nospellcraft"],
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"],
+					"special": ["weapon"]
+				},
+				"require": "g.spec_slash>0&&g.weaponlore>=6",
+				"buy": {
+					"arcana": 3,
+					"codices": 5,
+					"vigor": 5
+				},
+				"caststoppers": [1],
+				"need": "g.player.weapon.hasTag('t_slash')",
+				"needtext": "Currently equipped weapon must be slashing",
+				"cost": {
+					"vigor": 6
+				},
+				"cd": 5,
+				"result": {
+					"weaponlore.exp": 0.6
+				},
+				"attack": {
+					"kind": "slash",
+					"tohit": 1,
+					"damage": "((a.weapon.damage||0)*1.0)",
+					"potencies": ["physdmg", "slashdmg"],
+					"dot": {
+						"id": "weak",
+						"duration": 10
+					}
+				}
+			}
+		]
+	}
+}

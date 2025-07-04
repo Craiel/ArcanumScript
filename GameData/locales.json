@@ -2,37 +2,30 @@
 	{
 		"id": "mustylibrary",
 		"name": "musty library",
-		"level": 1,
-		"length": 15,
 		"sym": "📖",
-		"require": "evt_helper",
 		"desc": "A good apprentice spends all their free time in the library. After chores, of course.",
+		"level": 1,
+		"require": "evt_helper",
+		"length": 15,
 		"run": {
 			"stamina": 0.2
 		},
 		"result": {
-			"arcana": 0.1,
+			"arcana": 0.25,
 			"research": 10
 		},
 		"loot": {
 			"scrolls": "1~4"
 		},
-		"encs": [
-			"enc_bookworm",
-			"enc_tapestry",
-			"enc_primer1",
-			"enc_chest1",
-			"enc_primer1",
-			"enc_workbook1"
-		]
+		"encs": ["enc_bookworm", "enc_tapestry", "enc_primer1", "enc_chest1", "enc_scrollpile", "enc_workbook1"]
 	},
 	{
 		"id": "loc_spring",
 		"name": "lillit's spring",
-		"level": 2,
-		"length": 20,
-		"require": "mustylibrary",
 		"desc": "Tradition tells of a spring with enchanted waters. Investigations might prove revealing.",
+		"level": 2,
+		"require": "mustylibrary",
+		"length": 20,
 		"run": {
 			"stamina": 0.2
 		},
@@ -44,21 +37,14 @@
 			"herbs": "2~5",
 			"lillitscord": "5%"
 		},
-		"encs": [
-			"manatree",
-			"enc_heather",
-			"mysticwater",
-			"manatree",
-			"hiddencache",
-			"starrysky1"
-		]
+		"encs": ["manatree", "enc_heather", "mysticwater", "enc_magicstream", "enc_lilitscache", "starrysky1"]
 	},
 	{
 		"id": "eryleyot",
 		"name": "eryl eyot",
+		"desc": "The small and tranquil island is inhabited by an old hermit named thyffr.",
 		"level": 5,
 		"length": 30,
-		"desc": "The small and tranquil island is inhabited by an old hermit named thyffr",
 		"run": {
 			"stamina": 0.22
 		},
@@ -70,28 +56,22 @@
 			"scrolls": "1~4",
 			"herbs": "2~5"
 		},
-		"encs": [
-			"enc_chest3",
-			"brightvista",
-			"enc_thyffr",
-			"starrysky1",
-			"mysticwater"
-		]
+		"encs": ["enc_eyotchest", "brightvista", "enc_thyffr", "starrysky1", "mysticwater"]
 	},
 	{
 		"id": "loc_treffil",
 		"name": "Explore Treffil Wood",
+		"desc": "The deeper woods posses many features of interest to the magical scholar. The spirits of the place make sure to keep the troublemakers out.",
 		"level": 7,
 		"length": 40,
-		"desc": "The deeper woods posses many features of interest to the magical scholar. The spirits of the place make sure to keep the troublemakers out.",
 		"run": {
 			"stamina": 0.25
 		},
 		"result": {
 			"arcana": 0.1,
-			"naturelore.exp": 10,
-			"herbalism.exp": 5,
-			"animals.exp": 5
+			"naturelore.exp": 100,
+			"herbalism.exp": 50,
+			"animals.exp": 50
 		},
 		"loot": {
 			"herbs": "5~10"
@@ -102,16 +82,22 @@
 			"brightvista",
 			"hauntedglade",
 			"enc_delki",
-			"hiddencache"
+			"hiddencache",
+			"enc_mossylogs",
+			"enc_mudpatch",
+			"enc_woodlandcritters",
+			"enc_smallcave",
+			"enc_flowermeadow",
+			"enc_hugetree"
 		]
 	},
 	{
 		"id": "pidwigcove",
 		"name": "pidwig's cove",
+		"desc": "The half-goblin Pidwig has sailed the waters around his bay for hundreds of years. In that time he has collected a myriad of interesting artifacts.",
 		"level": 9,
 		"require": "g.history>=5&&g.eryleyot>0",
 		"length": 25,
-		"desc": "The half-goblin Pidwig has sailed the waters around his bay for hundreds of years. In that time he has collected a myriad of interesting artifacts.",
 		"run": {
 			"stamina": 0.3
 		},
@@ -123,7 +109,7 @@
 			"gems": "4~10"
 		},
 		"encs": [
-			"enc_chest3",
+			"enc_pidwigchest",
 			"pidwigstars",
 			"enc_pidwig",
 			"murkywater",
@@ -135,9 +121,9 @@
 	},
 	{
 		"id": "rithel",
+		"desc": "This tiny outpost in the center of thangmor outlasted even the pillars.",
 		"level": 14,
-		"desc": "This tiny outpost in the center of thangmor outlasted even the pillars",
-		"require": "g.evil<=0&&g.history>=7&&g.loc_treffil>0",
+		"require": "g.evil2<=0&&g.history>=7&&g.loc_treffil>0",
 		"run": {
 			"stamina": 0.33
 		},
@@ -154,16 +140,22 @@
 			"enc_primer2",
 			"enc_hettie",
 			"enc_delki",
-			"brightvista"
+			"brightvista",
+			"enc_chest2",
+			"rithel_fortifications",
+			"rithel_grizzledveteran",
+			"rithel_woods",
+			"rithel_towerview",
+			"rithel_rangerpatrol"
 		]
 	},
 	{
 		"id": "ruinedcrypt",
 		"name": "ruined crypt",
-		"level": 4,
-		"length": 30,
-		"require": "tier0",
 		"desc": "An ancient crypt of crumbling stone.",
+		"level": 4,
+		"require": "tier0",
+		"length": 30,
 		"run": {
 			"stamina": 0.35
 		},
@@ -172,7 +164,9 @@
 			"research": 20
 		},
 		"loot": {
-			"scrolls": "2~4"
+			"scrolls": "2~4",
+			"bodies": { "value": "4~8", "skipLocked": true },
+			"bonedust": { "value": "3~5", "skipLocked": true }
 		},
 		"encs": [
 			"enc_tapestry",
@@ -188,11 +182,10 @@
 	},
 	{
 		"id": "hallofmirrors",
+		"sym": "📖",
 		"level": 12,
 		"require": "g.scrying>=999",
 		"length": 50,
-		"sym": "📖",
-		"desc": "",
 		"run": {
 			"stamina": 0.4
 		},
@@ -220,13 +213,13 @@
 	{
 		"id": "fazbitshop",
 		"name": "fazbit's workshop",
-		"level": 9,
-		"length": 50,
 		"sym": "📖",
-		"require": "(g.alchemy+g.scrying)>=17",
 		"desc": "You could spend a century in Fazbit's lost workshop and not exhaust its creations.",
+		"level": 9,
+		"require": "(g.alchemy+g.scrying)>=17",
+		"length": 50,
 		"loot": {
-			"tomes": "2~3",
+			"tomes": 1,
 			"gems": "3~5",
 			"airgem": "50%",
 			"firegem": "50%",
@@ -238,29 +231,36 @@
 			"enc_chest2",
 			"enc_furnace",
 			"enc_workbook1",
-			"enc_alchemy",
+			"enc_alchemy2",
 			"enc_workbook2",
 			"puppet_fazbitservants"
 		]
 	},
 	{
 		"id": "genezereth",
-		"level": 15,
-		"require": "g.history>=7",
-		"length": 100,
 		"sym": "📖",
 		"desc": "An ancient library at the bridge spanning Markhul's gap.",
 		"flavor": "Third of the Four Weirs of Dhrune.",
+		"level": 15,
+		"require": "g.history>=7",
+		"length": 100,
 		"result": {
 			"title": "Historian"
 		},
 		"run": {
 			"stamina": 0.4
 		},
-		"loot": {
-			"tomes": "3~5",
-			"markhulcodex": true
-		},
+		"loot": [
+			{
+				"tomes": "1~3",
+				"shadowgem": "8~12",
+				"markhulcodex": true
+			},
+			{
+				"%": "100%",
+				"enchanted_fountain_pen": 1
+			}
+		],
 		"encs": [
 			"enc_tapestry",
 			"enc_tome",
@@ -276,24 +276,35 @@
 	{
 		"id": "loc_orrem",
 		"name": "sands of orrem",
+		"desc": "Only a small trading post marks the boundary of the lost cities of Orrem. Weathered masonry jutting from the sands beyond bespeak monuments of unimaginable proportions.",
+		"level": 19,
 		"require": "g.history>=7&&g.scrying>=5",
 		"start": {
 			"name": "Cities of Orrem",
 			"desc": "A vision in a crystal orb reveals to you the ruins of the lost cities of Orrem."
 		},
-		"desc": "Only a small trading post marks the boundary of the lost cities of Orrem. Weathered masonry jutting from the sands beyond bespeak monuments of unimaginable proportions.",
 		"length": 400,
-		"level": 19,
 		"run": {
-			"stamina": 4
+			"stamina": 3
 		},
 		"result": {
 			"title": "Nomad",
 			"fame": 1
 		},
-		"loot": {
-			"jazidscompass": "5%"
+		"mod": {
+			"s_travel.max": "0.5//4/-1"
 		},
+		"loot": [
+			{
+				"%": "5%",
+				"jazidscompass": 1
+			},
+			{
+				"%": "100%",
+				"stone_working_kit": 1,
+				"runestones": 1
+			}
+		],
 		"encs": [
 			"enc_aeonclock",
 			"enc_caravan",
@@ -321,10 +332,10 @@
 	{
 		"id": "loc_menagerie",
 		"name": "the lost menagerie",
+		"desc": "Beneath the tallest idrasil a great menagerie thrives beneath a second sky.",
 		"level": 23,
 		"require": "g.tier5>0&&g.magicbeasts>=5",
 		"length": 200,
-		"desc": "Beneath the tallest idrasil a great menagerie thrives beneath a second sky.",
 		"run": {
 			"stamina": 3
 		},
@@ -365,9 +376,9 @@
 	{
 		"id": "loc_tenwick",
 		"name": "peregrination",
+		"desc": "Tenwick's trail runs a circuit about the notable areas of Dhrune. On foot it takes the better part of a year to complete.",
 		"level": 19,
 		"require": "g.s_travel>=5&&g.a_travel>=100",
-		"desc": "Tenwick's trail runs a circuit about the notable areas of Dhrune. On foot it takes the better part of a year to complete.",
 		"length": 10000,
 		"run": {
 			"stamina": 2
@@ -406,7 +417,9 @@
 			"mysticwater",
 			"sombersunset",
 			"starrysky1",
-			"strangebones"
+			"strangebones",
+			"enc_blazingheat",
+			"enc_crashingwaves"
 		]
 	}
 ]

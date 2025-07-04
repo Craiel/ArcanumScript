@@ -6,23 +6,96 @@
 			{
 				"id": "evt_hall",
 				"name": "Wizard's Hall",
-				"desc": "Across the aeons wizards gather in hidden halls to exchange lore and augment their powers."
+				"tags": "hall",
+				"desc": "Across the aeons wizards gather in hidden halls to exchange lore and augment their powers.",
+				"mod": {
+					"fame.result.hallPoints": 1
+				},
+				"result": {
+					"hallPoints": "g.fame"
+				}
 			}
 		],
-		"tasks": [
+		"glossaryentries": [
 			{
-				"id": "retire",
-				"warn": true,
-				"require": "g.planeslore>=999",
-				"desc": "",
-				"cost": {},
-				"flavor": ""
+				"id": "gloss_example_entry_hall",
+				"name": "example entry name",
+				"group": "example group",
+				"tags": "t_gloss_example",
+				"desc": [
+					"Example line.",
+					"Forced example newline.",
+					"Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text."
+				],
+				"require": "g.lore>999"
+			},
+			{
+				"id": "gloss_hall",
+				"name": "wizard's hall",
+				"group": "hall",
+				"tags": "t_gloss_hall",
+				"desc": [
+					"The Wizard's Hall is the game's prestige mechanic, which you unlock by purchasing the eponymous upgrade.",
+					"Unlike most prestige systems, this one will not reset your progress, instead it will allow you to create new characters, you can switch between at any time.",
+					"Your hall's effects take the form of upgrades that apply to all of your characters."
+				],
+				"require": "g.tier5>0"
+			},
+			{
+				"id": "gloss_hall_upgrades",
+				"name": "potent hall upgrades",
+				"group": "hall",
+				"tags": "t_gloss_hall",
+				"desc": [
+					"The time related upgrades allow you to indirectly manipulating your available action slots.",
+					"The time fork upgrade will enable the time split upgrade on all of your wizards from apprenticeship onwards, without the need to purchase it.",
+					"A further upgrade will allow you to purchase an additional time split, after your wizard fulfills the original requirements.",
+					"",
+					"dream chamber",
+					"Besides the generation of dreams (which currently are quite useless), having a dream chamber will influence your wizards in more ways than its direct effect.",
+					"Besides obtaining more dreams, the dream chamber will allow wizards with some expertise to recover more while resting.",
+					"A more powerful mage can even slumber, and still do as much as if he didn't.",
+					"",
+					"The star chamber is an interesting upgrade, as it will give you a slow but steady stream of notoriety, effectively generating prestige.",
+					"A star chamber will earn back its initial cost after around 80 hours."
+				],
+				"require": "g.evt_hall>0"
+			},
+			{
+				"id": "gloss_prestige",
+				"name": "prestige",
+				"group": "hall",
+				"tags": "t_gloss_hall",
+				"desc": [
+					"Prestige is the currency you spend on hall upgrades that affect all wizards within your hall.",
+					"Whenever you see something mention fame or notoriety, that's 1:1 with prestige. Whenever you get 1 of those you get 1 prestige.",
+					"You can get notoriety by completing various tasks and dungeons. It should be mentioned among their results when they give some.",
+					"Reliable and repeatable ways to get prestige include clearing some dungeons, levelling up a wizard, getting titles, or tiering up a wizard.",
+					"Once obtained, prestige is saved to your hall, separate from the wizard that got it. If you get prestige you only lose it when you spend it.",
+					"Dismissing a wizard from your hall to clear up space won't remove the prestige that wizard got, and importing a wizard won't give you any prestige."
+				],
+				"require": "g.evt_hall>0"
+			},
+			{
+				"id": "gloss_dimensionalexploration",
+				"name": "dimensional exploration",
+				"group": "hall",
+				"tags": "t_gloss_hall",
+				"desc": [
+					"While most wizards can access and study the planes most neighboring to Dhrune, researching the ones more distant is a costly and risky endeavor.",
+					"A solution to that issue is a creation of a magical dimensional probe, that can be sent to gather information about the distant planes.",
+					"There is a functionally infinite amount of planes a probe can explore and it is unlikely that there would be any benefit beyond the accumulation of wizardly knowledge.",
+					"Each dimension is harder to reach than the last, as a simple function of distance needed to traverse. The task will grow infinitely more complex as more dimensions are scanned.",
+					"The number of dimension thus searched however, can be a potent point when one wants to boast about their hall's prowess."
+				],
+				"require": "g.hall_dimensionalexploration>0"
 			}
 		],
 		"upgrades": [
 			{
 				"id": "greatwing",
 				"name": "great wing",
+				"tags": "hall",
 				"max": 3,
 				"desc": "A new wing of the Great Hall where Wizards can lodge in comfort.",
 				"require": "g.expandhall>=1",
@@ -39,6 +112,7 @@
 			{
 				"id": "starchamber",
 				"name": "star chamber",
+				"tags": "hall",
 				"require": "tier6",
 				"max": 3,
 				"desc": "An expansive chamber for viewing the heavens.",
@@ -55,6 +129,7 @@
 			{
 				"id": "expandhall",
 				"name": "expanded halls",
+				"tags": "hall",
 				"require": "tier5",
 				"max": 3,
 				"cost": {
@@ -67,39 +142,43 @@
 			{
 				"id": "spellspire",
 				"max": 3,
+				"tags": "hall",
 				"require": "tier6",
 				"desc": "A conduit for magic energy.",
 				"cost": {
 					"prestige": 15
 				},
 				"mod": {
-					"spellcraft.max": "20%"
+					"spellcraft.max": "20%",
+					"spellcraft.rate": 2
 				}
 			},
 			{
 				"id": "dreamchamber",
 				"name": "dream chamber",
-				"desc": "In some time and place, even dreams were once real.",
+				"tags": "hall,t_oneiromancy",
+				"desc": "An ancient artifact from before the art of Oneiromancy was lost. Makes users capable of controlling dreams... and vice-versa.",
 				"require": "tier5",
 				"max": 1,
 				"cost": {
 					"prestige": 40
 				},
 				"mod": {
+					"dreams.max": 5,
 					"dreams.rate": 0.0001,
-					"dreams.max": 5
-				}
+					"fourposter.mod.dreams.rate": 0.0001
+				},
+				"flavor": "In some time and place, even dreams were once real."
 			},
 			{
 				"id": "puppet_enhancedlabs",
 				"name": "enhanced laboratories",
+				"tags": "hall",
 				"desc": "Mechanical assistants and automated delivery systems.",
 				"require": "g.mechamancer>0",
 				"max": 5,
 				"cost": {
-					"prestige": 80,
-					"automatas": 20,
-					"machinae": 20
+					"prestige": 30
 				},
 				"mod": {
 					"potions.max": 0.4,
@@ -109,42 +188,69 @@
 			{
 				"id": "titan_foundations",
 				"name": "stabilized foundations",
+				"tags": "hall",
 				"desc": "A procedure to prevent earthquakes from affecting member's buildings.",
 				"require": "g.titan>0",
 				"max": 3,
 				"cost": {
-					"prestige": 120,
-					"mythicanvil": 1
+					"prestige": 40
 				},
 				"mod": {
 					"space.max": 2
 				}
 			},
 			{
+				"id": "hall_time_1",
+				"name": "time fork",
+				"tags": "hall",
+				"desc": "Forces the timelines of all hall members to diverge without a need for a complicated procedure.",
+				"extdesc": "Adds a free timesplit to all wizards who do not yet own one, regardless of normal requirements.",
+				"require": "tier6",
+				"max": 1,
+				"cost": {
+					"prestige": 25
+				}
+			},
+			{
+				"id": "hall_time_2",
+				"name": "time knife",
+				"tags": "hall",
+				"desc": "Carve out just a little more time in a day.",
+				"require": "g.tier6>0&&g.hall_time_1>0",
+				"max": 1,
+				"cost": {
+					"prestige": 50
+				},
+				"mod": {
+					"timesplit.max": 1
+				}
+			},
+			{
 				"id": "magicstables",
 				"name": "magic stables",
+				"tags": "hall",
 				"desc": "Dedicated stabling for the hall's mounts. Useful for discerning those with aptitude for magic.",
 				"require": "tier5",
 				"max": 4,
 				"cost": {
-					"prestige": 30
+					"prestige": 10
 				},
 				"mod": {
 					"animals.max": 1,
-					"animals.rate": 1,
-					"cleanstables.result.gold": 0.05,
-					"chores.result.gold": 0.1,
+					"cleanstables.result.gold": 0.5,
+					"chores.result.gold": 1,
 					"errands.effect.gold": 0.15
 				}
 			},
 			{
 				"id": "arcanacollectors",
 				"name": "arcana collectors",
+				"tags": "hall",
 				"desc": "Specialized facilities for newer mages to practice arcana absorption.",
 				"require": "tier5",
 				"max": 4,
 				"cost": {
-					"prestige": 30
+					"prestige": 10
 				},
 				"mod": {
 					"arcana.rate": 0.0005
@@ -153,11 +259,12 @@
 			{
 				"id": "classrooms",
 				"name": "classrooms",
+				"tags": "hall",
 				"desc": "Dedicated classrooms for efficient study and transfer of knowledge.",
 				"require": "tier5",
 				"max": 5,
 				"cost": {
-					"prestige": 30
+					"prestige": 10
 				},
 				"mod": {
 					"study.effect.research": 0.15,
@@ -165,20 +272,40 @@
 				}
 			},
 			{
-				"id": "timewell",
-				"require": "tier6",
-				"desc": "A deep pool of time incarnate.",
-				"max": 1,
+				"id": "hall_tomeinsight",
+				"name": "tome of insight",
+				"tags": "hall",
+				"desc": "A rare treatise on the nature of learning.",
+				"require": "tier5",
+				"max": 2,
 				"cost": {
-					"prestige": 75
+					"prestige": 20
 				},
 				"mod": {
-					"runner.max": 1
+					"sp": 1
+				}
+			},
+			{
+				"id": "hall_books_basic",
+				"name": "elementalism textbooks",
+				"tags": "hall",
+				"desc": "A set of textbooks intended to facilitate the study of the elements.",
+				"require": "tier5",
+				"max": 1,
+				"cost": {
+					"prestige": 60
+				},
+				"mod": {
+					"firelore.buy.sp": -1,
+					"earthlore.buy.sp": -1,
+					"waterlore.buy.sp": -1,
+					"airlore.buy.sp": -1
 				}
 			},
 			{
 				"id": "ritualchamber",
 				"name": "ritual chamber",
+				"tags": "hall",
 				"require": "g.ritualist>0&&g.tier6>0",
 				"desc": "A warded room deep within the hall, dedicated to carrying out rituals in safety.",
 				"max": 1,
@@ -190,17 +317,108 @@
 					"ritualnotes.max": 12,
 					"ritualward.max": 7
 				}
+			},
+			{
+				"id": "hall_dimensionalnexus",
+				"name": "dimensional nexus",
+				"tags": "hall",
+				"desc": "A more advanced version of a dhrunic nexus, permitting deeper exploration into the planes.",
+				"require": "g.tier6>0&&g.gate>0",
+				"max": 1,
+				"cost": {
+					"prestige": 40
+				},
+				"mod": {
+					"gate.mod.space": -15
+				}
+			},
+			{
+				"id": "hall_dimensionalexploration",
+				"name": "dimensional exploration",
+				"tags": "hall",
+				"desc": "Crossing the vast distances between planes personally is a risky and expensive endeavor. Use a probe to research them instead.",
+				"require": "g.hall_dimensionalnexus>0",
+				"max": 1,
+				"cost": {
+					"prestige": 10
+				}
+			},
+			{
+				"id": "hall_probing_mastery1",
+				"name": "early dimensional exploration results",
+				"tags": "hall",
+				"desc": "Well-known planes: Fire, Darkness, Void. Most wizards would find such information basic, but the comprehensive surveys are nonetheless valuable.",
+				"require": "g.hall_probedepth>=5",
+				"max": 1,
+				"mod": {
+					"planeslore.max": 1
+				}
+			},
+			{
+				"id": "hall_probing_mastery2",
+				"name": "further dimensional exploration results",
+				"tags": "hall",
+				"desc": "Lesser-known planes: That-which-exists, Zolohedron, Plane of Loathing. Inimical to existance of Dhrune's creatures, one can rest easy that the inhhabitants would not be able to exist on Dhrune either.",
+				"require": "g.hall_probedepth>=25",
+				"max": 1,
+				"mod": {
+					"planeslore.max": 2
+				}
+			},
+			{
+				"id": "hall_probing_mastery3",
+				"name": "furthest dimensional exploration results",
+				"tags": "hall",
+				"desc": "Previously unknown planes. At this point, the laws governing them are largely incomprehensible to a denizen of Dhrune. Further exploration will not yield much in a way of practical insight.",
+				"require": "g.hall_probedepth>=100",
+				"max": 1,
+				"mod": {
+					"planeslore.max": 3
+				}
+			}
+		],
+		"resources": [
+			{
+				"id": "hall_probematerials",
+				"name": "dimensional probe materials",
+				"desc": "Properly staged materials for further advancement of dimensional probing.",
+				"max": 30,
+				"group": "hall",
+				"convert": {
+					"singular": true,
+					"input": {
+						"hall_probematerials": "g.hall_probematerials.max"
+					},
+					"output": {
+						"effect": {
+							"hall_probedepth": 1
+						}
+					}
+				}
 			}
 		],
 		"stats": [
 			{
+				"id": "hall_probedepth",
+				"name": "dimensions probed",
+				"tags": "hall",
+				"locked": false,
+				"mod": {
+					"hall_probematerials.max": 10,
+					"planeslore.rate": "0.5%",
+					"voidlore.rate": "0.5%"
+				}
+			},
+			{
 				"id": "hallSize",
+				"tags": "hall",
 				"locked": false,
 				"val": 3
 			},
 			{
 				"id": "hallPoints",
 				"name": "prestige",
+				"tags": "hall",
 				"alias": "points",
 				"hide": true,
 				"locked": false,
@@ -212,6 +430,7 @@
 			{
 				"id": "prestige",
 				"name": "hall prestige",
+				"tags": "hall",
 				"require": "evt_hall",
 				"val": 0,
 				"locked": false,
@@ -234,6 +453,13 @@
 					"tier7": true
 				}
 			}
-		]
+		],
+		"tags": [
+			{
+				"id": "hall",
+				"name": "hall"
+			}
+		],
+		"tasks": []
 	}
 }

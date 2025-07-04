@@ -2,7 +2,7 @@
 	{
 		"id": "hp",
 		"name": "life",
-		"desc": "Wizard life-force",
+		"desc": "Wizard life-force.",
 		"val": 5,
 		"max": 5,
 		"unit": false,
@@ -18,14 +18,14 @@
 		"mod": {
 			"spelllist.max": 1,
 			"stamina.max": 1,
-			"player.tohit": 1,
-			"hp.max": 1,
+			"vigor.max": 1,
+			"hp.max": 2,
 			"allies.max": ":5",
-			"speed": ":4"
+			"speed": ":3",
+			"sp": ":3"
 		},
 		"result": {
-			"hallPoints": 0.1,
-			"sp": ":3"
+			"fame": 0.1
 		}
 	},
 	{
@@ -58,14 +58,36 @@
 	{
 		"id": "sp",
 		"name": "skill points",
-		"desc": "Spend to unlock new skills",
+		"desc": "Spend to unlock new skills.",
 		"stat": true,
 		"val": 0,
 		"locked": false
 	},
 	{
+		"id": "chaincast",
+		"name": "chain cast",
+		"val": 1,
+		"stat": true,
+		"unit": false,
+		"locked": false
+	},
+	{
+		"id": "tohit",
+		"val": 1,
+		"stat": true,
+		"unit": false,
+		"locked": false
+	},
+	{
 		"id": "dodge",
 		"val": 1,
+		"stat": true,
+		"unit": false,
+		"locked": false
+	},
+	{
+		"id": "defense",
+		"val": 0,
 		"stat": true,
 		"unit": false,
 		"locked": false
@@ -77,12 +99,12 @@
 		"unit": false,
 		"rate": 1,
 		"effect": {
-			"hp": "<=0?-20"
+			"self.hp": "<=0?-20"
 		}
 	},
 	{
 		"id": "speed",
-		"desc": "Movement speed",
+		"desc": "Movement speed.",
 		"val": 1,
 		"stat": true,
 		"unit": false,
@@ -90,12 +112,12 @@
 	},
 	{
 		"id": "luck",
-		"desc": "Affinity for fortune",
+		"desc": "Affinity for fortune.",
 		"val": 0,
 		"stat": true,
 		"unit": false,
 		"locked": false,
-		"flavor": "Let's keep this party polite"
+		"flavor": "Let's keep this party polite."
 	},
 	{
 		"id": "scraft",
@@ -119,7 +141,7 @@
 		"require": "tier0",
 		"hide": "true",
 		"locked": false,
-		"desc": "Tendency to good",
+		"desc": "Tendency to good.",
 		"stat": true,
 		"val": 0
 	},
@@ -129,7 +151,7 @@
 		"hide": true,
 		"locked": false,
 		"stat": true,
-		"desc": "Tendency to evil",
+		"desc": "Tendency to evil.",
 		"val": 0
 	},
 	{
@@ -138,10 +160,7 @@
 		"hide": true,
 		"locked": false,
 		"stat": true,
-		"desc": "Your reputation in the world",
-		"result": {
-			"hallPoints": 1
-		},
+		"desc": "Your reputation in the world.",
 		"val": 0
 	}
 ]

@@ -1,0 +1,82 @@
+{
+	"module": "contributors",
+	"sym": "✪",
+	"data": {
+		"events": [
+			{
+				"id": "evn_yurisexpander",
+				"name": "yuri Dhjeeyn's von Neumann House",
+				"hidden": true,
+				"require": "g.clockworkexpansione>=15",
+				"mod": {
+					"clockworkexpansione.mod.yurisexpander.convert.input.puppets": 0.00028,
+					"clockworkexpansione.mod.yurisexpander.convert.input.machinae": 0.00028,
+					"clockworkexpansione.mod.yurisexpander.convert.input.automatas": 0.00028
+				}
+			}
+		],
+		"furniture": [
+			{
+				"id": "yurisexpander",
+				"name": "yuri Dhjeeyn's von Neumann House",
+				"require": "g.clockworkexpansione>=15",
+				"desc": "A device invented by a master of pushing the boundaries, allowing a wizard to automate the expansion process. Just don't forget to turn it off when you are done.",
+				"tags": "t_contributor",
+				"cost": {
+					"puppetautomation": 2,
+					"machinaautomation": 2,
+					"automataautomation": 2
+				},
+				"mod": {
+					"space": 25
+				},
+				"convert": {
+					"input": {
+						"puppets": 0.0056,
+						"machinae": 0.0056,
+						"automatas": 0.0056
+					},
+					"output": {
+						"effect": {
+							"clockworkexpansione": 0.00028
+						}
+					}
+				},
+				"flavor": "Most Wizards build their Towers on the labours of the less magically inclined. \n But not you, you shall spare the common people and build your Domain on the backs of your loyal Automata and their lesser cousins. \n And if a few of them are to be sacrificed and integrated into your works, then that is a sacrifice you are willing to make."
+			}
+		],
+		"spells": [
+			{
+				"id": "mk_phoenixegg",
+				"name": "baron's phoenix incubator",
+				"desc": "In combat, summon a phoenix egg which you must guard until it hatches.",
+				"sortOrder": 760,
+				"level": 3,
+				"school": "fire",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.summoner>0||(g.t_summonclass>0&&g.tier2>0)",
+				"buy": {
+					"research": 1000,
+					"firegem": 30,
+					"codices": 20
+				},
+				"cost": {
+					"fire": 10
+				},
+				"cd": 60,
+				"summon": [
+					{
+						"id": "sum_phoenixegg",
+						"count": 1,
+						"max": 3
+					}
+				]
+			}
+		]
+	}
+}

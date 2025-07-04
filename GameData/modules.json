@@ -1,5 +1,6 @@
 {
 	"core": [
+		"tags",
 		"resources",
 		"upgrades",
 		"tasks",
@@ -11,6 +12,7 @@
 		"spells",
 		"monsters",
 		"dungeons",
+		"clashes",
 		"events",
 		"classes",
 		"armors",
@@ -24,7 +26,10 @@
 		"stressors",
 		"rares",
 		"reagents",
-		"properties"
+		"properties",
+		"potencies",
+		"hall",
+		"glossaryentries"
 	],
 	"modules": [
 		"patrons",
@@ -32,8 +37,20 @@
 		"combattutorial",
 		"shian",
 		"sackmakers",
-		"ritualist",
+		"reedburgh",
 		"extramats",
-		"extraaction"
+		"extraaction",
+		"legacy_halloween",
+		"legacy_winter",
+		"timerip",
+		"shopkeeping",
+		"debitomancy",
+		"furniture_upgrades",
+		"swordplay",
+		"martial",
+		"companions",
+		"contributors",
+		"priest",
+		"seasonal/winter"
 	]
 }

@@ -427,6 +427,18 @@ function validateAttackBlock(settings, value) {
         switch (property) {
             case 'adj':
             case 'log':
+            case 'sym':
+            case 'nododge':
+            case 'tags':
+            case 'level':
+            case 'repeathits':
+            case 'applyinstanced':
+            case 'attack':
+            case 'onDeath':
+            case 'onExpire':
+            case 'only':
+            case 'healing':
+            case 'cure':
             case 'name': {
                 // ignore these
                 break;
@@ -512,6 +524,11 @@ function validateAttackBlock(settings, value) {
                 break;
             }
 
+            case 'targetspec': {
+                break
+            }
+
+            case 'summon':
             case 'targets': {
                 if(!isValidTarget(settings, propertyValue)){
                     settings.logError(" Invalid target value: " + propertyValue);
@@ -545,6 +562,14 @@ function validateAttackBlock(settings, value) {
                 }
 
                 break;
+            }
+
+            case 'acquire':{
+                break;
+            }
+
+            case 'potencies': {
+                break
             }
 
             case 'self.resist.shadow': {
@@ -627,6 +652,11 @@ exports.validateSecondPass = function(settings, object, key) {
         case 'immune':
         case 'spells':
         case 'spawns':
+        case 'summon':
+        case 'convert':
+        case 'sell':
+        case 'keywords':
+        case 'resurrect':
         case 'exclude': {
             validateObjectTarget(settings, object[key], key);
             break;
@@ -683,6 +713,7 @@ exports.validateSecondPass = function(settings, object, key) {
         }
 
         default: {
+            console.log(object);
             console.log(object[key]);
             throw "Unhandled property in second pass: " + key;
         }
@@ -745,6 +776,8 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'val':
         case 'rate':
         case 'scale':
+        case 'sortorder':
+        case 'chaincast':
         case 'length': {
             switch (typeof propertyData) {
                 case 'number': {
@@ -787,6 +820,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'unused':
         case 'silent':
         case 'secret':
+        case 'craftable':
         case 'repeat': {
             switch(typeof propertyData) {
                 case 'string': {
@@ -840,6 +874,11 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'need':
         case 'once':
         case 'show':
+        case 'keywords':
+        case 'summon':
+        case 'resurrect':
+        case 'convert':
+        case 'sell':
         case 'tags': {
             if(Array.isArray(propertyData)) {
                 targetData[property] = propertyData;
@@ -873,6 +912,9 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'actdesc':
         case 'title':
         case 'group':
+        case 'needtext':
+        case 'extdesc':
+        case 'parent':
         case 'name': {
             targetData[property] = propertyData;
             return true;
@@ -919,7 +961,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         }
 
         default: {
-            settings.logError("Unhandled Property: " + property + " (" + typeof propertyData + ")");
+            settings.logError("Unhandled Property (First Pass): " + property + " (" + typeof propertyData + ")");
             return false;
         }
     }

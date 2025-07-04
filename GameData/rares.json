@@ -2,32 +2,41 @@
 	{
 		"id": "karnivexcrown",
 		"name": "crown of karnivex",
+		"type": "armor",
 		"desc": "The conceits of Karnivex were without bounds.",
 		"slot": "head",
+		"tags": "t_crown",
 		"unique": true,
 		"level": 7,
 		"enchants": 7,
 		"armor": 5,
-		"mod": {
-			"bonuses.fire": "5%",
-			"resist.fire": 10,
-			"resist.silence": 5,
-			"tohit": 1,
-			"rage.rate": 0.5
+		"alter": {
+			"mod": {
+				"firedmg": "5%",
+				"self.resist.fire": 10,
+				"self.resist.silence": 5,
+				"self.tohit": 1,
+				"rage.rate": 0.5
+			}
 		}
 	},
 	{
 		"id": "veldranearring",
 		"name": "veldran's earring",
+		"type": "armor",
 		"desc": "A small blue stone with swirls of white.",
+		"tags": "t_earring",
 		"unique": true,
 		"level": 5,
 		"enchants": 5,
 		"armor": 1,
 		"slot": "trinket",
-		"mod": {
-			"water.rate": 0.1,
-			"resist.water": 5
+		"alter": {
+			"mod": {
+				"water.rate": 0.1,
+				"self.resist.water": 5,
+				"self.resist.silence": 10
+			}
 		}
 	},
 	{
@@ -35,14 +44,17 @@
 		"name": "wraps of the ecdysiast",
 		"type": "armor",
 		"slot": "shins",
+		"tags": "t_ankleguard",
 		"material": "silk",
 		"level": 7,
 		"enchants": 7,
 		"desc": "Desilla awarded her servants with articles of apparel.",
-		"mod": {
-			"resist.paralysis": 10,
-			"charms.max": 1,
-			"charms.rate": 0.3
+		"alter": {
+			"mod": {
+				"self.resist.paralysis": 10,
+				"charms.mod.magicadvice.result.gold": 0.13,
+				"charms.rate": 0.3
+			}
 		},
 		"flavor": "The awards however, were given sparingly."
 	},
@@ -51,25 +63,141 @@
 		"name": "lillit's cord",
 		"type": "armor",
 		"slot": "waist",
+		"tags": "t_cord",
 		"armor": 2,
 		"unique": true,
 		"level": 5,
 		"enchants": 5,
 		"desc": "Lillit was known for her soothing presence.",
-		"mod": {
-			"rage.rate": -0.25
+		"alter": {
+			"mod": {
+				"rage.rate": -0.25
+			}
 		}
 	},
 	{
 		"id": "botanistgloves",
 		"name": "gloves of the botanist",
+		"tags": "t_gloves",
 		"type": "armor",
 		"slot": "hands",
 		"material": "basiliskhide",
 		"armor": 5,
 		"enchants": 5,
-		"mod": {
-			"resist.poison": 10
+		"alter": {
+			"mod": {
+				"self.resist.poison": 10
+			}
+		}
+	},
+	{
+		"id": "stone_working_kit",
+		"name": "stone working kit",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A leather pouch filled with the finest tools for crafting runes.",
+		"level": 1,
+		"armor": 0,
+		"alter": {
+			"mod": {
+				"craftrune.cost.managem": -1,
+				"craftrune.cost.mana": 2,
+				"craftrune.length": -4,
+				"craftfirerune.cost.firegem": -2,
+				"craftfirerune.cost.fire": 2,
+				"craftfirerune.length": -4,
+				"craftearthrune.cost.earthgem": -2,
+				"craftearthrune.cost.earth": 2,
+				"craftearthrune.length": -4,
+				"craftairrune.cost.airgem": -2,
+				"craftairrune.cost.air": 2,
+				"craftairrune.length": -4,
+				"craftwaterrune.cost.watergem": -2,
+				"craftwaterrune.cost.water": 2,
+				"craftwaterrune.length": -4,
+				"craftspiritrune.cost.spiritgem": -2,
+				"craftspiritrune.cost.spirit": 2,
+				"craftspiritrune.length": -4
+			}
+		}
+	},
+	{
+		"id": "botanical_kit",
+		"name": "botanical kit",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A wooden box brimming with tools for gathering and preserving herbs, flowers, and roots.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 15
+		},
+		"alter": {
+			"mod": {
+				"herbs.max": 20,
+				"gatherherbs.result.herbalism.exp": 2,
+				"gatherherbs.result.herbs": 3,
+				"act_garden.effect.herbs": 0.1,
+				"act_garden.effect.research": 0.5
+			}
+		}
+	},
+	{
+		"id": "phoenix_quill",
+		"name": "phoenix quill",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A quill tempered in the ash pile of a phoenix.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"firegem": 1
+		},
+		"alter": {
+			"mod": {
+				"scribescroll.result.scrolls": 1,
+				"scribescroll.length": 1,
+				"scribescroll.cost.fire": 0.2,
+				"bindcodex.result.codices": 1,
+				"bindcodex.cost.fire": 2,
+				"compiletome.length": -10,
+				"compiletome.run.stamina": -0.2,
+				"compiletome.run.fire": 0.2
+			}
+		}
+	},
+	{
+		"id": "enchanted_fountain_pen",
+		"name": "enchanted fountain pen",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A moonstone pen imbued with magic to make it's ink flow without error.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gems": 2,
+			"gold": 150
+		},
+		"alter": {
+			"mod": {
+				"scribescroll.cost.research": 10,
+				"scribescroll.cost.mana": -0.5,
+				"bindcodex.cost.research": 30,
+				"bindcodex.cost.mana": -1,
+				"bindcodex.cost.scrolls": -2,
+				"compiletome.length": -10,
+				"compiletome.cost.mana": -5,
+				"compiletome.cost.research": 150,
+				"compiletome.run.stamina": -0.2
+			}
 		}
 	},
 	{
@@ -80,10 +208,12 @@
 		"enchants": 10,
 		"desc": "What leads your way can lead to you.",
 		"type": "armor",
-		"slot": "neck",
-		"mod": {
-			"s_travel.max": 2,
-			"bf.rate": -0.5
+		"slot": "trinket",
+		"alter": {
+			"mod": {
+				"s_travel.mod.dist": "5%",
+				"bf.rate": -0.5
+			}
 		},
 		"flavor": "Jazid always finds his compass."
 	},
@@ -92,9 +222,12 @@
 		"name": "ring of the patron",
 		"unique": true,
 		"material": "adamant",
+		"tags": "t_ring",
 		"desc": "A trinket bestowed on mages embroiled in the world's affairs.",
-		"mod": {
-			"space.max": "1%"
+		"alter": {
+			"mod": {
+				"space.max": "1%"
+			}
 		}
 	},
 	{
@@ -103,13 +236,14 @@
 		"material": "ice",
 		"enchants": 3,
 		"type": "weapon",
-		"tohit": 1,
+		"tags": "t_martial,t_pierce,t_dagger",
 		"attack": {
 			"kind": "pierce",
 			"damage": "2~4",
+			"tohit": 1,
 			"dot": {
 				"duration": 5,
-				"dmg": "1~3",
+				"damage": "1~3",
 				"name": "frosty",
 				"kind": "frost"
 			}
@@ -126,14 +260,17 @@
 		"enchants": 5,
 		"unique": true,
 		"type": "weapon",
+		"tags": "t_martial,t_blunt,t_cane",
 		"material": "wood",
-		"mod": {
-			"unease.rate": "-5%",
-			"weary.rate": "-10%",
-			"dist": "5%"
+		"alter": {
+			"mod": {
+				"unease.rate": "-5%",
+				"weary.rate": "-10%",
+				"dist": "5%"
+			}
 		},
 		"attack": {
-			"dmg": "5~10",
+			"damage": "5~10",
 			"kind": "blunt"
 		}
 	},
@@ -142,26 +279,295 @@
 		"name": "titan's hammer",
 		"desc": "Wrought from unyielding adamant, it hums with the energies of the earth.",
 		"type": "weapon",
-		"attack": {
-			"kind": "blunt",
-			"damage": "40~50"
-		},
-		"mod": {
-			"earth.rate": 1,
-			"earth.max": 10,
-			"player.defense": 30,
-			"smite.attack.tohit": 5,
-			"smite.level": -2,
-			"smite.attack.damage": "20%",
-			"fissure.cd": "-25%",
-			"fissure.attack.dot.duration": 1
+		"damage": "15~20",
+		"attack": [
+			{
+				"name": "earthbreaker",
+				"targets": "enemies",
+				"damage": "(i.damage||0)*0.33",
+				"kind": "blunt",
+				"potencies": ["physdmg", "hammerdmg", "bluntdmg"],
+				"dot": {
+					"duration": 6,
+					"damage": "3~6",
+					"mod": {
+						"self.speed": -5
+					},
+					"potencies": ["physdmg", "hammerdmg", "bluntdmg"]
+				}
+			},
+			{
+				"name": "titanic slam",
+				"kind": "blunt",
+				"targets": "enemy",
+				"damage": "(i.damage||0)*1.5",
+				"potencies": ["physdmg", "hammerdmg", "bluntdmg"]
+			},
+			{
+				"name": "earth barrier",
+				"targets": "allies",
+				"harmless": true,
+				"dot": {
+					"level": 1,
+					"id": "dot_adamantskin",
+					"name": "earth barrier",
+					"tags": "toughskin",
+					"duration": 15,
+					"mod": {
+						"self.defense": 50
+					}
+				}
+			}
+		],
+		"alter": {
+			"mod": {
+				"earth.rate": 1,
+				"earth.max": 10,
+				"self.defense": 30,
+				"smite.attack.tohit": 2,
+				"smite.level": -2,
+				"smite.attack.damage": "20%",
+				"fissure.cd": "-25%",
+				"fissure.attack.dot.duration": 1
+			}
 		},
 		"hands": 2,
-		"tags": "hammer",
+		"tags": "t_martial,t_blunt,t_warhammer,t_artifact",
 		"level": 10,
-		"enchants":10,
+		"enchants": 10,
+		"unique": true,
 		"sell": {
 			"gold": 1000
 		}
+	},
+	{
+		"id": "apprentice_herb_sickle",
+		"name": "apprentice herb sickle",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A small sickle that makes herb gathering easier.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 15
+		},
+		"alter": {
+			"mod": {
+				"gatherherbs.cost.stamina": -1
+			}
+		}
+	},
+	{
+		"id": "apprentice_quill",
+		"name": "apprentice scribe's quill",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "A simple quill, enchanted to last far longer than normal.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 15
+		},
+		"alter": {
+			"mod": {
+				"scribescroll.cost.research": -2,
+				"bindcodex.cost.scrolls": -1
+			}
+		}
+	},
+	{
+		"id": "apprentice_falconer_glove",
+		"name": "apprentice falconer's glove",
+		"type": "armor",
+		"enchants": 0,
+		"tags": "t_tool",
+		"slot": "trinket",
+		"desc": "An old reinforced glove, suitable for falconry.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 15
+		},
+		"alter": {
+			"mod": {
+				"allies.max": 5,
+				"tendanimals.run.stamina": -0.05,
+				"chores.cost.stamina": -0.05
+			}
+		}
+	},
+	{
+		"id": "jesterhat",
+		"name": "jester's cap",
+		"type": "armor",
+		"enchants": 10,
+		"slot": "head",
+		"desc": "A brightly-colored cap jingling cheerfully as you go.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 2
+		},
+		"alter": {
+			"mod": {
+				"chaosdmg": 5,
+				"dodge": 1,
+				"stress.rate": -0.025
+			}
+		}
+	},
+	{
+		"id": "jestershirt",
+		"name": "jester's tunic",
+		"type": "armor",
+		"enchants": 10,
+		"slot": "chest",
+		"desc": "A brightly-colored tunic in an eyetwisting pattern.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 2
+		},
+		"alter": {
+			"mod": {
+				"chaosdmg": 5,
+				"dodge": 1,
+				"stress.rate": -0.025
+			}
+		}
+	},
+	{
+		"id": "jesterpants",
+		"name": "jester's trousers",
+		"type": "armor",
+		"enchants": 10,
+		"slot": "shins",
+		"desc": "A brightly-colored pair of trousers to fool the eye.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 2
+		},
+		"alter": {
+			"mod": {
+				"chaosdmg": 5,
+				"dodge": 1,
+				"stress.rate": -0.025
+			}
+		}
+	},
+	{
+		"id": "jestershoes",
+		"name": "jester's boots",
+		"type": "armor",
+		"enchants": 10,
+		"slot": "feet",
+		"desc": "A brightly-colored pair of poulaines to obscure your steps.",
+		"level": 1,
+		"armor": 0,
+		"sell": {
+			"gold": 2
+		},
+		"alter": {
+			"mod": {
+				"chaosdmg": 5,
+				"dodge": 1,
+				"stress.rate": -0.025
+			}
+		}
+	},
+	{
+		"id": "fishysword",
+		"name": "swordfish",
+		"desc": "A weapon far too unexpected to guard against.",
+		"type": "weapon",
+		"material": "fish",
+		"damage": "1~4",
+		"enchants": 3,
+		"attack": {
+			"kind": "slash",
+			"damage": "i.damage||0",
+			"nododge": true,
+			"potencies": ["sworddmg", "physdmg", "slashdmg", "waterdmg", "chaosdmg"]
+		},
+		"tags": "t_martial,t_slash,t_swords",
+		"cost": 30,
+		"level": 1,
+		"flavor": "It's always swordfish."
+	},
+	{
+		"id": "fishyspear",
+		"name": "pike",
+		"desc": "A weapon far too unexpected to guard against.",
+		"type": "weapon",
+		"material": "fish",
+		"damage": "1~4",
+		"enchants": 3,
+		"attack": {
+			"kind": "pierce",
+			"damage": "i.damage||0",
+			"nododge": true,
+			"potencies": ["physdmg", "piercedmg", "waterdmg", "chaosdmg"]
+		},
+		"tags": "t_martial,t_pierce,t_spear",
+		"cost": 30,
+		"level": 1,
+		"flavor": "Ah? Some likes 'em, but they are too muddy for my taste."
+	},
+	{
+		"id": "fishyhammer",
+		"name": "hammerhead shark",
+		"desc": "A weapon far too unexpected to guard against.",
+		"type": "weapon",
+		"material": "fish",
+		"damage": "1~4",
+		"enchants": 3,
+		"attack": {
+			"kind": "blunt",
+			"damage": "i.damage||0",
+			"nododge": true,
+			"potencies": ["hammerdmg", "physdmg", "bluntdmg", "waterdmg", "chaosdmg"]
+		},
+		"tags": "t_martial,t_blunt,t_warhammer",
+		"cost": 30,
+		"level": 1,
+		"flavor": "For when you're having trouble nailing down your enemies."
+	},
+	{
+		"id": "fishyrapier",
+		"name": "en gar",
+		"desc": "A weapon far too unexpected to guard against.",
+		"type": "weapon",
+		"material": "fish",
+		"damage": 2,
+		"enchants": 3,
+		"attack": {
+			"kind": "pierce",
+			"damage": "i.damage||0",
+			"nododge": true,
+			"targetspec": {
+				"affectedby": {
+					"condition": ["enemy_engagement"],
+					"conditiontext": "engagement"
+				}
+			},
+			"targets": "enemy",
+			"potencies": [
+				"physdmg",
+				"piercedmg",
+				"duelingdmg",
+				"sworddmg",
+				"waterdmg",
+				"chaosdmg"
+			]
+		},
+		"tags": "t_rapiers,t_swords,t_martial,t_pierce,t_dueling",
+		"cost": 30,
+		"level": 1,
+		"flavor": "You mean en garde? No."
 	}
 ]

@@ -82,7 +82,7 @@
 		"name": "fire thistle",
 		"tags": "herb,reagent",
 		"desc": "",
-		"flavor": "It burns"
+		"flavor": "It burns."
 	},
 	{
 		"id": "goldfel",
@@ -112,7 +112,7 @@
 		"id": "crocodiletears",
 		"name": "crocodile tears",
 		"tags": "reagent",
-		"desc": "Tears without remorse"
+		"desc": "Tears without remorse."
 	},
 	{
 		"id": "eyeofnewt",

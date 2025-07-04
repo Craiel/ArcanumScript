@@ -1,94 +1,548 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-  <title>The page you're looking for could not be found (404)</title>
-  <style>
-    body {
-      color: #666;
-      text-align: center;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: auto;
-      font-size: 14px;
-    }
-
-    h1 {
-      font-size: 56px;
-      line-height: 100px;
-      font-weight: 400;
-      color: #456;
-    }
-
-    h2 {
-      font-size: 24px;
-      color: #666;
-      line-height: 1.5em;
-    }
-
-    h3 {
-      color: #456;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-    }
-
-    hr {
-      max-width: 800px;
-      margin: 18px auto;
-      border: 0;
-      border-top: 1px solid #EEE;
-      border-bottom: 1px solid white;
-    }
-
-    img {
-      max-width: 40vw;
-      display: block;
-      margin: 40px auto;
-    }
-
-    a {
-      line-height: 100px;
-      font-weight: 400;
-      color: #4A8BEE;
-      font-size: 18px;
-      text-decoration: none;
-    }
-
-    .container {
-      margin: auto 20px;
-    }
-
-    .go-back {
-      display: none;
-    }
-
-  </style>
-</head>
-
-<body>
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEwIiBoZWlnaHQ9IjIxMCIgdmlld0JveD0iMCAwIDIxMCAyMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEwNS4wNjE0IDIwMy42NTVsMzguNjQtMTE4LjkyMWgtNzcuMjhsMzguNjQgMTE4LjkyMXoiIGZpbGw9IiNlMjQzMjkiLz4KICA8cGF0aCBkPSJNMTA1LjA2MTQgMjAzLjY1NDhsLTM4LjY0LTExOC45MjFoLTU0LjE1M2w5Mi43OTMgMTE4LjkyMXoiIGZpbGw9IiNmYzZkMjYiLz4KICA8cGF0aCBkPSJNMTIuMjY4NSA4NC43MzQxbC0xMS43NDIgMzYuMTM5Yy0xLjA3MSAzLjI5Ni4xMDIgNi45MDcgMi45MDYgOC45NDRsMTAxLjYyOSA3My44MzgtOTIuNzkzLTExOC45MjF6IiBmaWxsPSIjZmNhMzI2Ii8+CiAgPHBhdGggZD0iTTEyLjI2ODUgODQuNzM0Mmg1NC4xNTNsLTIzLjI3My03MS42MjVjLTEuMTk3LTMuNjg2LTYuNDExLTMuNjg1LTcuNjA4IDBsLTIzLjI3MiA3MS42MjV6IiBmaWxsPSIjZTI0MzI5Ii8+CiAgPHBhdGggZD0iTTEwNS4wNjE0IDIwMy42NTQ4bDM4LjY0LTExOC45MjFoNTQuMTUzbC05Mi43OTMgMTE4LjkyMXoiIGZpbGw9IiNmYzZkMjYiLz4KICA8cGF0aCBkPSJNMTk3Ljg1NDQgODQuNzM0MWwxMS43NDIgMzYuMTM5YzEuMDcxIDMuMjk2LS4xMDIgNi45MDctMi45MDYgOC45NDRsLTEwMS42MjkgNzMuODM4IDkyLjc5My0xMTguOTIxeiIgZmlsbD0iI2ZjYTMyNiIvPgogIDxwYXRoIGQ9Ik0xOTcuODU0NCA4NC43MzQyaC01NC4xNTNsMjMuMjczLTcxLjYyNWMxLjE5Ny0zLjY4NiA2LjQxMS0zLjY4NSA3LjYwOCAwbDIzLjI3MiA3MS42MjV6IiBmaWxsPSIjZTI0MzI5Ii8+Cjwvc3ZnPgo="
-       alt="GitLab Logo" />
-  <h1>
-    404
-  </h1>
-  <div class="container">
-    <h3>The page you're looking for could not be found.</h3>
-    <hr />
-    <p>The resource that you are attempting to access does not exist or you don't have the necessary permissions to view it.</p>
-     <p>Make sure the address is correct and that the page hasn't moved.</p>
-     <p>Please contact your GitLab administrator if you think this is a mistake.</p>
-    <a href="javascript:history.back()" class="js-go-back go-back">Go back</a>
-  </div>
-  <script>
-    (function () {
-      var goBack = document.querySelector('.js-go-back');
-
-      if (history.length > 1) {
-        goBack.style.display = 'inline';
-      }
-    })();
-  </script>
-</body>
-</html>
-
+{
+	"module": "shian",
+	"author": "evil tyrant",
+	"data": {
+		"events": [
+			{
+				"id": "evt_breakthrough0",
+				"name": "breakthrough",
+				"desc": "A breakthrough in your understanding of spirits! It seems so clear now",
+				"require": "g.spirit.max>=20&&g.shian>0",
+				"mod": {
+					"spiritlore.max": 1
+				}
+			},
+			{
+				"id": "evt_breakthrough1",
+				"name": "breakthrough",
+				"desc": "A breakthrough in your understanding of spirits! It seems so clear now",
+				"require": "g.tier5>0&&g.evt_breakthrough0>0",
+				"mod": {
+					"breakthrough.max": 1
+				}
+			},
+			{
+				"id": "evt_breakthrough2",
+				"name": "breakthrough",
+				"desc": "A breakthrough in your understanding of spirits! It seems so clear now",
+				"require": "g.tier6>0&&g.evt_breakthrough1>0",
+				"mod": {
+					"breakthrough.max": 1
+				}
+			},
+			{
+				"id": "evt_sworduse",
+				"name": "mysterious arts",
+				"desc": "Swords fly through the sky, your mastery has improved",
+				"require": "g.tier5>0&&g.sworduse>0",
+				"mod": {
+					"sworduse.max": 1
+				}
+			},
+			{
+				"id": "evt_sworduse2",
+				"name": "mysterious arts",
+				"desc": "Swords fly through the sky, your mastery has improved",
+				"require": "g.tier6>0&&g.evt_sworduse>0",
+				"mod": {
+					"sworduse.max": 1
+				}
+			},
+			{
+				"id": "evt_hole",
+				"name": "public commotion",
+				"desc": "A large spire has risen closeby, quite a few are testing their luck, you better hurry if you want to be ahead",
+				"require": ["mtgorborung", "tier3"]
+			},
+			{
+				"id": "evt_hole2",
+				"name": "the first one",
+				"desc": "You're the first one to the top, you find some books unlike many you've seen",
+				"require": "g.tier3>0&&g.unstablespire>0&&g.tier4==0"
+			},
+			{
+				"id": "evt_hole3",
+				"name": "the top",
+				"desc": "You've reached the top, but it seems others have already taken what was here",
+				"require": "g.tier4>0&&g.unstablespire>0&&g.evt_hole2<=0"
+			}
+		],
+		"tasks": [
+			{
+				"id": "gathersouls",
+				"name": "ghost catcher",
+				"require": "g.shian>0",
+				"desc": "Bind the dead that haunt the world.",
+				"length": 180,
+				"cost": {
+					"spiritgem": 5
+				},
+				"result": {
+					"souls.max": 5,
+					"souls": 20
+				},
+				"group": "storage"
+			},
+			{
+				"id": "mkcave",
+				"name": "Dig out a bigger cave",
+				"require": "(g.earthlore+g.spiritlore)>=20&&g.shian>0",
+				"desc": "Make a underground home where the magic is strong and spirits are plentiful",
+				"length": 1800,
+				"max": 1,
+				"cost": {
+					"herbs": 50
+				},
+				"run": {
+					"stamina": 5,
+					"earth": 3,
+					"mana": 1,
+					"spirit": 1
+				},
+				"mod": {
+					"cave.mod.space.max": 475,
+					"cave.mod.minions.max": 8,
+					"cave.mod.research.rate": 1.5,
+					"cave.mod.mana.rate": 0.2,
+					"cave.mod.spirit.rate": 0.5
+				},
+				"flavor": "This will take a while...",
+				"group": "housing"
+			},
+			{
+				"id": "mkpagoda",
+				"name": "Make a Beautiful Home",
+				"require": "g.mkcave>0&&g.tier6>0&&g.shian>0",
+				"craftable": true,
+				"desc": "Make a home where you can improve your mastery of the mysterious sword arts and spirits are plentiful",
+				"length": 1800,
+				"max": 1,
+				"run": {
+					"gold": 100,
+					"stamina": 1,
+					"earth": 1,
+					"mana": 1,
+					"fire": 1,
+					"air": 1,
+					"spirit": 1
+				},
+				"flavor": "This will take another while...",
+				"group": "housing"
+			},
+			{
+				"id": "soulflag",
+				"name": "craft soulflag",
+				"require": "g.spiritlore>=13&&g.shian>0",
+				"craftable": true,
+				"desc": "So many souls around, there has to be a way to keep them out of your way",
+				"length": 100,
+				"max": 1,
+				"run": {
+					"research": 50,
+					"souls": 1
+				},
+				"mod": {
+					"souls.max": 5,
+					"souls.rate": 0.01
+				},
+				"group": "storage"
+			},
+			{
+				"id": "soulflag2",
+				"name": "improve soulflag",
+				"require": "g.soulflag>0&&g.shian>0",
+				"craftable": true,
+				"desc": "There is room for more souls",
+				"length": 900,
+				"max": 1,
+				"run": {
+					"research": 50,
+					"souls": 1
+				},
+				"mod": {
+					"souls.max": 15,
+					"souls.rate": 0.02,
+					"spiritart.attack.damage.max": 3,
+					"spiritart.attack.damage.min": 3,
+					"spiritart.attack.tohit": 3
+				},
+				"group": "spellcasting"
+			},
+			{
+				"id": "soulflag3",
+				"name": "complete soulflag",
+				"require": "g.soulflag2>0&&g.shian>0",
+				"need": "g.inv.max-g.inv._used>=1",
+				"needtext": "Must have at least 1 inventory space free.",
+				"craftable": true,
+				"desc": "Containing ten thousand souls, this is a powerful tool ",
+				"length": 9000,
+				"max": 1,
+				"run": {
+					"research": 50,
+					"souls": 1
+				},
+				"mod": {
+					"souls.max": 45,
+					"souls.rate": 0.03
+				},
+				"loot": {
+					"itemsoulflag": 1
+				},
+				"group": "weapon"
+			},
+			{
+				"id": "soulflagreacquire",
+				"name": "re-weave soulflag",
+				"require": "g.soulflag3>0&&g.shian>0",
+				"need": "g.inv.max-g.inv._used>=1",
+				"needtext": "Must have at least 1 inventory space free.",
+				"craftable": true,
+				"desc": "Even if it's been reduced to scraps, it can be restored",
+				"length": 60,
+				"run": {
+					"stamina": 3,
+					"souls": 1
+				},
+				"loot": {
+					"itemsoulflag": 1
+				},
+				"group": "weapon"
+			}
+		],
+		"homes": [
+			{
+				"id": "shianpagoda",
+				"name": "elegant pagoda",
+				"desc": "A peaceful structure where you can devote yourself fully to your arts.",
+				"require": "g.mkpagoda>0",
+				"mod": {
+					"space.max": 550,
+					"minions.max": 10,
+					"sworduse.max": 1,
+					"breakthrough.max": 1,
+					"spirit.rate": 0.3,
+					"herbs.max": 5
+				}
+			}
+		],
+		"upgrades": [
+			{
+				"id": "sworduse",
+				"name": "mysterious sword arts",
+				"desc": "The spire has yielded strange and interesting weapons; perhaps you can find a use for them.",
+				"require": "shian",
+				"max": 1,
+				"cost": {
+					"gold": 3000,
+					"research": 2500,
+					"mana": 10
+				},
+				"mod": {
+					"swordart.attack.damage.max": 2,
+					"swordart.attack.damage.min": 2,
+					"swordart.attack.tohit": 2
+				},
+				"group": "spellcasting"
+			},
+			{
+				"id": "breakthrough",
+				"desc": "A breakthrough in your spiritual meditations.",
+				"require": "evt_breakthrough0",
+				"max": 1,
+				"cost": {
+					"spirit": 15
+				},
+				"mod": {
+					"spiritart.attack.damage.max": 2,
+					"spiritart.attack.damage.min": 2,
+					"spiritart.attack.tohit": 1,
+					"soulart.attack.dot.damage.max": 1,
+					"soulart.attack.dot.damage.min": 1
+				},
+				"group": "spellcasting"
+			},
+			{
+				"id": "fastsoul",
+				"name": "refinement techniques",
+				"desc": "Methods for making flags among other things, won't make it cheaper though",
+				"require": "g.tier5>0&&g.soulflag2>0",
+				"mod": {
+					"soulflag3.length": "-50%",
+					"soulflag3.run.souls": 1
+				},
+				"group": "crafting"
+			}
+		],
+		"spells": [
+			{
+				"id": "throw_swords",
+				"name": "lost sword art: flying swords",
+				"sortOrder": 1740,
+				"level": 11,
+				"school": "summoning",
+				"tags": "swordart",
+				"keywords": {
+					"type": ["damage", "summon"],
+					"target": ["enemy", "ally"],
+					"targets": ["multiple"],
+					"delivery": ["instant"]
+				},
+				"require": "sworduse",
+				"buy": {
+					"research": 1000,
+					"codices": 10,
+					"spiritgem": 10
+				},
+				"cost": {
+					"mana": 10,
+					"vigor": 5
+				},
+				"result": {
+					"lore.exp": 1,
+					"weaponlore.exp": 0.5
+				},
+				"attack": {
+					"targets": "enemies",
+					"damage": "20~30",
+					"kind": "slash",
+					"tohit": 2,
+					"potencies": ["spelldmg", "slashdmg", "sworddmg"]
+				},
+				"summon": [
+					{
+						"id": "sum_magicblade",
+						"count": 3
+					}
+				]
+			},
+			{
+				"id": "giantkilling",
+				"name": "lost sword art: giant slayer",
+				"sortOrder": 300,
+				"level": 12,
+				"school": "martial",
+				"tags": "swordart",
+				"keywords": {
+					"type": ["damage", "debuff"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.sworduse>=2",
+				"buy": {
+					"research": 1000,
+					"codices": 10,
+					"spiritgem": 10
+				},
+				"cost": {
+					"gems": 1,
+					"mana": 12,
+					"vigor": 7
+				},
+				"result": {
+					"lore.exp": 1.4,
+					"weaponlore.exp": 0.9
+				},
+				"attack": {
+					"damage": "35~65",
+					"kind": "slash",
+					"potencies": ["spelldmg", "slashdmg", "sworddmg"],
+					"tohit": 2,
+					"dot": {
+						"duration": 10,
+						"mod": {
+							"self.defense": -10
+						}
+					}
+				}
+			},
+			{
+				"id": "soulstrike",
+				"name": "spirit art: soulstrike",
+				"sortOrder": 1001,
+				"level": 6,
+				"school": "spirit",
+				"tags": "spiritart",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.shian>0&&g.soulflag>0",
+				"buy": {
+					"research": 1000,
+					"codices": 10,
+					"spiritgem": 10
+				},
+				"cost": {
+					"souls": 1,
+					"spirit": 1
+				},
+				"result": {
+					"spiritlore.exp": 0.2
+				},
+				"attack": {
+					"damage": "20~29",
+					"kind": "spirit",
+					"tohit": 3,
+					"potencies": ["spelldmg", "spiritdmg"]
+				}
+			},
+			{
+				"id": "soullure",
+				"name": "soul card: soul lure",
+				"desc": "Lure the souls of enemies from out their mortal bodies",
+				"sortOrder": 1002,
+				"level": 10,
+				"school": "spirit",
+				"tags": "soulart",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["multiple"],
+					"delivery": ["over time"]
+				},
+				"require": "g.shian>0&&g.soulflag2>0",
+				"buy": {
+					"research": 1000,
+					"codices": 10,
+					"spiritgem": 20
+				},
+				"cost": {
+					"spirit": 10
+				},
+				"result": {
+					"spiritlore.exp": 1
+				},
+				"attack": {
+					"tohit": 4,
+					"targets": "enemies",
+					"dot": {
+						"id": "soullure",
+						"kind": "spirit",
+						"duration": 10,
+						"damage": "10~15",
+						"potencies": ["spelldmg", "spiritdmg"]
+					}
+				}
+			},
+			{
+				"id": "soulriver",
+				"name": "spirit art: soul river",
+				"sortOrder": 1000,
+				"level": 15,
+				"school": "spirit",
+				"tags": "spiritart",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.shian>0&&g.soulflag3>0",
+				"buy": {
+					"research": 1000,
+					"codices": 10,
+					"spiritgem": 10
+				},
+				"cost": {
+					"souls": 15,
+					"spirit": 5
+				},
+				"result": {
+					"spiritlore.exp": 2
+				},
+				"attack": {
+					"damage": "80~110",
+					"kind": "spirit",
+					"tohit": 5,
+					"potencies": ["spelldmg", "spiritdmg"]
+				}
+			}
+		],
+		"classes": [
+			{
+				"id": "shian",
+				"name": "shian anchorite",
+				"desc": "An ancient magic from beyond the sea, combining spirit and blade.",
+				"secret": true,
+				"tags": "t_tier4,t_swordclass",
+				"require": "g.tier3>0&&g.unstablespire>0",
+				"cost": {
+					"research": 25000,
+					"arcana": 25,
+					"tomes": 100,
+					"ichor": 2
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier4": true,
+					"spiritlore.max": 3
+				},
+				"flavor": "Contemplation of the small as well as great."
+			}
+		],
+		"rares": [
+			{
+				"id": "itemsoulflag",
+				"name": "soulflag",
+				"desc": "Ten thousand souls muffled in its fabric.",
+				"type": "weapon",
+				"unique": true,
+				"damage": "60~70",
+				"attack": {
+					"kind": "spirit",
+					"damage": "(i.damage||0)"
+				},
+				"alter": {
+					"mod": {
+						"spirit.max": 10,
+						"souls.rate": 0.5,
+						"spiritart.attack.damage.max": 5,
+						"spiritart.attack.damage.min": 5,
+						"spiritart.attack.tohit": 5
+					}
+				},
+				"hands": 2,
+				"kind": "flag",
+				"tags": "flag",
+				"level": 15,
+				"enchants": 15,
+				"sell": {
+					"souls": 1
+				}
+			}
+		],
+		"dungeons": [
+			{
+				"id": "unstablespire",
+				"name": "The unstable spire",
+				"desc": "A large spire which rose from the ground. It looks like it might collapse any day now",
+				"require": "evt_hole",
+				"level": 15,
+				"dist": 50,
+				"run": {
+					"stamina": 2
+				},
+				"length": 10000,
+				"result": {
+					"fame": 1,
+					"gems": "10~20",
+					"gold": "100~200"
+				},
+				"biome": ["cave", "mountain"],
+				"spawns": {
+					"level": "4~15",
+					"range": 3,
+					"quantity": "1~3",
+					"quantitypenalty": 0.1
+				},
+				"flavor": "some things are left to time"
+			}
+		]
+	}
+}

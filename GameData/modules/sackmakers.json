@@ -1,94 +1,260 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-  <title>The page you're looking for could not be found (404)</title>
-  <style>
-    body {
-      color: #666;
-      text-align: center;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: auto;
-      font-size: 14px;
-    }
-
-    h1 {
-      font-size: 56px;
-      line-height: 100px;
-      font-weight: 400;
-      color: #456;
-    }
-
-    h2 {
-      font-size: 24px;
-      color: #666;
-      line-height: 1.5em;
-    }
-
-    h3 {
-      color: #456;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-    }
-
-    hr {
-      max-width: 800px;
-      margin: 18px auto;
-      border: 0;
-      border-top: 1px solid #EEE;
-      border-bottom: 1px solid white;
-    }
-
-    img {
-      max-width: 40vw;
-      display: block;
-      margin: 40px auto;
-    }
-
-    a {
-      line-height: 100px;
-      font-weight: 400;
-      color: #4A8BEE;
-      font-size: 18px;
-      text-decoration: none;
-    }
-
-    .container {
-      margin: auto 20px;
-    }
-
-    .go-back {
-      display: none;
-    }
-
-  </style>
-</head>
-
-<body>
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEwIiBoZWlnaHQ9IjIxMCIgdmlld0JveD0iMCAwIDIxMCAyMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEwNS4wNjE0IDIwMy42NTVsMzguNjQtMTE4LjkyMWgtNzcuMjhsMzguNjQgMTE4LjkyMXoiIGZpbGw9IiNlMjQzMjkiLz4KICA8cGF0aCBkPSJNMTA1LjA2MTQgMjAzLjY1NDhsLTM4LjY0LTExOC45MjFoLTU0LjE1M2w5Mi43OTMgMTE4LjkyMXoiIGZpbGw9IiNmYzZkMjYiLz4KICA8cGF0aCBkPSJNMTIuMjY4NSA4NC43MzQxbC0xMS43NDIgMzYuMTM5Yy0xLjA3MSAzLjI5Ni4xMDIgNi45MDcgMi45MDYgOC45NDRsMTAxLjYyOSA3My44MzgtOTIuNzkzLTExOC45MjF6IiBmaWxsPSIjZmNhMzI2Ii8+CiAgPHBhdGggZD0iTTEyLjI2ODUgODQuNzM0Mmg1NC4xNTNsLTIzLjI3My03MS42MjVjLTEuMTk3LTMuNjg2LTYuNDExLTMuNjg1LTcuNjA4IDBsLTIzLjI3MiA3MS42MjV6IiBmaWxsPSIjZTI0MzI5Ii8+CiAgPHBhdGggZD0iTTEwNS4wNjE0IDIwMy42NTQ4bDM4LjY0LTExOC45MjFoNTQuMTUzbC05Mi43OTMgMTE4LjkyMXoiIGZpbGw9IiNmYzZkMjYiLz4KICA8cGF0aCBkPSJNMTk3Ljg1NDQgODQuNzM0MWwxMS43NDIgMzYuMTM5YzEuMDcxIDMuMjk2LS4xMDIgNi45MDctMi45MDYgOC45NDRsLTEwMS42MjkgNzMuODM4IDkyLjc5My0xMTguOTIxeiIgZmlsbD0iI2ZjYTMyNiIvPgogIDxwYXRoIGQ9Ik0xOTcuODU0NCA4NC43MzQyaC01NC4xNTNsMjMuMjczLTcxLjYyNWMxLjE5Ny0zLjY4NiA2LjQxMS0zLjY4NSA3LjYwOCAwbDIzLjI3MiA3MS42MjV6IiBmaWxsPSIjZTI0MzI5Ii8+Cjwvc3ZnPgo="
-       alt="GitLab Logo" />
-  <h1>
-    404
-  </h1>
-  <div class="container">
-    <h3>The page you're looking for could not be found.</h3>
-    <hr />
-    <p>The resource that you are attempting to access does not exist or you don't have the necessary permissions to view it.</p>
-     <p>Make sure the address is correct and that the page hasn't moved.</p>
-     <p>Please contact your GitLab administrator if you think this is a mistake.</p>
-    <a href="javascript:history.back()" class="js-go-back go-back">Go back</a>
-  </div>
-  <script>
-    (function () {
-      var goBack = document.querySelector('.js-go-back');
-
-      if (history.length > 1) {
-        goBack.style.display = 'inline';
-      }
-    })();
-  </script>
-</body>
-</html>
-
+{
+	"module": "sackmakers",
+	"data": {
+		"dungeons": [
+			{
+				"id": "sackguild",
+				"name": "guild of the sack makers",
+				"require": "g.t_craftedbag>0",
+				"level": 19,
+				"run": {
+					"stamina": 3.5
+				},
+				"start": {
+					"name": "Guild Practices",
+					"desc": "Your unauthorized construction of pouches has sparked the ire of the Guild of Sackmakers."
+				},
+				"length": 250,
+				"boss": "sackmaster",
+				"spawns": [
+					"rumpelstiltskin",
+					"sackweaver",
+					"pouchmerchant",
+					"m_gemcutter",
+					["sackenforcer", "sackthug", "sackthug"],
+					["irongolem", "irongolem", "sackenforcer"],
+					"sackjman",
+					"greendragon",
+					["burlapgolem", "burlapgolem", "burlapgolem"],
+					["sackthug", "sackthug"]
+				],
+				"result": {
+					"title": "Guild Breaker"
+				}
+			}
+		],
+		"monsters": [
+			{
+				"id": "rumpelstiltskin",
+				"desc": "A strange imp that spins magic threads.",
+				"level": 23,
+				"unique": true,
+				"hp": 900,
+				"spells": "apiary,whirl3,perfectstrike",
+				"attack": {
+					"name": "wooden cane",
+					"kind": "blunt",
+					"damage": "40~100"
+				}
+			},
+			{
+				"id": "sackapprentice",
+				"name": "sackmaker apprentice",
+				"desc": "They have no respect for wizard apprentices.",
+				"level": 2,
+				"hp": 50,
+				"attack": {
+					"name": "sewing needle",
+					"damage": "5~10"
+				}
+			},
+			{
+				"id": "sackthug",
+				"name": "guild thug",
+				"desc": "The guild's policies on unauthorized pouch sales are strictly enforced.",
+				"flavor": "",
+				"level": 10,
+				"hp": 70,
+				"attack": {
+					"name": "sand bag",
+					"kind": "blunt",
+					"damage": "10~20"
+				}
+			},
+			{
+				"id": "sackenforcer",
+				"name": "sack guild enforcer",
+				"desc": "",
+				"flavor": "",
+				"level": 17,
+				"attack": {
+					"damage": "30~40"
+				}
+			},
+			{
+				"id": "m_gemcutter",
+				"name": "gem cutter",
+				"level": 18,
+				"flavor": "The guild sells its gems cheaply. Now if you want a place to store them...",
+				"hp": 400,
+				"attack": [
+					{
+						"name": "precision cut",
+						"kind": "slash",
+						"tohit": 30,
+						"damage": "30~40"
+					}
+				],
+				"loot": {
+					"gems": "5~10"
+				}
+			},
+			{
+				"id": "pouchmerchant",
+				"name": "pouch merchant",
+				"desc": "The guild hires merchants to drain gold from the pouches of others.",
+				"level": 14,
+				"speed": 20,
+				"hp": 300,
+				"attack": {
+					"name": "transfer gold",
+					"result": {
+						"gold": "-100~-200"
+					}
+				},
+				"immune": "charm"
+			},
+			{
+				"id": "burlapgolem",
+				"name": "burlap golem",
+				"desc": "Woven golem filled with heavy sand",
+				"level": 14,
+				"noproc": true,
+				"hp": 400,
+				"attack": {
+					"name": "sand punch",
+					"kind": "earth",
+					"damage": "20~30"
+				},
+				"loot": {
+					"maxlevel": 7,
+					"material": "sackcloth"
+				},
+				"immune": "spirit,sleep,fear,paralysis,blunt"
+			},
+			{
+				"id": "sum_burlapgolem",
+				"name": "burlap golem",
+				"tags": "t_summon",
+				"desc": "Summoned woven golem filled with heavy sand",
+				"level": 14,
+				"noproc": true,
+				"hp": 400,
+				"attack": {
+					"name": "sand punch",
+					"kind": "earth",
+					"damage": "20~30"
+				},
+				"immune": "spirit,sleep,fear,paralysis,blunt"
+			},
+			{
+				"id": "sackjman",
+				"name": "sackmaker journeyman",
+				"desc": "Travels to towns, selling the finest quality bags and pouches.",
+				"level": 16,
+				"hp": 75,
+				"attack": {
+					"name": "punch",
+					"damage": "40~50"
+				},
+				"loot": {
+					"maxlevel": 7,
+					"material": "sackcloth"
+				}
+			},
+			{
+				"id": "sackweaver",
+				"level": 19,
+				"hp": 400,
+				"attack": [
+					{
+						"dot": {
+							"id": "sacked",
+							"name": "weave sack",
+							"duration": 10
+						}
+					},
+					{
+						"name": "magic needle",
+						"kind": "pierce",
+						"damage": "20~30"
+					}
+				],
+				"desc": "Uses flows of magic to weave bags for sale.",
+				"flavor": ""
+			},
+			{
+				"id": "sackmaster",
+				"name": "sackmaker's lodge master",
+				"noproc": true,
+				"desc": "",
+				"level": 20,
+				"hp": 900,
+				"spells": "mon_mk_burlapgolem",
+				"attack": {
+					"name": "adamant needle",
+					"kind": "pierce",
+					"damage": "40~75"
+				}
+			}
+		],
+		"spells": [
+			{
+				"id": "mk_burlapgolem",
+				"name": "create burlap golem",
+				"sortOrder": 1755,
+				"level": 9,
+				"school": "summoning",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.sackguild>0",
+				"buy": {
+					"arcana": 10,
+					"tomes": 10
+				},
+				"cost": {
+					"mana": 20
+				},
+				"cd": 20,
+				"summon": [
+					{
+						"id": "sum_burlapgolem",
+						"count": 1,
+						"max": 1
+					}
+				]
+			},
+			{
+				"id": "mon_mk_burlapgolem",
+				"name": "create burlap golem",
+				"level": 19,
+				"school": "summoning",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.lore>999",
+				"buy": {
+					"arcana": 10,
+					"tomes": 10
+				},
+				"cost": {
+					"mana": 20
+				},
+				"summon": [
+					{
+						"id": "sum_burlapgolem",
+						"count": 1,
+						"max": 3
+					}
+				]
+			}
+		]
+	}
+}

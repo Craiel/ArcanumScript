@@ -1,21 +1,322 @@
 [
 	{
-		"id": "stam1",
-		"name": "minor fount",
+		"id": "darkbolt",
+		"name": "dark bolt",
+		"sortOrder": 1207,
 		"level": 1,
-		"require": "g.spellbook.value>0&&g.waterlore>0",
-		"school": "water",
+		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.spellbook>0&&g.shadowlore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
 		},
-		"flavor": "Come thou fount",
+		"cost": { "shadow": 1 },
+		"attack": {
+			"damage": "0.5~2",
+			"potencies": ["spelldmg", "shadowdmg"],
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["darkbolt_dot"],
+					"conditiontext": "dark bolt"
+				}
+			},
+			"dot": {
+				"id": "darkbolt_dot",
+				"name": "dark bolt",
+				"kind": "shadow",
+				"duration": 15,
+				"damage": 1,
+				"potencies": ["spelldmg", "shadowdmg"]
+			}
+		},
+		"at": {
+			"25": { "attack.damage.max": 1 },
+			"75": { "attack.damage.min": 1 },
+			"300": {
+				"attack.damage.max": 2,
+				"attack.damage.min": 1,
+				"attack.tohit": 2
+			}
+		}
+	},
+	{
+		"id": "waveofdarkness",
+		"name": "wave of darkness",
+		"sortOrder": 1200,
+		"level": 9,
+		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant"]
+		},
+		"require": "g.shadowlore2>=5&&g.tier3>0",
+		"buy": {
+			"research": 100,
+			"scrolls": 10,
+			"shadowgem": 3
+		},
+		"cost": {
+			"shadow": 6
+		},
+		"attack": {
+			"targets": "enemies",
+			"damage": "15~35",
+			"kind": "shadow",
+			"potencies": ["spelldmg", "shadowdmg"]
+		}
+	},
+	{
+		"id": "darkfeast",
+		"name": "dark feast",
+		"desc": "Tear life force from everything nearby and consume it to recover your own.",
+		"sortOrder": 1201,
+		"level": 10,
+		"school": "shadow",
+		"keywords": {
+			"type": ["damage", "recovery"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant"]
+		},
+		"require": "g.shadowlore2>=3&&g.tier3>0",
+		"buy": {
+			"research": 5000,
+			"shadowgem": 20,
+			"tomes": 10
+		},
+		"need": "g.good2==0",
+		"needtext": "Cannot be scrupulous.",
+		"cost": {
+			"shadow": 9
+		},
+		"cd": 5,
+		"attack": {
+			"targets": "epicenter",
+			"kind": "shadow",
+			"leech": 1,
+			"damage": "15~20",
+			"potencies": ["spelldmg", "shadowdmg"]
+		},
+		"result": {
+			"evilamt": 0.1,
+			"virtue": -1
+		}
+	},
+	{
+		"id": "obscure1",
+		"name": "lesser obscuring shadows",
+		"sortOrder": 1246,
+		"level": 2,
+		"school": "shadow",
+		"tags": "t_obscurebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.shadowlore>0",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"cost": { "shadow": 2 },
+		"dot": {
+			"tags": "obscuringshadows",
+			"duration": 20,
+			"mod": { "self.dodge": 2 }
+		}
+	},
+	{
+		"id": "immuneblind",
+		"name": "penumbral senses",
+		"sortOrder": 1248,
+		"level": 5,
+		"school": "shadow",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.shadowlore>=8&&g.tier1>0",
+		"buy": {
+			"research": 4000,
+			"tomes": 1
+		},
+		"cost": { "shadow": 5 },
+		"cd": 15,
+		"dot": {
+			"duration": 30,
+			"mod": { "self.immunities.blind": 1 }
+		}
+	},
+	{
+		"id": "prolight",
+		"name": "protection: light",
+		"sortOrder": 1249,
+		"level": 2,
+		"school": "shadow",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.player.level>=4&&g.shadowlore>=3",
+		"buy": {
+			"research": 100,
+			"scrolls": 10
+		},
+		"cost": { "shadow": 2 },
+		"dot": {
+			"duration": 20,
+			"mod": {
+				"self.resist.holy": 10,
+				"self.resist.light": 10
+			}
+		}
+	},
+	{
+		"id": "defensivestance",
+		"name": "defensive stance",
+		"desc": "Shift your focus from dodging to parrying.",
+		"flavor": "Face to face.",
+		"sortOrder": 397,
+		"level": 0,
+		"school": "martial",
+		"keywords": {
+			"target": ["self"],
+			"special": ["stance"]
+		},
+		"require": "g.player.defense>=20",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"dot": {
+			"id": "defensive",
+			"tags": "t_defensive"
+		}
+	},
+	{
+		"id": "defensiveunstance",
+		"name": "avoiding stance",
+		"desc": "Shift your focus from parrying back to dodging.",
+		"flavor": "Footwork and agility.",
+		"sortOrder": 398,
+		"level": 0,
+		"school": "martial",
+		"keywords": {
+			"target": ["self"],
+			"special": ["stance"]
+		},
+		"require": "g.player.defense>=20",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"action": {
+			"cure": ["defensive"],
+			"targets": "self"
+		}
+	},
+	{
+		"id": "invigorate",
+		"name": "invigorate",
+		"desc": "Utilize your stamina for combat.",
+		"sortOrder": 399,
+		"level": 1,
+		"school": "martial",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.weaponlore>=1",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"caststoppers": [],
+		"cost": {
+			"stamina": 1
+		},
+		"result": {
+			"vigor": 3,
+			"weaponlore.exp": 0.1
+		},
+		"at": {
+			"25": {
+				"result.vigor": 1
+			},
+			"50": {
+				"result.vigor": 1
+			},
+			"100": {
+				"result.vigor": 1
+			},
+			"200": {
+				"result.vigor": 1
+			},
+			"400": {
+				"result.vigor": 1
+			},
+			"800": {
+				"result.vigor": 1
+			},
+			"1600": {
+				"result.vigor": 1
+			}
+		}
+	},
+	{
+		"id": "dash",
+		"name": "dash(deprecated)",
+		"level": 1,
+		"require": "g.weaponlore>=999",
+		"school": "martial",
+		"desc": "Used to be a means of faster traversal, now [deprecated].",
+		"caststoppers": []
+	},
+	{
+		"id": "stam1",
+		"name": "minor fount",
+		"flavor": "Come thou fount.",
+		"sortOrder": 536,
+		"level": 1,
+		"school": "water",
+		"tags": "t_stambuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.waterlore>0",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
 		"cost": {
 			"water": 1
 		},
+		"cd": 15,
+		"result": {
+			"waterlore.exp": 0.1
+		},
 		"dot": {
-			"id": "fount",
-			"name": "minor fount",
+			"id": "fount1",
+			"tags": "stamdot",
 			"duration": 30,
 			"effect": {
 				"stamina": 0.3
@@ -23,105 +324,174 @@
 		}
 	},
 	{
-		"id": "clarity",
-		"level": 7,
-		"school": "charms",
-		"require": "g.charms>2",
-		"desc": "Cure yourself or an ally of a charm.",
-		"silent": true,
-		"cost": {
-			"spiritgem": 1
-		},
-		"action": {
-			"cure": "charmed",
-			"targets": "ally,self"
-		}
-	},
-	{
 		"id": "wake",
+		"desc": "Wake a slumbering ally.",
+		"sortOrder": 436,
 		"level": 5,
 		"school": "mana",
-		"require": "g.lore>10",
-		"desc": "Wake a slumbering ally.",
-		"silent": true,
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lore>=11",
+		"caststoppers": [],
 		"cost": {
 			"mana": 1,
 			"herbs": 1
 		},
-		"action": {
-			"cure": "sleep",
-			"targets": "ally,self"
+		"result": {
+			"lore.exp": 0.2
+		},
+		"attack": {
+			"cure": "t_sleep",
+			"targets": "ally",
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_sleep"]
+				}
+			}
 		}
 	},
 	{
 		"id": "embolden",
+		"desc": "Remove fear from yourself or a frightened creature.",
+		"sortOrder": 730,
 		"level": 3,
 		"school": "fire",
-		"require": "g.firelore>5",
-		"silent": true,
-		"desc": "Remove fear from yourself or a frightened creature.",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.firelore>=6",
+		"caststoppers": [],
 		"cost": {
 			"fire": 1
 		},
-		"action": {
-			"cure": "fear",
-			"targets": "ally,self"
+		"result": {
+			"firelore.exp": 0.1
+		},
+		"attack": {
+			"cure": "t_fear",
+			"targets": "ally",
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_fear"]
+				}
+			}
 		}
 	},
 	{
 		"id": "speak",
+		"desc": "Breaks a curse of silence.",
+		"sortOrder": 636,
 		"level": 8,
 		"school": "air",
-		"require": "g.airlore>5",
-		"desc": "Breaks a curse of silence.",
-		"silent": true,
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.airlore>=6",
+		"caststoppers": [],
 		"cost": {
 			"air": 2,
 			"managem": 1
 		},
+		"result": {
+			"airlore.exp": 0.7
+		},
 		"action": {
-			"cure": "silence",
-			"targets": "ally,self"
+			"cure": "t_silence",
+			"targets": "ally",
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_silence"]
+				}
+			}
 		}
 	},
 	{
 		"id": "cureparalyze",
 		"name": "cure paralysis",
+		"desc": "Loosens rigid muscles, nerves, and bones.",
+		"sortOrder": 434,
 		"level": 7,
 		"school": "mana",
-		"require": "g.lore>10",
-		"silent": true,
-		"desc": "Loosens rigid muscles, nerves, and bones.",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lore>=11",
+		"caststoppers": [],
 		"cost": {
 			"mana": 2,
 			"gems": 1
 		},
+		"result": {
+			"lore.exp": 0.4
+		},
 		"action": {
-			"cure": "paralysis",
-			"targets": "ally,self"
+			"cure": "t_paralysis",
+			"targets": "ally",
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_paralysis"]
+				}
+			}
 		}
 	},
 	{
 		"id": "curesick",
+		"name": "cure sickness",
+		"sortOrder": 1145,
 		"level": 1,
 		"school": "light",
-		"silent": true,
-		"require": "g.lightlore>1",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lightlore>=2",
 		"desc": "Cure sickness on yourself or an ally.",
+		"caststoppers": [],
 		"cost": {
 			"light": 1
 		},
-		"action": {
-			"cure": "sick",
-			"targets": "ally,self"
+		"result": {
+			"lightlore.exp": 0.1
+		},
+		"attack": {
+			"cure": "t_sick",
+			"targets": "ally",
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_sick"]
+				}
+			}
 		}
 	},
 	{
 		"id": "stam2",
-		"name": "fount",
+		"name": "lesser fount",
+		"sortOrder": 535,
 		"level": 5,
-		"require": "g.stam1>0&&g.waterlore>=5",
 		"school": "water",
+		"tags": "t_stambuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.stam1>0&&g.waterlore>=5",
 		"buy": {
 			"watergem": 10,
 			"tomes": 3
@@ -129,9 +499,13 @@
 		"cost": {
 			"water": 1
 		},
+		"cd": 30,
+		"result": {
+			"waterlore.exp": 0.1
+		},
 		"dot": {
-			"id": "fount",
-			"name": "fount",
+			"id": "fount2",
+			"tags": "stamdot",
 			"duration": 60,
 			"effect": {
 				"stamina": 0.7
@@ -140,22 +514,34 @@
 	},
 	{
 		"id": "stam3",
-		"name": "greater fount",
+		"name": "fount",
+		"flavor": "Come thou fount.",
+		"sortOrder": 534,
 		"level": 10,
 		"school": "water",
+		"tags": "t_stambuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.stam2>0&&g.waterlore>=10&&g.tier2>0",
 		"buy": {
 			"watergem": 10,
-			"waterrune": 20,
+			"waterrune": 5,
 			"tomes": 20
 		},
-		"flavor": "Come thou fount",
 		"cost": {
 			"water": 1.5
 		},
+		"cd": 45,
+		"result": {
+			"waterlore.exp": 0.15
+		},
 		"dot": {
-			"id": "fount",
-			"name": "greater fount",
+			"id": "fount3",
+			"tags": "stamdot",
 			"duration": 90,
 			"effect": {
 				"stamina": 2
@@ -163,52 +549,42 @@
 		}
 	},
 	{
-		"id": "darkbolt",
-		"name": "dark bolt",
-		"level": 1,
-		"require": "g.spellbook.value>0&&g.shadowlore>0",
-		"school": "shadow",
-		"buy": {
-			"research": 25,
-			"scrolls": 1
-		},
-		"cost": {
-			"shadow": 1
-		},
-		"at": {
-			"25": {
-				"attack.damage.max": 1
-			},
-			"75": {
-				"attack.damage.min": 1
-			},
-			"300": {
-				"attack.damage.max": 2,
-				"attack.damage.min": 1,
-				"attack.tohit": 2
-			}
-		},
-		"attack": {
-			"damage": "0.5~2",
-			"dot": {
-				"kind": "shadow",
-				"duration": 15,
-				"damage": 1
-			}
-		}
-	},
-	{
 		"id": "blast",
 		"name": "blasting curse",
+		"sortOrder": 1206,
 		"level": 3,
-		"require": "g.shadowlore>=5&&g.evil>0",
 		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.shadowlore>=5&&g.evil>0",
 		"buy": {
 			"research": 750,
 			"shadowgem": 1
 		},
 		"cost": {
 			"shadow": 3
+		},
+		"attack": {
+			"damage": "4~7",
+			"potencies": ["spelldmg", "shadowdmg"],
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["blast_dot"],
+					"conditiontext": "blasting curse"
+				}
+			},
+			"dot": {
+				"id": "blast_dot",
+				"kind": "shadow",
+				"duration": 10,
+				"damage": 0.7,
+				"leech": 1,
+				"potencies": ["spelldmg", "shadowdmg"]
+			}
 		},
 		"at": {
 			"25": {
@@ -220,31 +596,46 @@
 			"300": {
 				"attack.damage.max": 3,
 				"attack.damage.min": 3,
-				"attack.tohit": 4
-			}
-		},
-		"attack": {
-			"damage": "4~7",
-			"dot": {
-				"kind": "shadow",
-				"duration": 10,
-				"damage": 0.7,
-				"leech": 1
+				"attack.tohit": 2
 			}
 		}
 	},
 	{
 		"id": "deathbolt",
 		"name": "death bolt",
+		"sortOrder": 1205,
 		"level": 7,
-		"require": "g.darkbolt>0&&g.shadowlore>=7&&g.tier1>0",
 		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.darkbolt>0&&g.shadowlore>=7&&g.tier1>0",
 		"buy": {
 			"shadowgem": 10,
 			"tomes": 3
 		},
 		"cost": {
 			"shadow": 5
+		},
+		"attack": {
+			"damage": "15~20",
+			"potencies": ["spelldmg", "shadowdmg"],
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["deathbolt_dot"],
+					"conditiontext": "death bolt"
+				}
+			},
+			"dot": {
+				"id": "deathbolt_dot",
+				"kind": "drain",
+				"duration": 30,
+				"damage": 3,
+				"potencies": ["spelldmg", "shadowdmg"]
+			}
 		},
 		"at": {
 			"25": {
@@ -256,37 +647,304 @@
 			"300": {
 				"attack.damage.max": 4,
 				"attack.damage.min": 4,
-				"attack.tohit": 4
+				"attack.tohit": 2
 			}
+		}
+	},
+	{
+		"id": "pilfer_gold",
+		"name": "pilfer",
+		"desc": "Unburden your opponent of excess gold, valuable pieces of anatomy and other materials of use to an enterprising wizard.",
+		"extdesc": "Effect scales with the level of your opponent and your dedication to trickery. It is relatively random. Shown value approximates what you would get if you were stealing from yourself.",
+		"flavor": "Gold coins, dragon scales, mountain oysters, some kind of a beacon...",
+		"sortOrder": 1372,
+		"level": 3,
+		"school": "chaos",
+		"keywords": {
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"],
+			"special": ["resource"]
+		},
+		"require": "g.spellbook>0&&g.trickery>=5",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"cost": {
+			"vigor": 5
+		},
+		"result": {
+			"trickery.exp": 0.5
 		},
 		"attack": {
-			"damage": "15~20",
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["pilfered_dot"],
+					"strict": "true",
+					"conditiontext": "having their valuables stolen"
+				}
+			},
 			"dot": {
-				"kind": "drain",
-				"duration": 30,
-				"damage": 3
+				"id": "pilfered_dot",
+				"duration": 300,
+				"kind": "chaos",
+				"name": "missing valuables"
+			},
+			"damage": "t.hp.max/100",
+			"acquire": {
+				"gold": "(10+Math.pow(t.level,1.3))*(0.5+(0.1*g.t_chaosclass+0.01*g.trickery)+0.5*Math.random())"
+			}
+		}
+	},
+	{
+		"id": "pilfer_time",
+		"name": "borrow time",
+		"desc": "Just a couple of seconds, nothing bad ever happens in that amount of time.",
+		"flavor": "May I have a second of your time?",
+		"sortOrder": 1316,
+		"level": 5,
+		"school": "chaos",
+		"keywords": {
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"],
+			"special": ["resource"]
+		},
+		"require": "g.fey>0&&g.trickery>=10",
+		"buy": {
+			"chaosgem": 7,
+			"chaosrune": 1
+		},
+		"cost": {
+			"chaos": 3
+		},
+		"result": {
+			"trickery.exp": 0.3
+		},
+		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["pilfered_time_dot"],
+					"strict": "true",
+					"conditiontext": "stolen time"
+				}
+			},
+			"dot": {
+				"id": "pilfered_time_dot",
+				"kind": "chaos",
+				"duration": 300,
+				"name": "missing time"
+			},
+			"result": {
+				"self.timer": 2
+			},
+			"acquire": {
+				"offlinetime": 2
+			}
+		}
+	},
+	{
+		"id": "dream_realm",
+		"name": "midsummer night",
+		"desc": "Pull everyone into a dream of your making.",
+		"flavor": "If you die in a dream, you die in real life.",
+		"sortOrder": 440,
+		"level": 10,
+		"school": "mana",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.fey>0||(g.dreamchamber>0&&(g.t_natureclass+g.tier5)>=3)",
+		"buy": {
+			"dreams": "(1-g.fey)*3",
+			"naturegem": 15,
+			"managem": 15
+		},
+		"cost": {
+			"mana": 7,
+			"nature": 7
+		},
+		"cd": 120,
+		"result": {
+			"naturelore.exp": 1.4
+		},
+		"dot": {
+			"name": "midsummer night's dream",
+			"duration": 30,
+			"applyinstanced": true,
+			"kind": "mana",
+			"attack": {
+				"hits": [
+					{
+						"targets": "enemies",
+						"name": "midsummer nightmare",
+						"result": {
+							"self.timer": 0.2
+						},
+						"dot": {
+							"applyinstanced": true,
+							"kind": "mana",
+							"duration": 3,
+							"mod": {
+								"self.speed": -5,
+								"self.defense": -5,
+								"self.resist.nature": -50,
+								"self.resist.mana": -50,
+								"self.resist.chaos": -50
+							}
+						}
+					},
+					{
+						"targets": "allies",
+						"name": "midsummer reverie",
+						"result": {
+							"self.timer": -0.1
+						},
+						"dot": {
+							"applyinstanced": true,
+							"kind": "mana",
+							"duration": 3,
+							"mod": {
+								"self.speed": 2,
+								"self.defense": 5
+							}
+						}
+					}
+				]
+			}
+		}
+	},
+	{
+		"id": "gems_acquisition",
+		"name": "crystal seeding",
+		"desc": "Afflict the opponent with an earthen curse, so that their bones turn into gems.",
+		"extdesc": "Gains 1 gem for every 10 defense the opponent had",
+		"flavor": "Sure to baffle future paleontologists.",
+		"sortOrder": 870,
+		"level": 3,
+		"school": "earth",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["resource"]
+		},
+		"require": "g.t_earthclass>0",
+		"buy": {
+			"research": 500,
+			"codices": 10
+		},
+		"cost": {
+			"earth": 2
+		},
+		"result": {
+			"geosculpting.exp": 0.2
+		},
+		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_body_preparation"],
+					"strict": "true",
+					"conditiontext": "body preparation"
+				}
+			},
+			"dot": {
+				"id": "gems_acquisition_dot",
+				"tags": "t_body_preparation",
+				"kind": "earth",
+				"duration": 300,
+				"name": "crystal bones",
+				"mod": {
+					"self.speed": -1
+				},
+				"onDeath": {
+					"harmless": true,
+					"acquire": {
+						"gems": "Math.max(a.defense/10,0.1)"
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "bloodgem_acquisition",
+		"name": "coagulant injection",
+		"desc": "Inject an enemy with a coagulant, allowing you to crystallize their blood.",
+		"extdesc": "Amount of blood gems acquired is approximately 1 per 250 maximum hp an opponent had",
+		"flavor": "A blood-curdling sight.",
+		"sortOrder": 206,
+		"level": 3,
+		"school": "blood",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["resource"]
+		},
+		"require": "g.bloodlore>=5",
+		"buy": {
+			"research": 500,
+			"codices": 10
+		},
+		"cost": {
+			"hp": 5
+		},
+		"result": {
+			"bloodlore.exp": 0.5
+		},
+		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_body_preparation"],
+					"strict": "true",
+					"conditiontext": "body preparation"
+				}
+			},
+			"dot": {
+				"id": "bloodgem_acquisition_dot",
+				"tags": "t_body_preparation",
+				"kind": "blood",
+				"duration": 300,
+				"name": "coagulant poison",
+				"damage": 0.25,
+				"onDeath": {
+					"harmless": true,
+					"acquire": {
+						"bloodgem": "a.hp.max/250"
+					}
+				}
 			}
 		}
 	},
 	{
 		"id": "quell",
+		"desc": "The full weight of a wizard's gaze is often overpowering.",
+		"sortOrder": 442,
 		"level": 15,
 		"school": "mana",
-		"require": "g.lore>=35&&g.tier5>0",
-		"desc": "The full weight of a wizard's gaze is often overpowering.",
-		"cd": 200,
+		"require": "(g.lore+g.t_knowledgeclass*4)>=35&&g.tier5>0",
 		"buy": {
 			"arcana": 30
 		},
 		"cost": {
 			"mana": 5
 		},
+		"cd": 200,
+		"result": {
+			"lore.exp": 0.5
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
 				"duration": 60,
 				"mod": {
-					"speed": -20
+					"self.speed": -10
 				}
 			}
 		}
@@ -294,45 +952,166 @@
 	{
 		"id": "lifedrain",
 		"name": "drain life",
+		"sortOrder": 1203,
 		"level": 12,
 		"school": "shadow",
+		"keywords": {
+			"type": ["damage", "recovery"],
+			"target": ["enemy", "self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.necromancy>=8&&g.shadowlore>=25",
 		"buy": {
 			"research": 5000,
 			"shadowgem": 20,
 			"tomes": 10
 		},
+		"need": "g.good2==0",
+		"needtext": "Cannot be scrupulous.",
 		"cost": {
 			"shadow": 7
 		},
-		"at": {
-			"25": {
-				"attack.damage.max": 5
-			},
-			"75": {
-				"attack.damage.min": 5
-			},
-			"300": {
-				"attack.damage.max": 5,
-				"attack.damage.min": 5
-			}
-		},
 		"attack": {
-			"damage": "0~5",
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["lifedrain_dot"],
+					"conditiontext": "life drain"
+				}
+			},
 			"dot": {
+				"id": "lifedrain_dot",
 				"kind": "drain",
 				"leech": 0.75,
 				"duration": 60,
-				"damage": "15~30"
+				"damage": "15~30",
+				"potencies": ["spelldmg", "shadowdmg"]
+			}
+		},
+		"at": {
+			"25": {
+				"attack.dot.damage.max": 5
+			},
+			"75": {
+				"attack.dot.damage.min": 5
+			},
+			"300": {
+				"attack.dot.damage.max": 5,
+				"attack.dot.damage.min": 5
+			}
+		}
+	},
+	{
+		"id": "bolsterundead",
+		"name": "bolster undead",
+		"sortOrder": 1240,
+		"level": 6,
+		"school": "shadow",
+		"keywords": {
+			"type": ["recovery", "buff"],
+			"target": ["ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.shadowlore>=12&&g.reanimation>=8",
+		"buy": {
+			"research": 5000,
+			"shadowgem": 20,
+			"tomes": 10
+		},
+		"cost": {
+			"shadow": 5
+		},
+		"cd": 20,
+		"attack": {
+			"targets": "minions",
+			"only": "undead,ghost",
+			"id": "undeadbuff",
+			"dot": {
+				"duration": 45,
+				"mod": {
+					"self.dodge": 2,
+					"self.hp.max": "10%",
+					"self.hp.rate": 2,
+					"self.resist.shadow": 20
+				}
+			}
+		}
+	},
+	{
+		"id": "obscure2",
+		"name": "obscuring shadows",
+		"sortOrder": 1245,
+		"level": 5,
+		"school": "shadow",
+		"tags": "t_obscurebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.obscure1>0&&g.shadowlore>=5&&g.t_shadowclass>0",
+		"buy": {
+			"research": 500,
+			"codices": 5,
+			"shadowgem": 1
+		},
+		"cost": {
+			"shadow": 4
+		},
+		"cd": 10,
+		"dot": {
+			"tags": "obscuringshadows",
+			"duration": 25,
+			"mod": {
+				"self.dodge": 3
+			}
+		}
+	},
+	{
+		"id": "obscure3",
+		"name": "greater obscuring shadows",
+		"sortOrder": 1244,
+		"level": 7,
+		"school": "shadow",
+		"tags": "t_obscurebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.obscure2>0&&g.shadowlore>=10&&g.tier2>0",
+		"buy": {
+			"shadowgem": 10,
+			"tomes": 1
+		},
+		"cost": {
+			"shadow": 6
+		},
+		"cd": 15,
+		"dot": {
+			"tags": "obscuringshadows",
+			"duration": 30,
+			"mod": {
+				"self.dodge": 4
 			}
 		}
 	},
 	{
 		"id": "gloom",
-		"level": 2,
-		"require": "g.shadowlore>=5&&g.shadow>8",
-		"school": "shadow",
 		"desc": "Decreases the target's resistance to shadow magic.",
+		"sortOrder": 1250,
+		"level": 2,
+		"school": "shadow",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.shadowlore>=5&&g.t_shadowclass>0",
 		"buy": {
 			"research": 100,
 			"codices": 1,
@@ -346,16 +1125,330 @@
 			"dot": {
 				"kind": "shadow",
 				"duration": 100,
-				"self.resist.shadow": -10
+				"mod": {
+					"self.resist.shadow": -10
+				}
 			}
 		}
 	},
 	{
+		"id": "terrifyingvisage",
+		"name": "terrifying visage",
+		"sortOrder": 1251,
+		"level": 6,
+		"school": "shadow",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.shadowlore>=6&&g.t_shadowclass>0",
+		"buy": {
+			"research": 5000,
+			"shadowgem": 20,
+			"tomes": 10
+		},
+		"cost": {
+			"shadow": 6
+		},
+		"cd": 30,
+		"attack": {
+			"targets": "enemies",
+			"dot": {
+				"id": "fear",
+				"duration": 3
+			}
+		}
+	},
+	{
+		"id": "soul_acquisition",
+		"name": "soulbind branding",
+		"desc": "Carve a set of soul-trapping runes into an enemy's flesh, to prevent their soul from escaping your grasp",
+		"flavor": "It shall be engraved upon your soul!",
+		"sortOrder": 1270,
+		"level": 3,
+		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"],
+			"special": ["resource"]
+		},
+		"require": "g.evil2>0&&g.necromancy>=5&&g.shadowlore>=15",
+		"buy": {
+			"research": 500,
+			"codices": 15,
+			"shadowgem": 5,
+			"spiritgem": 1
+		},
+		"need": "g.good2==0",
+		"needtext": "Cannot be scrupulous.",
+		"cost": {
+			"shadow": 2
+		},
+		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_brand"],
+					"strict": "true",
+					"conditiontext": "branding"
+				}
+			},
+			"damage": 5,
+			"dot": {
+				"id": "soul_acquisition_dot",
+				"tags": "t_brand",
+				"kind": "shadow",
+				"duration": 300,
+				"name": "soulbind branding",
+				"onDeath": {
+					"harmless": true,
+					"acquire": {
+						"souls": 1
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "body_acquisition",
+		"name": "embalming injection",
+		"desc": "Inject an enemy with embalming fluid to preserve the corpse for later.",
+		"flavor": "Gives an entirely new definition to \"living dead\".",
+		"sortOrder": 1271,
+		"level": 3,
+		"school": "shadow",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["resource"]
+		},
+		"require": "g.embalming>=5",
+		"buy": {
+			"research": 500,
+			"codices": 10
+		},
+		"cost": {
+			"shadow": 2
+		},
+		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_body_preparation"],
+					"strict": "true",
+					"conditiontext": "body preparation"
+				}
+			},
+			"dot": {
+				"id": "body_acquisition_dot",
+				"tags": "t_body_preparation",
+				"kind": "shadow",
+				"duration": 300,
+				"name": "embalming poison",
+				"damage": 0.25,
+				"onDeath": {
+					"harmless": true,
+					"acquire": {
+						"bodies": 0.25
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "darkpromptings",
+		"name": "dark promptings",
+		"desc": "Malevolent voices whisper secrets to your mind.",
+		"sortOrder": 1272,
+		"level": 3,
+		"school": "shadow",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.shadowlore>=5&&g.t_shadowclass>0",
+		"buy": {
+			"research": 500,
+			"codices": 1,
+			"shadowgem": 1
+		},
+		"cost": {
+			"shadow": 5,
+			"bonedust": 1
+		},
+		"cd": 45,
+		"result": {
+			"evilamt": 1,
+			"shadowlore.exp": 2
+		},
+		"dot": {
+			"duration": 60,
+			"mod": {
+				"shadowdmg": 20,
+				"encounter.effect.t_school.exp": 0.25
+			}
+		}
+	},
+	{
+		"id": "mk_imp",
+		"name": "Summon Imps",
+		"desc": "Summon your patron's weakest servants to perish for you.",
+		"sortOrder": 1752,
+		"level": 3,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.demonology>=5",
+		"buy": {
+			"research": 2000,
+			"codices": 30,
+			"shadowgem": 10
+		},
+		"cost": {
+			"shadow": 4,
+			"fire": 2,
+			"hp": 4,
+			"arcana": 0.25
+		},
+		"cd": 5,
+		"result": {
+			"demonology.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_imp",
+				"count": 2,
+				"max": 6
+			}
+		]
+	},
+	{
+		"id": "mk_quasit",
+		"name": "Summon quasit",
+		"desc": "Summon one of your patron's servants to die for you.",
+		"sortOrder": 1753,
+		"level": 5,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.demonology>=11",
+		"buy": {
+			"research": 2000,
+			"codices": 30,
+			"firegem": 10
+		},
+		"cost": {
+			"shadow": 8,
+			"hp": 8,
+			"arcana": 1
+		},
+		"cd": 8,
+		"result": { "demonology.exp": 1.8 },
+		"summon": [
+			{
+				"id": "sum_quasit",
+				"count": 1,
+				"max": 4
+			}
+		]
+	},
+	{
+		"id": "mk_grimstalk",
+		"name": "summon grimstalk",
+		"desc": "Summon one of your patron's servants to endure for you.",
+		"sortOrder": 1751,
+		"level": 7,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.demonology>=17&&g.naturelore>=8",
+		"buy": {
+			"research": 6000,
+			"tomes": 25,
+			"naturegem": 40
+		},
+		"cost": {
+			"shadow": 13,
+			"nature": 5,
+			"hp": 13,
+			"arcana": 6
+		},
+		"cd": 30,
+		"result": { "demonology.exp": 4.3 },
+		"summon": [
+			{
+				"id": "sum_grimstalk",
+				"count": 1,
+				"max": 2
+			}
+		]
+	},
+	{
+		"id": "mk_demon",
+		"name": "summon demon",
+		"desc": "Summon one of your patron's servants to fight for you.",
+		"sortOrder": 1750,
+		"level": 12,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "(g.t_demonclass+g.t_summonclass)>=3&&g.demonology>=21&&g.firelore>=15&&g.shadowlore>=15",
+		"buy": {
+			"research": 6666,
+			"tomes": 40,
+			"firegem": 30,
+			"shadowgem": 30
+		},
+		"cost": {
+			"fire": 7,
+			"shadow": 18,
+			"arcana": 10
+		},
+		"cd": 50,
+		"result": { "demonology.exp": 3.8 },
+		"summon": [
+			{
+				"id": "sum_demon",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
 		"id": "poisonnettle",
 		"name": "poison nettle",
+		"sortOrder": 905,
 		"level": 1,
-		"require": "g.spellbook.value>0&&g.naturelore>0",
 		"school": "nature",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.naturelore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -363,20 +1456,39 @@
 		"cost": {
 			"nature": 1
 		},
+		"result": {
+			"naturelore.exp": 0.1
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["nettle"],
+					"conditiontext": "nettle"
+				}
+			},
 			"dot": {
+				"id": "nettle",
 				"kind": "poison",
 				"duration": 10,
-				"damage": "0.5~1"
+				"damage": "0.5~1",
+				"potencies": ["spelldmg", "naturedmg", "poisondmg"]
 			}
 		}
 	},
 	{
 		"id": "whirl1",
-		"name": "whirling step",
+		"name": "lesser whirling step",
+		"sortOrder": 646,
 		"level": 1,
-		"require": "g.spellbook.value>0&&g.airlore>0",
 		"school": "air",
+		"tags": "t_dodgebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.airlore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -384,20 +1496,31 @@
 		"cost": {
 			"air": 1
 		},
+		"cd": 20,
+		"result": {
+			"airlore.exp": 0.1
+		},
 		"dot": {
-			"id": "whirlingstep",
-			"name": "whirling step",
+			"tags": "whirlingstep",
 			"duration": 45,
 			"mod": {
-				"dodge": 1
+				"self.dodge": 1
 			}
 		}
 	},
 	{
 		"id": "whirl2",
-		"name": "whirling step II",
+		"name": "whirling step",
+		"sortOrder": 645,
 		"level": 3,
 		"school": "air",
+		"tags": "t_dodgebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.whirl1>0&&g.airlore>=5",
 		"buy": {
 			"research": 500,
@@ -407,22 +1530,35 @@
 		"cost": {
 			"air": 4
 		},
+		"cd": 30,
+		"result": {
+			"airlore.exp": 0.4
+		},
 		"dot": {
-			"id": "whirlingstep",
-			"name": "whirling step",
+			"tags": "whirlingstep",
 			"duration": 60,
 			"mod": {
-				"dodge": 2,
-				"speed": 0.3
+				"self": {
+					"dodge": 2,
+					"speed": 1
+				}
 			}
 		}
 	},
 	{
 		"id": "whirl3",
-		"name": "whirling step III",
+		"name": "greater whirling step",
+		"sortOrder": 644,
 		"level": 5,
-		"require": "g.whirl2>0&&g.airlore>=10&&g.tier2>0",
 		"school": "air",
+		"tags": "t_dodgebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.whirl2>0&&g.airlore>=10&&g.tier2>0",
 		"buy": {
 			"airgem": 10,
 			"tomes": 1
@@ -430,22 +1566,35 @@
 		"cost": {
 			"air": 7
 		},
+		"cd": 40,
+		"result": {
+			"airlore.exp": 0.7
+		},
 		"dot": {
-			"id": "whirlingstep",
-			"name": "whirling step",
+			"tags": "whirlingstep",
 			"duration": 80,
 			"mod": {
-				"dodge": 5,
-				"speed": 0.55
+				"self": {
+					"dodge": 5,
+					"speed": 2
+				}
 			}
 		}
 	},
 	{
 		"id": "mana1",
 		"name": "minor mana",
-		"school": "mana",
-		"require": "g.spellbook.value>0&&g.lore>=4",
+		"sortOrder": 432,
 		"level": 1,
+		"school": "mana",
+		"tags": "t_manabuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.lore>=4",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -453,9 +1602,13 @@
 		"cost": {
 			"mana": 0.1
 		},
+		"cd": 15,
+		"result": {
+			"lore.exp": 0.1
+		},
 		"dot": {
-			"id": "dotmana",
 			"name": "minor mana",
+			"tags": "manadot",
 			"duration": 30,
 			"effect": {
 				"mana": 0.25
@@ -465,8 +1618,16 @@
 	{
 		"id": "mana2",
 		"name": "lesser mana",
-		"school": "mana",
+		"sortOrder": 431,
 		"level": 2,
+		"school": "mana",
+		"tags": "t_manabuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.mana1>0&&g.lore>=8&&g.tier1>0",
 		"buy": {
 			"research": 30,
@@ -476,9 +1637,13 @@
 		"cost": {
 			"mana": 0.3
 		},
+		"cd": 30,
+		"result": {
+			"lore.exp": 0.1
+		},
 		"dot": {
-			"id": "dotmana",
 			"name": "lesser mana",
+			"tags": "manadot",
 			"duration": 60,
 			"effect": {
 				"mana": 0.45
@@ -488,9 +1653,17 @@
 	{
 		"id": "mana3",
 		"name": "mana",
-		"school": "mana",
-		"require": "g.mana2>0&&g.lore>=12&&g.tier3>0",
+		"sortOrder": 430,
 		"level": 5,
+		"school": "mana",
+		"tags": "t_manabuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.mana2>0&&g.lore>=12&&g.tier3>0",
 		"buy": {
 			"research": 200,
 			"codices": 10,
@@ -499,9 +1672,13 @@
 		"cost": {
 			"mana": 1
 		},
+		"cd": 60,
+		"result": {
+			"lore.exp": 0.1
+		},
 		"dot": {
-			"id": "dotmana",
 			"name": "mana",
+			"tags": "manadot",
 			"duration": 120,
 			"effect": {
 				"mana": 0.8
@@ -510,11 +1687,19 @@
 	},
 	{
 		"id": "lightregen1",
-		"name": "pulsing light",
-		"require": "g.spellbook.value>0&&g.lightlore>0",
-		"school": "light",
+		"name": "lesser pulsing light",
 		"desc": "A small pulse of light zips around you, mending injuries.",
+		"sortOrder": 1142,
 		"level": 1,
+		"school": "light",
+		"tags": "t_healspell,t_regenbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.lightlore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -522,20 +1707,32 @@
 		"cost": {
 			"light": 1
 		},
+		"result": {
+			"lightlore.exp": 0.1
+		},
 		"dot": {
-			"duration": 45,
-			"effect": {
-				"hp": 1.1
-			}
+			"tags": "lightregen",
+			"duration": 20,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"],
+			"healing": 1.3
 		}
 	},
 	{
 		"id": "lightregen2",
-		"name": "pulsing light II",
-		"school": "light",
-		"require": "g.lightregen1>0&&g.lightlore>=5",
+		"name": "pulsing light",
 		"desc": "A pulse of light zips around you, mending injuries.",
-		"level": 3,
+		"sortOrder": 1141,
+		"level": 4,
+		"school": "light",
+		"tags": "t_healspell,t_regenbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.lightregen1>0&&g.lightlore>=5",
 		"buy": {
 			"research": 100,
 			"codices": 1,
@@ -544,44 +1741,83 @@
 		"cost": {
 			"light": 5
 		},
+		"cd": 15,
+		"result": {
+			"lightlore.exp": 0.5
+		},
 		"dot": {
-			"duration": 60,
-			"effect": {
-				"hp": 2
-			}
+			"tags": "lightregen",
+			"duration": 30,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"],
+			"healing": 3
 		}
 	},
 	{
 		"id": "lightregen3",
-		"name": "pulsing light III",
-		"school": "light",
+		"name": "greater pulsing light",
 		"desc": "A large pulse of light zips around you, mending injuries.",
+		"sortOrder": 1140,
 		"level": 5,
-		"require": "g.lightregen2>0&&g.lightlore>=8&&g.tier1>0",
+		"school": "light",
+		"tags": "t_healspell,t_regenbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.lightregen2>0&&g.lightlore>=8&&g.tier1>0&&g.heallore>=4&&g.evil2==0",
 		"buy": {
 			"research": 100,
 			"tomes": 1,
 			"lightgem": 10
 		},
+		"need": ["g.evil2==0", "good2"],
+		"needtext": "Cannot be sinister and must be at least scrupulous.",
 		"cost": {
 			"light": 10
 		},
+		"cd": 20,
+		"result": {
+			"lightlore.exp": 1
+		},
 		"dot": {
-			"duration": 120,
-			"effect": {
-				"hp": 5
-			}
+			"tags": "lightregen",
+			"duration": 40,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"],
+			"healing": 5
 		}
 	},
 	{
 		"id": "magicmissile",
 		"name": "magic missile",
+		"sortOrder": 406,
 		"level": 1,
 		"school": "mana",
-		"require": "g.spellbook.value>0&&g.lore>0",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.spellbook>0&&g.lore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
+		},
+		"cost": {
+			"mana": 1
+		},
+		"result": {
+			"lore.exp": 0.1
+		},
+		"attack": {
+			"damage": "1.5~2.5",
+			"kind": "mana",
+			"tohit": 2,
+			"potencies": ["spelldmg", "manadmg"]
 		},
 		"at": {
 			"10": {
@@ -594,26 +1830,38 @@
 				"attack.damage.max": 1,
 				"attack.damage.min": 1
 			}
-		},
-		"cost": {
-			"mana": 1
-		},
-		"attack": {
-			"damage": "1.5~2.5",
-			"kind": "mana",
-			"tohit": 2
 		}
 	},
 	{
 		"id": "prismaticspray",
 		"name": "prismatic spray",
+		"desc": "Lines of arcane energy damage all enemies.",
+		"sortOrder": 402,
 		"level": 1,
 		"school": "mana",
-		"require": "g.spellbook.value>0&&g.lore>0",
-		"desc": "Lines of arcane energy damage all enemies.",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant"]
+		},
+		"require": "g.spellbook>0&&g.lore>0",
 		"buy": {
 			"research": 100,
 			"scrolls": 10
+		},
+		"cost": {
+			"mana": 1
+		},
+		"result": {
+			"lore.exp": 0.1
+		},
+		"attack": {
+			"targets": "enemies",
+			"damage": "0~2",
+			"kind": "mana",
+			"tohit": 1,
+			"potencies": ["spelldmg", "manadmg"]
 		},
 		"at": {
 			"25": {
@@ -621,58 +1869,67 @@
 				"attack.damage.max": 1
 			},
 			"100": {
-				"attack.tohit": 2,
+				"attack.tohit": 1,
 				"attack.damage.min": 1
 			}
-		},
-		"cost": {
-			"mana": 1
-		},
-		"attack": {
-			"targets": "enemies",
-			"damage": "0~2",
-			"kind": "mana",
-			"tohit": 1
 		}
 	},
 	{
 		"id": "prismaticspray2",
 		"name": "greater prismatic spray",
+		"desc": "Lines of arcane energy strike all enemies.",
+		"sortOrder": 400,
 		"level": 9,
 		"school": "mana",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant"]
+		},
 		"require": "g.tier3>0",
-		"desc": "Lines of arcane energy strike all enemies.",
 		"buy": {
 			"research": 100,
 			"scrolls": 10
 		},
-		"at": {
-			"25": {
-				"attack.tohit": 3,
-				"attack.damage.max": 3
-			},
-			"100": {
-				"attack.tohit": 3,
-				"attack.damage.min": 3
-			}
-		},
 		"cost": {
 			"mana": 8
+		},
+		"result": {
+			"lore.exp": 0.8
 		},
 		"attack": {
 			"targets": "enemies",
 			"damage": "12~30",
 			"kind": "mana",
-			"tohit": 4
+			"tohit": 2,
+			"potencies": ["spelldmg", "manadmg"]
+		},
+		"at": {
+			"25": {
+				"attack.tohit": 1,
+				"attack.damage.max": 3
+			},
+			"100": {
+				"attack.tohit": 1,
+				"attack.damage.min": 3
+			}
 		}
 	},
 	{
 		"id": "moveearth",
 		"name": "fling stone",
-		"desc": "Throw a rock using magic",
-		"school": "earth",
-		"require": "g.earthlore>=5",
+		"desc": "Throw a rock using magic.",
+		"sortOrder": 808,
 		"level": 1,
+		"school": "earth",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.earthlore>=5",
 		"buy": {
 			"research": 30,
 			"scrolls": 5
@@ -680,19 +1937,30 @@
 		"cost": {
 			"earth": 1
 		},
+		"result": {
+			"earthlore.exp": 0.1
+		},
 		"attack": {
 			"damage": "2~6",
 			"kind": "earth",
-			"tohit": 4
+			"tohit": 1,
+			"potencies": ["spelldmg", "earthdmg"]
 		}
 	},
 	{
 		"id": "slow1",
 		"name": "mud",
-		"desc": "Engulfs target in mud",
-		"school": "earth",
-		"require": "g.player.level>=4&&g.earthlore>=5",
+		"desc": "Engulfs target in mud.",
+		"sortOrder": 846,
 		"level": 2,
+		"school": "earth",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.player.level>=4&&g.earthlore>=5",
 		"buy": {
 			"research": 30,
 			"scrolls": 5,
@@ -701,11 +1969,20 @@
 		"cost": {
 			"earth": 5
 		},
+		"result": {
+			"earthlore.exp": 0.5
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_speeddown"]
+				}
+			},
 			"dot": {
+				"tags": "t_speeddown",
 				"duration": 20,
 				"mod": {
-					"speed": -0.2
+					"self.speed": -2
 				}
 			}
 		}
@@ -713,8 +1990,15 @@
 	{
 		"id": "mk_spirit",
 		"name": "call spirit",
-		"school": "spirit",
+		"sortOrder": 1790,
 		"level": 1,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.spiritlore>0",
 		"buy": {
 			"research": 30,
@@ -723,34 +2007,45 @@
 		"cost": {
 			"spirit": 5
 		},
-		"result": "wisp"
-	},
-	{
-		"id": "mk_zombie",
-		"name": "raise zombie",
-		"desc": "Summon a zombie to fight for you",
-		"school": "shadow",
-		"require": "g.shadowlore>0&&g.reanimation>0",
-		"level": 2,
-		"buy": {
-			"research": 30,
-			"scrolls": 5,
-			"shadowgem": 1
+		"cd": 1,
+		"result": {
+			"spiritlore.exp": 0.5
 		},
-		"cost": {
-			"shadow": 7
-		},
-		"result": "zombie"
+		"summon": [
+			{
+				"id": "sum_wisp",
+				"count": 1
+			}
+		]
 	},
 	{
 		"id": "firedart",
 		"name": "fire dart",
+		"sortOrder": 705,
 		"level": 1,
-		"require": "g.spellbook.value>0&&g.firelore>0",
 		"school": "fire",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.spellbook>0&&g.firelore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
+		},
+		"cost": {
+			"fire": 1
+		},
+		"result": {
+			"firelore.exp": 0.1
+		},
+		"attack": {
+			"damage": "3~5",
+			"kind": "fire",
+			"tohit": 1,
+			"potencies": ["spelldmg", "firedmg"]
 		},
 		"at": {
 			"25": {
@@ -764,27 +2059,38 @@
 				"attack.damage.min": 1,
 				"attack.tohit": 2
 			}
-		},
-		"cost": {
-			"fire": 1
-		},
-		"attack": {
-			"damage": "3~5",
-			"kind": "fire",
-			"tohit": 1
 		}
 	},
 	{
 		"id": "firebolt",
 		"name": "fire bolt",
-		"level": 2,
 		"desc": "A small bolt of flame.",
-		"require": "g.firedart>0&&g.firelore>=5",
+		"sortOrder": 704,
+		"level": 2,
 		"school": "fire",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.firedart>0&&g.firelore>=5",
 		"buy": {
 			"research": 30,
 			"scrolls": 5,
 			"firegem": 1
+		},
+		"cost": {
+			"fire": 4
+		},
+		"result": {
+			"firelore.exp": 0.4
+		},
+		"attack": {
+			"damage": "4~5",
+			"tohit": 3,
+			"kind": "fire",
+			"potencies": ["spelldmg", "firedmg"]
 		},
 		"at": {
 			"25": {
@@ -798,22 +2104,21 @@
 				"attack.damage.min": 2,
 				"attack.tohit": 3
 			}
-		},
-		"cost": {
-			"fire": 4
-		},
-		"attack": {
-			"damage": "4~5",
-			"tohit": 3,
-			"kind": "fire"
 		}
 	},
 	{
 		"id": "searingbolt",
 		"name": "searing bolt",
-		"level": 3,
 		"desc": "A bolt of fire with lingering flames",
+		"sortOrder": 703,
+		"level": 3,
 		"school": "fire",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
 		"require": "g.firebolt>0&&g.firelore>=8&&g.tier1>0",
 		"buy": {
 			"research": 100,
@@ -823,36 +2128,49 @@
 		"cost": {
 			"fire": 5
 		},
-		"at": {
-			"30": {
-				"attack.damage.max": 3
-			},
-			"100": {
-				"attack.damage.min": 3
-			},
-			"300": {
-				"attack.damage.max": 4,
-				"attack.damage.min": 3,
-				"attack.tohit": 5
-			}
+		"result": {
+			"firelore.exp": 0.5
 		},
 		"attack": {
-			"damage": "7~10",
+			"damage": "6~8",
 			"tohit": 5,
 			"kind": "fire",
+			"potencies": ["spelldmg", "firedmg"],
 			"dot": {
-				"dmg": "2~3",
-				"duration": 10
+				"kind": "fire",
+				"damage": "2~3",
+				"duration": 10,
+				"potencies": ["spelldmg", "firedmg"]
+			}
+		},
+		"at": {
+			"30": {
+				"attack.damage.max": 2
+			},
+			"100": {
+				"attack.damage.min": 2
+			},
+			"300": {
+				"attack.damage.max": 3,
+				"attack.damage.min": 2,
+				"attack.tohit": 5
 			}
 		}
 	},
 	{
 		"id": "lightspear",
 		"name": "light spear",
+		"desc": "A barb of solid light.",
+		"sortOrder": 1101,
 		"level": 3,
-		"desc": "A barb of solid light",
-		"require": "g.lightlore>0",
 		"school": "light",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lightlore>0",
 		"buy": {
 			"research": 100,
 			"codices": 10,
@@ -861,32 +2179,42 @@
 		"cost": {
 			"light": 2
 		},
+		"result": {
+			"lightlore.exp": 0.2
+		},
+		"attack": {
+			"damage": "5~8",
+			"kind": "light",
+			"potencies": ["spelldmg", "lightdmg"]
+		},
 		"at": {
 			"30": {
 				"attack.damage.min": 3,
-				"attack.tohit": 2
+				"attack.tohit": 1
 			},
 			"100": {
 				"attack.damage.max": 3,
-				"attack.tohit": 3
+				"attack.tohit": 1
 			},
 			"300": {
 				"attack.damage.max": 4,
 				"attack.damage.min": 3
 			}
-		},
-		"attack": {
-			"damage": "5~8",
-			"tohit": 8,
-			"kind": "light"
 		}
 	},
 	{
 		"id": "lightspear2",
 		"name": "greater light spear",
+		"desc": "A lance of solid light.",
+		"sortOrder": 1100,
 		"level": 7,
-		"desc": "A lance of solid light",
 		"school": "light",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.lightspear>0&&g.lightlore>=5",
 		"buy": {
 			"research": 100,
@@ -896,33 +2224,44 @@
 		"cost": {
 			"light": 4
 		},
+		"result": {
+			"lightlore.exp": 0.4
+		},
+		"attack": {
+			"damage": "21~29",
+			"tohit": 1,
+			"kind": "light",
+			"potencies": ["spelldmg", "lightdmg"]
+		},
 		"at": {
 			"30": {
 				"attack.damage.min": 3,
-				"attack.tohit": 2
+				"attack.tohit": 1
 			},
 			"100": {
 				"attack.damage.max": 3,
-				"attack.tohit": 3
+				"attack.tohit": 1
 			},
 			"300": {
 				"attack.damage.max": 4,
 				"attack.damage.min": 3,
-				"attack.tohit": 4
+				"attack.tohit": 2
 			}
-		},
-		"attack": {
-			"damage": "21~29",
-			"tohit": 8,
-			"kind": "light"
 		}
 	},
 	{
 		"id": "magmabolt",
 		"name": "magma bolt",
-		"level": 5,
 		"desc": "A bolt of liquid-hot magma",
+		"sortOrder": 702,
+		"level": 5,
 		"school": "fire",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
 		"require": "g.searingbolt>0&&g.firelore>=12&&g.tier3>0",
 		"buy": {
 			"research": 100,
@@ -932,35 +2271,48 @@
 		"cost": {
 			"fire": 7
 		},
-		"at": {
-			"50": {
-				"attack.damage.max": 4
-			},
-			"150": {
-				"attack.damage.min": 4
-			},
-			"500": {
-				"attack.damage.max": 5,
-				"attack.damage.min": 4,
-				"attack.tohit": 7
-			}
+		"result": {
+			"firelore.exp": 0.7
 		},
 		"attack": {
-			"damage": "15~20",
+			"damage": "12~15",
 			"tohit": 7,
 			"kind": "fire",
+			"potencies": ["spelldmg", "firedmg"],
 			"dot": {
-				"dmg": "5~7",
-				"duration": 20
+				"damage": "4~6",
+				"kind": "fire",
+				"duration": 20,
+				"potencies": ["spelldmg", "firedmg"]
+			}
+		},
+		"at": {
+			"50": {
+				"attack.damage.max": 3
+			},
+			"150": {
+				"attack.damage.min": 3
+			},
+			"500": {
+				"attack.damage.max": 4,
+				"attack.damage.min": 3,
+				"attack.tohit": 7
 			}
 		}
 	},
 	{
 		"id": "waterblast",
 		"name": "water spray",
-		"level": 3,
 		"desc": "A violent burst of water.",
+		"sortOrder": 509,
+		"level": 3,
 		"school": "water",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.waterlore>0",
 		"buy": {
 			"research": 30,
@@ -969,23 +2321,46 @@
 		"cost": {
 			"water": 1
 		},
+		"result": {
+			"waterlore.exp": 0.1
+		},
 		"attack": {
 			"damage": "2~5",
-			"tohit": 3,
-			"kind": "water"
+			"tohit": 2,
+			"kind": "water",
+			"potencies": ["spelldmg", "waterdmg"]
 		}
 	},
 	{
 		"id": "frostbolt",
 		"name": "frost bolt",
-		"level": 2,
-		"require": "g.spellbook.value>0&&g.waterlore>0",
 		"desc": "A sharp shard of ice.",
+		"sortOrder": 508,
+		"level": 2,
 		"school": "water",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.spellbook>0&&g.waterlore>0",
 		"buy": {
 			"research": 30,
 			"scrolls": 10,
 			"watergem": 1
+		},
+		"cost": {
+			"water": 2
+		},
+		"result": {
+			"waterlore.exp": 0.2
+		},
+		"attack": {
+			"damage": "6~11",
+			"tohit": 2,
+			"kind": "water",
+			"potencies": ["spelldmg", "waterdmg"]
 		},
 		"at": {
 			"25": {
@@ -997,28 +2372,39 @@
 			"300": {
 				"attack.damage.max": 2,
 				"attack.damage.min": 1,
-				"attack.tohit": 2
+				"attack.tohit": 1
 			}
-		},
-		"cost": {
-			"water": 2
-		},
-		"attack": {
-			"damage": "6~11",
-			"tohit": 5,
-			"kind": "water"
 		}
 	},
 	{
 		"id": "frostbolt2",
 		"name": "frost bolt II",
-		"level": 6,
-		"require": "g.frostbolt>0&&g.waterlore>=5",
 		"desc": "Fling a large shard of ice.",
+		"sortOrder": 507,
+		"level": 6,
 		"school": "water",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.frostbolt>0&&g.waterlore>=5",
 		"buy": {
 			"codices": 10,
 			"watergem": 6
+		},
+		"cost": {
+			"water": 4
+		},
+		"result": {
+			"waterlore.exp": 0.4
+		},
+		"attack": {
+			"damage": "16~21",
+			"tohit": 2,
+			"kind": "water",
+			"potencies": ["spelldmg", "waterdmg"]
 		},
 		"at": {
 			"25": {
@@ -1030,28 +2416,39 @@
 			"300": {
 				"attack.damage.max": 3,
 				"attack.damage.min": 2,
-				"attack.tohit": 7
+				"attack.tohit": 2
 			}
-		},
-		"cost": {
-			"water": 4
-		},
-		"attack": {
-			"damage": "16~21",
-			"tohit": 8,
-			"kind": "water"
 		}
 	},
 	{
 		"id": "frostbolt3",
 		"name": "frost bolt III",
-		"level": 10,
-		"require": "g.frostbolt2>0&&g.waterlore>=8&&g.tier1>0",
 		"desc": "A heavy shard of ice.",
+		"sortOrder": 506,
+		"level": 10,
 		"school": "water",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.frostbolt2>0&&g.waterlore>=8&&g.tier1>0",
 		"buy": {
 			"codices": 10,
 			"watergem": 6
+		},
+		"cost": {
+			"water": 7
+		},
+		"result": {
+			"waterlore.exp": 0.7
+		},
+		"attack": {
+			"damage": "36~45",
+			"tohit": 3,
+			"kind": "water",
+			"potencies": ["spelldmg", "waterdmg"]
 		},
 		"at": {
 			"25": {
@@ -1063,31 +2460,34 @@
 			"300": {
 				"attack.damage.max": 3,
 				"attack.damage.min": 2,
-				"attack.tohit": 7
+				"attack.tohit": 2
 			}
-		},
-		"cost": {
-			"water": 7
-		},
-		"attack": {
-			"damage": "36~45",
-			"tohit": 8,
-			"kind": "water"
 		}
 	},
 	{
 		"id": "poisonward",
 		"name": "poison ward",
-		"require": "g.spellbook.value>0&&g.naturelore>0",
+		"desc": "Reduce the efficacy of common venoms.",
+		"sortOrder": 944,
 		"level": 2,
 		"school": "nature",
-		"desc": "Reduce the efficacy of common venoms",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.naturelore>0",
 		"buy": {
 			"research": 50,
 			"scrolls": 10
 		},
 		"cost": {
 			"nature": 3
+		},
+		"cd": 15,
+		"result": {
+			"naturelore.exp": 0.3
 		},
 		"dot": {
 			"duration": 30,
@@ -1099,14 +2499,33 @@
 	{
 		"id": "vinewhip",
 		"name": "vine whip",
-		"level": 3,
 		"desc": "Vines lash out from the ground.",
+		"sortOrder": 900,
+		"level": 3,
 		"school": "nature",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.player.level>=4&&g.naturelore>=5",
 		"buy": {
 			"research": 50,
 			"scrolls": 5,
 			"naturegem": 1
+		},
+		"cost": {
+			"nature": 3
+		},
+		"result": {
+			"naturelore.exp": 0.3
+		},
+		"attack": {
+			"damage": "6.5~10.5",
+			"tohit": 3,
+			"kind": "nature",
+			"potencies": ["spelldmg", "naturedmg"]
 		},
 		"at": {
 			"25": {
@@ -1120,23 +2539,22 @@
 				"attack.damage.min": 1,
 				"attack.tohit": 2
 			}
-		},
-		"cost": {
-			"nature": 3
-		},
-		"attack": {
-			"damage": "6.5~10.5",
-			"tohit": 3,
-			"kind": "nature"
 		}
 	},
 	{
 		"id": "mk_hobgoblin",
 		"name": "summon hobgoblin",
-		"school": "mana",
-		"desc": "In combat, summon an hobboblin to fight for you",
+		"desc": "In combat, summon a hobgoblin to fight for you.",
+		"sortOrder": 1768,
 		"level": 6,
-		"require": "g.conjuration>4",
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.conjuration>=5",
 		"buy": {
 			"research": 100,
 			"tomes": 1
@@ -1144,15 +2562,31 @@
 		"cost": {
 			"mana": 10
 		},
-		"result": "hobgoblin"
+		"cd": 3,
+		"result": {
+			"conjuration.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_hobgoblin",
+				"count": 1
+			}
+		]
 	},
 	{
 		"id": "mk_spider",
 		"name": "summon spider",
-		"desc": "Summon a spider to fight for you",
-		"school": "nature",
-		"require": "g.conjuration>2&&g.naturelore>=5",
+		"desc": "Summon a spider to fight for you.",
+		"sortOrder": 1770,
 		"level": 5,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.conjuration>=3&&g.naturelore>=5",
 		"buy": {
 			"research": 100,
 			"scrolls": 20
@@ -1160,67 +2594,92 @@
 		"cost": {
 			"nature": 4
 		},
-		"result": "lgspider"
-	},
-	{
-		"id": "mk_raven",
-		"name": "summon raven",
-		"desc": "In combat, summon a raven to fight for you",
-		"school": "nature",
-		"require": "g.conjuration>2&&g.naturelore>=3",
-		"level": 3,
-		"buy": {
-			"research": 100,
-			"scrolls": 20
+		"cd": 2,
+		"result": {
+			"conjuration.exp": 0.4
 		},
-		"cost": {
-			"nature": 4
-		},
-		"result": "raven"
+		"summon": [
+			{
+				"id": "lgspider",
+				"count": 1
+			}
+		]
 	},
 	{
 		"id": "reanimate",
+		"desc": "Reanimate a weak undead minion.",
+		"sortOrder": 1237,
 		"level": 3,
-		"only": "undead",
 		"school": "shadow",
-		"require": "g.reanimation>0",
-		"desc": "Reanimate a weak (up to level 6) undead minion. From the \"Minions\" tab only",
 		"tags": "rez",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.reanimation>0",
 		"buy": {
 			"research": 50,
 			"scrolls": 25
 		},
+		"need": "g.good3==0",
+		"needtext": "Cannot be incorruptible.",
 		"cost": {
 			"bonedust": 5,
 			"shadow": 5
+		},
+		"resurrect": {
+			"only": ["undead"],
+			"maxlevel": 10,
+			"count": 1
 		}
 	},
 	{
 		"id": "reanimate2",
 		"name": "greater reanimate",
-		"desc": "Reanimate a stronger (up to level 10) undead minion. From the \"Minions\" tab only",
+		"desc": "Reanimate a stronger undead minion.",
+		"sortOrder": 1236,
 		"level": 5,
-		"only": "undead",
 		"school": "shadow",
 		"tags": "rez",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.reanimation>=7&&g.tier1>0",
 		"buy": {
 			"codices": 10,
 			"research": 500
 		},
+		"need": "g.good3==0",
+		"needtext": "Cannot be incorruptible.",
 		"cost": {
 			"bonedust": 10,
 			"bones": 3,
 			"shadow": 5
+		},
+		"resurrect": {
+			"only": ["undead"],
+			"maxlevel": 30,
+			"count": 1
 		}
 	},
 	{
 		"id": "revive",
-		"only": "humanoid,goblinoid",
-		"level": 3,
+		"desc": "Call back to life a weak humanoid or goblinoid minion.",
+		"sortOrder": 1030,
+		"level": 1,
 		"school": "spirit",
-		"desc": "Call back to life a weak (up to level 6) humanoid or goblinoid minion. From the \"Minions\" tab only",
 		"tags": "rez",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.spiritlore>=4",
 		"buy": {
 			"research": 100,
@@ -1229,16 +2688,27 @@
 		"cost": {
 			"scrolls": 5,
 			"mana": 5
+		},
+		"resurrect": {
+			"only": ["humanoid", "goblinoid"],
+			"maxlevel": 10,
+			"count": 1
 		}
 	},
 	{
 		"id": "tend",
 		"name": "magic tending",
-		"only": "beast",
-		"level": 3,
+		"desc": "Revive a weak beast minion.",
+		"sortOrder": 936,
+		"level": 1,
 		"school": "nature",
-		"desc": "Revive a weak (up to level 6) beast minion. From the \"Minions\" tab only",
 		"tags": "rez",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.naturelore>=4",
 		"buy": {
 			"research": 100,
@@ -1247,17 +2717,28 @@
 		"cost": {
 			"herbs": 5,
 			"nature": 5
+		},
+		"resurrect": {
+			"only": ["beast"],
+			"maxlevel": 10,
+			"count": 1
 		}
 	},
 	{
 		"id": "wildtend",
 		"name": "wild tending",
-		"tags": "rez",
-		"only": "beast",
-		"require": "(g.druid+g.warden+g.kell+g.fey)>0",
-		"level": 5,
+		"desc": "Revive a stronger beast minion.",
+		"require": "g.t_natureclass>0",
+		"sortOrder": 935,
+		"level": 2,
 		"school": "nature",
-		"desc": "Revive a stronger (up to level 10) beast minion. From the \"Minions\" tab only",
+		"tags": "rez",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"buy": {
 			"research": 100,
 			"codices": 25
@@ -1265,77 +2746,67 @@
 		"cost": {
 			"herbs": 10,
 			"nature": 7
+		},
+		"resurrect": {
+			"only": ["beast"],
+			"maxlevel": 40,
+			"count": 1
 		}
 	},
 	{
 		"id": "flamestrike",
-		"school": "fire",
 		"desc": "Imbue your weapon with flame before striking.",
-		"level": 4,
-		"require": "g.bladelore>=4&&g.firelore>=8",
+		"sortOrder": 313,
+		"level": 6,
+		"school": "martial",
+		"tags": ["t_nospellcraft"],
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"],
+			"special": ["weapon"]
+		},
+		"require": "g.spellbook.value>0&&g.weaponlore>=4&&g.firelore>=8",
 		"buy": {
+			"arcana": 4,
 			"tomes": 5,
 			"firegem": 10
 		},
+		"caststoppers": [1],
+		"need": "g.player.weapon.hasTag('t_martial')",
+		"needtext": "Currently equipped weapon must be martial",
 		"cost": {
-			"fire": 3,
-			"hp": 10,
-			"stamina": 1
+			"fire": 6,
+			"hp": 25,
+			"vigor": 3
+		},
+		"cd": 2,
+		"result": {
+			"firelore.exp": 0.6,
+			"weaponlore.exp": 0.3
 		},
 		"attack": {
 			"kind": "fire",
-			"bonus": 5,
-			"dmg": "(a.weapon.damage+a.getBonus( a.weapon.kind ))*2"
+			"tohit": 5,
+			"damage": "(a.weapon.damage||0)*1.2",
+			"potencies": ["physdmg", "firedmg"]
 		}
-	},
-	{
-		"id": "mk_blade",
-		"name": "summon blade",
-		"school": "blade",
-		"desc": "In combat, summon a magical blade to fight for you",
-		"require": "(g.battlemage+g.spellblade+g.dreadlord+g.summoner)>0",
-		"level": 7,
-		"buy": {
-			"research": 5000,
-			"tomes": 5
-		},
-		"cost": {
-			"mana": 12
-		},
-		"result": "magicblade"
-	},
-	{
-		"id": "mk_murder",
-		"name": "summon murder",
-		"school": "nature",
-		"desc": "In combat, summon a squad of murdering raven to fight for you",
-		"require": "summoner",
-		"level": 5,
-		"cd": 150,
-		"buy": {
-			"research": 1000,
-			"codices": 10,
-			"managem": 3
-		},
-		"cost": {
-			"mana": 7
-		},
-		"result": [
-			"raven",
-			"raven",
-			"raven",
-			"raven",
-			"raven"
-		]
 	},
 	{
 		"id": "mk_unicorn",
 		"name": "summon unicorn",
-		"school": "light",
-		"desc": "In combat, summon an unicorn to fight for you",
-		"require": "g.evil==0&&(g.seer+g.oracle+g.summoner)>0&&g.magicbeasts>=5",
+		"desc": "In combat, summon an unicorn to fight for you.",
+		"require": "(g.good2+g.t_divinationclass+g.t_summonclass)>0&&g.magicbeasts>=5",
+		"sortOrder": 1771,
 		"level": 5,
-		"cd": 150,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"buy": {
 			"research": 1000,
 			"tomes": 10,
@@ -1344,7 +2815,17 @@
 		"cost": {
 			"light": 10
 		},
-		"result": "unicorn"
+		"cd": 5,
+		"result": {
+			"magicbeasts.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_unicorn",
+				"count": 1,
+				"max": 3
+			}
+		]
 	},
 	{
 		"id": "tosand",
@@ -1370,10 +2851,17 @@
 	},
 	{
 		"id": "quicksand",
-		"desc": "Command the earth to swallow the enemy",
-		"school": "earth",
-		"require": "g.geosculpting>7",
+		"desc": "Command the earth to swallow the enemy.",
+		"sortOrder": 802,
 		"level": 15,
+		"school": "earth",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.geosculpting>=8",
 		"buy": {
 			"sp": 1,
 			"research": 8000,
@@ -1383,13 +2871,17 @@
 		"cost": {
 			"earth": 15
 		},
+		"result": {
+			"geosculpting.exp": 1.5
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
 				"duration": 15,
-				"dmg": "15~25",
+				"damage": "15~25",
+				"potencies": ["spelldmg", "earthdmg"],
 				"mod": {
-					"speed": -12
+					"self.speed": -5
 				}
 			}
 		}
@@ -1397,9 +2889,16 @@
 	{
 		"id": "entomb",
 		"desc": "Bury your enemies deep beneath the ground.",
-		"school": "earth",
-		"require": "g.titan>0",
+		"sortOrder": 800,
 		"level": 25,
+		"school": "earth",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.titan>0",
 		"buy": {
 			"sp": 15,
 			"research": 30000,
@@ -1412,88 +2911,109 @@
 			"earth": 25,
 			"sindel": 2
 		},
+		"result": {
+			"geosculpting.exp": 600
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
 				"duration": 30,
-				"dmg": "50~75",
+				"damage": "50~75",
+				"potencies": ["spelldmg", "earthdmg"],
 				"mod": {
-					"speed": -25
+					"self.speed": -15
 				}
 			}
 		}
 	},
 	{
 		"id": "smite",
-		"school": "earth",
-		"require": "g.hammerlore>=5&&g.earthlore>=8&&g.tier1>0",
+		"sortOrder": 311,
 		"level": 5,
-		"cd": 2,
+		"school": "martial",
+		"tags": "t_nospellcraft",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"],
+			"special": ["weapon"]
+		},
+		"require": "g.hammerlore>=5&&g.earthlore>=8&&g.tier1>0",
 		"buy": {
 			"research": 500
 		},
+		"caststoppers": [1],
+		"need": "g.player.weapon.hasTag('t_blunt')",
+		"needtext": "Currently equipped weapon must be blunt.",
 		"cost": {
 			"earth": 3,
-			"stamina": 1
+			"vigor": 4
+		},
+		"result": {
+			"hammerlore.exp": 0.7
 		},
 		"attack": {
-			"damage": "(a.weapon.damage+a.getBonus( a.weapon.kind ))*2.5",
+			"damage": "((a.weapon.damage||0)+mod.flat)*(1.3+ mod.pct) ",
 			"tohit": 3,
-			"kind": "earth"
+			"kind": "earth",
+			"potencies": ["physdmg", "earthdmg", "hammerdmg"]
 		}
 	},
 	{
 		"id": "fissure",
 		"desc": "Crack the earth beneath the feet of your enemy.",
-		"cd": 200,
-		"school": "earth",
-		"require": "g.hammerlore>=10&&g.earthlore>=12&&g.tier3>0",
+		"sortOrder": 310,
 		"level": 5,
+		"school": "martial",
+		"tags": "t_nospellcraft",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"],
+			"special": ["weapon"]
+		},
+		"require": "g.hammerlore>=10&&g.earthlore>=12&&g.tier3>0",
 		"buy": {
 			"research": 12000
 		},
+		"caststoppers": [1],
+		"need": "g.player.weapon.hasTag('t_blunt')",
+		"needtext": "Currently equipped weapon must be blunt.",
 		"cost": {
 			"earth": 8,
-			"stamina": 12
+			"vigor": 15
+		},
+		"cd": 200,
+		"result": {
+			"hammerlore.exp": 2.3
 		},
 		"attack": {
-			"damage": "(a.weapon.damage+a.getBonus( a.weapon.kind ))*6",
-			"tohit": 5,
+			"damage": "((a.weapon.damage||0))*4",
+			"tohit": 15,
+			"potencies": ["physdmg", "earthdmg", "hammerdmg"],
 			"kind": "earth",
 			"dot": {
 				"kind": "earth",
-				"duration": 4,
+				"duration": 6,
 				"id": "prone"
-			}
-		}
-	},
-	{
-		"id": "prolight",
-		"name": "protection: light",
-		"school": "shadow",
-		"require": "g.player.level>=4&&g.shadowlore>=3",
-		"level": 2,
-		"buy": {
-			"research": 100,
-			"scrolls": 10
-		},
-		"cost": {
-			"shadow": 2
-		},
-		"dot": {
-			"duration": 20,
-			"mod": {
-				"self.resist.holy": 10,
-				"self.resist.light": 10
 			}
 		}
 	},
 	{
 		"id": "proshadow",
 		"name": "protection: shadow",
-		"school": "light",
-		"require": "g.player.level>=4&&g.lightlore>=3",
+		"sortOrder": 1156,
 		"level": 2,
+		"school": "light",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.player.level>=4&&g.lightlore>=3",
 		"buy": {
 			"research": 100,
 			"scrolls": 5
@@ -1501,19 +3021,29 @@
 		"cost": {
 			"light": 2
 		},
+		"result": {
+			"lightlore.exp": 0.2
+		},
 		"dot": {
 			"duration": 20,
 			"mod": {
 				"self.resist.shadow": 10,
-				"self.resist.undead": 10
+				"self.resist.drain": 10
 			}
 		}
 	},
 	{
 		"id": "profire",
 		"name": "protection: fire",
-		"school": "fire",
+		"sortOrder": 748,
 		"level": 2,
+		"school": "fire",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.player.level>=4&&g.firelore>=2",
 		"buy": {
 			"research": 100,
@@ -1521,6 +3051,9 @@
 		},
 		"cost": {
 			"fire": 1
+		},
+		"result": {
+			"firelore.exp": 0.1
 		},
 		"dot": {
 			"duration": 20,
@@ -1532,8 +3065,15 @@
 	{
 		"id": "prowater",
 		"name": "protection: water",
-		"school": "water",
+		"sortOrder": 546,
 		"level": 2,
+		"school": "water",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.player.level>=4&&g.waterlore>=3",
 		"buy": {
 			"research": 100,
@@ -1542,19 +3082,28 @@
 		"cost": {
 			"water": 1
 		},
+		"result": {
+			"waterlore.exp": 0.1
+		},
 		"dot": {
 			"duration": 20,
 			"mod": {
-				"self.resist.water": 10,
-				"self.resist.cold": 10
+				"self.resist.water": 10
 			}
 		}
 	},
 	{
 		"id": "pronature",
 		"name": "protection: nature",
-		"school": "nature",
+		"sortOrder": 946,
 		"level": 2,
+		"school": "nature",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.player.level>=4&&g.naturelore>=3",
 		"buy": {
 			"research": 25,
@@ -1562,6 +3111,9 @@
 		},
 		"cost": {
 			"nature": 1
+		},
+		"result": {
+			"naturelore.exp": 0.1
 		},
 		"dot": {
 			"duration": 20,
@@ -1573,10 +3125,18 @@
 	},
 	{
 		"id": "heal1",
-		"level": 2,
 		"name": "sealing light",
 		"desc": "Seams of light close your wounds.",
+		"sortOrder": 1136,
+		"level": 2,
 		"school": "light",
+		"tags": "t_healspell",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.player.level>=4&&g.lightlore>=4",
 		"buy": {
 			"research": 30,
@@ -1584,18 +3144,30 @@
 			"lightgem": 1
 		},
 		"cost": {
-			"light": 5
+			"light": 3
 		},
 		"result": {
-			"self.hp": 20
+			"lightlore.exp": 0.3
+		},
+		"attack": {
+			"targets": "self",
+			"harmless": true,
+			"healing": 20,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"]
 		}
 	},
 	{
-		"id": "unseenservant",
+		"id": "gold_exploration",
+		"name": "windcomb",
+		"desc": "Use directed gusts of wind to clear away debris and detritus, making exploration a much more profitable affair.",
+		"sortOrder": 670,
 		"level": 2,
-		"name": "unseen servant",
-		"desc": "An invisible servant manages your affairs.",
 		"school": "air",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["explore", "resource"]
+		},
 		"require": "g.player.level>=4&&g.airlore>=4",
 		"buy": {
 			"research": 30,
@@ -1605,20 +3177,31 @@
 		"cost": {
 			"air": 5
 		},
+		"cd": 30,
+		"result": {
+			"airlore.exp": 0.5
+		},
 		"dot": {
-			"duration": 45,
-			"effect": {
-				"gold": 2
+			"duration": 60,
+			"mod": {
+				"encounter.effect.gold": 2
 			}
 		}
 	},
 	{
 		"id": "insight",
 		"name": "insight",
-		"level": 3,
 		"desc": "All your studies fall neatly into place.",
-		"flavor": "I know the pieces fit",
+		"flavor": "I know the pieces fit.",
+		"sortOrder": 1172,
+		"level": 3,
 		"school": "light",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.player.level>=5&&g.lightlore>=5",
 		"buy": {
 			"research": 500,
@@ -1628,19 +3211,14 @@
 		"cost": {
 			"light": 5
 		},
-		"mod": {
-			"lore.rate": "0.005",
-			"naturelore.rate": "0.01",
-			"lightlore.rate": "0.01",
-			"languages.rate": "0.01"
+		"cd": 45,
+		"result": {
+			"lightlore.exp": 1
 		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"lore.rate": 0.5,
-				"naturelore.rate": "0.2+2%",
-				"lightlore.rate": "0.2+2%",
-				"languages.rate": "0.2+2%"
+				"lightdmg": 10
 			}
 		}
 	},
@@ -1648,8 +3226,15 @@
 		"id": "fireinsight",
 		"name": "fire sense",
 		"desc": "Temporarily increase your natural aptitude for fire.",
+		"sortOrder": 772,
 		"level": 2,
 		"school": "fire",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.firelore>=1",
 		"buy": {
 			"research": 100,
@@ -1659,15 +3244,47 @@
 		"cost": {
 			"fire": 2
 		},
-		"mod": {
-			"lore.rate": "0.005",
-			"firelore.rate": "0.01"
+		"cd": 45,
+		"result": {
+			"firelore.exp": 0.4
 		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"lore.rate": 0.5,
-				"firelore.rate": "0.2+2%"
+				"firedmg": 10
+			}
+		}
+	},
+	{
+		"id": "earthinsight",
+		"name": "earth sense",
+		"desc": "Temporarily increase your natural aptitude for earth.",
+		"sortOrder": 874,
+		"level": 2,
+		"school": "earth",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.earthlore>=1",
+		"buy": {
+			"research": 100,
+			"codices": 1,
+			"earthgem": 1
+		},
+		"cost": {
+			"earth": 2
+		},
+		"cd": 45,
+		"result": {
+			"earthlore.exp": 0.4
+		},
+		"dot": {
+			"duration": 60,
+			"mod": {
+				"earthdmg": 10
 			}
 		}
 	},
@@ -1675,26 +3292,32 @@
 		"id": "waterinsight",
 		"name": "water sense",
 		"desc": "Temporarily increase your natural aptitude for water.",
+		"sortOrder": 570,
 		"level": 2,
 		"school": "water",
-		"require": "g.waterlore>=1",
-		"cost": {
-			"water": 2
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
 		},
+		"require": "g.waterlore>=1",
 		"buy": {
 			"research": 100,
 			"codices": 1,
 			"watergem": 1
 		},
-		"mod": {
-			"lore.rate": "0.005",
-			"waterlore.rate": "0.01"
+		"cost": {
+			"water": 2
+		},
+		"cd": 45,
+		"result": {
+			"waterlore.exp": 0.4
 		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"lore.rate": 0.5,
-				"waterlore.rate": "0.2+2%"
+				"waterdmg": 10
 			}
 		}
 	},
@@ -1702,69 +3325,47 @@
 		"id": "airinsight",
 		"name": "wind sense",
 		"desc": "Temporarily increase your natural aptitude for air.",
+		"sortOrder": 672,
 		"level": 2,
 		"school": "air",
-		"require": "g.airlore>=1",
-		"cost": {
-			"air": 2
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
 		},
+		"require": "g.airlore>=1",
 		"buy": {
 			"research": 100,
 			"codices": 1,
 			"airgem": 1
 		},
-		"mod": {
-			"lore.rate": "0.005",
-			"airlore.rate": "0.01"
-		},
-		"dot": {
-			"duration": 60,
-			"mod": {
-				"lore.rate": 0.5,
-				"airlore.rate": "0.2+2%"
-			}
-		}
-	},
-	{
-		"id": "darkpromptings",
-		"name": "dark promptings",
-		"level": 3,
-		"desc": "Malevolent voices whisper secrets to your mind.",
-		"require": "g.player.level>=5&&g.shadowlore>=5",
-		"school": "shadow",
-		"buy": {
-			"research": 500,
-			"codices": 1,
-			"shadowgem": 1
-		},
+		"cd": 45,
 		"cost": {
-			"shadow": 5,
-			"bonedust": 1
+			"air": 2
 		},
-		"mod": {
-			"dissection.rate": "0.01",
-			"shadowlore.rate": "0.01",
-			"demonology.rate": "0.01",
-			"reanimation.rate": "0.01"
+		"result": {
+			"airlore.exp": 0.4
 		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"lore.rate": 0.5,
-				"dissection.rate": "0.3+2%",
-				"shadowlore.rate": "0.3+2%",
-				"demonology.rate": "0.3+2%",
-				"reanimation.rate": "0.3+2%"
+				"airdmg": 10
 			}
 		}
 	},
 	{
-		"id": "wildgrowth",
-		"name": "wild growth",
+		"id": "herbs_exploration",
+		"name": "natural instinct",
+		"desc": "Enhance your sense of smell to more easily locate herbs worth harvesting.",
+		"sortOrder": 971,
 		"level": 1,
-		"desc": "Herbs sprout more quickly from the earth.",
 		"school": "nature",
-		"require": "g.spellbook.value>0&&g.herbalism>=3&&g.naturelore>0",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["explore", "resource"]
+		},
+		"require": "g.spellbook>0&&g.herbalism>=3&&g.naturelore>0",
 		"buy": {
 			"research": 50,
 			"scrolls": 5
@@ -1772,23 +3373,46 @@
 		"cost": {
 			"nature": 2
 		},
+		"cd": 30,
+		"result": {
+			"herbalism.exp": 0.4
+		},
 		"dot": {
-			"duration": 45,
+			"duration": 60,
 			"mod": {
-				"herbs.rate": 0.5
+				"encounter.effect.herbs": 0.5
 			}
 		}
 	},
 	{
 		"id": "magebolt",
 		"name": "mage bolt",
+		"sortOrder": 404,
 		"level": 9,
-		"require": "(g.mage+g.wizard+g.wizard2+g.highmage)>0",
+		"require": "g.t_manaclass>=2",
 		"school": "mana",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"buy": {
 			"research": 5000,
 			"tomes": 5,
 			"managem": 20
+		},
+		"cost": {
+			"mana": 4
+		},
+		"result": {
+			"lore.exp": 0.4
+		},
+		"attack": {
+			"damage": "10~20",
+			"kind": "mana",
+			"tohit": 10,
+			"potencies": ["spelldmg", "manadmg"]
 		},
 		"at": {
 			"10": {
@@ -1801,21 +3425,20 @@
 				"attack.damage.max": 5,
 				"attack.damage.min": 5
 			}
-		},
-		"cost": {
-			"mana": 4
-		},
-		"attack": {
-			"damage": "10~20",
-			"kind": "mana",
-			"tohit": 10
 		}
 	},
 	{
-		"id": "whisper",
-		"level": 2,
-		"desc": "Spirits whisper hidden truths as you study.",
+		"id": "knowledge_exploration",
+		"name": "ancient communion",
+		"desc": "Call on remnants of the dead to impart the knowledge of their lives. Has a relatively short effective range.",
+		"flavor": "Did you hear something?",
+		"sortOrder": 1070,
+		"level": 1,
 		"school": "spirit",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["explore", "resource"]
+		},
 		"require": "g.player.level>=4&&g.spiritlore>=4",
 		"buy": {
 			"research": 100,
@@ -1826,22 +3449,32 @@
 			"spirit": 5,
 			"mana": 2
 		},
-		"dot": {
-			"duration": 50,
-			"effect": {
-				"research": 1,
-				"sp": 0.001,
-				"arcana": 0.001
-			}
+		"cd": 30,
+		"result": {
+			"spiritlore.exp": 0.7
 		},
-		"flavor": "Did you hear something?"
+		"dot": {
+			"duration": 60,
+			"mod": {
+				"encounter.effect.research": 2,
+				"encounter.effect.sp": 0.0015,
+				"encounter.effect.arcana": 0.0015
+			}
+		}
 	},
 	{
 		"id": "venom1",
 		"name": "venom I",
+		"sortOrder": 904,
 		"level": 5,
-		"require": "g.player.level>=7&&g.naturelore>=6&&g.tier1>0",
 		"school": "nature",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.player.level>=7&&g.naturelore>=6&&g.tier1>0",
 		"buy": {
 			"research": 500,
 			"codices": 5,
@@ -1850,21 +3483,39 @@
 		"cost": {
 			"nature": 5
 		},
+		"result": {
+			"naturelore.exp": 0.5
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_venom"],
+					"conditiontext": "venom"
+				}
+			},
 			"dot": {
-				"id": "venom",
+				"name": "venom",
 				"kind": "poison",
+				"id": "t_venom",
 				"duration": 30,
-				"damage": "2~4"
+				"damage": "2~4",
+				"potencies": ["spelldmg", "naturedmg", "poisondmg"]
 			}
 		}
 	},
 	{
 		"id": "hex1",
 		"name": "spiteful hex",
+		"sortOrder": 1009,
 		"level": 4,
-		"require": "g.witch>0",
+		"require": "g.t_spiritclass>0",
 		"school": "spirit",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"buy": {
 			"research": 1000,
 			"codices": 10,
@@ -1873,33 +3524,61 @@
 		"cost": {
 			"spirit": 7
 		},
+		"result": {
+			"spiritlore.exp": 0.7
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_hex"],
+					"conditiontext": "hex"
+				}
+			},
 			"dot": {
-				"id": "hex1",
+				"name": "hex",
 				"kind": "hex",
+				"id": "hex",
 				"duration": 15,
-				"damage": "5~7"
+				"damage": "5~7",
+				"potencies": ["spelldmg", "spiritdmg"]
 			}
 		}
 	},
 	{
 		"id": "jinx",
-		"level": 2,
-		"require": "trickster",
 		"desc": "Curse an enemy with a streak of bad luck.",
-		"school": "trickery",
+		"sortOrder": 1347,
+		"level": 2,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "trickster",
 		"buy": {
 			"research": 75
 		},
 		"cost": {
 			"mana": 2
 		},
+		"result": {
+			"trickery.exp": 0.2
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["dot_jinx1"],
+					"conditiontext": "jinx"
+				}
+			},
 			"dot": {
-				"id": "jinx",
+				"id": "dot_jinx1",
+				"name": "jinx",
 				"kind": "curse",
 				"mod": {
-					"tohit": -5
+					"self.tohit": -2
 				},
 				"duration": 20
 			}
@@ -1907,10 +3586,18 @@
 	},
 	{
 		"id": "speed1",
-		"level": 3,
 		"name": "dust devil",
-		"desc": "A whirl of wind at your feet",
+		"desc": "A whirl of wind at your feet.",
+		"sortOrder": 641,
+		"level": 3,
 		"school": "air",
+		"tags": "t_speedbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.airlore>=4",
 		"buy": {
 			"research": 500,
@@ -1920,21 +3607,33 @@
 		"cost": {
 			"air": 1
 		},
+		"result": {
+			"airlore.exp": 0.1
+		},
 		"dot": {
-			"id": "dustdevil",
+			"id": "dot_dustdevil1",
 			"name": "dust devil",
+			"tags": "t_speedup",
 			"duration": 20,
 			"mod": {
-				"speed": 1
+				"self.speed": 2
 			}
 		}
 	},
 	{
 		"id": "speed2",
-		"level": 5,
 		"name": "dust devil II",
-		"desc": "A whirl of wind at your feet",
+		"desc": "A whirl of wind at your feet.",
+		"sortOrder": 640,
+		"level": 5,
 		"school": "air",
+		"tags": "t_speedbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.airlore>=8&&g.speed1>0&&g.tier1>0",
 		"buy": {
 			"research": 500,
@@ -1944,22 +3643,34 @@
 		"cost": {
 			"air": 3
 		},
+		"cd": 20,
+		"result": {
+			"airlore.exp": 0.3
+		},
 		"dot": {
-			"id": "dustdevil",
+			"id": "dot_dustdevil2",
 			"name": "dust devil",
+			"tags": "t_speedup",
 			"duration": 45,
 			"mod": {
-				"speed": 2
+				"self.speed": 4
 			}
 		}
 	},
 	{
 		"id": "massjinx",
 		"name": "mass jinx",
-		"level": 4,
-		"require": "trickster",
 		"desc": "Curse all enemies with a streak of bad luck.",
-		"school": "trickery",
+		"sortOrder": 1346,
+		"level": 4,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.trickster>0||g.t_chaosclass>=2",
 		"buy": {
 			"research": 1000,
 			"codices": 10
@@ -1967,14 +3678,19 @@
 		"cost": {
 			"chaos": 1
 		},
+		"result": {
+			"trickery.exp": 0.1
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
-				"id": "jinx",
+				"id": "dot_jinx2",
+				"name": "jinx",
 				"kind": "curse",
+				"tags": "jinx",
 				"duration": 30,
 				"mod": {
-					"tohit": -10
+					"self.tohit": -3
 				}
 			}
 		}
@@ -1982,9 +3698,17 @@
 	{
 		"id": "guidestr",
 		"name": "guided strike",
+		"sortOrder": 1046,
 		"level": 1,
-		"require": "g.divination>=3",
 		"school": "spirit",
+		"tags": "t_accuracybuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.divination>=3",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -1992,19 +3716,32 @@
 		"cost": {
 			"spirit": 1
 		},
+		"cd": 20,
+		"result": {
+			"spiritlore.exp": 0.1
+		},
 		"dot": {
+			"tags": "t_tohitup",
 			"duration": 45,
 			"mod": {
-				"self.tohit": 3
+				"self.tohit": 1
 			}
 		}
 	},
 	{
 		"id": "truestrike",
 		"name": "true strike",
+		"sortOrder": 1045,
 		"level": 3,
-		"require": "g.scrying>=1",
 		"school": "spirit",
+		"tags": "t_accuracybuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.scrying>=1",
 		"buy": {
 			"codices": 1,
 			"research": 100
@@ -2012,19 +3749,32 @@
 		"cost": {
 			"spirit": 2
 		},
+		"cd": 20,
+		"result": {
+			"spiritlore.exp": 0.2
+		},
 		"dot": {
 			"duration": 45,
+			"tags": "t_tohitup",
 			"mod": {
-				"self.tohit": 7
+				"self.tohit": 2
 			}
 		}
 	},
 	{
 		"id": "perfectstrike",
 		"name": "perfect strike",
+		"sortOrder": 1044,
 		"level": 5,
-		"require": "g.scrying>=5",
 		"school": "spirit",
+		"tags": "t_accuracybuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.scrying>=5",
 		"buy": {
 			"tomes": 1,
 			"research": 100,
@@ -2033,61 +3783,66 @@
 		"cost": {
 			"spirit": 2
 		},
+		"cd": 20,
+		"result": {
+			"spiritlore.exp": 0.2
+		},
 		"dot": {
 			"duration": 45,
+			"tags": "t_tohitup",
 			"mod": {
-				"self.tohit": 15
+				"self.tohit": 4
 			}
 		}
 	},
 	{
 		"id": "heal2",
-		"level": 4,
 		"name": "sealing light II",
 		"desc": "Seams of light close your wounds.",
-		"require": "g.heal1>0&&g.lightlore>=6",
+		"sortOrder": 1135,
+		"level": 4,
 		"school": "light",
+		"tags": "t_healspell",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.heal1>0&&g.lightlore>=6&&g.evil2==0",
 		"buy": {
 			"research": 1000,
 			"codices": 10,
 			"lightgem": 1
 		},
+		"need": "g.evil2==0",
+		"needtext": "Cannot be sinister.",
 		"cost": {
 			"light": 5
 		},
 		"result": {
-			"hp": 75
-		}
-	},
-	{
-		"id": "soothing",
-		"name": "soothing breeze",
-		"level": 2,
-		"school": "air",
-		"desc": "A light wind steadies your nerves.",
-		"require": "g.airlore>=3",
-		"buy": {
-			"research": 200,
-			"codices": 5,
-			"airgem": 1
+			"lightlore.exp": 0.5
 		},
-		"cost": {
-			"air": 3
-		},
-		"dot": {
-			"duration": 45,
-			"effect": {
-				"unease": -0.2,
-				"madness": -0.2,
-				"weary": -0.2
-			}
+		"attack": {
+			"targets": "self",
+			"harmless": true,
+			"healing": 75,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"]
 		}
 	},
 	{
 		"id": "airburst",
 		"name": "burst",
+		"sortOrder": 610,
 		"level": 1,
 		"school": "air",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.airlore>0",
 		"buy": {
 			"research": 100,
@@ -2096,24 +3851,52 @@
 		"cost": {
 			"air": 1
 		},
+		"result": {
+			"airlore.exp": 0.1
+		},
 		"attack": {
 			"damage": "1~4",
 			"tohit": 3,
-			"kind": "air"
+			"kind": "air",
+			"potencies": ["spelldmg", "airdmg"]
 		}
 	},
 	{
 		"id": "zap",
+		"desc": "An electric shock leaps from your fingers.",
+		"sortOrder": 608,
 		"level": 3,
-		"desc": "An electric shock leaps from your fingers",
-		"require": "g.lightlore>=5||g.airlore>=5",
 		"school": "air",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.lightlore>=5||g.airlore>=5",
 		"buy": {
 			"research": 100,
 			"scrolls": 10
 		},
 		"cost": {
 			"air": 2
+		},
+		"result": {
+			"airlore.exp": 0.2
+		},
+		"attack": {
+			"damage": "1~2",
+			"tohit": 5,
+			"kind": "air",
+			"potencies": ["spelldmg", "airdmg"],
+			"dot": {
+				"name": "blind",
+				"duration": 5,
+				"tags": "t_tohitdown",
+				"mod": {
+					"self.tohit": -1
+				}
+			}
 		},
 		"at": {
 			"30": {
@@ -2126,36 +3909,48 @@
 				"attack.damage.max": 6,
 				"attack.tohit": 2
 			}
-		},
-		"attack": {
-			"damage": "1~2",
-			"tohit": 5,
-			"kind": "air",
-			"dot": {
-				"name": "blind",
-				"duration": 5,
-				"mod": {
-					"tohit": -3
-				}
-			}
 		}
 	},
 	{
 		"id": "elec1",
 		"name": "lightning",
-		"level": 6,
 		"desc": "An arc of lightning flashes from the sky.",
-		"require": "g.airlore>=8&&g.zap>0&&g.tier1>0",
+		"flavor": "Shazaaam?",
+		"sortOrder": 606,
+		"level": 6,
 		"school": "air",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.airlore>=8&&g.zap>0&&g.tier1>0",
 		"buy": {
 			"research": 500,
 			"codices": 10,
 			"airgem": 5,
 			"lightgem": 5
 		},
-		"flavor": "Shazaaam?",
 		"cost": {
 			"air": 5
+		},
+		"result": {
+			"airlore.exp": 0.5
+		},
+		"attack": {
+			"damage": "5~10",
+			"tohit": 7,
+			"kind": "air",
+			"potencies": ["spelldmg", "airdmg"],
+			"dot": {
+				"name": "blind",
+				"duration": 5,
+				"tags": "t_tohitdown",
+				"mod": {
+					"self.tohit": -2
+				}
+			}
 		},
 		"at": {
 			"30": {
@@ -2168,28 +3963,23 @@
 				"attack.damage.max": 4,
 				"attack.tohit": 4
 			}
-		},
-		"attack": {
-			"damage": "5~10",
-			"tohit": 7,
-			"kind": "air",
-			"dot": {
-				"name": "blind",
-				"duration": 5,
-				"mod": {
-					"tohit": -4
-				}
-			}
 		}
 	},
 	{
 		"id": "elec2",
 		"name": "doublestrike",
-		"level": 9,
 		"desc": "Twin arcs of lightning flash from the sky.",
 		"flavor": "Sometimes lightning does strike twice.",
-		"require": "g.airlore>=12&&g.elec1>0&&g.tier3>0",
+		"sortOrder": 602,
+		"level": 9,
 		"school": "air",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.airlore>=12&&g.elec1>0&&g.tier3>0",
 		"buy": {
 			"research": 1000,
 			"tomes": 3,
@@ -2197,6 +3987,25 @@
 		},
 		"cost": {
 			"air": 5
+		},
+		"result": {
+			"airlore.exp": 0.5
+		},
+		"attack": {
+			"damage": "7~15",
+			"tohit": 12,
+			"kind": "air",
+			"potencies": ["spelldmg", "airdmg"],
+			"dot": {
+				"name": "blind",
+				"duration": 5,
+				"tags": "t_tohitdown",
+				"damage": "2~3",
+				"potencies": ["spelldmg", "airdmg"],
+				"mod": {
+					"self.tohit": -3
+				}
+			}
 		},
 		"at": {
 			"30": {
@@ -2209,28 +4018,22 @@
 				"attack.damage.max": 5,
 				"attack.tohit": 5
 			}
-		},
-		"attack": {
-			"damage": "7~15",
-			"tohit": 12,
-			"kind": "air",
-			"dot": {
-				"name": "blind",
-				"duration": 1,
-				"damage": "7~15",
-				"mod": {
-					"tohit": -7
-				}
-			}
 		}
 	},
 	{
 		"id": "elec3",
 		"name": "thunderstrike",
-		"level": 12,
 		"desc": "A blinding storm of lightning.",
-		"require": "g.airlore>=15&&g.elec2>0&&g.tier3>0",
+		"sortOrder": 600,
+		"level": 12,
 		"school": "air",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.airlore>=15&&g.elec2>0&&g.tier3>0",
 		"buy": {
 			"research": 5000,
 			"tomes": 10,
@@ -2239,19 +4042,8 @@
 		"cost": {
 			"air": 10
 		},
-		"at": {
-			"30": {
-				"attack.dot.dmg.max": 5
-			},
-			"100": {
-				"attack.dot.dmg.min": 5,
-				"attack.dot.dmg.max": 1
-			},
-			"300": {
-				"attack.dot.dmg.max": 5,
-				"attack.dot.dmg.min": 4,
-				"attack.tohit": 5
-			}
+		"result": {
+			"airlore.exp": 1
 		},
 		"attack": {
 			"tohit": 15,
@@ -2260,48 +4052,42 @@
 				"kind": "air",
 				"duration": 15,
 				"damage": "7~25",
+				"potencies": ["spelldmg", "airdmg"],
 				"mod": {
-					"tohit": -5
+					"self.tohit": -5
 				}
 			}
-		}
-	},
-	{
-		"id": "calming",
-		"name": "calming murmurs",
-		"level": 2,
-		"school": "spirit",
-		"require": "g.spiritlore>=5",
-		"desc": "Whispers on the wind calm your troubled mind.",
-		"buy": {
-			"research": 200,
-			"codices": 5,
-			"spiritgem": 1
 		},
-		"cost": {
-			"spirit": 3
-		},
-		"action": {
-			"cure": "enrage",
-			"targets": "self,ally"
-		},
-		"dot": {
-			"duration": 45,
-			"mod": {
-				"bf": -0.2,
-				"rage": -0.2,
-				"madness": -0.2
+		"at": {
+			"30": {
+				"attack.dot.damage.max": 5
+			},
+			"100": {
+				"attack.dot.damage.min": 5,
+				"attack.dot.damage.max": 1
+			},
+			"300": {
+				"attack.dot.damage.max": 5,
+				"attack.dot.damage.min": 4,
+				"attack.tohit": 5
 			}
 		}
 	},
 	{
 		"id": "downswinging",
-		"level": 7,
 		"name": "down swinging",
-		"school": "blood",
-		"cd": 120,
-		"require": "bloodmage",
 		"desc": "You won't go down without a fight.",
+		"flavor": "Am I more than you bargained for yet?",
+		"sortOrder": 210,
+		"level": 7,
+		"school": "blood",
+		"keywords": {
+			"type": ["recovery", "buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.bloodmage>0",
 		"buy": {
 			"research": 1000,
 			"tomes": 1,
@@ -2310,28 +4096,42 @@
 		"cost": {
 			"mana": 10
 		},
-		"dot": {
-			"duration": 60,
-			"mod": {
-				"hp.max": 75,
-				"hp.rate": -1,
-				"self.tohit": 10,
-				"self.damage": 10
-			}
-		},
+		"cd": 120,
 		"result": {
-			"hp": 75
+			"hp": 75,
+			"bloodlore.exp": 1
 		},
-		"flavor": "Am I more than you bargained for yet?"
+		"dot": {
+			"duration": 15,
+			"tags": "t_bloodbuff",
+			"mod": {
+				"self": {
+					"hp": {
+						"max": 150,
+						"rate": -2
+					},
+					"tohit": 10,
+					"physdmg": 30,
+					"spelldmg": 15
+				}
+			}
+		}
 	},
 	{
 		"id": "bodyisdry",
-		"level": 10,
 		"name": "last stand",
+		"desc": "Before your body is dry.",
+		"flavor": "Don't lose your way.",
+		"sortOrder": 208,
+		"level": 10,
 		"school": "blood",
-		"require": "g.bloodmage>0&&g.tier5>0",
-		"desc": "Before your body is dry",
-		"cd": 120,
+		"keywords": {
+			"type": ["recovery", "buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.t_bloodclass>=2&&g.tier5>0",
 		"buy": {
 			"research": 3000,
 			"tomes": 10,
@@ -2340,25 +4140,42 @@
 		"cost": {
 			"mana": 10
 		},
-		"dot": {
-			"duration": 60,
-			"mod": {
-				"hp.max": 200,
-				"hp.rate": -3,
-				"self.tohit": 20,
-				"self.damage": 20
-			}
-		},
+		"cd": 120,
 		"result": {
-			"hp": 200
+			"hp": 200,
+			"bloodlore.exp": 1
 		},
-		"flavor": "Don't lose your way"
+		"dot": {
+			"duration": 15,
+			"tags": "t_bloodbuff",
+			"mod": {
+				"self": {
+					"hp": {
+						"max": 400,
+						"rate": -6
+					},
+					"tohit": 15,
+					"spelldmg": 35,
+					"physdmg": 20
+				}
+			}
+		}
 	},
 	{
 		"id": "bloodshot",
+		"desc": "A projectile made of your blood savagely mutilates the enemy.",
+		"extdesc": "Costs part of your hp, scaling with the amount of blood mastery classes you took. Deals damage based on your max hp, improved with use and blood classes taken.",
+		"flavor": "You would put it in a sausage instead, but you are not in the mood.",
+		"sortOrder": 202,
 		"level": 8,
 		"school": "blood",
-		"cd": 15,
+		"tags": "t_nospellcraft",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
 		"require": "g.bloodlore>=3",
 		"buy": {
 			"research": 1000,
@@ -2366,27 +4183,30 @@
 			"bloodgem": 15
 		},
 		"cost": {
-			"hp": "a.hp/3"
+			"hp": "a.hp/(2+0.5*g.t_bloodclass)"
+		},
+		"cd": 15,
+		"result": {
+			"bloodlore.exp": "a.hp/2"
 		},
 		"attack": {
 			"kind": "blood",
-			"dmg": "15+a.hp/33"
-		},
-		"at": {
-			"20": {
-				"attack.dmg": "10+a.hp/33"
-			},
-			"100": {
-				"attack.dmg": "10+a.hp/33"
-			}
-		},
-		"flavor": "Costs 1/3 of your health and deals part of it as damage!"
+			"damage": "15+20*Math.min(1,g.bloodshot/100)+(a.hp*(1+2*Math.min(1,g.bloodshot/100)))/(50-5*g.t_bloodclass)",
+			"potencies": ["spelldmg", "blooddmg"]
+		}
 	},
 	{
 		"id": "bloodspike",
-		"desc": "Blast all enemies with crystallized shards of magically charged blood",
+		"desc": "Blast all enemies with crystallized shards of magically charged blood.",
+		"sortOrder": 204,
 		"level": 5,
 		"school": "blood",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant"]
+		},
 		"require": "g.bloodlore>=5",
 		"buy": {
 			"research": 1000,
@@ -2394,30 +4214,41 @@
 			"bloodgem": 15
 		},
 		"cost": {
-			"hp": "15"
+			"hp": 30
+		},
+		"result": {
+			"bloodlore.exp": 3
 		},
 		"attack": {
 			"kind": "blood",
-			"dmg": "16",
-			"targets": "enemies"
+			"damage": 16,
+			"targets": "enemies",
+			"potencies": ["spelldmg", "blooddmg"]
 		},
 		"at": {
 			"100": {
-				"attack.dmg": "7",
-				"cost.hp": "2"
+				"attack.damage": 7,
+				"cost.hp": 2
 			},
 			"500": {
-				"attack.dmg": "7",
-				"cost.hp": "3"
+				"attack.damage": 7,
+				"cost.hp": 3
 			}
 		}
 	},
 	{
-		"id": "unearth",
-		"desc": "Raise precious stones from the ground.",
+		"id": "gems_exploration",
+		"name": "gem resonance",
+		"desc": "Use your knowledge of the earth to detect valuable gemstones by their resonance.",
+		"flavor": "Hi-Ho, Hi-Ho.",
+		"sortOrder": 870,
+		"level": 1,
 		"school": "earth",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["explore", "resource"]
+		},
 		"require": "g.earthlore>=8&&g.tier1>0",
-		"level": 3,
 		"buy": {
 			"research": 300,
 			"codices": 5,
@@ -2427,22 +4258,32 @@
 			"scrolls": 2,
 			"earth": 5
 		},
-		"dot": {
-			"duration": 120,
-			"mod": {
-				"gems.rate": 0.1
-			}
+		"cd": 30,
+		"result": {
+			"earthlore.exp": 0.5
 		},
-		"flavor": "Hi-Ho, Hi-Ho"
+		"dot": {
+			"duration": 60,
+			"mod": {
+				"encounter.effect.gems": 0.1
+			}
+		}
 	},
 	{
-		"id": "apiary",
+		"id": "mk_apiary",
 		"name": "dbulm's apiary",
-		"desc": "In combat, summon a really angry bee to fight for you",
+		"desc": "In combat, summon a really angry bee to fight for you.",
+		"flavor": "Beees.",
+		"sortOrder": 1772,
+		"level": 5,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
 		"require": "g.tier5>0&&g.conjuration>=5&&g.summoning>=10",
-		"school": "conjuration",
-		"level": 10,
-		"cd": 200,
 		"buy": {
 			"research": 2000,
 			"tomes": 15,
@@ -2450,21 +4291,41 @@
 			"airgem": 15
 		},
 		"cost": {
-			"airgem": 1
+			"air": 15
+		},
+		"cd": 20,
+		"result": {
+			"summoning.exp": 1.5
 		},
 		"dot": {
 			"duration": 10,
-			"effect": "stingybee"
-		},
-		"flavor": "Beees"
+			"summon": [
+				{
+					"id": "sum_queenbee",
+					"count": 1,
+					"max": 1
+				},
+				{
+					"id": "sum_warwasp",
+					"count": 2,
+					"max": 2
+				}
+			]
+		}
 	},
 	{
 		"id": "starfall",
 		"desc": "You can't escape the sky.",
-		"school": "astral",
+		"sortOrder": 1600,
 		"level": 10,
-		"require": "g.tier5>0&&(g.astralseer+g.wizard3+g.wizard2)>0&&g.astronomy>=15&&g.evil==0",
-		"cd": 55,
+		"school": "astral",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.tier5>0&&(g.astralseer+g.wizard3+g.wizard2)>0&&g.astronomy>=15&&g.evil2==0",
 		"buy": {
 			"research": 2000,
 			"tomes": 15,
@@ -2474,21 +4335,34 @@
 		"cost": {
 			"managem": 1
 		},
+		"cd": 55,
+		"result": {
+			"astronomy.exp": 1
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
 				"duration": 30,
 				"kind": "astral",
-				"dmg": "20~30"
+				"damage": "20~30",
+				"potencies": ["spelldmg", "astraldmg"]
 			}
 		}
 	},
 	{
 		"id": "stoneskin",
 		"name": "stone skin",
+		"sortOrder": 845,
 		"level": 1,
-		"require": "g.spellbook.value>0&&g.earthlore>0",
 		"school": "earth",
+		"tags": "t_defbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.spellbook>0&&g.earthlore>0",
 		"buy": {
 			"research": 25,
 			"scrolls": 1
@@ -2496,9 +4370,12 @@
 		"cost": {
 			"earth": 1
 		},
+		"cd": 15,
+		"result": {
+			"earthlore.exp": 0.1
+		},
 		"dot": {
-			"id": "toughskin",
-			"name": "stone skin",
+			"tags": "toughskin",
 			"duration": 30,
 			"mod": {
 				"self.defense": 2
@@ -2509,9 +4386,17 @@
 		"id": "copperskin",
 		"name": "copper skin",
 		"desc": "Hardens the skin of the self.",
+		"sortOrder": 844,
+		"level": 2,
 		"school": "earth",
+		"tags": "t_defbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.earthlore>=8&&g.tier0>0",
-		"level": 1,
 		"buy": {
 			"research": 30,
 			"scrolls": 5,
@@ -2520,9 +4405,12 @@
 		"cost": {
 			"earth": 2
 		},
+		"cd": 25,
+		"result": {
+			"earthlore.exp": 0.2
+		},
 		"dot": {
-			"id": "toughskin",
-			"name": "copper skin",
+			"tags": "toughskin",
 			"duration": 50,
 			"mod": {
 				"self.defense": 5
@@ -2533,9 +4421,17 @@
 		"id": "ironskin",
 		"name": "iron skin",
 		"desc": "Hardens the skin of the self.",
-		"school": "earth",
-		"require": "g.stoneskin>0&&g.earthlore>=8&&g.tier1>0",
+		"sortOrder": 843,
 		"level": 3,
+		"school": "earth",
+		"tags": "t_defbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.stoneskin>0&&g.earthlore>=8&&g.tier1>0",
 		"buy": {
 			"research": 750,
 			"codices": 5,
@@ -2544,9 +4440,12 @@
 		"cost": {
 			"earth": 5
 		},
+		"cd": 30,
+		"result": {
+			"earthlore.exp": 0.5
+		},
 		"dot": {
-			"id": "toughskin",
-			"name": "iron skin",
+			"tags": "toughskin",
 			"duration": 60,
 			"mod": {
 				"self.defense": 10
@@ -2557,9 +4456,17 @@
 		"id": "steelskin",
 		"name": "steel skin",
 		"desc": "Hardens the skin of the self.",
-		"school": "earth",
-		"require": "g.ironskin>0&&g.earthlore>=12&&g.tier2>0",
+		"sortOrder": 842,
 		"level": 5,
+		"school": "earth",
+		"tags": "t_defbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.ironskin>0&&g.earthlore>=12&&g.tier2>0",
 		"buy": {
 			"research": 1000,
 			"tomes": 1,
@@ -2568,9 +4475,12 @@
 		"cost": {
 			"earth": 7
 		},
+		"cd": 60,
+		"result": {
+			"earthlore.exp": 0.7
+		},
 		"dot": {
-			"id": "toughskin",
-			"name": "steel skin",
+			"tags": "toughskin",
 			"duration": 120,
 			"mod": {
 				"self.defense": 25
@@ -2581,9 +4491,17 @@
 		"id": "adamantshell",
 		"name": "adamant shell",
 		"desc": "Your skin becomes adamant.",
-		"school": "earth",
-		"require": "g.steelskin>0&&g.earthlore>=15&&g.tier3>0",
+		"sortOrder": 841,
 		"level": 10,
+		"school": "earth",
+		"tags": "t_defbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.steelskin>0&&g.earthlore>=15&&g.tier3>0",
 		"buy": {
 			"research": 4000,
 			"tomes": 5,
@@ -2592,9 +4510,14 @@
 		"cost": {
 			"earth": 10
 		},
+		"cd": 90,
+		"result": {
+			"earthlore.exp": 1
+		},
 		"dot": {
-			"id": "toughskin",
+			"id": "dot_adamantskin",
 			"name": "adamant shell",
+			"tags": "toughskin",
 			"duration": 180,
 			"mod": {
 				"self.defense": 50
@@ -2603,10 +4526,17 @@
 	},
 	{
 		"id": "tremor",
+		"desc": "The earth shakes beneath your enemies' feet.",
+		"sortOrder": 804,
 		"level": 5,
-		"desc": "The earth shakes beneath your enemies' feet",
-		"require": "g.slow1>0&&g.earthlore>=8&&g.tier1>0",
 		"school": "earth",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.slow1>0&&g.earthlore>=8&&g.tier1>0",
 		"buy": {
 			"research": 100,
 			"codices": 30,
@@ -2615,37 +4545,51 @@
 		"cost": {
 			"earth": 5
 		},
-		"at": {
-			"30": {
-				"attack.tohit": 1
-			},
-			"100": {
-				"attack.tohit": 2
-			},
-			"300": {
-				"attack.tohit": 2
-			}
+		"result": {
+			"earthlore.exp": 0.5
 		},
 		"attack": {
 			"tohit": 2,
 			"targets": "enemies",
 			"kind": "earth",
 			"dot": {
-				"dmg": "2~3",
+				"damage": "2~3",
+				"potencies": ["spelldmg", "earthdmg"],
 				"duration": 3,
 				"mod": {
-					"speed": -10
+					"self.speed": -5
 				}
+			}
+		},
+		"at": {
+			"30": {
+				"attack.tohit": 1
+			},
+			"100": {
+				"attack.dot.damage.max": 1,
+				"attack.tohit": 2
+			},
+			"300": {
+				"attack.dot.damage.max": 2,
+				"attack.dot.damage.min": 1,
+				"attack.tohit": 2
 			}
 		}
 	},
 	{
 		"id": "quake",
 		"alias": "earthquake",
-		"desc": "The earth shakes at your command",
-		"school": "earth",
-		"require": "g.earthlore>=10&&g.tier2>0",
+		"desc": "The earth shakes at your command.",
+		"sortOrder": 803,
 		"level": 9,
+		"school": "earth",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.earthlore>=10&&g.tier2>0",
 		"buy": {
 			"sp": 1,
 			"research": 1750,
@@ -2655,14 +4599,18 @@
 		"cost": {
 			"earth": 5
 		},
+		"result": {
+			"earthlore.exp": 0.5
+		},
 		"attack": {
 			"targets": "enemies",
 			"kind": "earth",
 			"dot": {
 				"duration": 30,
-				"dmg": "5~12",
+				"damage": "5~12",
+				"potencies": ["spelldmg", "earthdmg"],
 				"mod": {
-					"speed": -7
+					"self.speed": -7
 				}
 			}
 		}
@@ -2670,16 +4618,27 @@
 	{
 		"id": "resistparalysis",
 		"name": "resist paralysis",
-		"school": "water",
-		"level": 7,
-		"require": "g.waterlore>=10&&g.tier2>0",
 		"desc": "Keep your limbs fluid.",
+		"sortOrder": 548,
+		"level": 7,
+		"school": "water",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.waterlore>=10&&g.tier2>0",
 		"buy": {
 			"research": 4000,
 			"tomes": 5
 		},
 		"cost": {
 			"water": 2
+		},
+		"cd": 30,
+		"result": {
+			"waterlore.exp": 0.2
 		},
 		"dot": {
 			"duration": 60,
@@ -2691,38 +4650,60 @@
 	{
 		"id": "resistsilence",
 		"name": "resist silence",
-		"school": "mana",
-		"level": 7,
-		"require": "g.lore>=15",
 		"desc": "Keep your mind active and alert.",
+		"sortOrder": 448,
+		"level": 7,
+		"school": "mana",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.lore>=15",
 		"buy": {
 			"research": 5000,
 			"tomes": 20,
 			"managem": 10
 		},
 		"cost": {
-			"mana": 2
+			"mana": 5
+		},
+		"cd": 30,
+		"result": {
+			"lore.exp": 0.5
 		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"self.resist.silence": 50
+				"self.resist.silence": 30
 			}
 		}
 	},
 	{
 		"id": "immunefire1",
 		"name": "quenching sphere",
-		"school": "water",
-		"level": 5,
-		"require": "g.waterlore>=8&&g.tier1>0",
 		"desc": "Temporarily negate all fire damage.",
+		"sortOrder": 541,
+		"level": 5,
+		"school": "water",
+		"tags": "t_immunitybuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.waterlore>=8&&g.tier1>0",
 		"buy": {
 			"research": 4000,
 			"tomes": 1
 		},
 		"cost": {
 			"water": 5
+		},
+		"result": {
+			"waterlore.exp": 0.5
 		},
 		"dot": {
 			"duration": 20,
@@ -2734,10 +4715,16 @@
 	{
 		"id": "splendor",
 		"alias": "magnificence",
+		"sortOrder": 1150,
 		"level": 7,
 		"school": "light",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.lightlore>=9&&g.tier1>0",
-		"desc": "",
 		"buy": {
 			"tomes": 1,
 			"lightgem": 10,
@@ -2746,21 +4733,32 @@
 		"cost": {
 			"light": 7
 		},
+		"cd": 30,
+		"result": {
+			"lightlore.exp": 0.7
+		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"self.tohit": 5,
-				"hp.max": 50,
-				"defense": 10,
-				"speed": 2
+				"self": {
+					"tohit": 1,
+					"hp.max": 50,
+					"defense": 10,
+					"speed": 2
+				}
 			}
 		}
 	},
 	{
 		"id": "abundance",
+		"desc": "Herbs sprout all around you as you walk.",
+		"sortOrder": 970,
 		"level": 8,
-		"desc": "Herbs sprout more quickly from the earth.",
 		"school": "nature",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["explore", "resource"]
+		},
 		"require": "g.naturelore>=15&&g.tier3>0",
 		"buy": {
 			"research": 1000,
@@ -2769,20 +4767,31 @@
 		"cost": {
 			"nature": 8
 		},
+		"cd": 30,
+		"result": {
+			"naturelore.exp": 0.8
+		},
 		"dot": {
 			"duration": 60,
 			"mod": {
-				"herbs.rate": 1.5
+				"encounter.effect.herbs": 1.5
 			}
 		}
 	},
 	{
 		"id": "blindflash",
 		"name": "blinding flash",
-		"school": "light",
+		"desc": "A flash of pure white light.",
+		"sortOrder": 1104,
 		"level": 8,
+		"school": "light",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant", "over time"]
+		},
 		"require": "g.lightlore>=10&&g.tier2>0",
-		"desc": "A flash of pure white light",
 		"buy": {
 			"tomes": 10,
 			"lightgem": 20,
@@ -2791,24 +4800,36 @@
 		"cost": {
 			"light": 5
 		},
+		"result": {
+			"lightlore.exp": 0.5
+		},
 		"attack": {
 			"targets": "enemies",
 			"damage": "3~5",
+			"potencies": ["spelldmg", "lightdmg"],
 			"dot": {
-				"id": "blind",
+				"name": "blind",
 				"kind": "light",
+				"tags": "t_tohitdown",
 				"duration": 60,
 				"mod": {
-					"tohit": -30
+					"self.tohit": -5
 				}
 			}
 		}
 	},
 	{
 		"id": "venom2",
-		"level": 9,
 		"name": "venom II",
+		"sortOrder": 903,
+		"level": 9,
 		"school": "nature",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.venom1>0&&g.naturelore>=15&&g.tier3>0",
 		"buy": {
 			"research": 4000,
@@ -2818,22 +4839,39 @@
 		"cost": {
 			"nature": 5
 		},
+		"result": {
+			"naturelore.exp": 0.5
+		},
 		"attack": {
+			"targetspec": {
+				"notaffectedby": {
+					"condition": ["t_venom"],
+					"conditiontext": "venom"
+				}
+			},
 			"dot": {
-				"id": "venom",
+				"name": "venom",
 				"kind": "poison",
+				"tags": "t_venom",
 				"duration": 30,
-				"damage": "8~15"
+				"damage": "8~15",
+				"potencies": ["spelldmg", "naturedmg", "poisondmg"]
 			}
 		}
 	},
 	{
 		"id": "hightide",
 		"name": "high tide",
-		"school": "water",
+		"desc": "Flood the field of battle.",
+		"sortOrder": 502,
 		"level": 6,
-		"desc": "Flood the field of battle",
-		"cd": 40,
+		"school": "water",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
 		"require": "g.waterlore>=11",
 		"buy": {
 			"research": 400,
@@ -2843,35 +4881,63 @@
 		"cost": {
 			"water": 5
 		},
-		"attack": {
-			"hits": [
-				{
-					"targets": "all",
-					"dot": {
-						"kind": "water",
-						"dmg": "20~30",
-						"duration": 30
-					}
-				},
-				{
-					"targets": "allies",
-					"dot": {
-						"id": "hightideprotection",
-						"name": "high tide protection",
-						"duration": 30,
-						"mod": {
-							"self.resist.water": 75
+		"cd": 120,
+		"result": {
+			"waterlore.exp": 0.5
+		},
+		"dot": {
+			"name": "high tide",
+			"duration": 30,
+			"applyinstanced": true,
+			"kind": "water",
+			"attack": {
+				"hits": [
+					{
+						"targets": "enemies",
+						"dot": {
+							"name": "crushing tide",
+							"applyinstanced": true,
+							"kind": "water",
+							"damage": "4~8",
+							"duration": 3,
+							"mod": {
+								"self.speed": -3,
+								"dodge": -3
+							},
+							"potencies": ["spelldmg", "waterdmg"]
+						}
+					},
+					{
+						"targets": "allies",
+						"dot": {
+							"name": "tide backlash",
+							"applyinstanced": true,
+							"kind": "water",
+							"damage": "1~2",
+							"duration": 3,
+							"mod": {
+								"self.speed": -3,
+								"dodge": -3
+							},
+							"potencies": []
 						}
 					}
-				}
-			]
+				]
+			}
 		}
 	},
 	{
 		"id": "cordyceps",
+		"sortOrder": 902,
 		"level": 7,
 		"school": "nature",
-		"require": "g.venom2>0&&(g.druid+g.fey+g.kell)>0",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.venom2>0&&(g.t_natureclass+g.tier4)>=2",
 		"desc": "A fungal cloud that damages all enemies.",
 		"buy": {
 			"research": 4000,
@@ -2881,41 +4947,72 @@
 		"cost": {
 			"nature": 5
 		},
+		"result": {
+			"naturelore.exp": 0.5
+		},
 		"attack": {
 			"targets": "enemies",
 			"dot": {
+				"id": "dot_venom3",
+				"name": "venom",
 				"kind": "poison",
+				"tags": "t_venom",
 				"duration": 45,
-				"damage": "7~11"
+				"damage": "7~11",
+				"potencies": ["spelldmg", "naturedmg", "poisondmg"]
 			}
 		}
 	},
 	{
 		"id": "heal3",
-		"level": 7,
 		"name": "sealing light III",
 		"desc": "Seams of light close your wounds.",
+		"sortOrder": 1134,
+		"level": 7,
 		"school": "light",
-		"require": "g.lightlore>=14&&g.heal2>0&&g.tier3>0",
+		"tags": "t_healspell",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lightlore>=14&&g.heal2>0&&g.heallore>=3&&g.tier3>0&&g.evil2==0",
 		"buy": {
 			"research": 1000,
 			"tomes": 10,
 			"lightgem": 10
 		},
+		"need": ["g.evil2==0", "good2"],
+		"needtext": "Cannot be sinister and must be at least scrupulous.",
 		"cost": {
 			"light": 7
 		},
 		"result": {
-			"hp": 200
+			"heallore.exp": 0.7
+		},
+		"attack": {
+			"targets": "self",
+			"harmless": true,
+			"healing": 200,
+			"kind": "light",
+			"potencies": ["spellheal", "lightdmg"]
 		}
 	},
 	{
 		"id": "forceten",
 		"name": "force ten",
-		"school": "water",
-		"cd": 50,
-		"level": 15,
 		"desc": "The storm before the calm.",
+		"flavor": "Force without form.",
+		"sortOrder": 500,
+		"level": 15,
+		"school": "water",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
 		"require": "g.waterlore>=18&&g.tier4>0",
 		"buy": {
 			"research": 4000,
@@ -2925,84 +5022,110 @@
 		"cost": {
 			"water": 8
 		},
-		"attack": {
-			"hits": [
-				{
-					"targets": "all",
-					"dot": {
-						"kind": "water",
-						"dmg": "20~30",
-						"duration": 30
-					}
-				},
-				{
-					"id": "forcetenprotection",
-					"name": "force ten protection",
-					"targets": "allies",
-					"dot": {
-						"duration": 30,
-						"mod": {
-							"self.resist.water": 75
-						}
-					}
-				}
-			]
+		"cd": 50,
+		"result": {
+			"waterlore.exp": 0.8
 		},
-		"flavor": "Force without form"
+		"dot": {
+			"name": "force ten",
+			"duration": 30,
+			"applyinstanced": true,
+			"kind": "water",
+			"attack": {
+				"hits": [
+					{
+						"targets": "enemies",
+						"kind": "water",
+						"damage": "20~30",
+						"name": "hurricane",
+						"potencies": ["spelldmg", "waterdmg"]
+					},
+					{
+						"targets": "allies",
+						"kind": "water",
+						"damage": "5~7.5",
+						"name": "downpour",
+						"potencies": []
+					}
+				]
+			}
+		}
 	},
 	{
 		"id": "firestorm",
-		"school": "fire",
-		"level": 17,
 		"desc": "Rain hell from above",
-		"cd": 66,
-		"require": "g.firelore>=18&&g.tier4>0",
+		"sortOrder": 700,
+		"level": 17,
+		"school": "fire",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "(g.firelore+g.firelore2)>=20&&g.tier4>0",
 		"buy": {
 			"research": 4000,
 			"firegem": 25,
 			"tomes": 20
 		},
 		"cost": {
-			"fire": 8
+			"fire": 14
 		},
-		"attack": {
-			"hits": [
-				{
-					"targets": "all",
-					"dot": {
+		"cd": 66,
+		"result": {
+			"firelore.exp": 1.4
+		},
+		"dot": {
+			"name": "firestorm",
+			"duration": 30,
+			"applyinstanced": true,
+			"kind": "fire",
+			"attack": {
+				"hits": [
+					{
+						"targets": "enemies",
 						"kind": "fire",
-						"dmg": "30~50",
-						"duration": 30
+						"damage": "20~30",
+						"name": "firestorm",
+						"potencies": ["spelldmg", "firedmg"]
+					},
+					{
+						"targets": "allies",
+						"kind": "fire",
+						"damage": "5~7.5",
+						"name": "blowback",
+						"potencies": []
 					}
-				},
-				{
-					"id": "firestormprotection",
-					"name": "firestorm protection",
-					"targets": "allies",
-					"dot": {
-						"duration": 30,
-						"mod": {
-							"self.resist.fire": 80
-						}
-					}
-				}
-			]
-		},
-		"flavor": ""
+				]
+			}
+		}
 	},
 	{
 		"id": "immunefire2",
 		"name": "greater quenching sphere",
-		"school": "water",
+		"desc": "Temporarily negate all fire damage.",
+		"sortOrder": 540,
 		"level": 9,
+		"school": "water",
+		"tags": "t_immunitybuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
 		"require": "g.waterlore>=15&&g.tier3>0",
-		"desc": "Temporarily negate all fire damage",
 		"buy": {
 			"research": 4000,
 			"tomes": 10
 		},
 		"cost": {
 			"water": 7
+		},
+		"cd": 50,
+		"result": {
+			"waterlore.exp": 0.7
 		},
 		"dot": {
 			"duration": 100,
@@ -3012,40 +5135,16 @@
 		}
 	},
 	{
-		"id": "angelofdeath",
-		"name": "angel of death",
-		"desc": "A black spirit arises, reaping souls for your work.",
-		"school": "shadow",
-		"require": [
-			"evil",
-			{
-				"shadow.max": 15
-			}
-		],
-		"level": 5,
-		"buy": {
-			"research": 3000,
-			"tomes": 1,
-			"shadowgem": 5,
-			"spiritgem": 1
-		},
-		"cost": {
-			"shadow": 10,
-			"spirit": 5
-		},
-		"dot": {
-			"duration": 90,
-			"effect": {
-				"bodies": 0.03,
-				"souls": 0.012
-			}
-		}
-	},
-	{
 		"id": "disdream",
 		"name": "dispersal dream",
+		"sortOrder": 1500,
 		"school": "void",
-		"desc": "",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
 		"require": "g.voidlore>0&&g.dreams>0",
 		"buy": {
 			"voidgem": 10
@@ -3053,12 +5152,2411 @@
 		"cost": {
 			"dreams": 1
 		},
+		"result": {
+			"voidlore.exp": 10
+		},
 		"attack": {
 			"targets": "all",
 			"dot": {
 				"duration": 30,
-				"dmg": "200~300",
-				"kind": "void"
+				"damage": "200~300",
+				"kind": "void",
+				"potencies": ["spelldmg", "voiddmg"]
+			}
+		}
+	},
+	{
+		"id": "calming",
+		"name": "calming murmurs",
+		"desc": "Whispers on the wind calm your troubled mind.",
+		"sortOrder": 1970,
+		"level": 2,
+		"school": "charms",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["explore"]
+		},
+		"require": "g.spiritlore>=5",
+		"buy": {
+			"research": 200,
+			"codices": 5,
+			"spiritgem": 1
+		},
+		"cost": {
+			"spirit": 3
+		},
+		"cd": 20,
+		"result": {
+			"spiritlore.exp": 0.3
+		},
+		"attack": {
+			"targetspec": {
+				"affectedby": {
+					"condition": ["t_enrage"]
+				}
+			},
+			"cure": "t_enrage",
+			"targets": "ally"
+		},
+		"dot": {
+			"duration": 45,
+			"effect": {
+				"bf": -0.2,
+				"rage": -0.2,
+				"madness": -0.2
+			}
+		}
+	},
+	{
+		"id": "soothing",
+		"name": "soothing breeze",
+		"desc": "A light wind steadies your nerves.",
+		"sortOrder": 1971,
+		"level": 2,
+		"school": "charms",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["explore"]
+		},
+		"require": "g.airlore>=3",
+		"buy": {
+			"research": 200,
+			"codices": 5,
+			"airgem": 1
+		},
+		"cost": {
+			"air": 3
+		},
+		"cd": 20,
+		"result": {
+			"airlore.exp": 0.3
+		},
+		"dot": {
+			"duration": 45,
+			"effect": {
+				"unease": -0.2,
+				"madness": -0.2,
+				"weary": -0.2
+			}
+		}
+	},
+	{
+		"id": "quickening_melody",
+		"name": "quickening melody",
+		"desc": "A magical melody that quickens everyone's pace.",
+		"sortOrder": 1940,
+		"level": 3,
+		"school": "charms",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.charms>=4",
+		"buy": {
+			"research": 800,
+			"gold": 200,
+			"codices": 5,
+			"tomes": 2,
+			"spiritgem": 1
+		},
+		"cost": {
+			"mana": 3,
+			"vigor": 1
+		},
+		"cd": 60,
+		"result": {
+			"charms.exp": 0.4
+		},
+		"attack": {
+			"targets": "all",
+			"harmless": true,
+			"dot": {
+				"kind": "charm",
+				"duration": 30,
+				"mod": {
+					"self.speed": 10
+				}
+			}
+		}
+	},
+	{
+		"id": "luminescent_enchantment",
+		"name": "luminescent enchantment",
+		"desc": "Conjure a swirling array of dancing lights that stick to everyone.",
+		"sortOrder": 1944,
+		"level": 6,
+		"school": "charms",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.charms>=4&&g.evil2<=0",
+		"buy": {
+			"research": 1600,
+			"gold": 700,
+			"codices": 8,
+			"tomes": 5,
+			"lightgem": 4
+		},
+		"need": "g.evil2==0",
+		"needtext": "Cannot be sinister.",
+		"cost": {
+			"lightgem": 1,
+			"light": 5
+		},
+		"cd": 120,
+		"result": {
+			"charms.exp": 1
+		},
+		"attack": {
+			"targets": "all",
+			"harmless": true,
+			"dot": {
+				"kind": "charm",
+				"duration": 60,
+				"mod": {
+					"self.dodge": -2
+				}
+			}
+		}
+	},
+	{
+		"id": "glimmering_aura",
+		"name": "glimmering aura",
+		"desc": "Render a gemstone into a temporary source of illumination.",
+		"sortOrder": 1942,
+		"level": 2,
+		"school": "charms",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.charms>=4",
+		"buy": {
+			"research": 800,
+			"gold": 200,
+			"codices": 5,
+			"gems": 1
+		},
+		"cost": {
+			"gems": 1,
+			"mana": 5
+		},
+		"cd": 30,
+		"result": {
+			"charms.exp": 0.7
+		},
+		"attack": {
+			"targets": "all",
+			"harmless": true,
+			"dot": {
+				"kind": "charm",
+				"duration": 60,
+				"mod": {
+					"self.tohit": 3
+				}
+			}
+		}
+	},
+	{
+		"id": "eclipsing_desolate_destinies",
+		"name": "eclipsing desolate destinies",
+		"desc": "Fill the mind of a foe with visions of varying horrifying fates, forcing them to grapple with the reality of their imminent demise.",
+		"sortOrder": 1900,
+		"level": 8,
+		"school": "charms",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.charms>=5&&g.spiritlore>=8",
+		"buy": {
+			"research": 3500,
+			"gold": 1200,
+			"codices": 10,
+			"tomes": 1
+		},
+		"cost": {
+			"mana": 8,
+			"spirit": 8
+		},
+		"cd": 30,
+		"result": {
+			"charms.exp": 1.6
+		},
+		"dot": {
+			"name": "desolation's wake",
+			"duration": 15,
+			"applyinstanced": true,
+			"kind": "charm",
+			"attack": {
+				"targets": "enemyleader",
+				"tohit": 6,
+				"dot": {
+					"name": "desolation",
+					"applyinstanced": true,
+					"kind": "charm",
+					"damage": "3~5",
+					"duration": 3,
+					"potencies": ["spelldmg", "charmdmg"]
+				}
+			}
+		}
+	},
+	{
+		"id": "clarity",
+		"desc": "Cure yourself or an ally of a charm.",
+		"sortOrder": 1938,
+		"level": 7,
+		"school": "charms",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.charms>=3",
+		"caststoppers": [],
+		"cost": {
+			"spiritgem": 1
+		},
+		"result": {
+			"charms.exp": 0.5
+		},
+		"action": {
+			"cure": "charmed",
+			"targets": "ally,self"
+		}
+	},
+	{
+		"id": "bolstering_hope",
+		"name": "bolstering hope",
+		"desc": "Gently disperse the essence of hopeful aspirations, imbuing the minds of others.",
+		"sortOrder": 1930,
+		"level": 4,
+		"school": "charms",
+		"keywords": {
+			"type": ["recovery", "buff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.charms>=3",
+		"buy": {
+			"research": 500,
+			"gold": 1200,
+			"tomes": 3
+		},
+		"cost": {
+			"gold": 50,
+			"mana": 3,
+			"herbs": 5
+		},
+		"cd": 45,
+		"result": {
+			"charms.exp": 0.5
+		},
+		"attack": {
+			"hits": [
+				{
+					"kind": "charm",
+					"targets": "all",
+					"harmless": true,
+					"dot": {
+						"duration": 90,
+						"mod": {
+							"self": {
+								"dodge": 2,
+								"hp.max": "5+15%"
+							}
+						}
+					}
+				},
+				{
+					"targets": "all",
+					"harmless": true,
+					"result": {
+						"hp": 25
+					}
+				}
+			]
+		},
+		"at": {
+			"5": {
+				"cost.mana": -1,
+				"cost.gold": -10
+			},
+			"15": {
+				"cost.mana": -1,
+				"cost.gold": -15
+			}
+		}
+	},
+	{
+		"id": "aura_of_benevolence",
+		"name": "aura of benevolence",
+		"desc": "Use your life force to produce a beneficial aura, mending the wounds and spirits of your allies.",
+		"sortOrder": 1932,
+		"level": 3,
+		"school": "charms",
+		"keywords": {
+			"type": ["damage", "recovery", "buff"],
+			"target": ["self", "ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.tier3>=1&&g.charms>=5",
+		"buy": {
+			"research": 3500,
+			"gold": 1200,
+			"tomes": 12,
+			"runestones": 3
+		},
+		"cost": {
+			"hp": 30,
+			"gems": 2,
+			"gold": 30,
+			"scrolls": 1,
+			"spiritgem": 1
+		},
+		"cd": 240,
+		"result": {
+			"charms.exp": 1.2
+		},
+		"dot": {
+			"name": "aura of benevolence",
+			"duration": 120,
+			"applyinstanced": true,
+			"kind": "charm",
+			"attack": {
+				"hits": [
+					{
+						"targets": "self",
+						"name": "burden of the giver",
+						"applyinstanced": true,
+						"damage": "3~4",
+						"nodefense": true,
+						"potencies": []
+					},
+					{
+						"targets": "minions",
+						"harmless": true,
+						"dot": {
+							"name": "benevolence",
+							"applyinstanced": true,
+							"kind": "charm",
+							"duration": 3,
+							"mod": {
+								"self.regen": 4,
+								"self.tohit": 1
+							}
+						}
+					}
+				]
+			}
+		},
+		"at": {
+			"10": {
+				"cost.hp": -10
+			},
+			"25": {
+				"cost.hp": -20
+			},
+			"30": {
+				"cost.gems": -1
+			}
+		}
+	},
+	{
+		"id": "waterregen1",
+		"name": "lesser mending river",
+		"desc": "Cleansing waters trickle over you, slowly mending your wounds.",
+		"sortOrder": 532,
+		"level": 4,
+		"school": "water",
+		"tags": "t_healspell,t_waterhealbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.waterlore>=4&&g.tier0>0",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"cost": {
+			"water": 2
+		},
+		"cd": 45,
+		"result": {
+			"waterlore.exp": 0.2
+		},
+		"dot": {
+			"harmless": true,
+			"targets": "self",
+			"kind": "water",
+			"potencies": ["spellheal", "waterdmg"],
+			"tags": "t_waterheal",
+			"duration": 90,
+			"healing": 2
+		}
+	},
+	{
+		"id": "waterregen2",
+		"name": "mending river",
+		"desc": "Cleansing waters flow over you, slowly mending your wounds.",
+		"sortOrder": 531,
+		"level": 7,
+		"school": "water",
+		"tags": "t_healspell,t_waterhealbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.waterlore>=7&&g.tier0>0",
+		"buy": {
+			"research": 100,
+			"codices": 1,
+			"watergem": 3
+		},
+		"cost": {
+			"water": 4
+		},
+		"cd": 45,
+		"result": {
+			"waterlore.exp": 0.4
+		},
+		"dot": {
+			"harmless": true,
+			"targets": "self",
+			"kind": "water",
+			"potencies": ["spellheal", "waterdmg"],
+			"tags": "t_waterheal",
+			"duration": 90,
+			"healing": 4
+		}
+	},
+	{
+		"id": "waterregen3",
+		"name": "greater mending river",
+		"desc": "Cleansing waters rush over you, rapidly mending your wounds.",
+		"sortOrder": 530,
+		"level": 10,
+		"school": "water",
+		"tags": "t_healspell,t_waterhealbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.waterlore>=12&&g.tier1>0&&g.heallore>=5",
+		"buy": {
+			"research": 100,
+			"tomes": 1,
+			"watergem": 10
+		},
+		"cost": {
+			"water": 6
+		},
+		"cd": 45,
+		"result": {
+			"waterlore.exp": 0.6
+		},
+		"dot": {
+			"harmless": true,
+			"targets": "self",
+			"kind": "water",
+			"potencies": ["spellheal", "waterdmg"],
+			"tags": "t_waterheal",
+			"duration": 90,
+			"healing": 6
+		}
+	},
+	{
+		"id": "natureheal1",
+		"name": "lesser life's bloom",
+		"desc": "Wild energies flow through you, slowly closing wounds before providing a burst of healing energy.",
+		"sortOrder": 931,
+		"level": 5,
+		"school": "nature",
+		"tags": "t_healspell,t_naturehealbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.naturelore>=9",
+		"buy": {
+			"research": 25,
+			"scrolls": 1
+		},
+		"cost": {
+			"nature": 4
+		},
+		"cd": 5,
+		"result": {
+			"naturelore.exp": 0.4
+		},
+		"dot": {
+			"harmless": true,
+			"targets": "self",
+			"kind": "nature",
+			"tags": "t_natureheal",
+			"duration": 10,
+			"healing": 1.5,
+			"potencies": ["spellheal", "naturedmg"],
+			"onExpire": {
+				"name": "blossom",
+				"harmless": true,
+				"targets": "self",
+				"kind": "nature",
+				"potencies": ["spellheal", "naturedmg"],
+				"healing": 40
+			}
+		}
+	},
+	{
+		"id": "natureheal2",
+		"name": "life's bloom",
+		"desc": "Wild energies course through you, knitting together injuries and then providing a rapid burst of healing.",
+		"sortOrder": 930,
+		"level": 9,
+		"school": "nature",
+		"tags": "t_healspell,t_naturehealbuff",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.naturelore>=14&&g.heallore>=5&&g.tier0>0",
+		"buy": {
+			"research": 100,
+			"codices": 1,
+			"naturegem": 10
+		},
+		"cost": {
+			"nature": 7
+		},
+		"cd": 10,
+		"result": {
+			"heallore.exp": 0.7
+		},
+		"dot": {
+			"harmless": true,
+			"targets": "self",
+			"kind": "nature",
+			"tags": "t_natureheal",
+			"duration": 15,
+			"healing": 3,
+			"potencies": ["spellheal", "naturedmg"],
+			"onExpire": {
+				"name": "blossom",
+				"harmless": true,
+				"targets": "self",
+				"kind": "nature",
+				"potencies": ["spellheal", "naturedmg"],
+				"healing": 100
+			}
+		}
+	},
+	{
+		"id": "braveryaura",
+		"name": "Aura of Bravery",
+		"sortOrder": 1151,
+		"level": 6,
+		"school": "light",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.lightlore>=12&&g.charms>=4",
+		"buy": {
+			"research": 5000,
+			"lightgem": 20,
+			"tomes": 10
+		},
+		"cost": {
+			"light": 5
+		},
+		"cd": 25,
+		"result": {
+			"charms.exp": 0.5
+		},
+		"attack": {
+			"targets": "minions",
+			"only": "humanoid,goblinoid",
+			"id": "braveaura",
+			"dot": {
+				"duration": 50,
+				"mod": {
+					"self.defense": 1,
+					"self.tohit": 2,
+					"self.speed": 1
+				}
+			}
+		}
+	},
+	{
+		"id": "etherealness1",
+		"name": "lesser etherealness",
+		"desc": "A partial intangibility to protect from physical attacks.",
+		"sortOrder": 1041,
+		"level": 5,
+		"school": "spirit",
+		"tags": "t_etherealbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.player.level>=4&&g.spiritlore>=3",
+		"buy": {
+			"research": 25,
+			"scrolls": 5
+		},
+		"cost": {
+			"spirit": 3
+		},
+		"cd": 10,
+		"result": {
+			"spiritlore.exp": 0.3
+		},
+		"dot": {
+			"id": "etherealness",
+			"duration": 20,
+			"mod": {
+				"self.resist.physical": 10,
+				"self.resist.blunt": 10,
+				"self.resist.pierce": 10,
+				"self.resist.slash": 10
+			}
+		}
+	},
+	{
+		"id": "etherealness2",
+		"name": "etherealness",
+		"desc": "More potent than its predecessor, with greater protection against the weapons of your enemies.",
+		"sortOrder": 1040,
+		"level": 8,
+		"school": "spirit",
+		"tags": "t_etherealbuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.etherealness1>0&&g.spiritlore>=9&&g.tier2>0",
+		"buy": {
+			"spiritgem": 10,
+			"tomes": 5
+		},
+		"cost": {
+			"spirit": 8
+		},
+		"cd": 15,
+		"result": {
+			"spiritlore.exp": 0.8
+		},
+		"dot": {
+			"id": "etherealness",
+			"duration": 30,
+			"mod": {
+				"self.resist.physical": 20,
+				"self.resist.blunt": 20,
+				"self.resist.pierce": 20,
+				"self.resist.slash": 20
+			}
+		}
+	},
+	{
+		"id": "ghostlyassist",
+		"name": "ghostly assistants",
+		"desc": "Unseen spirits assist you in compiling knowledge, speeding your work.",
+		"flavor": "The sound of quill scratching against parchment seem ceaseless.",
+		"sortOrder": 1072,
+		"level": 9,
+		"school": "spirit",
+		"keywords": {
+			"delivery": ["over time"],
+			"special": ["resource"]
+		},
+		"require": "g.player.level>=4&&g.spiritlore>=10",
+		"buy": {
+			"research": 1000,
+			"codices": 20,
+			"tomes": 10,
+			"spiritgem": 5
+		},
+		"cost": {
+			"spirit": 6,
+			"mana": 5
+		},
+		"cd": 30,
+		"result": {
+			"spiritlore.exp": 1.1
+		},
+		"dot": {
+			"duration": 60,
+			"mod": {
+				"scrolls.rate": "5%",
+				"codices.rate": "3%",
+				"tomes.rate": "2%"
+			}
+		}
+	},
+	{
+		"id": "spiritpossess",
+		"name": "spiritual possession",
+		"desc": "Entreat a captured soul to briefly possess an enemy before being granted its release.",
+		"flavor": "Their screams of terror would pierce your ears, if only they could make a sound.",
+		"sortOrder": 1007,
+		"level": 10,
+		"school": "spirit",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"tags": "t_silencespell",
+		"require": "g.spiritlore>=15&&g.tier3>0",
+		"buy": {
+			"research": 3000,
+			"tomes": 10,
+			"spiritgem": 30
+		},
+		"cost": {
+			"spirit": 10,
+			"souls": 1
+		},
+		"cd": 25,
+		"result": {
+			"spiritlore.exp": 1.1
+		},
+		"attack": {
+			"damage": "20~25",
+			"potencies": ["spelldmg", "spiritdmg"],
+			"dot": {
+				"flags": "silence",
+				"name": "possessed",
+				"kind": "spirit",
+				"duration": 6,
+				"damage": "4~6",
+				"potencies": ["spelldmg", "spiritdmg"]
+			}
+		}
+	},
+	{
+		"id": "spiritconfuse",
+		"name": "befuddling spirits",
+		"desc": "Confuse the mind of the target.",
+		"sortOrder": 1005,
+		"level": 7,
+		"school": "spirit",
+		"tags": "t_confusespell",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.spiritlore>=12&&g.tier2>0",
+		"buy": {
+			"research": 2500,
+			"tomes": 5,
+			"spiritgem": 15
+		},
+		"cost": {
+			"spirit": 7
+		},
+		"cd": 60,
+		"result": {
+			"spiritlore.exp": 0.7
+		},
+		"attack": {
+			"damage": "25~30",
+			"potencies": ["spelldmg", "spiritdmg"],
+			"dot": {
+				"id": "confuse",
+				"name": "confused",
+				"flags": "confused",
+				"kind": "spirit",
+				"duration": 10
+			}
+		}
+	},
+	{
+		"id": "mk_snek",
+		"name": "summon arcane serpent",
+		"desc": "In combat, summon an arcane serpent to fight for you.",
+		"sortOrder": 1780,
+		"level": 3,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.tier3>0&&g.conjuration>=5&&g.lore>=15",
+		"buy": {
+			"research": 1000,
+			"tomes": 5,
+			"managem": 10
+		},
+		"cost": {
+			"mana": 10
+		},
+		"cd": 3,
+		"summon": [
+			{
+				"id": "sum_snek",
+				"count": 1,
+				"max": 3
+			}
+		]
+	},
+	{
+		"id": "mk_prism",
+		"name": "summon fulminant prism",
+		"desc": "In combat, create a fulminant prism to destroy your enemies.",
+		"sortOrder": 1759,
+		"level": 8,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.tier5>0&&g.summoning>=5&&g.lore>=20",
+		"buy": {
+			"research": 5000,
+			"tomes": 25,
+			"runestones": 5
+		},
+		"cost": {
+			"mana": 20
+		},
+		"cd": 30,
+		"result": {
+			"summoning.exp": 2
+		},
+		"summon": [
+			{
+				"id": "sum_prism",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "mk_hero_ancestor",
+		"name": "summon heroic ancestor",
+		"desc": "In combat, summon an ancestral hero to defend you.",
+		"sortOrder": 1757,
+		"level": 8,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.tier5>0&&g.summoning>=5&&g.spiritlore>=15",
+		"buy": {
+			"research": 5000,
+			"tomes": 25,
+			"spiritgem": 50
+		},
+		"cost": {
+			"spirit": 20
+		},
+		"cd": 20,
+		"result": {
+			"summoning.exp": 2
+		},
+		"summon": [
+			{
+				"id": "sum_hero_ancestor",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "mk_frostgiant",
+		"name": "summon frost giant",
+		"desc": "In combat, summon a frost giant to fight for you.",
+		"sortOrder": 1758,
+		"level": 8,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.tier5>0&&g.summoning>=5&&g.waterlore>=15",
+		"buy": {
+			"research": 5000,
+			"tomes": 25,
+			"waterrune": 10
+		},
+		"cost": {
+			"water": 15
+		},
+		"cd": 20,
+		"result": {
+			"summoning.exp": 1.5
+		},
+		"summon": [
+			{
+				"id": "sum_frostgiant",
+				"count": 1,
+				"max": 3
+			}
+		]
+	},
+	{
+		"id": "mon_mk_stingybee",
+		"name": "spawn bees",
+		"level": 5,
+		"school": "arcane",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.lore>9999",
+		"cd": 30,
+		"dot": {
+			"duration": 10,
+			"summon": [
+				{
+					"id": "sum_stingybee",
+					"count": 1,
+					"max": 10
+				}
+			]
+		}
+	},
+	{
+		"id": "mk_phoenix",
+		"name": "summon phoenix",
+		"desc": "In combat, summon a phoenix to fight for you.",
+		"sortOrder": 1760,
+		"level": 7,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.summoning>=12&&g.tier4>0",
+		"buy": {
+			"research": 3000,
+			"firerune": 5,
+			"codices": 100
+		},
+		"cost": {
+			"fire": 15
+		},
+		"cd": 60,
+		"result": {
+			"summoning.exp": 1.5
+		},
+		"summon": [
+			{
+				"id": "sum_phoenix",
+				"count": 1,
+				"max": 3
+			}
+		]
+	},
+	{
+		"id": "mk_sandmite",
+		"name": "summon sand mite",
+		"desc": "In combat, summon a sand mite to fight for you.",
+		"sortOrder": 1778,
+		"level": 4,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.conjuration>=7||g.tier2>0",
+		"buy": {
+			"research": 1000,
+			"earthgem": 10,
+			"scrolls": 20
+		},
+		"cost": {
+			"earth": 10
+		},
+		"cd": 3,
+		"result": {
+			"conjuration.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_sandmite",
+				"count": 1,
+				"max": 3
+			}
+		]
+	},
+	{
+		"id": "mon_dig",
+		"name": "dig",
+		"level": 1,
+		"school": "earth",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.earthlore>999",
+		"cd": 10,
+		"dot": {
+			"duration": 5,
+			"tags": "t_hiding",
+			"flags": "hiding",
+			"name": "underground",
+			"attack": {
+				"targets": "enemies",
+				"name": "unstable footing",
+				"dot": {
+					"damage": "2~3",
+					"kind": "earth",
+					"duration": 1,
+					"mod": {
+						"self.speed": -5
+					}
+				}
+			},
+			"onExpire": {
+				"name": "emerge",
+				"damage": "10~20",
+				"kind": "pierce"
+			}
+		}
+	},
+	{
+		"id": "mk_shadow",
+		"name": "coalesce shadow",
+		"desc": "Animate your shadow for a dependable ally- a risky move.",
+		"sortOrder": 1773,
+		"level": 5,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "(g.conjuration>=8||g.tier2>0)&&g.shadowlore>=5",
+		"buy": {
+			"research": 500,
+			"shadowgem": 10,
+			"scrolls": 25
+		},
+		"cost": {
+			"shadow": 10,
+			"hp": 5
+		},
+		"cd": 5,
+		"result": {
+			"shadowlore.exp": 1.5
+		},
+		"summon": [
+			{
+				"id": "sum_shadow",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "mk_painrune",
+		"name": "summon rune of agony",
+		"desc": "Summon a rune of pure suffering. Its dark power doesn't distinguish between friend and foe.",
+		"sortOrder": 1761,
+		"level": 7,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.summoning>=10&&g.runelore>=3&&g.shadowlore>=10",
+		"buy": {
+			"research": 4000,
+			"shadowgem": 30,
+			"tomes": 10
+		},
+		"cost": {
+			"shadow": 15
+		},
+		"cd": 5,
+		"result": {
+			"runelore.exp": 1.5
+		},
+		"summon": [
+			{
+				"id": "sum_painrune",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "mk_nova",
+		"name": "summon nova",
+		"desc": "Summon an incarnation of extreme light as an ally.",
+		"sortOrder": 1747,
+		"level": 10,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.summoning>=13&&g.planeslore>=15&&g.lightlore>=15",
+		"buy": {
+			"research": 10000,
+			"tomes": 100,
+			"lightgem": 50,
+			"sindel": 1
+		},
+		"cost": {
+			"light": 20
+		},
+		"cd": 30,
+		"result": {
+			"planeslore.exp": 2
+		},
+		"summon": [
+			{
+				"id": "sum_nova",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "mk_black_hole",
+		"name": "summon black hole",
+		"desc": "Summon an incarnation of extreme shadow as an ally.",
+		"sortOrder": 1748,
+		"level": 10,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.summoning>=13&&g.voidlore>=3&&g.shadowlore>=15",
+		"buy": {
+			"research": 10000,
+			"tomes": 100,
+			"shadowgem": 100
+		},
+		"cost": {
+			"shadow": 20
+		},
+		"cd": 30,
+		"result": {
+			"voidlore.exp": 2
+		},
+		"summon": [
+			{
+				"id": "sum_black_hole",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "reclaim_power",
+		"name": "reclaim power",
+		"desc": "Sacrifice the minion with proportionally the lowest current life to buff everyone else. It's fine, summons are just mana simulacra.",
+		"flavor": "Just be careful not to use it on non-summoned minions, okay? Okay.",
+		"sortOrder": 1701,
+		"level": 4,
+		"school": "summoning",
+		"keywords": {
+			"type": ["damage", "buff"],
+			"target": ["self", "ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.summoning>=11&&g.charms>=5",
+		"buy": {
+			"research": 800,
+			"codices": 10,
+			"runestones": 5
+		},
+		"cost": {
+			"mana": 5
+		},
+		"result": {
+			"charms.exp": 0.5
+		},
+		"attack": {
+			"only": "t_summon",
+			"targets": "minion",
+			"targetspec": {
+				"stat": "hp",
+				"highest": false,
+				"usepercentage": true
+			},
+			"dot": {
+				"duration": 60,
+				"harmless": true,
+				"nodefense": true,
+				"damage": "10+t.hp.max",
+				"onDeath": {
+					"name": "reclaimed power",
+					"targets": "allies",
+					"dot": {
+						"name": "reclaimed power",
+						"duration": 20,
+						"mod": {
+							"self.speed": 5,
+							"self.hp.max": "25%"
+						}
+					}
+				}
+			}
+		}
+	},
+	{
+		"id": "absorb_minion",
+		"name": "absorb summon",
+		"desc": "Sacrifice the minion with the highest life to heal yourself. Remember, summons are merely mana simulacra.",
+		"flavor": "Just be careful not to use it on non-summoned minions, okay? Okay.",
+		"sortOrder": 1700,
+		"level": 6,
+		"school": "summoning",
+		"keywords": {
+			"type": ["damage", "recovery"],
+			"target": ["self", "ally"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.summoning>=12&&g.charms>=5",
+		"buy": {
+			"research": 800,
+			"codices": 10,
+			"runestones": 5
+		},
+		"cost": {
+			"mana": 5
+		},
+		"result": {
+			"charms.exp": 0.5
+		},
+		"attack": {
+			"only": "t_summon",
+			"targets": "minion",
+			"targetspec": {
+				"stat": "hp",
+				"highest": true,
+				"usepercentage": false
+			},
+			"harmless": true,
+			"nodefense": true,
+			"damage": "t.hp",
+			"leech": 1
+		}
+	},
+	{
+		"id": "conjure_minion_armor",
+		"name": "conjure minion armor",
+		"desc": "Conjure armor for your precious minions.",
+		"sortOrder": 1702,
+		"level": 3,
+		"school": "summoning",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["ally"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.conjuration>=9",
+		"buy": {
+			"research": 500,
+			"earthgem": 5,
+			"codices": 3
+		},
+		"cost": {
+			"earth": 8
+		},
+		"result": {
+			"conjuration.exp": 0.8
+		},
+		"dot": {
+			"targets": "minions",
+			"harmless": true,
+			"tags": "toughskin",
+			"duration": 20,
+			"mod": {
+				"self.defense": 5
+			}
+		}
+	},
+	{
+		"id": "conjure_stone_barrier",
+		"name": "conjure stone barrier",
+		"desc": "Conjure a wall of stone to protect yourself.",
+		"sortOrder": 1781,
+		"level": 3,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "(g.conjuration>=7&&g.earthlore>=5)||(g.earthlore>=10&&g.tier3>0)",
+		"buy": {
+			"research": 500,
+			"earthgem": 5,
+			"codices": 3
+		},
+		"cost": {
+			"earth": 10
+		},
+		"cd": 3,
+		"result": {
+			"earthlore.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_stone_barrier",
+				"count": 1,
+				"max": 1
+			}
+		]
+	},
+	{
+		"id": "conjure_beartrap",
+		"name": "conjure beartrap",
+		"desc": "Conjure a bear trap to maim someone.",
+		"sortOrder": 1782,
+		"level": 3,
+		"school": "summoning",
+		"keywords": {
+			"type": ["summon"],
+			"target": ["ally"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "(g.conjuration>=7&&g.crafting>=7)||g.crafting>=15",
+		"buy": {
+			"research": 500,
+			"gold": 300,
+			"codices": 3
+		},
+		"cost": {
+			"mana": 5,
+			"gold": 50
+		},
+		"cd": 3,
+		"result": {
+			"crafting.exp": 1
+		},
+		"summon": [
+			{
+				"id": "sum_beartrap",
+				"count": 1,
+				"max": 3
+			}
+		]
+	},
+	{
+		"id": "illusiondance",
+		"name": "illusive dance",
+		"desc": "A bewildering dance that makes you seem to be in multiple places at once.",
+		"sortOrder": 1331,
+		"level": 5,
+		"school": "chaos",
+		"tags": "t_dodgebuff",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=3&&g.madcap>0",
+		"buy": {
+			"chaosgem": 10,
+			"tomes": 1
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"cd": 40,
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"dot": {
+			"name": "elusion",
+			"duration": 80,
+			"mod": {
+				"self": {
+					"dodge": 10,
+					"speed": 4
+				}
+			}
+		}
+	},
+	{
+		"id": "superposition",
+		"desc": "This one has you actually shift between multiple places at once.",
+		"flavor": "Or are you just rolling around at the speed of sound?",
+		"sortOrder": 1330,
+		"level": 7,
+		"school": "chaos",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.illusiondance>0&&g.chaoslore>=5&&g.jester>0",
+		"buy": {
+			"chaosrune": 7
+		},
+		"cost": {
+			"chaos": 15
+		},
+		"cd": 120,
+		"result": {
+			"chaoslore.exp": 1.5
+		},
+		"dot": {
+			"name": "superposition",
+			"duration": 5,
+			"mod": {
+				"self": {
+					"dodge": 200,
+					"speed": 200,
+					"luck": 200
+				}
+			}
+		}
+	},
+	{
+		"id": "stealdodge",
+		"name": "steal fortune",
+		"desc": "Claim your enemy's fortune for yourself.",
+		"sortOrder": 1370,
+		"level": 3,
+		"school": "chaos",
+		"keywords": {
+			"type": ["buff", "debuff"],
+			"target": ["self", "enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"],
+			"special": ["resource"]
+		},
+		"require": "g.chaoslore>=2",
+		"buy": {
+			"codices": 77
+		},
+		"cost": {
+			"chaos": 5
+		},
+		"result": {
+			"chaoslore.exp": 0.5
+		},
+		"attack": {
+			"hits": [
+				{
+					"targets": "self",
+					"dot": {
+						"name": "stolen fortune",
+						"duration": 30,
+						"mod": {
+							"speed": 5,
+							"luck": 5,
+							"gold.rate": "50%"
+						}
+					}
+				},
+				{
+					"dot": {
+						"name": "fortune stolen",
+						"duration": 30,
+						"mod": {
+							"dodge": -5
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"id": "stealmagic",
+		"name": "steal mana",
+		"desc": "Claim your enemy's magic for yourself.",
+		"sortOrder": 1315,
+		"level": 4,
+		"school": "chaos",
+		"cd": 30,
+		"tags": "t_silencespell",
+		"keywords": {
+			"type": ["recovery", "debuff"],
+			"target": ["self", "enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=2",
+		"buy": {
+			"codices": 77
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"attack": {
+			"hits": [
+				{
+					"targets": "self",
+					"dot": {
+						"name": "stolen magic",
+						"duration": 30,
+						"mod": {
+							"prismatic.rate": 0.1,
+							"mana.rate": 0.15
+						}
+					}
+				},
+				{
+					"dot": {
+						"name": "magic stolen",
+						"duration": 10,
+						"tags": "t_silence"
+					}
+				}
+			]
+		}
+	},
+	{
+		"id": "toonphysics",
+		"name": "convenient physics",
+		"desc": "Alter reality to make certain injuries irrelevant.",
+		"flavor": "Fire only leaves a layer of soot. Your body bounces back from impacts. Holes plug themselves back up.",
+		"sortOrder": 1333,
+		"level": 6,
+		"cd": 90,
+		"school": "chaos",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=5&&(g.jester>0||g.fey>0)",
+		"buy": {
+			"chaosrune": 13
+		},
+		"cost": {
+			"chaos": 12
+		},
+		"result": {
+			"chaoslore.exp": 1.2
+		},
+		"dot": {
+			"name": "convenience",
+			"targets": "self",
+			"duration": 30,
+			"mod": {
+				"self.immunities.blunt": 1,
+				"self.resist.slash": 50,
+				"self.resist.pierce": 50,
+				"self.resist.fire": 50
+			}
+		}
+	},
+	{
+		"id": "chaosbolt",
+		"name": "chaos bolt",
+		"desc": "A brief burst of magic destabilizing whatever it touches.",
+		"sortOrder": 1306,
+		"level": 2,
+		"school": "chaos",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.chaoslore>=1",
+		"buy": {
+			"codices": 7
+		},
+		"cost": {
+			"chaos": 3
+		},
+		"result": {
+			"chaoslore.exp": 1.2
+		},
+		"attack": {
+			"damage": "1~17",
+			"tohit": 2,
+			"kind": "chaos",
+			"potencies": ["spelldmg", "chaosdmg"]
+		},
+		"at": {
+			"25": {
+				"attack.damage.max": 2
+			},
+			"75": {
+				"attack.damage.max": 2
+			},
+			"300": {
+				"attack.damage.max": 4,
+				"attack.tohit": 1
+			}
+		}
+	},
+	{
+		"id": "chaoswave",
+		"name": "chaos wave",
+		"desc": "Research suggests that your enemies dislike having bits swapped at random.",
+		"sortOrder": 1303,
+		"level": 3,
+		"school": "chaos",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.chaoslore>=2",
+		"buy": {
+			"codices": 13
+		},
+		"cost": {
+			"chaos": 4
+		},
+		"result": {
+			"chaoslore.exp": 0.4
+		},
+		"attack": {
+			"targets": "enemies",
+			"damage": "1~5",
+			"kind": "chaos",
+			"potencies": ["spelldmg", "chaosdmg"],
+			"dot": {
+				"name": "bleed",
+				"damage": "1~3",
+				"duration": 3
+			}
+		},
+		"at": {
+			"25": {
+				"attack.damage.max": 2
+			},
+			"100": {
+				"attack.tohit": 1,
+				"attack.damage.max": 4,
+				"attack.dot.duration": 2
+			}
+		}
+	},
+	{
+		"id": "chaosblast",
+		"name": "chaos blast",
+		"desc": "An onslaught of chaos drowns your foe.",
+		"sortOrder": 1305,
+		"level": 5,
+		"school": "chaos",
+		"require": "g.chaosbolt>0&&g.chaoslore>=3&&(g.madcap>0||g.t_chaosclass>=2)",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"buy": {
+			"chaosgem": 66
+		},
+		"cost": {
+			"chaos": 5
+		},
+		"result": {
+			"chaoslore.exp": 0.5
+		},
+		"attack": {
+			"damage": "1~28",
+			"tohit": 2,
+			"kind": "chaos",
+			"potencies": ["spelldmg", "chaosdmg"]
+		},
+		"at": {
+			"25": {
+				"attack.damage.max": 4
+			},
+			"75": {
+				"attack.damage.max": 8,
+				"attack.tohit": 1
+			},
+			"300": {
+				"attack.damage.max": 12,
+				"attack.tohit": 1
+			}
+		}
+	},
+	{
+		"id": "chaosstorm",
+		"name": "chaos storm",
+		"desc": "You've learned to swap bits between living and inanimate things.",
+		"sortOrder": 1302,
+		"level": 6,
+		"school": "chaos",
+		"require": "g.chaoswave>0&&g.chaoslore>=4&&(g.madcap>0||g.t_chaosclass>=2)",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["instant", "over time"]
+		},
+		"buy": {
+			"chaosgem": 77
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"attack": {
+			"targets": "enemies",
+			"damage": "1~12",
+			"kind": "chaos",
+			"potencies": ["spelldmg", "chaosdmg"],
+			"dot": {
+				"name": "bleed",
+				"damage": "1~9",
+				"duration": 6
+			}
+		},
+		"at": {
+			"25": {
+				"attack.tohit": 1,
+				"attack.damage.max": 4
+			},
+			"100": {
+				"attack.tohit": 1,
+				"attack.damage.max": 6,
+				"attack.dot.duration": 9
+			}
+		}
+	},
+	{
+		"id": "unmake",
+		"name": "unmake",
+		"desc": "The weight of your will grinds your adversaries away.",
+		"sortOrder": 1300,
+		"level": 12,
+		"school": "chaos",
+		"require": "g.chaosblast>0&&g.chaoslore>=5&&(g.jester>0||g.fey>0)",
+		"buy": {
+			"chaosrune": 6
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"attack": {
+			"damage": 42,
+			"tohit": 3,
+			"kind": "chaos",
+			"potencies": ["spelldmg", "chaosdmg"]
+		},
+		"at": {
+			"25": {
+				"attack.damage": 2
+			},
+			"75": {
+				"attack.damage": 3,
+				"attack.tohit": 1
+			},
+			"300": {
+				"attack.damage": 5,
+				"attack.tohit": 1
+			}
+		}
+	},
+	{
+		"id": "chaosworld",
+		"name": "world of chaos",
+		"desc": "Elements invert. Ground and sky dance. Gales howl, and fragments slice.",
+		"sortOrder": 1320,
+		"level": 13,
+		"school": "chaos",
+		"keywords": {
+			"type": ["damage", "buff", "debuff"],
+			"target": ["self", "ally", "enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaosstorm>0&&g.chaoslore>=5&&g.jester>0&&g.tier5>0",
+		"buy": {
+			"chaosrune": 7
+		},
+		"cost": {
+			"chaos": 13
+		},
+		"result": {
+			"chaoslore.exp": 1.3
+		},
+		"dot": {
+			"name": "ruined world",
+			"duration": 30,
+			"applyinstanced": true,
+			"attack": {
+				"hits": [
+					{
+						"targets": "allies",
+						"dot": {
+							"name": "glory of eschaton",
+							"applyinstanced": true,
+							"mod": {
+								"chaosdmg": 50
+							},
+							"damage": "1~7",
+							"duration": 3,
+							"kind": "chaos",
+							"potencies": []
+						}
+					},
+					{
+						"targets": "enemies",
+						"dot": {
+							"name": "ruined world",
+							"applyinstanced": true,
+							"damage": "1~10",
+							"duration": 3,
+							"kind": "chaos",
+							"potencies": ["spelldmg", "chaosdmg"],
+							"mod": {
+								"self.speed": -10,
+								"self.dodge": -10
+							}
+						}
+					}
+				]
+			}
+		},
+		"flavor": "Let all glimpse how it was before the beginning."
+	},
+	{
+		"id": "petroleumdouse",
+		"name": "douse in petroleum",
+		"desc": "Make an enemy more susceptible to flames.",
+		"flavor": "For when you feel too impatient to heat the tar and feathers.",
+		"sortOrder": 1353,
+		"level": 2,
+		"school": "chaos",
+		"tags": "t_coating",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.trickery>=1&&g.firelore>=3",
+		"buy": {
+			"research": 100,
+			"codices": 1,
+			"firegem": 1
+		},
+		"cost": {
+			"fire": 2,
+			"herbs": 1
+		},
+		"result": {
+			"trickery.exp": 0.3
+		},
+		"attack": {
+			"dot": {
+				"kind": "fire",
+				"duration": 20,
+				"mod": {
+					"self.resist.fire": -50
+				}
+			}
+		}
+	},
+	{
+		"id": "invertelements",
+		"name": "elemental inversion",
+		"desc": "Invert the cycle of the natural elements within the target to create a weakness to them.",
+		"sortOrder": 1343,
+		"level": 5,
+		"school": "chaos",
+		"tags": "t_resist_debuff",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=3&&g.firelore>=3&&g.waterlore>=3&&g.airlore>=3&&g.earthlore>=3",
+		"buy": {
+			"research": 1000,
+			"tomes": 1,
+			"firegem": 7,
+			"watergem": 7,
+			"earthgem": 7,
+			"airgem": 7
+		},
+		"cost": {
+			"chaos": 2
+		},
+		"result": {
+			"chaoslore.exp": 0.2
+		},
+		"attack": {
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.resist.fire": -20,
+					"self.resist.water": -20,
+					"self.resist.earth": -20,
+					"self.resist.air": -20
+				}
+			}
+		}
+	},
+	{
+		"id": "invertesoterics",
+		"name": "esoteric inversion",
+		"desc": "Invert the cycle of the esoteric elements within the target to create a weakness to them.",
+		"sortOrder": 1344,
+		"level": 5,
+		"school": "chaos",
+		"tags": "t_resist_debuff",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=3&&g.spiritlore>=3&&g.naturelore>3&&g.lightlore>=3&&g.shadowlore>=3",
+		"buy": {
+			"research": 1000,
+			"tomes": 1,
+			"spiritgem": 7,
+			"naturegem": 7,
+			"lightgem": 7,
+			"shadowgem": 7
+		},
+		"cost": {
+			"chaos": 2
+		},
+		"result": {
+			"chaoslore.exp": 0.2
+		},
+		"attack": {
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.resist.spirit": -20,
+					"self.resist.nature": -20,
+					"self.resist.poison": -20,
+					"self.resist.light": -20,
+					"self.resist.shadow": -20
+				}
+			}
+		}
+	},
+	{
+		"id": "invertphysical",
+		"name": "physical inversion",
+		"desc": "Invert the regulation of matter within the target to create a weakness to physical attacks.",
+		"sortOrder": 1341,
+		"level": 5,
+		"school": "chaos",
+		"tags": "t_resist_debuff",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=3&&g.weaponlore>=3&&(g.trickster>0||g.t_chaosclass>=2)",
+		"buy": {
+			"research": 1000,
+			"tomes": 1,
+			"bloodgem": 7
+		},
+		"cost": {
+			"chaos": 2
+		},
+		"result": {
+			"chaoslore.exp": 0.2
+		},
+		"attack": {
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.resist.physical": -20,
+					"self.resist.blunt": -20,
+					"self.resist.slash": -20,
+					"self.resist.pierce": -20
+				}
+			}
+		}
+	},
+	{
+		"id": "invertreality",
+		"name": "reality inversion",
+		"desc": "Invert the laws of reality within the target to create a weakness to chaos.",
+		"sortOrder": 1342,
+		"level": 5,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=4&&(g.trickster>0||g.t_chaosclass>=2)",
+		"buy": {
+			"research": 1000,
+			"tomes": 1,
+			"bloodgem": 7
+		},
+		"cost": {
+			"chaos": 2
+		},
+		"result": {
+			"chaoslore.exp": 0.2
+		},
+		"attack": {
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.resist.chaos": -20
+				}
+			}
+		}
+	},
+	{
+		"id": "debilitate",
+		"name": "debilitate",
+		"desc": "Weaken the concept of your enemy just so, and render them no longer immune to attacks.",
+		"sortOrder": 1340,
+		"level": 5,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>=5&&(g.madcap>0||g.t_chaosclass>=2)",
+		"buy": {
+			"research": 1000,
+			"tomes": 1,
+			"bloodgem": 7
+		},
+		"cost": {
+			"chaos": 2
+		},
+		"cd": 60,
+		"result": {
+			"chaoslore.exp": 0.2
+		},
+		"attack": {
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.immunities.fire": -1,
+					"self.immunities.water": -1,
+					"self.immunities.earth": -1,
+					"self.immunities.air": -1,
+					"self.immunities.spirit": -1,
+					"self.immunities.nature": -1,
+					"self.immunities.poison": -1,
+					"self.immunities.light": -1,
+					"self.immunities.shadow": -1,
+					"self.immunities.physical": -1,
+					"self.immunities.blunt": -1,
+					"self.immunities.slash": -1,
+					"self.immunities.pierce": -1
+				}
+			}
+		}
+	},
+	{
+		"id": "chaosconfuse",
+		"name": "chaotic madness",
+		"desc": "Chaos makes it impossible to think straight.",
+		"sortOrder": 1308,
+		"level": 7,
+		"school": "chaos",
+		"tags": "t_confusespell",
+		"keywords": {
+			"type": ["damage", "debuff"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant", "over time"]
+		},
+		"require": "g.chaoslore>=4&&g.madcap>0",
+		"buy": {
+			"research": 2500,
+			"tomes": 5,
+			"chaosgem": 15
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"cd": 60,
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"attack": {
+			"damage": "1~7",
+			"potencies": ["spelldmg", "chaosdmg"],
+			"dot": {
+				"id": "confuse",
+				"name": "confused",
+				"flags": "confused",
+				"sym": "🤪",
+				"kind": "chaos",
+				"duration": 12
+			}
+		}
+	},
+	{
+		"id": "stickygum",
+		"name": "chewing gum prank",
+		"desc": "Trip up your enemies.",
+		"flavor": "Double the flavor, stick both their feet to the ground and double your fun.",
+		"sortOrder": 1351,
+		"level": 2,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.trickery>=3",
+		"buy": {
+			"research": 100,
+			"codices": 2
+		},
+		"cost": {
+			"mana": 2
+		},
+		"result": {
+			"trickery.exp": 0.2
+		},
+		"attack": {
+			"targets": "enemies",
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.speed": -3,
+					"self.dodge": -2
+				}
+			}
+		}
+	},
+	{
+		"id": "randomizearmor",
+		"name": "randomize armor",
+		"desc": "Rearrange your enemies' defenses.",
+		"flavor": "A pauldron does no good worn like a crown.",
+		"sortOrder": 1349,
+		"level": 4,
+		"school": "chaos",
+		"keywords": {
+			"type": ["debuff"],
+			"target": ["enemy"],
+			"targets": ["multiple"],
+			"delivery": ["over time"]
+		},
+		"require": "g.chaoslore>3&&(g.madcap>0||g.t_chaosclass>=2)",
+		"buy": {
+			"research": 100,
+			"codices": 7,
+			"chaosgem": 13
+		},
+		"cost": {
+			"chaos": 7
+		},
+		"result": {
+			"chaoslore.exp": 0.7
+		},
+		"attack": {
+			"targets": "enemies",
+			"dot": {
+				"kind": "chaos",
+				"duration": 20,
+				"mod": {
+					"self.defense": -10
+				}
+			}
+		}
+	},
+	{
+		"id": "newfaceheal",
+		"name": "facioplasty",
+		"desc": "Replace your injured flesh.",
+		"flavor": "For most, this would be a disfiguring injury.  For me, it is merely an inconvenience.",
+		"sortOrder": 1133,
+		"level": 2,
+		"school": "light",
+		"tags": "t_healspell",
+		"keywords": {
+			"type": ["recovery"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.facecollect>0&&g.chaoslore>=4",
+		"buy": {
+			"research": 777,
+			"codices": 5,
+			"chaos": 1
+		},
+		"cost": {
+			"chaos": 3
+		},
+		"result": {
+			"chaoslore.exp": 0.3
+		},
+		"attack": {
+			"targets": "self",
+			"harmless": true,
+			"healing": 33,
+			"kind": "chaos",
+			"potencies": ["spellheal", "chaosdmg"]
+		}
+	},
+	{
+		"id": "starbolt",
+		"desc": "A weak projection of astral energy. Perhaps you could do better if you devoted yourself fully to the study of stars.",
+		"level": 3,
+		"school": "astral",
+		"keywords": {
+			"type": ["damage"],
+			"target": ["enemy"],
+			"targets": ["single"],
+			"delivery": ["instant"]
+		},
+		"require": "g.picatrix>0",
+		"buy": {
+			"research": 500
+		},
+		"cost": {
+			"mana": 3
+		},
+		"result": {
+			"astronomy.exp": 0.3
+		},
+		"attack": {
+			"damage": "6~11",
+			"tohit": 2,
+			"kind": "astral",
+			"potencies": ["spelldmg", "astraldmg"]
+		},
+		"at": {
+			"25": {
+				"attack.damage.max": 1.5
+			},
+			"75": {
+				"attack.damage.min": 1.5
+			},
+			"300": {
+				"attack.damage.max": 2.5,
+				"attack.damage.min": 2.5,
+				"attack.tohit": 1
+			}
+		}
+	},
+	{
+		"id": "astrology",
+		"desc": "Borrow a little of the influence of a star. Perhaps you could do better if you devoted yourself fully to the study of stars.",
+		"level": 3,
+		"school": "astral",
+		"keywords": {
+			"type": ["buff"],
+			"target": ["self"],
+			"targets": ["single"],
+			"delivery": ["over time"]
+		},
+		"require": "g.picatrix>0",
+		"buy": {
+			"research": 500
+		},
+		"cost": {
+			"mana": 3
+		},
+		"cd": 40,
+		"result": {
+			"astronomy.exp": 0.3
+		},
+		"dot": {
+			"name": "astrology",
+			"duration": 60,
+			"mod": {
+				"astraldmg": 20,
+				"self": {
+					"luck": 5
+				}
 			}
 		}
 	}

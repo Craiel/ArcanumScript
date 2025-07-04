@@ -7,12 +7,13 @@
 			"research": 20
 		},
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.3
 		},
 		"result": {
 			"sp": 0.1
 		},
 		"mod": {
+			"t_craftwork.rate": "1%",
 			"research.max": 1
 		}
 	},
@@ -23,7 +24,7 @@
 		"tags": "t_school",
 		"verb": "reading lore",
 		"desc": "Nothing is more important to a wizard than the depth of their lore.",
-		"locked": false,
+		"require": "g.apprentice>0",
 		"buy": {
 			"research": 20
 		},
@@ -36,7 +37,8 @@
 		"mod": {
 			"research.max": 5,
 			"spelllist.max": 0.5,
-			"arcana.max": 1
+			"arcana.max": 1,
+			"player.hits.mana": 0.2
 		}
 	},
 	{
@@ -45,7 +47,7 @@
 		"verb": "studying spells",
 		"desc": "The ability to build greater spells from lesser is what separates a practitioner from a master.",
 		"require": "g.tier2>0&&g.lore>=15",
-		"level": 8,
+		"level": 10,
 		"buy": {
 			"sp": 5
 		},
@@ -62,23 +64,22 @@
 	{
 		"id": "concentrate",
 		"name": "concentration",
-		"desc": "Keep your mind and nerves sharp under pressure.",
 		"verb": "concentrating",
+		"desc": "Keep your mind and nerves sharp under pressure.",
+		"level": 5,
 		"require": "(g.mustylibrary+g.loc_spring)>=2",
 		"run": {
 			"stamina": 0.2
 		},
 		"mod": {
-			"history.rate": "1%",
 			"stress.max": 1
 		}
 	},
 	{
 		"id": "composure",
-		"name": "composure",
 		"desc": "Remain unfazed under strain.",
+		"level": 5,
 		"require": "g.concentrate>=4",
-		"level": 3,
 		"run": {
 			"stamina": 0.3
 		},
@@ -88,9 +89,11 @@
 	},
 	{
 		"id": "trickery",
-		"school": "arcane",
 		"verb": "scheming",
-		"require": "g.prestidigitation>25",
+		"flavor": "Sufficiently advanced sleight of hand is indistinguishable from magic.",
+		"level": 5,
+		"school": "arcane",
+		"require": "g.prestidigitation>=10",
 		"buy": {
 			"sp": 2
 		},
@@ -105,15 +108,14 @@
 		"mod": {
 			"luck": 0.4,
 			"dodge": 0.4
-		},
-		"flavor": "Sufficiently advanced sleight of hand is indistinguishable from magic"
+		}
 	},
 	{
 		"id": "conjuration",
 		"school": "arcane",
 		"verb": "conjuring",
 		"desc": "",
-		"require": "g.lore>=10&&g.divination>3",
+		"require": "g.tier0>0&&g.lore>=7&&g.divination>=3",
 		"run": {
 			"stamina": 0.2,
 			"spirit": 0.2
@@ -137,7 +139,7 @@
 		"verb": "translating",
 		"desc": "Study ancient Dhrunic runes.",
 		"require": "g.tier2>0&&g.dwarfbook>0",
-		"level": 7,
+		"level": 10,
 		"buy": {
 			"sp": 3
 		},
@@ -150,11 +152,12 @@
 			"sp": 0.05
 		},
 		"mod": {
-			"research.max": 5,
-			"languages.rate": "0.1+2%",
+			"research.max": "0.1%",
+			"languages.rate": "20+3%",
 			"languages.max": 0.2,
-			"lore.rate": 0.1,
-			"lore.max": 0.2
+			"lore.rate": "50+5%",
+			"lore.max": 0.2,
+			"craftrune.result.runestones": 0.05
 		},
 		"flavor": ""
 	},
@@ -166,14 +169,14 @@
 			"research": 20
 		},
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.3
 		},
 		"result": {
-			"sp": 0.05,
-			"research": 5
+			"sp": 0.05
 		},
 		"mod": {
-			"research.max": 1
+			"research.max": 1,
+			"steed.mod.dist": 1
 		},
 		"flavor": "Tend the rabbits. Or horses."
 	},
@@ -182,9 +185,9 @@
 		"name": "magic beasts",
 		"require": "g.animals>=7&&g.naturelore>=5",
 		"desc": "",
-		"level": 3,
+		"level": 5,
 		"run": {
-			"stamina": 0.7
+			"stamina": 0.5
 		},
 		"effect": {
 			"naturelore.exp": 1
@@ -193,17 +196,17 @@
 			"sp": 0.05
 		},
 		"mod": {
-			"animals.rate": "1%",
-			"allies.max": 0.25,
-			"research.max": 5
+			"research.max": 5,
+			"animals.rate": 0.05,
+			"allies.max": 0.25
 		}
 	},
 	{
 		"id": "charms",
 		"require": "g.enchanting>=5&&g.lore>=10",
-		"level": 3,
+		"level": 10,
 		"run": {
-			"stamina": 0.3
+			"stamina": 0.5
 		},
 		"result": {
 			"sp": 0.05
@@ -236,15 +239,16 @@
 	{
 		"id": "weaving",
 		"need": "weavesource",
+		"level": 5,
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.4
 		},
 		"result": {
 			"sp": 0.05
 		},
 		"mod": {
 			"crafting.max": 0.2,
-			"crafting.rate": "0.1+1%"
+			"crafting.rate": 0.05
 		}
 	},
 	{
@@ -265,7 +269,8 @@
 		"mod": {
 			"research.rate": 0.05,
 			"research.max": 5,
-			"lore.rate": 0.1
+			"lore.rate": 0.1,
+			"t_languagework.rate":"0.5%"
 		}
 	},
 	{
@@ -274,6 +279,7 @@
 		"require": "g.languages>=6",
 		"desc": "The knowledge of what has come before reveals what is yet possible.",
 		"verb": "historicizing",
+		"level": 5,
 		"run": {
 			"stamina": 0.2
 		},
@@ -287,21 +293,17 @@
 			"research.max": 15,
 			"arcana.max": 0.1,
 			"s_travel.max": 0.1,
-			"languages.rate": "1%"
+			"s_travel.rate": 0.05,
+			"languages.rate": 0.05
 		}
 	},
 	{
 		"id": "anatomy",
 		"require": "g.neophyte>0&&g.lore>=6",
-		"school": [
-			"nature",
-			"shadow",
-			"light"
-		],
+		"school": ["nature", "shadow", "light"],
 		"desc": "The study of physical form.",
-		"level": 2,
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.4
 		},
 		"result": {
 			"sp": 0.05
@@ -316,7 +318,7 @@
 		"id": "vivification",
 		"require": "g.tier4>0&&g.anatomy>0&&g.spiritlore>=5",
 		"desc": "",
-		"level": 3,
+		"level": 5,
 		"run": {
 			"stamina": 1
 		},
@@ -325,7 +327,8 @@
 		},
 		"mod": {
 			"stamina.rate": 0.1,
-			"anatomy.rate": "2%"
+			"vigor.rate": 0.01,
+			"anatomy.rate": 0.05
 		}
 	},
 	{
@@ -362,16 +365,16 @@
 		"id": "summoning",
 		"require": "g.tier1>0&&g.conjuration>=5",
 		"school": "arcane",
-		"level": 4,
+		"level": 5,
 		"buy": {
 			"sp": 2
 		},
 		"run": {
-			"stamina": 0.7
+			"stamina": 0.5
 		},
 		"mod": {
-			"allies.max": 1,
 			"research.max": 5,
+			"allies.max": 1,
 			"minions.max": 0.5
 		}
 	},
@@ -379,8 +382,8 @@
 		"id": "bloodlore",
 		"name": "blood magic",
 		"school": "blood",
-		"require": "(g.bloodmage+g.thanophage+g.alchemist)>0",
-		"level": 5,
+		"require": "g.t_bloodclass>0",
+		"level": 10,
 		"buy": {
 			"sp": 3
 		},
@@ -389,42 +392,20 @@
 			"hp": 1
 		},
 		"mod": {
-			"anatomy.rate": "1%",
-			"hp.max": 10,
-			"hp.rate": 0.1
-		}
-	},
-	{
-		"id": "bladelore",
-		"name": "swordplay",
-		"desc": "Incorporate martial weapons into your magic.",
-		"require": "g.spellblade>0||g.battlemage>0||g.dreadlord>0",
-		"need": "armssource",
-		"level": 3,
-		"buy": {
-			"sp": 2
-		},
-		"run": {
-			"stamina": 0.6
-		},
-		"result": {
-			"sp": 0.05
-		},
-		"mod": {
-			"player.bonuses.slash": 1,
-			"player.bonuses.pierce": 1,
-			"player.hits.slash": 1,
-			"player.hits.pierce": 1
+			"anatomy.rate": 0.05,
+			"hp.max": "5%",
+			"hp.rate": 0.1,
+			"player.hits.blood": 1
 		}
 	},
 	{
 		"id": "divination",
-		"desc": "The art of foretelling",
+		"desc": "The art of foretelling.",
 		"require": "g.spiritlore>=6||g.mysticism>=5",
 		"need": "spiritsource",
 		"school": "spirit",
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.2
 		},
 		"effect": {
 			"arcana": 0.001
@@ -442,125 +423,137 @@
 		"tags": "t_school",
 		"name": "lumenology",
 		"school": "light",
-		"level": 2,
-		"desc": "Study of pure light",
+		"desc": "Study of pure light.",
 		"need": "lightsource",
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"light.max": 1,
-			"light.rate": 0.01
+			"light.rate": 0.01,
+			"player.hits.light": 0.2
 		},
-		"flavor": "The light fantastic"
+		"flavor": "The light fantastic."
 	},
 	{
 		"id": "shadowlore",
 		"name": "umbramancy",
 		"tags": "t_school",
-		"level": 2,
-		"require": "g.dissection>=3||g.evil>0",
+		"require": "g.evilamt>=10||g.spiritlore>=6",
 		"school": "shadow",
 		"need": "shadowsource",
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"shadow.max": 1,
-			"shadow.rate": 0.01
+			"shadow.rate": 0.01,
+			"player.hits.shadow": 0.2
 		}
 	},
 	{
 		"id": "spiritlore",
 		"tags": "t_school",
 		"name": "spirit communion",
-		"level": 2,
-		"desc": "Seeing the unseen",
+		"desc": "Seeing the unseen.",
 		"require": "g.lore>=6",
 		"need": "spiritsource",
 		"school": "spirit",
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"spirit.max": 1,
-			"spirit.rate": 0.01
+			"spirit.rate": 0.01,
+			"player.hits.spirit": 0.2
 		}
 	},
 	{
 		"id": "firelore",
 		"tags": "t_school,elemental",
 		"name": "pyromancy",
-		"level": 2,
-		"desc": "The investigation of fire",
+		"desc": "The investigation of fire.",
 		"need": "firesource",
+		"buy": {
+			"sp": 1
+		},
 		"run": {
-			"stamina": 0.4,
+			"stamina": 0.2,
 			"hp": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"fire.max": 1,
-			"fire.rate": 0.01
+			"fire.rate": 0.01,
+			"player.hits.fire": 0.2
 		},
-		"flavor": "Dry is good and wind is better"
+		"flavor": "Dry is good and wind is better."
 	},
 	{
 		"id": "earthlore",
 		"name": "geomancy",
 		"tags": "t_school,elemental",
-		"level": 2,
 		"need": "earthsource",
+		"buy": {
+			"sp": 1
+		},
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.3
 		},
 		"mod": {
 			"research.max": 1,
 			"earth": {
 				"max": 1,
 				"rate": 0.01
-			}
+			},
+			"player.hits.earth": 0.2
 		}
 	},
 	{
 		"id": "waterlore",
 		"name": "aquamancy",
-		"desc": "The study of water",
+		"desc": "The study of water.",
 		"verb": "studying water",
 		"tags": "elemental,t_school",
-		"level": 2,
+		"buy": {
+			"sp": 1
+		},
 		"need": "watersource",
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"water": {
 				"max": 1,
 				"rate": 0.01
-			}
+			},
+			"player.hits.water": 0.2
 		}
 	},
 	{
 		"id": "airlore",
 		"name": "aeromancy",
-		"desc": "The study of air",
+		"desc": "The study of air.",
 		"verb": "studying air",
 		"tags": "elemental,t_school",
-		"level": 2,
+		"buy": {
+			"sp": 1
+		},
 		"need": "airsource",
 		"run": {
-			"stamina": 0.3
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"air": {
 				"max": 1,
 				"rate": 0.01
-			}
+			},
+			"player.hits.air": 0.2
 		}
 	},
 	{
@@ -568,33 +561,33 @@
 		"name": "nature studies",
 		"verb": "observing nature",
 		"tags": "t_school",
-		"level": 2,
 		"require": "g.herbalism>=3",
 		"run": {
-			"stamina": 0.4
+			"stamina": 0.2
 		},
 		"mod": {
 			"research.max": 1,
 			"nature": {
 				"max": 1,
 				"rate": 0.01
-			}
+			},
+			"player.hits.nature": 0.2
 		}
 	},
 	{
 		"id": "wizlore",
 		"name": "wizard Lore",
-		"require": "(g.mage+g.highmage+g.wizard+g.wizard2+g.wizard3)>=2",
+		"require": "(g.t_knowledgeclass+g.tier5)>=2",
 		"school": "arcane",
 		"desc": "Many ask 'how?' Few think to ask, 'why?'",
-		"level": 5,
+		"level": 15,
 		"run": {
 			"stamina": 1,
 			"research": 50,
 			"arcana": 0.5
 		},
 		"mod": {
-			"lore.rate": "5%",
+			"lore.rate": 0.1,
 			"mana.rate": "3%",
 			"research.rate": "2%",
 			"arcana.rate": "1%"
@@ -603,9 +596,9 @@
 	{
 		"id": "firelore2",
 		"name": "fire mastery",
-		"desc": "A mastery of fire",
-		"level": 10,
-		"require": "g.firelore>=10",
+		"desc": "A mastery of fire.",
+		"level": 15,
+		"require": "g.firelore>=10&&g.t_fireclass>0",
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -620,17 +613,17 @@
 			"firerune.max": 2,
 			"fire.max": 1,
 			"fire.rate": "1%",
-			"player.bonuses.fire": 1,
-			"player.hits.fire": 1
+			"firedmg": 3,
+			"firelore.mod.player.hits.fire": 0.04
 		},
-		"flavor": "Dry is good and wind is better"
+		"flavor": "Dry is good and wind is better."
 	},
 	{
 		"id": "waterlore2",
 		"name": "water mastery",
-		"desc": "A mastery of water",
-		"require": "g.waterlore>=10",
-		"level": 10,
+		"desc": "A mastery of water.",
+		"require": "g.waterlore>=10&&g.t_waterclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -645,16 +638,16 @@
 			"waterrune.max": 2,
 			"water.max": 1,
 			"water.rate": "1%",
-			"player.bonuses.water": 1,
-			"player.hits.water": 1
+			"waterdmg": 3,
+			"waterlore.mod.player.hits.water": 0.04
 		}
 	},
 	{
 		"id": "airlore2",
 		"name": "air mastery",
-		"desc": "A mastery of air",
-		"require": "g.airlore>=10",
-		"level": 10,
+		"desc": "A mastery of air.",
+		"require": "g.airlore>=10&&g.t_airclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -669,57 +662,57 @@
 			"airrune.max": 2,
 			"air.max": 1,
 			"air.rate": "1%",
-			"player.bonuses.air": 1,
-			"player.hits.air": 1
+			"airdmg": 3,
+			"airlore.mod.player.hits.air": 0.04
 		}
 	},
 	{
 		"id": "hammerlore",
 		"name": "hammer proficiency",
 		"desc": "The anvil or the skull, it makes no difference.",
-		"require": "g.geomancer>0||g.earthshaker>0||g.titan>0",
+		"require": "g.t_hammerclass>0",
 		"need": "armssource",
-		"level": 3,
+		"level": 5,
 		"buy": {
 			"sp": 2
 		},
 		"run": {
-			"stamina": 0.6
+			"stamina": 1.5
 		},
 		"result": {
 			"sp": 0.05
 		},
 		"mod": {
-			"player.bonuses.blunt": 1,
-			"player.hits.blunt": 1
+			"hammerdmg": 3,
+			"player.hits.blunt": 0.4
 		}
 	},
 	{
 		"id": "geosculpting",
 		"desc": "Bend the earth to your will.",
-		"require": "g.geomancer>0||g.earthshaker>0",
-		"level": 3,
+		"require": "g.t_earthclass>0",
+		"level": 5,
 		"buy": {
 			"sp": 2
 		},
 		"run": {
-			"stamina": 0.6
+			"stamina": 0.5
 		},
 		"result": {
 			"sp": 0.05
 		},
 		"mod": {
-			"player.defense": 1,
-			"player.dodge": -1,
+			"player.defense": 0.3,
+			"player.dodge": -0.2,
 			"earthspire.mod.space.max": 1
 		}
 	},
 	{
 		"id": "earthlore2",
 		"name": "earth mastery",
-		"desc": "A mastery of earth",
-		"require": "g.earthlore>=10",
-		"level": 10,
+		"desc": "A mastery of earth.",
+		"require": "g.earthlore>=10&&g.t_earthclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -734,16 +727,16 @@
 			"earthrune.max": 2,
 			"earth.max": 1,
 			"earth.rate": "1%",
-			"player.bonuses.earth": 1,
-			"player.hits.earth": 1
+			"earthdmg": 3,
+			"earthlore.mod.player.hits.earth": 0.04
 		}
 	},
 	{
 		"id": "shadowlore2",
 		"name": "shadow mastery",
-		"desc": "A mastery of shadow",
-		"require": "g.shadowlore>=10",
-		"level": 10,
+		"desc": "A mastery of shadow.",
+		"level": 15,
+		"require": "g.shadowlore>=10&&g.t_shadowclass>0",
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -757,16 +750,16 @@
 		"mod": {
 			"shadow.max": 1,
 			"shadow.rate": "1%",
-			"player.bonuses.shadow": 1,
-			"player.hits.shadow": 1
+			"shadowdmg": 3,
+			"shadowlore.mod.player.hits.shadow": 0.04
 		}
 	},
 	{
 		"id": "lightlore2",
 		"name": "light mastery",
-		"desc": "A mastery of light",
-		"require": "g.lightlore>=10",
-		"level": 10,
+		"desc": "A mastery of light.",
+		"require": "g.lightlore>=10&&g.t_lightclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -780,16 +773,16 @@
 		"mod": {
 			"light.max": 1,
 			"light.rate": "1%",
-			"player.bonuses.light": 1,
-			"player.hits.light": 1
+			"lightdmg": 3,
+			"lightlore.mod.player.hits.light": 0.04
 		}
 	},
 	{
 		"id": "spiritlore2",
 		"name": "spirit mastery",
-		"desc": "A mastery of spirit",
-		"require": "g.spiritlore>=10",
-		"level": 10,
+		"desc": "A mastery of spirit.",
+		"require": "g.spiritlore>=10&&g.t_spiritclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -803,16 +796,16 @@
 		"mod": {
 			"spirit.max": 1,
 			"spirit.rate": "1%",
-			"player.bonuses.spirit": 1,
-			"player.hits.spirit": 1
+			"spiritdmg": 3,
+			"spiritlore.mod.player.hits.spirit": 0.04
 		}
 	},
 	{
 		"id": "manalore2",
 		"name": "arcane mastery",
-		"desc": "A mastery of pure magic",
-		"require": "g.lore>=20",
-		"level": 10,
+		"desc": "A mastery of pure magic.",
+		"require": "g.lore>=20&&g.t_knowledgeclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -826,16 +819,16 @@
 		"mod": {
 			"mana.max": 1,
 			"mana.rate": "1%",
-			"player.bonuses.mana": 1,
-			"player.hits.mana": 1
+			"manadmg": 3,
+			"lore.mod.player.hits.mana": 0.04
 		}
 	},
 	{
 		"id": "naturelore2",
 		"name": "nature mastery",
-		"desc": "A mastery of nature",
-		"require": "g.naturelore>=10",
-		"level": 10,
+		"desc": "A mastery of nature.",
+		"require": "g.naturelore>=10&&g.t_natureclass>0",
+		"level": 15,
 		"buy": {
 			"arcana": 1,
 			"sp": 5,
@@ -849,8 +842,8 @@
 		"mod": {
 			"nature.max": 1,
 			"nature.rate": "1%",
-			"player.bonuses.nature": 1,
-			"player.hits.nature": 1
+			"naturedmg": 3,
+			"naturelore.mod.player.hits.nature": 0.04
 		}
 	},
 	{
@@ -877,9 +870,7 @@
 	{
 		"id": "reanimation",
 		"require": "g.evil>0&&g.embalming>=3",
-		"school": [
-			"shadow"
-		],
+		"school": ["shadow"],
 		"run": {
 			"stamina": 0.5,
 			"shadow": 0.1
@@ -895,7 +886,7 @@
 	},
 	{
 		"id": "necromancy",
-		"require": "g.evil>0&&g.reanimation>=7&&g.souls.max>3",
+		"require": "g.evil>0&&g.reanimation>=7&&g.souls.max>=3",
 		"school": "shadow",
 		"desc": "Forbidden death magic.",
 		"buy": {
@@ -916,31 +907,33 @@
 	{
 		"id": "potions",
 		"require": "g.crafting>=3&&g.alchemy>=2",
-		"need": [
-			"workspace",
-			"potsource"
-		],
+		"need": ["workspace", "potsource"],
+		"level": 5,
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.3
 		},
 		"result": {
 			"sp": 0.05
 		},
 		"mod": {
-			"alchemy.rate": "1%",
 			"research.max": 5
 		}
 	},
 	{
 		"id": "enchanting",
-		"require": "g.tier1>0&&g.lore>=14",
+		"require": "g.tier1>0&&g.lore>=11",
 		"desc": "Imbue mundane gems and items with magical properties.",
+		"level": 10,
 		"run": {
 			"stamina": 0.4,
 			"research": 1
 		},
+		"buy": {
+			"research": 300
+		},
+		"need": "((g.managem>=1)+(g.firegem>=1)+(g.watergem>=1)+(g.naturegem>=1)+(g.earthgem>=1)+(g.airgem>=1)+(g.shadowgem>=1)+(g.lightgem>=1)+(g.spiritgem>=1))>=3",
+		"needtext": "Must own at least 3 types of magical gems. Perhaps they can be found while exploring some nearby locales.",
 		"mod": {
-			"charms.rate": "1%",
 			"enchantslots.max": 1
 		},
 		"result": {
@@ -953,29 +946,29 @@
 		"school": "elemental",
 		"require": "g.tier0>0&&g.herbalism>=4",
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.4
 		},
 		"result": {
-			"sp": 0.1,
-			"research": 5
+			"sp": 0.1
 		},
 		"mod": {
-			"potions.rate": "1%",
-			"research.max": 5
+			"research.max": 5,
+			"gold.rate": 0.01
 		}
 	},
 	{
 		"id": "astronomy",
 		"need": "starsource",
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.2
 		},
 		"result": {
 			"sp": 0.04
 		},
 		"mod": {
 			"planeslore.rate": "1%",
-			"research.max": 5
+			"research.max": 5,
+			"dist": 5
 		}
 	},
 	{
@@ -997,11 +990,11 @@
 	{
 		"id": "s_travel",
 		"name": "travel",
-		"level": 2,
+		"level": 5,
 		"require": "(g.languages+g.history)>=12",
 		"desc": "Travel offers a growing wizard new avenues of research and new sources of research.",
 		"run": {
-			"stamina": 0.5
+			"stamina": 1
 		},
 		"mod": {
 			"dist": "5%"
@@ -1010,15 +1003,16 @@
 	{
 		"id": "planeslore",
 		"name": "planes lore",
+		"desc": "Farther than the stars and closer than your fingertips.",
+		"flavor": "There is no safe distance.",
 		"require": "g.astronomy>=5&&g.tier1>0",
-		"level": 6,
-		"desc": "Farther than the stars and closer than your fingertips",
+		"level": 5,
 		"buy": {
 			"sp": 2,
 			"arcana": 5
 		},
 		"run": {
-			"stamina": 0.7,
+			"stamina": 0.3,
 			"research": 1,
 			"mana": 0.1
 		},
@@ -1026,23 +1020,22 @@
 			"dist": "1%",
 			"arcana.max": 1,
 			"research.max": 1
-		},
-		"flavor": "There is no safe distance"
+		}
 	},
 	{
 		"id": "astrallore",
 		"name": "astral communion",
-		"require": "g.planeslore>=25&&g.tier5>0",
+		"require": "g.planeslore>=13&&g.tier5>0",
 		"desc": "Anyone can see the stars. Few can read them.",
-		"level": 10,
+		"level": 15,
 		"buy": {
 			"sp": 10,
-			"arcana": 1
+			"arcana": 50
 		},
 		"run": {
 			"stamina": 1,
 			"research": 10,
-			"arcana": 5
+			"arcana": 0.5
 		},
 		"mod": {
 			"sindel.rate": 0.0001,
@@ -1053,14 +1046,14 @@
 		"id": "voidlore",
 		"name": "abyss gazing",
 		"require": "g.planeslore>=10&&g.tier5>0",
-		"desc": "The absence of all things",
-		"level": 10,
+		"desc": "The absence of all things.",
+		"level": 15,
 		"buy": {
 			"sp": 5,
 			"arcana": 5
 		},
 		"run": {
-			"stamina": 0.7,
+			"stamina": 1,
 			"research": 5,
 			"arcana": 0.1
 		},
@@ -1073,30 +1066,32 @@
 	},
 	{
 		"id": "chronomancy",
+		"desc": "There must be a way...",
+		"flavor": "Too much to do, so little time.",
+		"level": 15,
+		"tags": "t_school",
 		"require": "tier3",
 		"need": "timesource",
-		"tags": "t_school",
-		"level": 9,
-		"desc": "There must be a way...",
+		"max": 1,
 		"buy": {
-			"sp": 5
+			"sp": 2
 		},
 		"run": {
-			"stamina": 0.3,
+			"stamina": 0.7,
 			"research": 1,
 			"mana": 1
 		},
 		"mod": {
 			"tempus.max": 1,
 			"tempus.rate": 0.001
-		},
-		"flavor": "Too much to do, so little time."
+		}
 	},
 	{
 		"id": "scrying",
-		"require": "g.divination>5",
+		"require": "g.divination>=6",
+		"level": 5,
 		"run": {
-			"stamina": 0.5
+			"stamina": 0.25
 		},
 		"effect": {
 			"arcana": 0.001
@@ -1107,5 +1102,49 @@
 			"dist": "1%",
 			"arcana.max": 0.2
 		}
+	},
+	{
+		"id": "heallore",
+		"name": "rejuvenation",
+		"require": "g.t_healspell>=200&&g.tier1>0",
+		"school": ["light", "water", "nature"],
+		"desc": "A revelation of life magic.",
+		"level": 5,
+		"buy": {
+			"sp": 3
+		},
+		"run": {
+			"stamina": 0.5
+		},
+		"result": {
+			"sp": 0.05
+		},
+		"mod": {
+			"spellheal": 2
+		}
+	},
+	{
+		"id": "chaoslore",
+		"name": "imposition",
+		"require": "g.tier4>0&&g.trickery>=12",
+		"school": "chaos",
+		"level": 15,
+		"desc": "Manipulate the underlying principles of reality with varying degrees of subtlety.",
+		"buy": {
+			"sp": 5
+		},
+		"run": {
+			"stamina": 1,
+			"mana": 1
+		},
+		"mod": {
+			"luck": 1,
+			"chaos.max": 1,
+			"chaos.rate": "0.01+1%",
+			"arcana.rate": 0.05,
+			"lore.rate": 0.05,
+			"research.rate": "1%"
+		},
+		"flavor": "Wizards do parlor tricks. I throttle the heavens."
 	}
 ]

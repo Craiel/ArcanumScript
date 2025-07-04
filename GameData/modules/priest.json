@@ -1,0 +1,460 @@
+{
+	"module": "priest",
+	"author": "draxius",
+	"data": {
+		"upgrades": [
+			{
+				"id": "consecrateshrine",
+				"name": "consecrate shrine",
+				"desc": "Consecrating your shrine, you gain insights into both body and spirit",
+				"require": "g.good2>0&&g.shrine>0",
+				"cost": {
+					"research": 3000,
+					"gold": 1500,
+					"lightgem": 10,
+					"spiritgem": 10,
+					"arcana": 1
+				},
+				"mod": {
+					"heallore.max": 1,
+					"heallore.rate": 0.5,
+					"lightlore.max": 1,
+					"spiritlore.max": 1,
+					"spiritlore.rate": 0.1
+				},
+				"group": "knowledge"
+			},
+			{
+				"id": "templerenovation",
+				"name": "temple renovations",
+				"desc": "Expand the grounds of the temple with room for like-minded individuals",
+				"cost": {
+					"gold": 1000,
+					"research": 400,
+					"lightgem": 10
+				},
+				"max": 3,
+				"require": "g.t_lightclass>0",
+				"need": "(1+g.t_lightclass)>g.templerenovation",
+				"needtext": "You need to have taken classes tagged 'Master of Light' at least as many times as you've done this task. It still maxes at 3.",
+				"mod": {
+					"temple.mod.space.max": 80,
+					"temple.mod.virtue.rate": 0.001,
+					"temple.mod.light.rate": 0.1,
+					"temple.mod.minions.max": 2,
+					"temple.mod.lightlore.mod.light.max": 0.1,
+					"templeexpansion.max": -1
+				},
+				"group": "housing"
+			},
+			{
+				"id": "templealtar",
+				"name": "grand altar",
+				"desc": "Raise a grand altar in defiance of the fading age of darkness.",
+				"cost": {
+					"gold": 10000,
+					"research": 5000,
+					"lightgem": 100
+				},
+				"max": 1,
+				"lock": "templepinnacle",
+				"warn": true,
+				"require": "(g.templeexpansion+g.templerenovation)>=3&&g.templerenovation>0&&g.tier4>0",
+				"result": {
+					"fame": 1
+				},
+				"mod": {
+					"temple.mod": {
+						"space.max": 120,
+						"virtue.rate": 0.006,
+						"light.rate": 0.2,
+						"minions.max": 6,
+						"lightlore.mod.light.max": 0.1
+					}
+				},
+				"flavor": "The greatest to stand since the Rending ushered in the Age of Silence.",
+				"group": "housing"
+			}
+		],
+		"spells": [
+			{
+				"id": "resurrection",
+				"desc": "Reknit the body and recall the soul of a stronger humanoid or goblinoid minion.",
+				"sortOrder": 1147,
+				"level": 5,
+				"school": "light",
+				"tags": "rez",
+				"keywords": {
+					"type": ["recovery"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.t_healingclass>0",
+				"buy": {
+					"research": 500,
+					"codices": 25
+				},
+				"cost": {
+					"light": 7,
+					"spirit": 7,
+					"lightgem": 1,
+					"spiritgem": 1
+				},
+				"resurrect":
+				{
+					"only": ["humanoid","goblinoid"],
+					"maxlevel":99,
+					"count":1
+				}
+			},
+			{
+				"id": "mendinglight",
+				"name": "mending light",
+				"desc": "A cascade of light closes your wounds and those of your allies.",
+				"extdesc": "Healing gains twice the normal benefit from Light and Spell Healing potencies.",
+				"sortOrder": 1130,
+				"level": 15,
+				"school": "light",
+				"tags": ["t_healspell", "t_nospellcraft"],
+				"keywords": {
+					"type": ["recovery"],
+					"target": ["ally"],
+					"targets": ["multiple"],
+					"delivery": ["instant"]
+				},
+				"require": "g.lightlore>=20&&g.heallore>=7&&(g.t_healingclass+g.tier5)>=2&&g.evil2==0",
+				"buy": {
+					"research": 3000,
+					"tomes": 25,
+					"lightgem": 35
+				},
+				"need": ["g.evil2==0", "g.good2>0"],
+				"cost": {
+					"light": 7
+				},
+				"cd": 10,
+				"result": {
+					"lightlore.exp": 0.7,
+					"heallore.exp": 0.7
+				},
+				"attack": {
+					"targets": "allies",
+					"harmless": true,
+					"healing": 50,
+					"kind": "light",
+					"potencies": ["spellheal", "spellheal", "lightdmg", "lightdmg"]
+				}
+			},
+			{
+				"id": "callacolyte",
+				"name": "call reinforcement: acolyte",
+				"sortOrder": 1162,
+				"level": 5,
+				"school": "light",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.t_lightclass>0",
+				"buy": {
+					"research": 300,
+					"tomes": 3
+				},
+				"cost": {
+					"light": 6
+				},
+				"result": {
+					"lightlore.exp": 0.6
+				},
+				"summon": [
+					{
+						"id": "acolytecomp",
+						"count": 1,
+						"max": 3
+					}
+				]
+			},
+			{
+				"id": "callpaladin",
+				"name": "call reinforcement: paladin",
+				"sortOrder": 1161,
+				"level": 7,
+				"school": "light",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "(g.t_lightclass+g.tier5+g.tier6)>=3",
+				"buy": {
+					"research": 1000,
+					"tomes": 10,
+					"lightgem": 5
+				},
+				"cost": {
+					"light": 10
+				},
+				"result": {
+					"lightlore.exp": 1
+				},
+				"summon": [
+					{
+						"id": "paladincomp",
+						"count": 1,
+						"max": 3
+					}
+				]
+			},
+			{
+				"id": "calllightbearer",
+				"name": "call reinforcement: light bearer",
+				"sortOrder": 1160,
+				"level": 6,
+				"school": "light",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "(g.t_lightclass+g.tier5)>=2",
+				"buy": {
+					"research": 750,
+					"tomes": 7,
+					"lightgem": 4
+				},
+				"cost": {
+					"light": 8
+				},
+				"result": {
+					"lightlore.exp": 0.8
+				},
+				"summon": [
+					{
+						"id": "lightbearercomp",
+						"count": 1,
+						"max": 3
+					}
+				]
+			}
+		],
+		"monsters": [
+			{
+				"id": "paladincomp",
+				"tags": "t_goodcompanion",
+				"slot": "companion",
+				"require": "(g.t_lightclass+g.tier5+g.tier6)>=3",
+				"name": "paladin companion",
+				"level": 10,
+				"kind": "humanoid",
+				"noproc": true,
+				"speed": 5,
+				"hp": 125,
+				"tohit": 10,
+				"defense": 20,
+				"dodge": 5,
+				"regen": 2,
+				"attack": [
+					{
+						"hits": [
+							{
+								"targets": "self",
+								"dot": {
+									"id": "taunt",
+									"name": "issue challenge",
+									"tags": "t_taunt",
+									"duration": 10,
+									"mod": {
+										"self.defense": 5
+									}
+								}
+							},
+							{
+								"targets": "enemy",
+								"name": "shield bash",
+								"damage": "3~10",
+								"kind": "blunt"
+							}
+						]
+					},
+					{
+						"name": "righteous charge",
+						"targets": "enemy",
+						"damage": "6~16",
+						"kind": "slash"
+					}
+				]
+			},
+			{
+				"id": "acolytecomp",
+				"tags": "t_goodcompanion",
+				"slot": "companion",
+				"require": "g.t_lightclass>0",
+				"name": "acolyte companion",
+				"level": 10,
+				"kind": "humanoid",
+				"noproc": true,
+				"speed": 12,
+				"hp": 70,
+				"tohit": 15,
+				"defense": 12,
+				"dodge": 10,
+				"regen": 1,
+				"attack": [
+					{
+						"kind": "light",
+						"name": "flash of light",
+						"targets": "enemy",
+						"damage": "10~15"
+					},
+					{
+						"targets": "leader",
+						"harmless": true,
+						"name": "healing chant",
+						"kind": "light",
+						"healing": 5
+					}
+				]
+			},
+			{
+				"id": "lightbearercomp",
+				"tags": "t_goodcompanion",
+				"slot": "companion",
+				"require": "(g.t_lightclass+g.tier5)>=2",
+				"name": "lightbearer companion",
+				"level": 10,
+				"kind": "humanoid",
+				"noproc": true,
+				"speed": 15,
+				"hp": 115,
+				"tohit": 20,
+				"defense": 15,
+				"dodge": 8,
+				"regen": 2,
+				"attack": [
+					{
+						"hits": [
+							{
+								"name": "light spear",
+								"targets": "enemy",
+								"kind": "light",
+								"damage": "10~15"
+							},
+							{
+								"name": "purging light",
+								"kind": "light",
+								"targets": "enemies",
+								"damage": "5~10"
+							}
+						]
+					}
+				]
+			}
+		],
+		"classes": [
+			{
+				"id": "hierarch",
+				"tags": "t_tier6,t_lightclass,t_healingclass",
+				"desc": "Your authority is unquestioned in matters of faith",
+				"require": "g.tier5>0&&g.lightlore>=25&&g.t_lightclass>0&&g.tier6==0",
+				"need": "good3",
+				"cost": {
+					"research": 20000,
+					"arcana": 50,
+					"sindel": 3,
+					"tomes": 75,
+					"lightgem": 75,
+					"runestones": 30
+				},
+				"mod": {
+					"tier6": true,
+					"lightdmg": 5,
+					"lightlore.max": 2,
+					"heallore.max": 3,
+					"spiritlore.max": 1,
+					"planeslore.max": 1,
+					"astrallore.max": 1,
+					"lore.max": 1,
+					"composure.max": 1
+				}
+			},
+			{
+				"id": "hallowed",
+				"tags": "t_tier5,t_lightclass,t_healingclass",
+				"desc": "Other members of the faith defer to your wisdom and experience",
+				"require": "g.tier4>0&&g.lightlore>=21&&g.spiritlore>=15&&g.tier5==0",
+				"need": "good3",
+				"cost": {
+					"research": 15000,
+					"arcana": 30,
+					"tomes": 10,
+					"lightgem": 20,
+					"runestones": 15
+				},
+				"mod": {
+					"tier5": true,
+					"lightlore.max": 2,
+					"heallore.max": 3,
+					"anatomy.max": 1,
+					"planeslore.max": 1,
+					"lore.max": 1,
+					"concentrate.max": 1
+				}
+			},
+			{
+				"id": "lightbringer",
+				"tags": "t_tier4,t_lightclass,t_healingclass",
+				"desc": "The light blesses you on your mission to create a virtuous world.",
+				"require": "g.tier3>0&&g.lightlore>=17&&g.spiritlore>=10&&g.tier4==0",
+				"need": "good2",
+				"cost": {
+					"research": 4000,
+					"arcana": 15,
+					"tomes": 20,
+					"lightgem": 20,
+					"runestones": 5
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier4": true,
+					"lightdmg": 5,
+					"lightlore.max": 3,
+					"heallore.max": 2,
+					"planeslore.max": 1,
+					"composure.max": 1
+				}
+			},
+			{
+				"id": "priest",
+				"tags": "t_tier3,t_lightclass,t_healingclass",
+				"desc": "Join the assembly that recognizes the good inherent in the light.",
+				"require": "g.tier2>0&&g.lightlore>=13&&g.spiritlore>=10&&g.tier3==0",
+				"need": "good2",
+				"cost": {
+					"research": 1500,
+					"arcana": 10,
+					"tomes": 10,
+					"lightgem": 20
+				},
+				"result": {
+					"sp": 2
+				},
+				"mod": {
+					"tier3": true,
+					"lightlore.max": 2,
+					"heallore.max": 2,
+					"anatomy.max": 1,
+					"spiritlore.max": 1,
+					"lore.max": 1,
+					"concentrate.max": 1
+				}
+			}
+		]
+	}
+}
