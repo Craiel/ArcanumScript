@@ -1,0 +1,1503 @@
+{
+	"module": "reedburgh",
+	"data": {
+		"skills": [
+			{
+				"id": "citynavigation",
+				"name": "city navigation",
+				"require": "tier1",
+				"desc": "Like stars, spells, or any complex systems, cities and their tunnels also merit study.",
+				"run": {
+					"stamina": 0.2
+				},
+				"result": {
+					"sp": 0.15
+				},
+				"mod": {
+					"s_travel.max": 0.1,
+					"research.max": 5
+				}
+			}
+		],
+		"upgrades": [
+			{
+				"id": "reedburgh_city_papers",
+				"name": "reedburgh city pass",
+				"desc": "Allows free access into and out of the Reedburgh City's first ring, bursting with commerce and labour.",
+				"require": "g.citynavigation>0",
+				"max": 1,
+				"cost": {
+					"gold": 60
+				},
+				"mod": {
+					"citynavigation.max": 1
+				},
+				"group": "exploration"
+			},
+			{
+				"id": "reedburgh_city_map",
+				"name": "map of reedburgh city first ring",
+				"desc": "A map of the first ring, more complex than most basic spells...",
+				"require": "g.reedburgh_market>0",
+				"max": 1,
+				"cost": {
+					"gold": 120
+				},
+				"mod": {
+					"reedburgh_market.run.bf": -0.1
+				},
+				"group": "exploration"
+			},
+			{
+				"id": "reedburgh_gym_membership",
+				"name": "reedburgh gymnasium pass",
+				"desc": "Membership to a gymnasium you found in Reedburgh.",
+				"require": "g.reedburgh_market>0",
+				"max": 1,
+				"cost": {
+					"gold": 250
+				},
+				"mod": {
+					"citynavigation.max": 1
+				},
+				"group": "exploration"
+			},
+			{
+				"id": "reedburgh_city_bank",
+				"name": "reedburgh city bank documents",
+				"desc": "Gain access to shops and markets using the local currencies, that are tightly controlled through banks and debt.",
+				"require": "g.debitomancy>=1&&g.reedburgh_city_papers>0",
+				"max": 1,
+				"cost": {
+					"gold": 150
+				},
+				"mod": {
+					"debitomancy.max": 0.5
+				},
+				"group": "knowledge"
+			}
+		],
+		"rares": [
+			{
+				"id": "reedburgh_badge",
+				"name": "reedburgh's copper medal",
+				"type": "armor",
+				"desc": "A token from Reedburgh for clearing out the sewer ways. Having one of these makes you seem more trustworthy to people.",
+				"tags": "t_bauble",
+				"unique": true,
+				"level": 1,
+				"enchants": 1,
+				"armor": 0,
+				"slot": "trinket",
+				"alter": {
+					"mod": {
+						"debt.max": 150,
+						"gold.max": 125,
+						"reedburgh_checkpoint.length": -2,
+						"reedburgh_sewer_misunderstand.length": -2
+					}
+				}
+			},
+			{
+				"id": "reedburgh_herobadge",
+				"name": "reedburgh rose gold medal",
+				"type": "armor",
+				"desc": "Given mostly to knights for heroic acts, nobles that had made wealthy donations or others of higher standing, this medal marks the holder as an honorable person.",
+				"tags": "t_bauble",
+				"unique": true,
+				"level": 1,
+				"enchants": 1,
+				"armor": 0,
+				"slot": "trinket",
+				"alter": {
+					"mod": {
+						"debt.max": 250,
+						"gold.max": 80,
+						"light.rate": 0.05,
+						"reedburgh_checkpoint.length": -4,
+						"reedburgh_sewer_misunderstand.length": -4
+					}
+				}
+			}
+		],
+		"spells": [
+			{
+				"id": "reedburgh_call_backup",
+				"name": "Call guard",
+				"desc": "HELP! HELLLPPP! HELP ME!!",
+				"level": 1,
+				"school": "charm",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.citynavigation>999",
+				"buy": {
+					"research": 500,
+					"gold": 500,
+					"gems": 15
+				},
+				"cost": {
+					"gold": 100,
+					"gems": 5
+				},
+				"cd": 30,
+				"summon": [
+					{
+						"id": "reedburgh_guard_backup",
+						"count": 1,
+						"max": 3
+					}
+				]
+			},
+			{
+				"id": "mon_blunt_heavy",
+				"name": "heavy slam",
+				"desc": "A thunderous blow that does impressive damage.",
+				"flavor": "That's gonna leave a bruise in the morning.",
+				"level": 4,
+				"school": "martial",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.citynavigation>999",
+				"cd": 5,
+				"attack": {
+					"kind": "blunt",
+					"tohit": 5,
+					"damage": "15~25"
+				}
+			},
+			{
+				"id": "reedburgh_call_backup_captain",
+				"name": "Call guard",
+				"desc": "HELP! HELLLPPP! HELP ME!!",
+				"level": 1,
+				"school": "charm",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.citynavigation>999",
+				"buy": {
+					"research": 500,
+					"gold": 500,
+					"gems": 15
+				},
+				"cost": {
+					"gold": 100,
+					"gems": 5
+				},
+				"cd": 30,
+				"summon": [
+					{
+						"id": "reedburgh_guard",
+						"count": 1,
+						"max": 3
+					}
+				]
+			}
+		],
+		"encounters": [
+			{
+				"id": "reedburgh_seized_goods",
+				"name": "seized goods wagon",
+				"desc": "A halted wagon with confiscated goodies",
+				"tags": "loot_equip_gen",
+				"effect": {
+					"weary": "1~2",
+					"shadow": -0.5
+				},
+				"result": {
+					"bloodgem": "1~2",
+					"herbs": "4~10",
+					"shadowgem": "30%",
+					"codices": "45%",
+					"scrolls": "1~2",
+					"managem": "80%",
+					"skulls": "50%",
+					"bonedust": "3~5"
+				},
+				"loot": [
+					{
+						"%": "15%",
+						"maxlevel": 3,
+						"id": "d_wand"
+					}
+				]
+			},
+			{
+				"id": "reedburgh_armory",
+				"name": "reedburgh weapon storage",
+				"desc": "A compact shed with an assortment of mounted weapons inside.",
+				"tags": "loot_equip_gen",
+				"level": 1,
+				"length": 5,
+				"effect": {
+					"weary": "1~2",
+					"shadow": -0.5
+				},
+				"loot": [
+					{
+						"%": "15%",
+						"maxlevel": 5,
+						"id": "d_spear"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 5,
+						"id": "d_mace"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 5,
+						"id": "d_shortsword"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 5,
+						"id": "d_dagger"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 5,
+						"id": "d_sword"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 5,
+						"id": "d_longsword"
+					}
+				]
+			},
+			{
+				"id": "reedburgh_training",
+				"name": "guard training grounds",
+				"desc": "A field strewn with combat training equipment, weapons, and scattered personal belongings.",
+				"tags": "loot_equip_gen",
+				"level": 1,
+				"length": 5,
+				"effect": {
+					"weary": "1~2",
+					"shadow": -0.5
+				},
+				"result": {
+					"gold": "0~10"
+				},
+				"loot": [
+					{
+						"%": "15%",
+						"maxlevel": 5,
+						"id": "d_cap"
+					},
+					{
+						"%": "15%",
+						"maxlevel": 5,
+						"id": "d_boots"
+					},
+					{
+						"%": "40%",
+						"maxlevel": 5,
+						"id": "d_helm"
+					},
+					{
+						"%": "25%",
+						"maxlevel": 5,
+						"id": "d_paddedarmor"
+					},
+					{
+						"%": "15%",
+						"maxlevel": 5,
+						"id": "d_chainmail"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 5,
+						"id": "d_girdle"
+					}
+				]
+			},
+			{
+				"id": "reedburgh_barracks",
+				"name": "reedburgh barracks housing",
+				"desc": "empty guard quarters, housing equipment and personal items.",
+				"tags": "loot_equip_gen",
+				"level": 1,
+				"length": 5,
+				"effect": {
+					"weary": "1~2"
+				},
+				"result": {
+					"gold": "15~20"
+				},
+				"loot": [
+					{
+						"%": "30%",
+						"maxlevel": 5,
+						"id": "d_cap"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 5,
+						"id": "d_boots"
+					},
+					{
+						"%": "15%",
+						"maxlevel": 5,
+						"id": "d_ring"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 5,
+						"id": "d_necklace"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 5,
+						"id": "d_amulet"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 5,
+						"id": "d_pendant"
+					}
+				]
+			},
+			{
+				"id": "reedburgh_guardpost",
+				"name": "guard post",
+				"desc": "Vigilant sentinels on the lookout for any signs of disturbance.",
+				"effect": {
+					"rage": "1~2",
+					"shadow": -0.5
+				}
+			},
+			{
+				"id": "reedburgh_streets",
+				"name": "maze-like streets",
+				"desc": "Some streets are dead ends, others loop back into themselves.",
+				"effect": {
+					"madness": "1~4"
+				}
+			},
+			{
+				"id": "reedburgh_crime",
+				"name": "alleyway trouble",
+				"desc": "Dimly lit offshoots, sounds of people in trouble, people beating up one another and other city terrors.",
+				"effect": {
+					"unease": "1~4"
+				}
+			},
+			{
+				"id": "reedburgh_nothing",
+				"name": "wandering",
+				"desc": "No stores to window shop, no trouble on the road, just passing by."
+			},
+			{
+				"id": "reedburgh_con",
+				"name": "street shows",
+				"desc": "As you pass by many street shows you find your bags to be a bit lighter, the suspects lost in crowds.",
+				"effect": {
+					"rage": "2~3"
+				},
+				"result": {
+					"gold": "-25~-30"
+				}
+			},
+			{
+				"id": "reedburgh_stalls",
+				"name": "street stalls",
+				"desc": "A wide range of stalls, rugs and other street shops forcing wares onto passers.",
+				"effect": {
+					"weary": "1~3"
+				},
+				"result": {
+					"debt": "75~125",
+					"herbs": "3~5"
+				},
+				"loot": {
+					"codices": "80%",
+					"scrolls": "1~2",
+					"gems": "1~2",
+					"bones": { "value": "3~5"}
+				}
+			},
+			{
+				"id": "reedburgh_checkpoint_bad",
+				"name": "thug checkpoint",
+				"desc": "Threats, daggers, and harassment from locals, trying to shake down a few extra coins from passersby. All while bribed guards watch.",
+				"effect": {
+					"rage": 1.5,
+					"unease": 1.5
+				},
+				"result": {
+					"gold": "-15~-30"
+				}
+			},
+			{
+				"id": "reedburgh_checkpoint",
+				"name": "checkpoint",
+				"desc": "Lots of questions, showing papers and waiting around while guards check over everyone.",
+				"effect": {
+					"rage": 1.5
+				}
+			},
+			{
+				"id": "reedburgh_show",
+				"name": "putting on a show",
+				"desc": "Many have never seen your magic before, maybe doing a small performance wouldn't hurt.",
+				"effect": {
+					"bf": -1.5,
+					"mana": -1
+				},
+				"result": {
+					"debt": "-30~-50"
+				}
+			},
+			{
+				"id": "reedburgh_scrolls",
+				"name": "scrolls shop",
+				"desc": "Outrageous prices for common paper with an impossible to say no to, sales clerk.",
+				"effect": {
+					"rage": 0.5
+				},
+				"result": {
+					"debt": "30~50"
+				},
+				"loot": {
+					"scrolls": 1
+				}
+			},
+			{
+				"id": "reedburgh_beggars",
+				"name": "street beggars",
+				"desc": "Passing by poorer houses, many people beg you for even a single coin, while others take it with sleight of hand.",
+				"effect": {
+					"rage": "3~4"
+				},
+				"result": {
+					"gold": "-10~-15"
+				}
+			},
+			{
+				"id": "reedburgh_lost",
+				"name": "complex streets",
+				"desc": "Dead ends, everywhere you go. Closed-off streets only compound the issue.",
+				"effect": {
+					"rage": "1~2",
+					"bf": "3~4"
+				}
+			},
+			{
+				"id": "reedburgh_gems",
+				"name": "gems shops",
+				"desc": "A jewelers street of colors and reflections charming even the most frugal spender.",
+				"effect": {
+					"rage": -1,
+					"bf": -1
+				},
+				"result": {
+					"debt": "150~175"
+				},
+				"loot": {
+					"gems": "1~2",
+					"watergem": "0~2",
+					"firegem": "0~2",
+					"airgem": "0~2",
+					"earthgem": "0~2"
+				}
+			},
+			{
+				"id": "village_pillage_tavern",
+				"name": "plundering village tavern",
+				"desc": "A merry place of gold and booze.",
+				"effect": {
+					"stamina": -0.1
+				},
+				"result": {
+					"gold": "10~13"
+				}
+			},
+			{
+				"id": "village_pillage_house",
+				"name": "ransack house",
+				"desc": "Quickly look through for a purse or loose gold coins.",
+				"effect": {
+					"stamina": -0.1,
+					"mana": -0.1
+				},
+				"result": {
+					"gold": "0~5"
+				}
+			},
+			{
+				"id": "village_pillage_shop",
+				"name": "loot village shop",
+				"desc": "Take any wealth this small cottage has.",
+				"effect": {
+					"stamina": -0.1
+				},
+				"result": {
+					"gems": "0~2",
+					"gold": "10~25"
+				}
+			},
+			{
+				"id": "reedburgh_sewer_breath",
+				"name": "sewer walkway",
+				"desc": "A section of the sewers not engulfed in overflowing water.",
+				"effect": {
+					"stamina": -0.1,
+					"breath": 1.2
+				},
+				"result": {
+					"hp": "15~30"
+				}
+			},
+			{
+				"id": "reedburgh_sewer_stash",
+				"name": "lost coin bag",
+				"desc": "A lost bag, submerged in water, in a section with a harsh current",
+				"effect": {
+					"weary": "1~2"
+				},
+				"result": {
+					"gold": "15~30"
+				}
+			},
+			{
+				"id": "reedburgh_sewer_blockage",
+				"name": "sewer blockage",
+				"desc": "Trash, water vines, gates, you name it, it's in the way.",
+				"effect": {
+					"rage": "0.75~2.5",
+					"madness": "1~3"
+				}
+			},
+			{
+				"id": "reedburgh_sewer_beggar",
+				"name": "sewer beggars",
+				"desc": "Poor beggars cast down into lower sewer sections, begging for coins. Passing through these sections always seems to make a purse lighter.",
+				"effect": {
+					"rage": "0.75~2.5",
+					"breath": 1.5
+				},
+				"result": {
+					"gold": "0~-15"
+				}
+			},
+			{
+				"id": "reedburgh_sewer_misunderstand",
+				"name": "sewer argument",
+				"desc": "City guards question you endlessly while you pass by an open section.",
+				"effect": {
+					"rage": "0.75~2.5",
+					"breath": 1.5
+				}
+			},
+			{
+				"id": "reedburgh_sewer_crimestash",
+				"name": "hidden drop off",
+				"desc": "Remote corners and dead ends often serve as havens for the exchange of contraband materials.",
+				"effect": {
+					"bf": "0.75~2.5",
+					"stamina": -0.4
+				},
+				"loot": {
+					"gold": "0~12",
+					"gems": "0~2",
+					"bloodgem": "20%"
+				}
+			},
+			{
+				"id": "the_last_rep",
+				"name": "the last rep",
+				"desc": "Just one more then you can go home, right? The receptionist said this was a good gym...",
+				"effect": {
+					"weary": "2~5",
+					"stamina": -2,
+					"vigor": -1
+				},
+				"flavor": "It's always the hardest."
+			},
+			{
+				"id": "gym_crowd",
+				"name": "crowded gym",
+				"desc": "Everywhere people shout and grunt. A spot's nowhere to be found.",
+				"effect": {
+					"rage": "1~2",
+					"madness": "0.5~1.5",
+					"stamina": -0.5,
+					"vigor": -0.05
+				},
+				"flavor": "Amidst it all a man in a horse mask slumps."
+			},
+			{
+				"id": "lifting_weights",
+				"name": "lifting weights",
+				"desc": "And putting them down again.",
+				"tags": "enc_site_of_learning",
+				"effect": {
+					"weary": "1~3",
+					"stamina": -1,
+					"vigor": -0.1
+				},
+				"mod": {
+					"weaponlore.max": "0.05//20/-1"
+				}
+			},
+			{
+				"id": "running_laps",
+				"name": "running laps",
+				"desc": "Best to build up your legs with how many places you have to see and how many creditors you have to flee.",
+				"tags": "enc_site_of_learning",
+				"effect": {
+					"weary": "1~3",
+					"stamina": -0.5,
+					"vigor": -0.05
+				},
+				"mod": {
+					"dist": "1//20/-1"
+				}
+			},
+			{
+				"id": "dropped_the_weights",
+				"name": "dropped the weights",
+				"desc": "You dropped the bar oh gods oh gods o gods don't go into the light",
+				"effect": {
+					"hp": -1,
+					"stamina": -0.5,
+					"vigor": -0.05,
+					"unease": "1~3"
+				}
+			},
+			{
+				"id": "hair_pluckers",
+				"name": "hair pluckers",
+				"desc": "People getting their bodies tweezed free of hair would be a lot easier to ignore if not for the screaming.",
+				"effect": {
+					"bf": "1~3",
+					"unease": "1~3"
+				}
+			},
+			{
+				"id": "dodge_shotputs",
+				"name": "shotput dodge",
+				"desc": "The shotput team's aim is bad enough sober. Their drinking makes it worse.",
+				"effect": {
+					"stamina": -0.5,
+					"vigor": -0.05,
+					"unease": "1~2",
+					"weary": "2~3",
+					"hp": -2
+				}
+			},
+			{
+				"id": "gym_spar",
+				"name": "gymnasium sparring",
+				"desc": "Practice your strikes and grappling.",
+				"tags": "enc_site_of_learning",
+				"effect": {
+					"stamina": -0.8,
+					"vigor": -0.08,
+					"weary": "1~3"
+				},
+				"mod": {
+					"weaponlore.max": "0.05//20/-1"
+				}
+			},
+			{
+				"id": "gym_supplements",
+				"name": "supplement pusher",
+				"desc": "A suspicious man browbeats you into buying something to drink for workouts.",
+				"effect": {
+					"bf": "1~3"
+				},
+				"result": {
+					"debt": "1~2"
+				},
+				"loot": {
+					"pot_stam1": 1
+				}
+			},
+			{
+				"id": "gym_supplements_bad",
+				"name": "supplement pusher",
+				"desc": "A suspicious man browbeats you into buying something to drink for workouts.",
+				"effect": {
+					"bf": "1~3"
+				},
+				"result": {
+					"debt": "1~2",
+					"water": 1
+				}
+			}
+		],
+		"locales": [
+			{
+				"id": "reedburgh_market",
+				"name": "reedburgh Markets",
+				"desc": "Navigate the intricate web of city streets, bustling stalls, and vibrant shops. Travelers, burdened by debt, find themselves compelled to lend a hand in the noble task of sewer cleanup.",
+				"level": 4,
+				"dist": 65,
+				"require": "g.reedburgh_city_papers>0",
+				"length": 40,
+				"run": {
+					"stamina": 0.2,
+					"bf": 0.2
+				},
+				"once": {
+					"purse.max": 1,
+					"herbbag.max": 1,
+					"gembag.max": 1
+				},
+				"encs": [
+					["daylight_mugging", "daylight_mugging"],
+					["gang_mugging", "gang_mugging"],
+					"daylight_mugging",
+					"gang_mugging",
+					{
+						"ids": "reedburgh_gems",
+						"weight": 0.8
+					},
+					{
+						"ids": "reedburgh_stalls",
+						"weight": 0.7
+					},
+					{
+						"ids": "reedburgh_show",
+						"weight": 1.5
+					},
+					"reedburgh_scrolls",
+					"reedburgh_beggars",
+					"reedburgh_lost",
+					"reedburgh_checkpoint",
+					"reedburgh_checkpoint_bad",
+					"reedburgh_con",
+					"reedburgh_nothing",
+					"reedburgh_streets",
+					"reedburgh_crime"
+				]
+			},
+			{
+				"id": "reedburgh_gymnasium",
+				"name": "reedburgh Gymnasium",
+				"desc": "Finally, someplace pleasant in this wretched city.",
+				"level": 5,
+				"dist": 69,
+				"require": "g.reedburgh_gym_membership>0",
+				"length": 40,
+				"run": {
+					"stamina": 1,
+					"vigor": 0.1
+				},
+				"buy": {
+					"gold": 250
+				},
+				"once": {
+					"citynavigation.max": 1
+				},
+				"mod": {
+					"hp.max": "5//10/-1"
+				},
+				"boss": {
+					"40": ["unleashed_beast"]
+				},
+				"encs": [
+					["roid_rage", "roid_rage"],
+					"roid_rage",
+					"the_last_rep",
+					"gym_crowd",
+					"lifting_weights",
+					"running_laps",
+					"dropped_the_weight",
+					"hair_pluckers",
+					"dodge_shotputs",
+					"gym_spar",
+					"gym_supplements",
+					"gym_supplements_bad"
+				]
+			},
+			{
+				"id": "reedburgh_second_ring",
+				"name": "infiltrate reedburgh second ring",
+				"desc": "By utilizing waterways, one can discover hidden passages into the second city ring of Reedburgh.",
+				"level": 4,
+				"dist": 65,
+				"require": "g.evil1>0&&g.citynavigation>=6&&g.reedburgh_city_sewer>=1",
+				"length": 31,
+				"run": {
+					"stamina": 0.3,
+					"shadow": 0.1
+				},
+				"boss": {
+					"31": ["reedburgh_captain", "reedburgh_guard", "reedburgh_guard"]
+				},
+				"encs": [
+					["reedburgh_guard", "reedburgh_guard"],
+					"reedburgh_guard",
+					"reedburgh_guardpost",
+					"reedburgh_training",
+					"reedburgh_barracks",
+					"reedburgh_armory",
+					"reedburgh_seized_goods"
+				]
+			}
+		],
+		"monsters": [
+			{
+				"id": "daylight_mugging",
+				"name": "mugger",
+				"level": 5,
+				"kind": "convict",
+				"desc": "Someone that is excellent at stabbing and robbing.",
+				"hp": 30,
+				"defense": 5,
+				"noproc": true,
+				"speed": 4,
+				"attack": [
+					{
+						"name": "close quarters jab",
+						"kind": "pierce",
+						"damage": "9~12"
+					},
+					{
+						"name": "steal gold",
+						"result": {
+							"gold": "-10~-20"
+						}
+					}
+				],
+				"loot": [
+					{
+						"%": "10%",
+						"maxlevel": 2,
+						"id": "d_dagger"
+					}
+				]
+			},
+			{
+				"id": "gang_mugging",
+				"name": "gang thug",
+				"level": 5,
+				"kind": "convict",
+				"desc": "A goon of the local gang, looking to steal your gems.",
+				"hp": 35,
+				"defense": 5,
+				"noproc": true,
+				"speed": 2,
+				"attack": [
+					{
+						"name": "street bash",
+						"kind": "blunt",
+						"damage": "9~12"
+					},
+					{
+						"name": "steal gems",
+						"result": {
+							"gems": "-1~-2"
+						}
+					}
+				],
+				"loot": [
+					{
+						"%": "10%",
+						"maxlevel": 2,
+						"id": "d_club"
+					}
+				]
+			},
+			{
+				"id": "village_farmer",
+				"name": "village farmer",
+				"level": 2,
+				"kind": "victim",
+				"desc": "A poor farmer.",
+				"noproc": true,
+				"hp": 25,
+				"defense": 1,
+				"attack": [
+					{
+						"name": "sickle slice",
+						"kind": "slash",
+						"damage": "4~7"
+					},
+					{
+						"name": "pitchfork thrust",
+						"kind": "pierce",
+						"damage": "7~9"
+					}
+				],
+				"loot": {
+					"body": "80%"
+				}
+			},
+			{
+				"id": "village_hunter",
+				"name": "village hunter",
+				"level": 4,
+				"kind": "victim",
+				"noproc": true,
+				"hp": 25,
+				"defense": 2,
+				"tohit": 12,
+				"attack": {
+					"name": "small arrow",
+					"kind": "pierce",
+					"damage": "9~12"
+				},
+				"loot": {
+					"body": "70%"
+				}
+			},
+			{
+				"id": "village_militia",
+				"name": "village militia",
+				"level": 4,
+				"kind": "victim",
+				"desc": "A poor farmer forced to take up arms to protect their home.",
+				"hp": 35,
+				"defense": 5,
+				"noproc": true,
+				"attack": {
+					"name": "short sword swing",
+					"kind": "slash",
+					"damage": "9~12"
+				},
+				"loot": [
+					{
+						"body": "90%"
+					},
+					{
+						"%": "10%",
+						"maxlevel": 4,
+						"id": "d_sword"
+					}
+				]
+			},
+			{
+				"id": "village_hero",
+				"name": "village hero",
+				"noproc": true,
+				"level": 6,
+				"kind": "victim",
+				"desc": "A retired adventurer, clad in old armor and armed with a longsword.",
+				"hp": 50,
+				"defense": 5,
+				"tohit": 12,
+				"attack": [
+					{
+						"name": "long sword clash",
+						"kind": "slash",
+						"damage": "10~13"
+					},
+					{
+						"name": "quick jabs",
+						"kind": "pierce",
+						"damage": "10~11"
+					},
+					{
+						"name": "dirty tricks",
+						"kind": "blunt",
+						"targets": "enemyleader",
+						"damage": "3~4",
+						"dot": {
+							"duration": 4,
+							"self.dodge": -2,
+							"self.tohit": -2
+						}
+					}
+				],
+				"loot": [
+					{
+						"body": 1,
+						"gold": "5~10"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 6,
+						"id": "d_longsword"
+					},
+					{
+						"%": "15%",
+						"maxlevel": 6,
+						"id": "d_paddedarmor"
+					}
+				]
+			},
+			{
+				"id": "village_hero_horse",
+				"name": "village stallion",
+				"level": 4,
+				"kind": "monster",
+				"desc": "A well-fed horse.",
+				"hp": 75,
+				"defense": 0,
+				"noproc": true,
+				"attack": [
+					{
+						"name": "trample",
+						"targets": "enemies",
+						"kind": "blunt",
+						"damage": "4~5"
+					},
+					{
+						"name": "gallop",
+						"targets": "ally",
+						"dot": {
+							"duration": 30,
+							"mod": {
+								"self.speed": 5
+							}
+						}
+					}
+				]
+			},
+			{
+				"id": "reedburgh_smuggler",
+				"name": "reedburgh smuggler",
+				"level": 6,
+				"kind": "convict",
+				"desc": "Typically smuggling in herbs and gems.",
+				"hp": 90,
+				"defense": 5,
+				"noproc": true,
+				"attack": {
+					"name": "shabby stab",
+					"kind": "slash",
+					"damage": "6~10"
+				},
+				"loot": {
+					"bloodgem": "5%",
+					"gems": "25%",
+					"herbs": "1~3",
+					"gold": "1~3"
+				}
+			},
+			{
+				"id": "reedburgh_quest_monster",
+				"name": "reedburgh sewer fungus",
+				"level": 8,
+				"kind": "monster",
+				"desc": "Watery creatures from the sewers. Local guilds, pay a decent amount for their eradication",
+				"hp": 80,
+				"noproc": true,
+				"defense": 5,
+				"attack": [
+					{
+						"name": "fungal breath",
+						"kind": "charm",
+						"damage": "8~15"
+					},
+					{
+						"name": "spore field",
+						"kind": "poison",
+						"damage": "1~3",
+						"dot": {
+							"duration": 4,
+							"damage": "2~4",
+							"self.speed": "-2"
+						}
+					}
+				],
+				"loot": {
+					"debt": "-50~-80"
+				},
+				"immune": "water"
+			},
+			{
+				"id": "reedburgh_water_vines",
+				"name": "reedburgh water tangle",
+				"level": 10,
+				"kind": "monster",
+				"desc": "A mass of thin weeds and vines grappling in its victims, known to clog up water ways.",
+				"hp": 120,
+				"noproc": true,
+				"defense": 8,
+				"speed": -8,
+				"spells": "vinewhip",
+				"attack": [
+					{
+						"name": "sharp vines",
+						"kind": "slash",
+						"damage": "10~15"
+					},
+					{
+						"name": "leg grapple",
+						"kind": "blunt",
+						"damage": "2~5",
+						"dot": {
+							"id": "entangle",
+							"name": "tangled footing",
+							"duration": 3,
+							"damage": "3~6"
+						}
+					}
+				],
+				"loot": {
+					"debt": "-50~-80",
+					"naturegem": "50%",
+					"watergem": "50%"
+				},
+				"immune": "water"
+			},
+			{
+				"id": "reedburgh_water_massvines",
+				"name": "reedburgh water thicket",
+				"level": 11,
+				"kind": "monster",
+				"desc": "A overgrown mass of vines and water tangle.",
+				"tohit": 10,
+				"noproc": true,
+				"hp": 190,
+				"defense": 10,
+				"speed": -6,
+				"spells": "vinewhip,poisonnettle,venom1",
+				"attack": [
+					{
+						"name": "thorny vines",
+						"kind": "slash",
+						"damage": "10~12"
+					},
+					{
+						"name": "grapple",
+						"kind": "blunt",
+						"damage": "4~7",
+						"dot": {
+							"id": "entangle",
+							"name": "tied down",
+							"duration": 5,
+							"damage": "3~5"
+						}
+					}
+				],
+				"loot": {
+					"debt": "-200~-250",
+					"naturegem": 2,
+					"watergem": 2,
+					"lightgem": 1,
+					"reedburgh_badge": 1
+				},
+				"immune": "water"
+			},
+			{
+				"id": "reedburgh_captain",
+				"name": "reedburgh decorated captain",
+				"level": 14,
+				"kind": "victim",
+				"desc": "An aged captain, now solely dedicated to overseeing training, still donning the weighty armor of the past.",
+				"tohit": 15,
+				"noproc": true,
+				"hp": 100,
+				"dodge": 8,
+				"defense": 50,
+				"speed": -5,
+				"chaincast": 0.5,
+				"spells": "reedburgh_call_backup_captain",
+				"attack": [
+					{
+						"name": "command",
+						"targets": "ally",
+						"dot": {
+							"duration": 30,
+							"mod": {
+								"self.speed": 5,
+								"self.tohit": 2,
+								"self.dodge": 2
+							}
+						}
+					},
+					{
+						"name": "bulwark",
+						"targets": "self",
+						"result": {
+							"hp": 10
+						},
+						"dot": {
+							"duration": 10,
+							"mod": {
+								"self.dodge": -3,
+								"self.defense": 10,
+								"self.speed": -2
+							}
+						}
+					},
+					{
+						"name": "priority target",
+						"targets": "enemyleader",
+						"dot": {
+							"duration": 60,
+							"mod": {
+								"self.dodge": -2,
+								"self.speed": -2
+							}
+						}
+					}
+				],
+				"loot": {
+					"gold": 120,
+					"gems": 5,
+					"lightgem": 2,
+					"reedburgh_herobadge": 1
+				}
+			},
+			{
+				"id": "reedburgh_guard",
+				"name": "reedburgh guard",
+				"level": 7,
+				"kind": "victim",
+				"desc": "A well-trained civil servant entrusted with maintaining peace and handling minor crimes.",
+				"tohit": 12,
+				"noproc": true,
+				"hp": 50,
+				"dodge": 5,
+				"defense": 4,
+				"speed": 3,
+				"chaincast": 0.4,
+				"spells": "reedburgh_call_backup,guidestr",
+				"attack": [
+					{
+						"name": "sword slash",
+						"kind": "slash",
+						"damage": "12~14"
+					},
+					{
+						"name": "shield bash",
+						"kind": "bash",
+						"damage": "6~12"
+					},
+					{
+						"name": "raise shield",
+						"targets": "self",
+						"result": {
+							"hp": 5
+						},
+						"dot": {
+							"duration": 10,
+							"mod": {
+								"self.dodge": -2,
+								"self.defense": 6,
+								"self.speed": -2
+							}
+						}
+					}
+				],
+				"loot": [
+					{
+						"gold": "15~25",
+						"gems": "60%",
+						"lightgem": "1%"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 7,
+						"id": "d_spear"
+					}
+				]
+			},
+			{
+				"id": "reedburgh_guard_backup",
+				"name": "reedburgh guard",
+				"level": 7,
+				"kind": "victim",
+				"noproc": true,
+				"desc": "A well-trained civil servant entrusted with maintaining peace and handling minor crimes.",
+				"hp": 50,
+				"dodge": 5,
+				"defense": 4,
+				"speed": 3,
+				"chaincast": 0.5,
+				"spells": "guidestr",
+				"attack": [
+					{
+						"name": "sword slash",
+						"kind": "slash",
+						"damage": "12~14"
+					},
+					{
+						"name": "shield bash",
+						"kind": "bash",
+						"damage": "6~12"
+					},
+					{
+						"name": "raise shield",
+						"targets": "self",
+						"result": {
+							"hp": 5
+						},
+						"dot": {
+							"duration": 10,
+							"mod": {
+								"self.dodge": -2,
+								"self.defense": 6,
+								"self.speed": -2
+							}
+						}
+					}
+				],
+				"loot": [
+					{
+						"gold": "15~25",
+						"gems": "60%",
+						"lightgem": "1%"
+					},
+					{
+						"%": "20%",
+						"maxlevel": 7,
+						"id": "d_spear"
+					}
+				]
+			},
+			{
+				"id": "roid_rage",
+				"name": "enraged strongman",
+				"level": 5,
+				"kind": "humanoid",
+				"desc": "You took his spot!",
+				"hp": 30,
+				"defense": 12,
+				"spells": "mon_blunt_heavy",
+				"attack": {
+					"name": "barbell",
+					"kind": "blunt",
+					"damage": "6~12"
+				}
+			},
+			{
+				"id": "unleashed_beast",
+				"name": "unleashed beast",
+				"level": 9,
+				"kind": "beast",
+				"desc": "Someone's sparring opponent broke free!",
+				"hp": 40,
+				"defense": 19,
+				"spells": "terrifyingvisage",
+				"attack": [
+					{
+						"name": "bite",
+						"kind": "pierce",
+						"damage": "15~25"
+					},
+					{
+						"name": "swipe",
+						"kind": "slash",
+						"damage": "10~20"
+					}
+				],
+				"flavor": "The tiger/He destroyed his cage/Yes/YES/The tiger is out"
+			}
+		],
+		"dungeons": [
+			{
+				"id": "pillage_village",
+				"name": "pillage village",
+				"level": 2,
+				"length": 30,
+				"dist": 35,
+				"require": "g.evil1>0",
+				"desc": "Go out and steal, plunder and otherwise ruin a once peaceful village.",
+				"run": {
+					"stamina": 0.2,
+					"mana": 0.1
+				},
+				"result": {
+					"gold": "30~80",
+					"gems": "1~2"
+				},
+				"mod": {
+					"pillage_village.dist": 5
+				},
+				"encs": [
+					["village_militia", "village_militia"],
+					["village_farmer", "village_hunter"],
+					["village_militia", "village_hunter", "village_farmer"],
+					"village_militia",
+					"village_hunter",
+					"village_farmer",
+					"village_pillage_tavern",
+					"village_pillage_house",
+					"village_pillage_shop"
+				]
+			},
+			{
+				"id": "reedburgh_city_sewer",
+				"name": "reedburgh city first ring sewer",
+				"level": 4,
+				"length": 30,
+				"require": "g.reedburgh_market>0",
+				"dist": 65,
+				"bars": "breath",
+				"desc": "Travel the underground waterways looking for lost treasure, hidden stashes or to clean up some troubling monsters.",
+				"run": {
+					"stamina": 0.2,
+					"mana": 0.12
+				},
+				"effect": {
+					"breath": -1.05
+				},
+				"result": {
+					"gold": "50~100",
+					"gems": "5~10",
+					"watergem": "5~10",
+					"debt": "-50~-100"
+				},
+				"boss": {
+					"30": [
+						"reedburgh_water_massvines",
+						"reedburgh_quest_monster",
+						"slime",
+						"slime"
+					]
+				},
+				"encs": [
+					["slime", "slime"],
+					["slime", "slime", "slime"],
+					["lgspider", "lgspider", "lgspider"],
+					["lgspider", "lgspider"],
+					"reedburgh_smuggler",
+					"reedburgh_quest_monster",
+					"reedburgh_water_vines",
+					{
+						"ids": "reedburgh_sewer_breath",
+						"weight": 2
+					},
+					{
+						"ids": "reedburgh_quest_monster,reedburgh_quest_monster",
+						"weight": 0.25
+					},
+					{
+						"ids": "reedburgh_smuggler,reedburgh_smuggler",
+						"weight": 0.5
+					},
+					{
+						"ids": "reedburgh_water_vines,reedburgh_water_vines",
+						"weight": 0.25
+					},
+					{
+						"ids": "reedburgh_sewer_blockage",
+						"weight": 0.8
+					},
+					{
+						"ids": "reedburgh_sewer_beggar",
+						"weight": 0.8
+					},
+					{
+						"ids": "reedburgh_sewer_stash",
+						"weight": 0.8
+					},
+					{
+						"ids": "reedburgh_sewer_crimestash",
+						"weight": 0.8
+					}
+				]
+			}
+		]
+	}
+}

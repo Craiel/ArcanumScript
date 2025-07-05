@@ -2,12 +2,6 @@
 (function($) {
     'use strict';
 
-    const ValidGameVersions = [
-        'vers pseudo_stable 0.8.1',
-        'vers 0.8.0',
-        'Version: pseudo_stable 0.10.4',
-        'Version: stable 0.11.1.3'];
-
     class AELoader {
         load() {
             this.checkForOtherScripts();
@@ -59,8 +53,8 @@
             }
 
             let rawText = versionSpan.text().trim();
-            for(let i = 0; i < ValidGameVersions.length; i++){
-                let specialVersion = ValidGameVersions[i];
+            for(let i = 0; i < AE.data.ValidGameVersions.length; i++){
+                let specialVersion = AE.data.ValidGameVersions[i];
                 if(rawText === specialVersion){
                     console.log("Detected Game Version: '" + rawText + "'");
                     return;

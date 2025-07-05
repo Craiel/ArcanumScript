@@ -148,7 +148,7 @@ function buildUpgradeData(source, target) {
     }
 }
 
-exports.build = function(data) {
+exports.build = function(data, stable) {
     let result = {
         ResourceData: {},
         PotionData: {},
@@ -193,5 +193,10 @@ exports.build = function(data) {
     `;
 
     // JSON.stringify(data, null, 1)
-    fs.writeFileSync('..\\src\\11 - data.generated.js', fileData, 'UTF8');
+    let path = '..\\src\\stable\\';
+    if(stable !== true) {
+        path = '..\\src\\unstable\\';
+    }
+
+    fs.writeFileSync(path + '11 - data.generated.js', fileData, 'UTF8');
 };

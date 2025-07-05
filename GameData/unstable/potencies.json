@@ -1,0 +1,140 @@
+[
+	{
+		"id": "physdmg",
+		"name": "physical damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "bluntdmg",
+		"name": "bludgeoning damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "piercedmg",
+		"name": "piercing damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "slashdmg",
+		"name": "slashing damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "spelldmg",
+		"name": "spell damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "runicdmg",
+		"name": "runic damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "airdmg",
+		"name": "air damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "earthdmg",
+		"name": "earth damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "waterdmg",
+		"name": "water damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "firedmg",
+		"name": "fire damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "spiritdmg",
+		"name": "spirit damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "naturedmg",
+		"name": "nature damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "shadowdmg",
+		"name": "shadow damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "chaosdmg",
+		"name": "chaos damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "lightdmg",
+		"name": "light damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "manadmg",
+		"name": "mana damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "timedmg",
+		"name": "time damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "voiddmg",
+		"name": "void damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "poisondmg",
+		"name": "poison damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "blooddmg",
+		"name": "blood damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "astraldmg",
+		"name": "astral damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "charmdmg",
+		"name": "charm damage",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	},
+	{
+		"id": "spellheal",
+		"name": "spell healing",
+		"value": 100,
+		"damage": "Math.max((i.value/100)||0,0)"
+	}
+]

@@ -1,0 +1,199 @@
+{
+	"module": "combat_tutorial",
+	"sym": "⚔️",
+	"data": {
+		"rares": [
+			{
+				"id": "trainingdagger",
+				"name": "dagger",
+				"desc": "a plain looking wooden dagger",
+				"level": 1,
+				"tags": "t_slash,t_martial,t_dagger,t_training",
+				"type": "weapon",
+				"material": "wood",
+				"hands": 1,
+				"enchants": 1,
+				"attack": {
+					"kind": "slash",
+					"tohit": 1,
+					"damage": "1~2",
+					"potencies": ["slashdmg", "physdmg"]
+				}
+			},
+			{
+				"id": "trainingdart",
+				"name": "homing dart",
+				"desc": "this should hit anything",
+				"level": 1,
+				"hands": 1,
+				"enchants": 1,
+				"type": "weapon",
+				"material": "wood",
+				"tags": "t_martial,t_pierce,t_dart,t_training",
+				"attack": {
+					"kind": "pierce",
+					"harmless": true,
+					"damage": 1,
+					"potencies": ["piercedmg", "physdmg"]
+				}
+			},
+			{
+				"id": "traininghammer",
+				"name": "wooden hammer",
+				"level": 1,
+				"enchants": 1,
+				"hands": 2,
+				"tags": "t_martial,t_blunt,t_warhammer,t_training",
+				"type": "weapon",
+				"material": "wood",
+				"attack": {
+					"kind": "blunt",
+					"tohit": -2,
+					"damage": "2~3",
+					"potencies": ["bluntdmg", "physdmg", "hammerdmg"]
+				}
+			}
+		],
+		"dungeons": [
+			{
+				"id": "traininggrounds",
+				"name": "training grounds",
+				"title": "Certified",
+				"dist": 1,
+				"length": 20,
+				"require": "g.evt_helper>0",
+				"boss": {
+					"1": "stddummy",
+					"2": "noweapondummy",
+					"3": "weapondummy",
+					"4": "dodgydummy",
+					"5": "armorydummy",
+					"20": "instructor"
+				},
+				"spawns": ["dummy"]
+			}
+		],
+		"monsters": [
+			{
+				"id": "stddummy",
+				"name": "dummy1",
+				"desc": "Even fists would do",
+				"level": 0,
+				"speed": -10,
+				"hp": 10,
+				"attack": {
+					"log": {
+						"name": "hit me!",
+						"desc": "Harder, HARDER I said. Spells will help"
+					}
+				}
+			},
+			{
+				"id": "noweapondummy",
+				"name": "hard dummy",
+				"desc": "Fists don't work against this guy",
+				"level": 0,
+				"speed": -10,
+				"hp": 5,
+				"immune": "physical",
+				"attack": {
+					"log": {
+						"name": "Spells",
+						"desc": "Use your magic missile, from spellpage bind as quickslot or add to memorized"
+					}
+				},
+				"loot": {
+					"trainingdagger": 1
+				}
+			},
+			{
+				"id": "weapondummy",
+				"name": "spellabsorber",
+				"desc": "Use a weapon for this guy",
+				"level": 0,
+				"speed": -10,
+				"hp": 5,
+				"immune": "force,blunt",
+				"attack": {
+					"log": {
+						"name": "Use your weapon",
+						"desc": "Go to the tab Equip and find the wood dagger and equip it"
+					}
+				},
+				"loot": {
+					"trainingdart": 1
+				}
+			},
+			{
+				"id": "dodgydummy",
+				"name": "dodging dummy",
+				"desc": "Any normal means of attack is useless",
+				"level": 0,
+				"hp": 1,
+				"speed": -10,
+				"dodge": 5,
+				"attack": {
+					"log": {
+						"name": "Can't hit me",
+						"desc": "Use the homing dart to hit this obnoxious dummy"
+					}
+				},
+				"loot": {
+					"traininghammer": 1
+				}
+			},
+			{
+				"id": "armorydummy",
+				"name": "armored dummy",
+				"desc": "Any normal attack leaves no mark",
+				"dodge": -30,
+				"hp": 10,
+				"speed": -10,
+				"defense": 20,
+				"resist": {
+					"blunt": -50
+				},
+				"attack": {
+					"log": {
+						"name": "Use your hammer",
+						"desc": "Only the hammer could leave a dent at this iron chunk"
+					}
+				}
+			},
+			{
+				"id": "instructor",
+				"desc": "Is he toying with you?",
+				"dodge": 4,
+				"hp": 50,
+				"speed": 3,
+				"attack": {
+					"name": "mockery",
+					"damage": "0~2",
+					"type": "slash",
+					"log": [
+						{
+							"%": "10%",
+							"desc": "Having a spell in memorized and a weapon in hand is most effective"
+						},
+						{
+							"%": "10%",
+							"desc": "Casting spells manually makes for an easy combat"
+						},
+						{
+							"%": "10%",
+							"desc": "Memorizing a good combination of buffs and attack spells increases survivability"
+						}
+					]
+				}
+			},
+			{
+				"id": "dummy",
+				"desc": "Can't even hit back",
+				"dodge": -10,
+				"defense": 3,
+				"hp": 10,
+				"speed": -10
+			}
+		]
+	}
+}

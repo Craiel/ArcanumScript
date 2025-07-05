@@ -1,0 +1,392 @@
+[
+	{
+		"id": "gloss_example_entry",
+		"name": "example entry name",
+		"group": "example group",
+		"tags": "t_gloss_example",
+		"desc": [
+			"Example line.",
+			"Forced example newline.",
+			"Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text. Example large text."
+		],
+		"require": "g.lore>999"
+	},
+	{
+		"id": "gloss_evil",
+		"name": "evil",
+		"group": "alignment",
+		"desc": [
+			"Dark and selfish deeds follow you, and leave a stain on your soul.",
+			"",
+			"Your 'Evil' score represents an accounting of the wicked and immoral actions you have performed over time. Most actions that will provide Evil are tagged as Evil Acts, with the more extreme examples being tagged Vile Acts.",
+			"As your Evil increases, so does your affinity for Shadow magic. But be warned - if you choose to delve the depths of this path, your access to Light magic will wane as well."
+		],
+		"require": "g.evilamt>0"
+	},
+	{
+		"id": "gloss_virtue",
+		"name": "virtue",
+		"group": "alignment",
+		"desc": [
+			"Kind and selfless acts can shine a light in the darkest of places.",
+			"",
+			"Your 'Virtue' score represents an accounting of the decent and respectable actions you have undertaken throughout your career. Most actions that will provide Virtue are tagged as Good Acts, with the more extreme examples being tagged as Virtuous Acts.",
+			"As your Virtue increases, so does your affinity for Light magic. However, devoting yourself to this path requires that you forsake Evil, and your strength with Shadow magic will decrease at more extreme dedication to Light and Virtue."
+		],
+		"require": "g.virtue>0"
+	},
+	{
+		"id": "gloss_animation",
+		"name": "animation",
+		"group": "spell schools",
+		"tags": "t_gloss_school,t_gloss_animation,t_gloss_minions",
+		"desc": [
+			"A school of magic focused on making normally inanimate objects, animate, for the benefit of the wizard.",
+			"Fundamental to a variety of magic branches, with the most well-known one being puppetry, an adept of this school will find himself not lacking for stalwart, if somewhat silent allies.",
+			"Required for development of any advanced artificial constructs."
+		],
+		"require": "g.puppetry>0"
+	},
+	{
+		"id": "gloss_puppetry",
+		"name": "puppetry",
+		"group": "skills",
+		"tags": "t_gloss_skill,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"A fusion of animation and crafting, this entry-level skill is a prerequisite for advancement in the mechanical arts.",
+			"Provides the wizard with the ability to create puppets, summonable in combat. Puppets can also be used to create several upgrades.",
+			"Puppeteers can make further use of this skill, making the puppets permanent minions and unlocking additional upgrades and a way to use them to produce gold."
+		],
+		"require": "g.crafting>=8&&g.spiritlore>=5"
+	},
+	{
+		"id": "gloss_machinacreation",
+		"name": "mechanical magic",
+		"group": "skills",
+		"tags": "t_gloss_skill,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"An advanced fusion of animation and crafting, this skill represents an advanced understanding of construct creation.",
+			"Provides the wizard with ability to construct machinae, a more powerful combat summon, and unlocks a number of related upgrades",
+			"Machinists can field machinae as permanent minions, create additional machina types and utilize machina to create elemental gems passively.",
+			"This is the highest skill a wizard without a speciality in mechanical magic can attain."
+		],
+		"require": "g.crafting>=12&&g.puppetry>=6&&g.magicalanimation>=5&&g.tier2>0"
+	},
+	{
+		"id": "gloss_automatasculpting",
+		"name": "automata sculpting",
+		"group": "skills",
+		"tags": "t_gloss_skill,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"The pinnacle of the crafting/animation arts, this skill represents the capacity to create artificial life.",
+			"Automatas are extremely powerful combat summons, although the costs to creating and maintaining them are prohibitive",
+			"Allows the wizard to create powerful upgrades, including an ability to have an additional action slot, albeit mutually exclusive with the creation of a time spiral."
+		],
+		"require": "g.crafting>=18&&g.puppetry>=8&&g.magicalanimation>=6&&g.magiphysics>=5&&(g.mechanist+g.mechamancer)>0"
+	},
+	{
+		"id": "gloss_puppets",
+		"name": "puppets",
+		"group": "resources",
+		"tags": "t_gloss_resource,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"Puppets are simple constructs that lack any source of internal motive force and therefore must be controlled by a wizard at all times. As the animation is done directly by the wizard, puppets tend to be made out of low-weight, easily replaced materials, such as wood.",
+			"Commonly, amplifiers for easier communication with the puppet are used, with spirit gems being a popular choice. For finer control, direct connection via enchanted strings might need to be established.",
+			"Because exerting constant control is taxing, most non-dedicated practitioners find themselves unable to control a significant number of puppets in combat, much less give them any kind of advanced commands."
+		],
+		"require": "g.puppetry>=1"
+	},
+	{
+		"id": "gloss_machinae",
+		"name": "machinae",
+		"group": "resources",
+		"tags": "t_gloss_resource,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"Machinae are automatons capable of performing tasks without direct control. They require a source of mana and precise, pre-made instructions on how to operate, in order to do anything.",
+			"As machinae are useful even to non-mages, it is common to make them out of sturdier, if more expensive materials, most commonly steel.",
+			"The lack of adaptability is a general shortcoming of this type of construct, meaning that unless the wizard specializes in this kind of magic, they would only be able to issue the most rudimentary of instructions, not accounting for changing environment, or allowing for things like self-preservation.",
+			"Specialists have been known to lease specialized machina for specific tasks, earning a significant amount of coin in the process, although undesirable long-term effects have been known to emerge."
+		],
+		"require": "g.machinacreation>=1"
+	},
+	{
+		"id": "gloss_automatas",
+		"name": "automatas",
+		"group": "resources",
+		"tags": "t_gloss_resource,t_gloss_animation,t_gloss_crafting,t_gloss_minions",
+		"desc": [
+			"Automatas are fully sentient artificial constructs, with the cognitive capacity commonly exceeding that of an average human. As each automata is usually a hand-crafted work of art, the choice of the material is largely the prerogative of the creator. Some people claim to have once encountered some automata made out of brass, but the ones more commonly known are made out of crystal.",
+			"Automatas are capable of artificial learning and direct knowledge transfer, allowing one to create a skilled fighter in an incredibly short amount of time.",
+			"True masters of this art, have been known to teach automata how to perform magic, despite the fact that their nature prevents them from absorbing and generating mana in conventional ways. Direct mana transfers and magical gem supplies have been employed to remedy this.",
+			"As automatas tend to have outstanding intellect, they are commonly employed in management roles, such as becoming advisors or overseers.",
+			"There have been no known cases of any automata imprisoning their creator and impersonating them with the use of disguises and glamour charms, to pursue their own agenda."
+		],
+		"require": "g.automatasculpting>=1"
+	},
+	{
+		"id": "gloss_skills",
+		"name": "skills",
+		"group": "skills",
+		"tags": "t_gloss_skill",
+		"desc": [
+			"Skills are the backbone of any wizard. They unlock wide swathes of content and typically cost research or skill points to unlock.",
+			"Most (not necessarily all) skills start with a maximum of 5 and have many ways to increase their maximum.",
+			"You can train a skill passively, which will increase the skill's experience each tick by its rate, or use focus.",
+			"Focus consumes mana to increase the experience of the first skill you're training. If you have multiple actions and use them to train multiple skills, only one will increase.",
+			"You can also gain experience through some alternative means. Remember, any overflow experience is lost when you level a skill.",
+			"Most skills unlock everything they're going to by level 25, with mage lore being the main exception."
+		],
+		"require": "apprentice"
+	},
+	{
+		"id": "gloss_sp",
+		"name": "skill points",
+		"group": "skills",
+		"tags": "t_gloss_skill,t_gloss_resource,t_gloss_player",
+		"desc": [
+			"Skill points are necessary to unlock most skills and buy some upgrades.",
+			"Various things provide them as one-time bonuses, such as obtaining a new class or the first clear of some dungeons.",
+			"For repeatable sources of skill points, you can pursue adventuring, potions, and spirit magic. Some tasks and furniture can also slowly provide more.",
+			"Several of the most important and impactful skills will cost multiple skill points, so consider your spending carefully until you're satisfied you've seen all that you care to."
+		],
+		"require": "apprentice"
+	},
+	{
+		"id": "gloss_focus",
+		"name": "focus",
+		"group": "skills",
+		"tags": "t_gloss_skill,t_gloss_action",
+		"desc": [
+			"Focus is a very useful task that converts mana into experience for the skill you're training.",
+			"It's recommended to enable Autofocus by clicking it above the runner listing your action, for the sake of your wrist."
+		],
+		"require": "mana"
+	},
+	{
+		"id": "gloss_enchants",
+		"name": "enchants",
+		"group": "enchants",
+		"tags": "t_gloss_enchant",
+		"desc": [
+			"Enchants go on equipment to give it a variety of permanent bonuses. They're unlocked by various things, but most can be unlocked with a high enough enchanting skill.",
+			"The skill enchanting is unlocked naturally by training your mage lore once you've acquired a class.",
+			"Unlocking an enchant has an upfront cost, and then another smaller cost each time you want to perform the enchantment.",
+			"Each enchant has a specific type of equipment it goes on. Besides that, to take an enchant an item needs a number of unoccupied enchant levels equal or greater to the enchant's level.",
+			"You have a number of slot-levels equal to your enchanting level.",
+			"To actually perform the enchant, you need an enchantsource, an action, and unoccupied slot-levels equal to or greater than the enchant's level.",
+			"If you have the slot-levels to spare, you can enchant multiple items at once. Enchanting any number of items still only counts as one action.",
+			"For example, if you had an enchanting level of 10, you would have 10 slot-levels and could put a level 4 enchant on one item and a level 6 enchant on another item at the same time."
+		],
+		"require": "g.tier0>0"
+	},
+	{
+		"id": "gloss_combat",
+		"name": "combat",
+		"group": "combat",
+		"tags": "t_gloss_combat",
+		"desc": [
+			"Combat is when you try to kill something. Dying has no penalty besides lost time and you can endlessly retry a fight as long as you like.",
+			"Combat tends to give experience faster than exploration does, for the various benefits of levelling (especially skill points), and monsters drop equipment often.",
+			"Equipment can be sold for more gold, used for combat, or enchanted to make them useful for a wide variety of purposes, including of course combat but also training skills, gathering resources, and reducing stress.",
+			"With all that said, each combat turn (depending on your speed, by default a few seconds) you make one weapon attack and cast one spell from your memorized list, starting at the top and going down until you wrap around.",
+			"If this reduces the monster's life to 0, you beat that monster, get its loot, and move to the next encounter or clear the dungeon if it was the last one.",
+			"The monster will do the same, and if your life drops to 0, you have to try again, although your progress in the dungeon won't be lost unless you visit a new place before clearing it.",
+			"Experiment with a variety of offensive spells, buffs, debuffs, and heals to see what works for you and master the art of combat.",
+			"General advice - memorize anything where you care about an effect with a duration, hotkey anything that has an instant effect."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_levels",
+		"name": "levels",
+		"group": "player",
+		"tags": "t_gloss_player",
+		"desc": [
+			"Levels are a measure of your wizard's experience and power. They're independent of your skills. Levelling up has various benefits, namely:",
+			"More memorized spell levels, more maximum stamina and vigor, and more maximum life. You also get more speed, skill points, and maximum allies somewhat more slowly from levels.",
+			"You get 1 skill point every 3 levels.",
+			"Gain levels by accumulating experience (not skill experience). The amount of experience needed per level increases as your level does."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_exp",
+		"name": "experience",
+		"group": "player",
+		"tags": "t_gloss_player",
+		"desc": [
+			"Experience is a measure of your wizard's prowess. It's independent of skill experience. You gain experience from some tasks, but mostly from killing monsters in dungeons and clearing encounters in locales."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_dungeons",
+		"name": "dungeons",
+		"group": "exploration",
+		"tags": "t_gloss_exploration,t_gloss_combat",
+		"desc": [
+			"Dungeons are a type of adventure focused on fighting monsters. See the entry for combat, and make sure to keep your life above 0.",
+			"Many dungeons unlock things when cleared for the first time, like new titles or more significant bits of content, and many give bonus resources whenever you clear them."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_locales",
+		"name": "locales",
+		"group": "exploration",
+		"tags": "t_gloss_exploration",
+		"desc": [
+			"Locales are a type of adventure focused on noncombat encounters.",
+			"Encounters tend to inflict various stresses. If a stress bar fills up, you go home to rest until they're all empty again.",
+			"So long as you don't visit another place before you finish resting, you won't lose progress in the locale.",
+			"Like dungeons, many locales will unlock things and have rewards on their first clear, with smaller rewards for subsequent clears.",
+			"Unlike combat, encounters take a fixed amount of time, although you can unlock a few tasks that can speed exploration.",
+			"Some encounters are beneficial in their own right, with treasure or experience or skill maximums as a reward for the encounter."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_clashes",
+		"name": "clashes",
+		"group": "exploration",
+		"tags": "t_gloss_exploration,t_gloss_combat",
+		"desc": [
+			"Clashes are a type of adventure focused on actively fighting a small number of powerful encounters.",
+			"Clashes are marked with the symbols ⚔💀.",
+			"If you leave a clash for any reason, your progress will reset, unlike dungeons and locales which will keep your progress if you don't visit another explore location first.",
+			"You can think of them as the challenge bosses of the game.",
+			"They have significant rewards and unlocks for being able to beat them, with less focus on repeat clears.",
+			"Typically, a clash's boss will challenge you with at least one unique mechanic, in addition to having good survivability and offense at the tier they're intended for.",
+			"To defeat a clash, you'll often have to strategize and figure out specific counters, since brute force usually only works when you outgrow the earlier clashes."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_summons",
+		"name": "summons",
+		"group": "combat",
+		"tags": "t_gloss_combat,t_gloss_minions",
+		"desc": [
+			"Summons are created or called to you by spells and vanish once you leave the adventure for any reason.",
+			"Each source of summons will describe how many of that summon you can have at once, with the weaker ones being unlimited and the stronger ones having caps.",
+			"For example, Call Spirit permits unlimited wisps that do little more than take a hit in your place, but a mightier spell could limit you to 2 especially potent summons that play a larger role in combat."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_minions_allies",
+		"name": "minions",
+		"group": "combat",
+		"tags": "t_gloss_combat,t_gloss_minions",
+		"desc": [
+			"Unlike summons, minions persist between explorations and last as long as they have life.",
+			"The majority of minions are created from the bestiary tab. You need to have killed 10 of a non-unique enemy and have certain skills based on the monster's type and level to be able to buy it as a minion.",
+			"Unique enemies such as bosses can't be minions regardless of normal requirements.",
+			"For the ones that you can recruit, you still have to pay a cost per monster indicated on a tooltip when you mouse over them.",
+			"For the skill requirements, your total levels in the monster's type's corresponding skills has to be equal to or greater than the monster's level.",
+			"The recruitable types and the skills they use are as follows:",
+			"Beasts: Animal handling, nature studies, and summoning.",
+			"Celestials: Astral communion, divination, and lumenology.",
+			"Constructs: Crafting.",
+			"Deities: Divination and spirit communion.",
+			"Demons: Blood magic, demonology, languages, and summoning.",
+			"Elementals: Aeromancy, aquamancy, geomancy, pyromancy, and summoning.",
+			"Giants: Charms, summoning, and trickery.",
+			"Ghosts: Conjuration and spirit communion.",
+			"Humanoids: Charms, languages, and world lore.",
+			"Kells: Nature studies and runic lore.",
+			"Magic beasts: Magic beasts, nature studies, and summoning.",
+			"Spirits: Divination, spirit communion, and summoning.",
+			"Undead: Necromancy and reanimation.",
+			"If a monster's type doesn't appear above, it currently can't be summoned, such as dragons.",
+			"You can have up to a maximum number of minions indicated as Owned Minions, above your list of current minions in the Minions tab.",
+			"You're also constrained by Minions Levels - the total level of your minions can't exceed your maximum Minions Levels, listed to the right of Owned Minions.",
+			"Both of these caps can be increased by a variety of upgrades, furnitures, classes, homes, and skills, with charms and summoning being reliable general options for this."
+		],
+		"require": "g.evt_helper>0"
+	},
+	{
+		"id": "gloss_classes",
+		"name": "classes",
+		"group": "progression",
+		"tags": "t_gloss_progression",
+		"desc": [
+			"Classes are the games primary progression milestones. At a certain point, you will be offered to pick a class.",
+			"Picking a class will increase your tier and with it unlock new progression fields.",
+			"Additionally, all other classes at the same tier will become unavailable, including all other class options you might have unlocked.",
+			"During the apprenticeship your class choice is of little importance, but once you are an independent practitioner of magic, they will heavily influence your future path."
+		],
+		"require": "g.animals>0||g.scribescroll>0||g.herbalism>0"
+	},
+	{
+		"id": "gloss_graduation",
+		"name": "graduation",
+		"group": "progression",
+		"tags": "t_gloss_example",
+		"desc": [
+			"Having learned the fundamentals of magic, it is time to finish your apprenticeship.",
+			"To do so you need to leave your master after paying your tuition fee, or by finding a way to circumvent said fee.",
+			"After doing so you will be free to discover the ways of magic on your own, no longer bound by the spatial limitations of that lousy Attic room."
+		],
+		"require": "g.neophyte>0&&g.research.max>=100&&g.lore>=4"
+	},
+	{
+		"id": "gloss_tiers",
+		"name": "Tiers",
+		"group": "progression",
+		"tags": "t_gloss_example",
+		"desc": [
+			"The level of expertise of a Wizard can be classified as follows, increasing every time they take a class:",
+			"",
+			"Tier 0 - Solitary Magic - Somebody that ended their apprenticeship.",
+			"Tier 1 - Professional Magick - A mastery of magic that allows for a stable income.",
+			"Tier 2 - Arcane Ascendant - An accomplished mage, qualified to take on apprentices.",
+			"Tier 3 - Magical Mastery - A complete mastery and understanding of ones chosen field of magic.",
+			"Tier 4 - Supreme Sorcery - Unlikely to ever meet an equal, these beings transcend the rules and mechanism of society.",
+			"Tier 5 - Dhrunic Magic - Rediscovering magic from before the rending, manipulating the powers that shaped the form of dhrune.",
+			"Tier 6 - Ageless Magic - Powerful enough to resist the inevitability of Death.",
+			"",
+			"Increasing your tier will give you some notoriety and also unlock some skills or upgrades independent of your class choice."
+		],
+		"require": "tier0"
+	},
+	{
+		"id": "gloss_trickery",
+		"name": "trickery",
+		"group": "skills",
+		"tags": "t_gloss_school,t_gloss_chaos",
+		"desc": [
+			"Sleight of hand, mundane attention manipulation, and other common practices of charlatans and stage performers alike.",
+			"Enables a sufficiently-greedy wizard to rob unsuspecting passers-by, potentially even without them noticing.  Trickery is also a pathway to some upgrades.",
+			"Tricksters can make further use of this skill, utilizing the sort of long-term planning traditional for a wizard to plot a theft and unlock other upgrades."
+		],
+		"require": "g.trickery>0"
+	},
+	{
+		"id": "gloss_chaos",
+		"name": "chaos",
+		"group": "spell schools",
+		"tags": "t_gloss_school,t_gloss_chaos",
+		"desc": [
+			"A school of magic focused on altering reality to the whims of the wizard.",
+			"While trickery allows a wizard to make subtle changes with effects far outweighing their causes, chaos magic alters reality in ways that make causality irrelevant.",
+			"Whether it be positional changes, physiological changes, or the reimagination of a world operating on order, Chaos Magic is a force to be reckoned with."
+		],
+		"require": "g.chaoslore>0"
+	},
+	{
+		"id": "gloss_priority",
+		"name": "task priorities (goals and pursuits)",
+		"group": "tasks",
+		"tags": "t_gloss_tasks",
+		"desc": [
+			"Running tasks priority can be further modified by assigining them as (G)oals or (P)ursuits.",
+			"You can do that by clicking the relevant button to the right of the task name in task list. A task may only have one of those properties at a time and you can only have a limited number of goals and pursuits assigned",
+			"When a task is set as a goal, it will attempt to perform itself whenever another action is performed. Assuming it can be performed or resumed it will take the slot of the completed action or an empty slot if available",
+			"Use goals to set high-priority tasks that need to be performed above all else",
+			"When a task is set as a pursuit, it is essentially marked as desirable, but low-priority. Pursuits will attempt to trigger when you have an empty slot, but will yield to queued tasks and goals if any of those try to resume themselves.",
+			"Use pursuits to set background activities that you want your wizard to perform when they ran out of other things to do"
+		],
+		"require": "g.goals1>0||g.pursuit1>0"
+	}
+]

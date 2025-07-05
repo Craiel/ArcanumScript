@@ -1,0 +1,192 @@
+{
+	"module": "furniture_upgrades",
+	"data": {
+		"upgrades": [
+			{
+				"id": "better_arcanestudy",
+				"name": "magically soundproofed study",
+				"desc": "Magically refine your enchanted study into an ideal location for researching topics without any distractions.",
+				"require": "g.enchanted_study>0&&g.airlore2>=1",
+				"cost": {
+					"tomes": 15,
+					"gold": 6750,
+					"research": 250,
+					"airgem": 60,
+					"arcana": 12
+				},
+				"mod": {
+					"studyroom.mod.focus.result.runner.skillprogress": "25%"
+				},
+				"group": "furniture"
+			},
+			{
+				"id": "better_study",
+				"name": "soundproof study",
+				"desc": "Refine your study into an ideal location for researching topics without any distractions.",
+				"require": "g.studyroom>0&&g.airlore>=5",
+				"cost": {
+					"scrolls": 12,
+					"gold": 2000,
+					"gems": 30,
+					"arcana": 3,
+					"bookcase": 5
+				},
+				"mod": {
+					"studyroom.mod.focus.result.runner.skillprogress": "10%"
+				},
+				"group": "furniture"
+			},
+			{
+				"id": "better_pedestal",
+				"name": "utility pedestal",
+				"desc": "A pedestal with added grooves to keep the reading material in place, small compartments holding spare bookmarks and even a light gem holder for night reading.",
+				"require": "g.pedestal>0&&g.crafting>=7",
+				"cost": {
+					"scrolls": 12,
+					"gold": 700,
+					"arcana": 1,
+					"research": 1200,
+					"lightgem": 3
+				},
+				"mod": {
+					"pedestal.mod.focus.result.runner.skillprogress": "5%"
+				},
+				"group": "furniture"
+			},
+			{
+				"id": "dungeon_modular",
+				"name": "rework dungeon",
+				"desc": "Add in new hidden passages and optimize the layout of your dungeon to make better use of its space.",
+				"require": "g.dungeon>0",
+				"cost": {
+					"gold": 5000,
+					"gems": 15,
+					"bookcase": 5
+				},
+				"mod": {
+					"dungeon.mod.space": -10,
+					"dungeon.mod.bodies.max": 5,
+					"dungeon.mod.bones.max": 15
+				}
+			},
+			{
+				"id": "dungeon_catacomb",
+				"name": "dungeon catacomb",
+				"desc": "Turn a room in your dungeon into a dedicated storage area for skeletons.",
+				"require": "g.dungeon_modular>0",
+				"cost": {
+					"gold": 1000,
+					"gems": 25,
+					"casket": 5
+				},
+				"mod": {
+					"dungeon.mod.bones.max": 20,
+					"dungeon.mod.skulls.max": 4,
+					"dungeon.mod.urn.max": 2
+				}
+			},
+			{
+				"id": "dungeon_treasure_room",
+				"name": "dungeon treasure room",
+				"desc": "Turn one room in your dungeon into a well-secured vault.",
+				"require": "g.dungeon_modular>0",
+				"cost": {
+					"gold": 5000,
+					"gems": 50,
+					"smchest": 3,
+					"ironchest": 2,
+					"ornatechest": 1
+				},
+				"mod": {
+					"dungeon.mod.gold.max": 400,
+					"dungeon.mod.inv.max": 5,
+					"dungeon.mod.glassware.max": 5,
+					"dungeon.mod.gems.max": 10
+				}
+			},
+			{
+				"id": "graveyard_columbarium",
+				"name": "graveyard columbarium",
+				"desc": "A building for cremated remains.",
+				"require": "g.fire>=5&&g.graveyard>0",
+				"cost": {
+					"gold": 2000,
+					"gems": 10
+				},
+				"mod": {
+					"graveyard.mod.urn.max": 2,
+					"graveyard.mod.glassware.max": 2
+				}
+			},
+			{
+				"id": "graveyard_landscaping",
+				"name": "graveyard landscaping",
+				"desc": "Redesign many areas of the graveyard to be more respectful to the dead.",
+				"require": "g.virtue>=75&&g.graveyard>0",
+				"tags": "t_graveyard_remodel",
+				"lock": "t_graveyard_remodel",
+				"warn": true,
+				"cost": {
+					"gold": 5000,
+					"gems": 30
+				},
+				"mod": {
+					"graveyard.mod.spiritlore.max": 2,
+					"graveyard.mod.spiritlore.rate": 0.5,
+					"graveyard.mod.souls.rate": 0.01,
+					"graveyard.mod.souls.max": 5
+				}
+			},
+			{
+				"id": "graveyard_soulkeeping",
+				"name": "graveyard soul binding",
+				"desc": "Tie the dead souls forcefully to the graveyard area.",
+				"require": "g.evil>0&&g.spiritlore>=10&&g.graveyard>0",
+				"tags": "t_graveyard_remodel",
+				"lock": "t_graveyard_remodel",
+				"warn": true,
+				"cost": {
+					"gold": 3000,
+					"gems": 10
+				},
+				"mod": {
+					"graveyard.mod.spiritlore.max": 2,
+					"graveyard.mod.spiritlore.rate": 1,
+					"graveyard.mod.souls.rate": 0.01,
+					"graveyard.mod.souls.max": 15
+				}
+			},
+			{
+				"id": "packmule",
+				"name": "pack mule",
+				"desc": "A clever design from the sack-maker's guild.",
+				"require": "g.mule>=1",
+				"cost": {
+					"gold": 500,
+					"herbs": 10,
+					"ironchest": 1
+				},
+				"mod": {
+					"mule.mod.inv.max": 5,
+					"mule.mod.gold.max": 150
+				},
+				"group": "mount"
+			},
+			{
+				"id": "rejuvenation_feed",
+				"name": "rejuvenation feed",
+				"desc": "A new concoction of herbs, carrots, and exotic fruits to invigorate the weary steed.",
+				"require": "(g.mule+g.oldnag)>=1&&g.potions>=3",
+				"cost": {
+					"gold": 800,
+					"herbs": 30
+				},
+				"mod": {
+					"mule.mod.dist": 50,
+					"oldnag.mod.dist": 60
+				},
+				"group": "mount"
+			}
+		]
+	}
+}

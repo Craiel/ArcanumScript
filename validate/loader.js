@@ -39,18 +39,15 @@ exports.loadData = function(settings) {
         settings.rawdata[coreFile] = loadJsonFile(settings, coreFile);
     }
 
+    let modList = [];
     if(moduleData.modules !== undefined) {
         for(let i = 0; i < moduleData.modules.length; i++) {
             let moduleFile = moduleData.modules[i];
             settings.rawdata['mod_' + moduleFile] = loadJsonFile(settings, "modules\\" + moduleFile);
+            modList.push(moduleFile.replace('seasonal/', 's_'));
         }
     }
 
-    let deprecatedModules = ['winter'];
-    for(let i = 0; i < deprecatedModules.length; i++) {
-        let moduleFile = deprecatedModules[i];
-        settings.rawdata['mod_' + moduleFile] = loadJsonFile(settings, "modules\\" + moduleFile);
-    }
-
+    settings.rawdata.modList = modList;
     return true;
 };

@@ -1,0 +1,509 @@
+[
+	{
+		"id": "evt_intro",
+		"name": "Prologue",
+		"require": "hp",
+		"desc": "An idle waif with no prospects to speak of..."
+	},
+	{
+		"id": "evt_scroll",
+		"name": "A tattered scroll",
+		"require": "g.scrolls>0",
+		"desc": "You buy a strange scroll from a travelling peddler. If you could only decipher the cryptic symbols."
+	},
+	{
+		"id": "evt_alcove",
+		"name": "Moving In",
+		"desc": "After taking your savings, your new master grants you a small nook under the stairs.",
+		"require": "alcove"
+	},
+	{
+		"id": "evt_helper",
+		"name": "Promotion",
+		"desc": "In return for your new services, your master grants you a small allowance for your studies. The position does require of course, some initial fees...",
+		"lock": "t_job",
+		"result": {
+			"arcana.rate": 0.0001,
+			"research.max": 10,
+			"player.exp": 10,
+			"player.tohit": 1
+		}
+	},
+	{
+		"id": "evt_tool_herbalist",
+		"name": "tool of the trade",
+		"require": "g.herbalist>0",
+		"desc": "Your master offers you an old sickle. 'I used this one for years, so it should be good enough for you.'",
+		"loot": {
+			"apprentice_herb_sickle": 1
+		}
+	},
+	{
+		"id": "evt_tool_scribe",
+		"name": "tool of the trade",
+		"require": "g.scribe>0",
+		"desc": "Your master offers you an old quill. 'Used this one for quite a few of the books you've read, so don't even think about complaining.'",
+		"loot": {
+			"apprentice_quill": 1
+		}
+	},
+	{
+		"id": "evt_tool_falconer",
+		"name": "tool of the trade",
+		"require": "g.falconer>0",
+		"desc": "Your master offers you an old glove. 'My falcons are used to this one, just don't let them get into the holes.'",
+		"loot": {
+			"apprentice_falconer_glove": 1
+		}
+	},
+	{
+		"id": "evt_rangers",
+		"name": "Impudent Meddlers",
+		"require": "g.wicked>0&&g.player.level>=15&&g.evilamt>=75",
+		"desc": "Hearing of your wicked deeds, the rangers of the Ettinmarch plot your downfall. An assault on their camps should crush their presumption."
+	},
+	{
+		"id": "evt_cabal",
+		"name": "Vile Plotters",
+		"require": "g.respectable>0&&g.player.level>=15&&g.virtue>=75",
+		"desc": "Learning of your virtuous ways, a cabal of ossurite priests plots your destruction. Travel to the Fetid Barrows and unravel their schemes."
+	},
+
+	{
+		"id": "evt_nexusadjust1",
+		"name": "Gate implosion",
+		"require": "g.gate==2",
+		"desc": "A powerful magical disturbance rocks the foundations of your home. As you survey the damage, you realize your gates have converged into a single nexus.",
+		"result": {
+			"gate": -1
+		}
+	},
+	{
+		"id": "evt_manafix",
+		"name": "Technical adjustment to max mana for reasons",
+		"desc": "If you see this, report it in discord.",
+		"hide": true,
+		"require": "g.lore>0",
+		"mod": {
+			"mana.max": 5
+		}
+	},
+	{
+		"id": "evt_vigorfix",
+		"name": "Technical adjustment to vigor for reasons",
+		"desc": "If you see this, report it in discord.",
+		"hide": true,
+		"require": "g.cleanstables>0",
+		"result": {
+			"vigor": 10
+		}
+	},
+	{
+		"id": "evt_nexusadjust2",
+		"name": "Gate implosion",
+		"require": "g.gate==3",
+		"desc": "A powerful magical disturbance rocks the foundations of your home. As you survey the damage, you realize your gates have converged into a single nexus.",
+		"result": {
+			"gate": -2
+		}
+	},
+	{
+		"id": "evt_hall_time_1_add",
+		"name": "Timesplit upgrade from time fork technical addition",
+		"desc": "If you see this, report it in discord.",
+		"hide": true,
+		"require": "g.hall_time_1>0&&g.timesplit==0",
+		"mod": {
+			"timesplit": 1
+		}
+	},
+	{
+		"id": "tier0",
+		"name": "Solitary Magic",
+		"desc": "Some say the study of magic doesn't truly begin until apprenticeship ends. People say a lot of things.",
+		"disable": [
+			"study",
+			"chores",
+			"errands",
+			"leavemaster",
+			"slaymaster",
+			"pestcontrol",
+			"alcove",
+			"atticbedroom"
+		],
+		"lock": "t_tier0",
+		"mod": {
+			"t_0": 1
+		},
+		"result": {
+			"innroom": true,
+			"sp": 1,
+			"player.exp": 15,
+			"fame": 1
+		}
+	},
+	{
+		"id": "tier1",
+		"name": "Professional Magick",
+		"desc": "Every province has its handful of runaway apprentices and failed Adepts. It's not uncommon for thieves and rangers to know a spell or two. They are nothing compared to the talents of a true professional.",
+		"disable": [
+			"prestidigitation"
+		],
+		"lock": "t_tier1",
+		"mod": {
+			"t_1": 1
+		},
+		"result": {
+			"sp": 1,
+			"player.exp": 15,
+			"fame": 2
+		}
+	},
+	{
+		"id": "tier2",
+		"name": "Arcane Ascendant",
+		"desc": "The masses of arcane dabblers never reach such heights.",
+		"lock": "t_tier2",
+		"mod": {
+			"t_2": 1
+		},
+		"result": {
+			"player.exp": 25,
+			"fame": 3
+		}
+	},
+	{
+		"id": "tier3",
+		"name": "Magical Mastery",
+		"desc": "You are a master of your field of magic.",
+		"lock": "t_tier3",
+		"mod": {
+			"t_3": 1
+		},
+		"result": {
+			"sp": 1,
+			"player.exp": 50,
+			"fame": 4
+		}
+	},
+	{
+		"id": "tier4",
+		"name": "Supreme Sorcery",
+		"desc": "Not even the masters could challenge you.",
+		"lock": "t_tier4",
+		"disable": [
+			"buyscroll"
+		],
+		"mod": {
+			"t_4": 1
+		},
+		"result": {
+			"sp": 1,
+			"player.exp": 75,
+			"fame": 5
+		}
+	},
+	{
+		"id": "tier5",
+		"name": "Dhrunic Magic",
+		"desc": "Magic from a forgotten age.",
+		"lock": "t_tier5",
+		"mod": {
+			"t_5": 1
+		},
+		"result": {
+			"sp": 1,
+			"player.exp": 100,
+			"fame": 6
+		}
+	},
+	{
+		"id": "tier6",
+		"name": "Ageless Magic",
+		"desc": "Ages of the world come and go; only these endure.",
+		"lock": "t_tier6",
+		"mod": {
+			"t_6": 1
+		},
+		"result": {
+			"sp": 1,
+			"player.exp": 100,
+			"fame": 7
+		}
+	},
+	{
+		"id": "tier7",
+		"name": "Dhrunic Pillar",
+		"desc": "A foundation of the world.",
+		"lock": "t_tier7",
+		"result": {
+			"sp": 1,
+			"player.exp": 100,
+			"fame": 8
+		},
+		"mod": {
+			"lore.max": 4,
+			"crafting.max": 2,
+			"arcanebody.max": 1,
+			"arcanebody2.max": 2,
+			"occultendure.max": 1,
+			"crystalmind.max": 1,
+			"player.hp.max": 50
+		}
+	},
+	{
+		"id": "secretfire",
+		"name": "servant of the secret fire",
+		"desc": "",
+		"mod": {
+			"firelore.max": 1,
+			"lightlore.max": 1
+		}
+	},
+	{
+		"id": "decent",
+		"require": "(g.virtue-g.evilamt)>=90&&g.evilamt<=200&&g.virtue>=90",
+		"desc": "You are turning out to be an upstanding spellcaster.",
+		"result": {
+			"decent1": 1
+		}
+	},
+	{
+		"id": "respectable",
+		"require": "(g.virtue-g.evilamt)>=375&&g.evilamt<=100&&g.virtue>=250",
+		"desc": "You have become a respected personage in the magical world.",
+		"result": {
+			"fame": 1,
+			"respectable1": 1
+		}
+	},
+	{
+		"id": "good",
+		"name": "virtuous",
+		"require": "(g.virtue-g.evilamt)>=750&&g.evilamt<=50&&g.tier0==1&&g.virtue>=750",
+		"desc": "Your actions have shown you to be a virtuous wizard.",
+		"result": {
+			"good1": 1
+		}
+	},
+	{
+		"id": "immoral",
+		"desc": "You have taken your first steps on the path of evil. It's a good thing.",
+		"require": "g.evilamt>=5",
+		"result": {
+			"immoral1": 1
+		}
+	},
+	{
+		"id": "wicked",
+		"desc": "Your wicked deeds put you on the sure path of evil. A few more steps, and there will be no turning back.",
+		"require": "g.evilamt>=250",
+		"result": {
+			"fame": 1,
+			"wicked1": 1
+		}
+	},
+	{
+		"id": "evil",
+		"name": "vile",
+		"desc": "Freed of pitiful notions of right, and morality, the dark arts lie open before you.",
+		"require": "g.evilamt>=500&&g.tier0==1",
+		"result": {
+			"evil1": 1
+		}
+	},
+	{
+		"id": "recal_evil",
+		"hide": true,
+		"require": "g.evil==1&&g.evil1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"evil1": 1
+		},
+		"enable": ["good", "light", "lightlore", "lightlore2"]
+	},
+	{
+		"id": "recal_good",
+		"hide": true,
+		"require": "g.good==1&&g.good1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"good1": 1
+		}
+	},
+	{
+		"id": "recal_immoral",
+		"hide": true,
+		"require": "g.immoral==1&&g.immoral1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"immoral1": 1
+		}
+	},
+	{
+		"id": "recal_wicked",
+		"hide": true,
+		"require": "g.wicked==1&&g.wicked1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"wicked1": 1
+		}
+	},
+	{
+		"id": "recal_decent",
+		"hide": true,
+		"require": "g.decent==1&&g.decent1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"decent1": 1
+		}
+	},
+	{
+		"id": "recal_respectable",
+		"hide": true,
+		"require": "g.respectable==1&&g.respectable1==0",
+		"desc": "Updating internals - players should not see this.",
+		"result": {
+			"respectable1": 1
+		}
+	},
+	{
+		"id": "good3_trickster",
+		"name": "a thief gone straight",
+		"require": "g.good3==1&&g.t_chaosclass>0",
+		"desc": "A former scoundrel knows best how to think like a scoundrel.",
+		"mod": {
+			"securityconsultant.result.gems.min": -3,
+			"securityconsultant.result.gems.max": -8,
+			"securityconsultant.result.gold": -150
+		},
+		"result": {
+			"securityconsultant": "g.heist"
+		},
+		"lock": "heist"
+	},
+	{
+		"id": "evt_securityconsultantfix",
+		"require": "g.good3_trickster>0",
+		"desc": "If you are reading this, report it as a bug",
+		"hide": true,
+		"mod": {
+			"securityconsultant.result.gems.min": 3,
+			"securityconsultant.result.gems.max": 8,
+			"securityconsultant.result.gold": 150
+		},
+		"disable": ["heist"]
+	},
+	{
+		"id": "idrasil_shift",
+		"hide": true,
+		"require": "g.sm_idrasil>0",
+		"lock": "sm_idrasil",
+		"desc": "Moving from deprecated home to new version - players should not see this.",
+		"result": {
+			"home_idrasil_sprout": true
+		}
+	},
+	{
+		"id": "moving_out_of_inn",
+		"name": "Moving out",
+		"require": "g.tier0>0&&g.innroom<=0",
+		"desc": "Having acquired a place to call your own, you now have a proper place for all the experiments and tools your research requires.",
+		"lock": "innroom"
+	},
+	{
+		"id": "ruinedpalace_evt",
+		"require": "g.ruinedpalace>0",
+		"desc": "If a player reads this, report it as a bug.",
+		"hide": true,
+		"mod": {
+			"palace.buy.gold": -2500
+		}
+	},
+	{
+		"id": "ruinedcastle_evt",
+		"require": "g.ruinedcastle>0",
+		"desc": "If a player reads this, report it as a bug.",
+		"hide": true,
+		"mod": {
+			"castle.buy.gold": -2500
+		}
+	},
+	{
+		"id": "home_idrasil_sprout_evt",
+		"require": "g.home_idrasil_sprout>0",
+		"hide": true,
+		"desc": "If a player reads this, report it as a bug.",
+		"mod": {
+			"home_idrasil_tree.buy.herbs": -25,
+			"home_idrasil_tree.buy.gems": -15,
+			"home_idrasil_sapling.buy.herbs": -25,
+			"home_idrasil_sapling.buy.gems": -15
+		}
+	},
+	{
+		"id": "home_idrasil_saping_evt",
+		"require": "g.home_idrasil_sapling>0&&g.home_idrasil_sprout_evt<1",
+		"hide": true,
+		"desc": "If a player reads this, report it as a bug.",
+		"mod": {
+			"home_idrasil_tree.buy.herbs": -25,
+			"home_idrasil_tree.buy.gems": -15
+		}
+	},
+	{
+		"id": "home_waterfall_evt",
+		"require": "g.home_waterfall>0",
+		"hide": true,
+		"desc": "If a player reads this, report it as a bug.",
+		"mod": {
+			"cataract.buy.gold": -500
+		}
+	},
+	{
+		"id": "restfix",
+		"require": "g.chant>0||g.naturecamp>0||g.eatchildren>0||g.stabilize>0",
+		"hide": true,
+		"desc": "If you see this, say so on discord.",
+		"result": {
+			"rest": true
+		},
+		"disable": ["chant", "naturecamp", "eatchildren", "stabilize"]
+	},
+	{
+		"id": "restfix2",
+		"require": "g.slumber>0&&g.up_slumber==0",
+		"hide": true,
+		"desc": "If you see this, say so on discord.",
+		"disable": ["rest"],
+		"lock": ["up_slumber"],
+		"result": {
+			"slumber": true
+		}
+	},
+	{
+		"id": "potlock",
+		"require": "g.hellfiretinctures>0",
+		"hide": true,
+		"desc": "Pyro backfix. If you see it, no you don't",
+		"disable": ["pot_ignition", "pot_explodium"]
+	},
+	{
+		"id": "enchantedgrant",
+		"require": "g.arcanestudy>0",
+		"name":"Study collapse",
+		"desc": "A worrying rumble from your enchanted study is quickly followed by a localized dimensional collapse. You now seem to only have a single study. At least it seems better than before.",
+		"disable": ["arcanestudy"],
+		"result":{
+			"enchanted_study":1,
+			"studyroom":"g.studyroom==0"
+		}
+	},
+	{
+		"id": "enchantedungrant",
+		"require": "g.arcanestudy==0",
+		"hide":true,
+		"desc": "Disables illegal study, if you did not own it.",
+		"disable": ["arcanestudy"]
+	}
+]

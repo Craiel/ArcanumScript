@@ -20,10 +20,8 @@
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
 
-// Game Addresses:
+// Game Address:
 // https://mathiashjelm.gitlab.io/arcanum/
-// https://www.lerpinglemur.com/arcanum/index.html
-// https://game312933.konggames.com/gamez/0031/2933/live/index.html
 
 let AE = (function($){
     'use strict';

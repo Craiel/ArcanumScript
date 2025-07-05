@@ -88,6 +88,8 @@ function processArguments() {
         return false;
     }
 
+    settings.stable = args[3] === 'stable';
+
     return true;
 }
 
@@ -463,11 +465,11 @@ function doValidate() {
 
     // Process the modules
     validateModule(settings.rawdata.hall, 'hall');
-    validateModule(settings.rawdata.mod_patrons, 'mod_patrons');
-    validateModule(settings.rawdata.mod_winter, 'mod_winter');
-    validateModule(settings.rawdata.mod_shian, 'mod_shian');
-    validateModule(settings.rawdata.mod_puppeteer, 'mod_puppeteer');
-    validateModule(settings.rawdata.mod_combattutorial, 'mod_combattutorial');
+
+    for(let i = 0; i < settings.rawdata.modList.length; i++) {
+        let modKey = 'mod_' + settings.rawdata.modList[i];
+        validateModule(settings.rawdata[modKey], modKey);
+    }
 
     for(let key in settings.rawdata) {
         if(settings.firstPassState[key] !== true) {
@@ -476,7 +478,7 @@ function doValidate() {
     }
 
     // Build before validate to not pollute the data
-    builder.build(settings.data.objects);
+    builder.build(settings.data.objects, settings.stable);
 
     appendHardcodedData();
     buildSecondPassLookups();

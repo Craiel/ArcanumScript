@@ -26,6 +26,11 @@
 
             let gameData = unsafeWindow.game.gdata;
             for(let homeId in AE.data.HomeData) {
+                if(gameData[homeId] === undefined) {
+                    console.warn("Unknown home: " + homeId);
+                    continue;
+                }
+
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let boostedValue = (10 + currentValue) * 5;
                 if(AE.config.enableDebugMode === true) {
@@ -60,6 +65,10 @@
 
             let gameData = unsafeWindow.game.gdata;
             for(let homeId in AE.data.HomeData) {
+                if(gameData[homeId] === undefined) {
+                    continue;
+                }
+
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let unboostedValue = (currentValue / 5) - 10;
 

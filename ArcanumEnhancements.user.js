@@ -20,10 +20,8 @@
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
 
-// Game Addresses:
+// Game Address:
 // https://mathiashjelm.gitlab.io/arcanum/
-// https://www.lerpinglemur.com/arcanum/index.html
-// https://game312933.konggames.com/gamez/0031/2933/live/index.html
 
 let AE = (function($){
     'use strict';
@@ -35,8 +33,8 @@ let AE = (function($){
     }
 
     return new AE();
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Interval helper
 (function($) {
     'use strict';
@@ -89,8 +87,8 @@ let AE = (function($){
 
     AE.interval = new AEInterval();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Utils
 (function($) {
     'use strict';
@@ -139,8 +137,8 @@ let AE = (function($){
 
     AE.utils = new AEUtils();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Config
 (function($) {
     'use strict';
@@ -154,8 +152,8 @@ let AE = (function($){
         uiUpdateInterval: 250
     }
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Data
 (function($) {
     'use strict';
@@ -177,6 +175,12 @@ let AE = (function($){
     }
 
     AE.data = new AEData();
+
+    AE.data.ValidGameVersions = [
+        'vers pseudo_stable 0.8.1',
+        'vers 0.8.0',
+        'Version: pseudo_stable 0.10.4',
+        'Version: stable 0.11.1.3'];
 
     AE.data.GameTabs = {
         Main: 'main',
@@ -381,31 +385,31 @@ let AE = (function($){
 
 
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Generated Data
 (function($) {
     'use strict';
     
-    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"scrolls":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"lightrune":{"max":10,"name":"light runes"},"shadowrune":{"max":10,"name":"shadow runes"},"manarune":{"max":10,"name":"mana runes"},"naturerune":{"max":10,"name":"nature runes"},"chaosrune":{"max":10,"name":"chaos runes"},"timerune":{"max":6,"name":"time runes"},"bodies":{"max":1},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"codices"},"tomes":{"max":5,"name":"tomes"},"gems":{"max":5,"name":"gemstones"},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3,"name":"time gem"},"voidgem":{"max":3,"name":"void gem"},"chaosgem":{"max":3,"name":"chaos gem"},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"potionessence":{"max":3,"name":"potion base"},"vigor":{"max":10,"name":"vigor"},"mana":{"max":0,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"offlinetime":{"max":10800,"name":"stored time"},"hall_probematerials":{"max":30,"name":"dimensional probe materials"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"}};
+    AE.data.ResourceData = {"gold":{"max":5},"research":{"max":10},"arcana":{"max":0},"scrolls":{"max":10},"runestones":{"max":10,"name":"rune stones"},"firerune":{"max":10,"name":"flame runes"},"waterrune":{"max":10,"name":"water runes"},"spiritrune":{"max":10,"name":"spirit runes"},"airrune":{"max":10,"name":"air runes"},"earthrune":{"max":10,"name":"earth runes"},"lightrune":{"max":10,"name":"light runes"},"shadowrune":{"max":10,"name":"shadow runes"},"manarune":{"max":10,"name":"mana runes"},"naturerune":{"max":10,"name":"nature runes"},"chaosrune":{"max":10,"name":"chaos runes"},"timerune":{"max":6,"name":"time runes"},"bodies":{"max":1},"bones":{"max":10},"skulls":{"max":5},"bonedust":{"max":10,"name":"bone dust"},"souls":{"max":1},"schematic":{"max":3,"name":"schematics"},"codices":{"max":10,"name":"codices"},"tomes":{"max":5,"name":"tomes"},"gems":{"max":5,"name":"gemstones"},"managem":{"max":2,"name":"arcane gem"},"firegem":{"max":2,"name":"fire gem"},"watergem":{"max":2,"name":"water gem"},"naturegem":{"max":2,"name":"nature gem"},"earthgem":{"max":2,"name":"earth gem"},"airgem":{"max":2,"name":"air gem"},"shadowgem":{"max":2,"name":"shadow gem"},"lightgem":{"max":2,"name":"light gem"},"spiritgem":{"max":2,"name":"spirit gem"},"bloodgem":{"max":2,"name":"blood gem"},"timegem":{"max":3,"name":"time gem"},"voidgem":{"max":3,"name":"void gem"},"chaosgem":{"max":3,"name":"chaos gem"},"ichor":{"max":5},"sindel":{"max":3,"name":"star shard"},"dreams":{"max":3},"herbs":{"max":10},"potionessence":{"max":3,"name":"potion base"},"vigor":{"max":10,"name":"vigor"},"mana":{"max":0,"name":"mana"},"fire":{"max":0},"air":{"max":0},"earth":{"max":0},"water":{"max":0},"nature":{"max":0},"shadow":{"max":0,"name":"shadow"},"light":{"max":0},"spirit":{"max":0},"tempus":{"max":0},"chaos":{"max":0},"void":{"max":0},"offlinetime":{"max":10800,"name":"stored time"},"hall_probematerials":{"max":30,"name":"dimensional probe materials"},"puppets":{"max":20},"machinae":{"max":20,"name":"machinae"},"automatas":{"max":20,"name":"automata"},"stillroom":{"max":1,"name":"still room"},"chargedtimepiece":{"max":6,"name":"charged timepiece"},"emptytimepiece":{"max":6,"name":"intricate timepiece"},"timeparadox":{"max":20,"name":"time paradox"},"instability":{"max":500},"debt":{"max":500}};
     
-    AE.data.PotionData = {"pot_remedy":{"name":"remedy"},"pot_midas":{"name":"goldeneye tincture"},"pot_souls":{"name":"soulbind essence"},"pot_metallicizer":{"name":"liquid metal"},"pot_invisibility":{"name":"vial of invisibility"},"pot_bottled_starlight":{"name":"bottled starlight"},"pot_weavers_balm":{"name":"weaver's balm"},"pot_dream_weaver_fibers":{"name":"dream weaver's fibers"},"pot_breath1":{"name":"portion of waterbreathing"},"pot_mana1":{"name":"draught of mana"},"pot_mana2":{"name":"well of mana"},"pot_mana3":{"name":"river of mana"},"pot_elemental1":{"name":"thimble of elements"},"pot_elemental2":{"name":"cup of elements"},"pot_elemental3":{"name":"jug of elements"},"pot_primal1":{"name":"primal whisper"},"pot_primal2":{"name":"primal echo"},"pot_primal3":{"name":"primal reverberation"},"pot_manadot":{"name":"drip of mana"},"pot_stamdot":{"name":"potion of bull's tenacity"},"pot_fake":{"name":"potion of eternal youth"},"pot_manaburn":{"name":"potion of mana burn"},"pot_cparalysis":{"name":"tincture of limberness"},"pot_csilence":{"name":"echoing flask"},"pot_csilence2":{"name":"amplified echoing flask"},"pot_heal1":{"name":"cream of mending"},"pot_heal2":{"name":"salve of mending"},"pot_heal3":{"name":"ointment of mending"},"pot_healdream":{"name":"oneirodistillation of wholeness"},"pot_manadream":{"name":"oneirodistillation of energy"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of monster's stamina"},"pot_sp":{"name":"philter of clarity"},"pot_sp_sink":{"name":"phial of skillfulness"},"pot_explodium":{"name":"volatile concoction"},"pot_corrosion":{"name":"corrosive mixture"},"pot_sticky":{"name":"engulfing glue"},"pot_smoke":{"name":"smoke bomb"},"pot_ignition":{"name":"flame potion"},"pot_frost":{"name":"Everfreeze potion"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"},"pot_weaponmeld":{"name":"weaponmeld salve"},"pot_perfection":{"name":"flask of perfection"},"pot_mule":{"name":"packmule's formula"},"pot_bigbrain":{"name":"bubble of mind expansion"},"pot_vileempowerment":{"name":"vile concoction"},"pot_attunement":{"name":"vial of attunement"},"pot_tarandfeathers":{"name":"tar-and-feathers potion"}};
+    AE.data.PotionData = {"pot_remedy":{"name":"remedy"},"pot_midas":{"name":"goldeneye tincture"},"pot_souls":{"name":"soulbind essence"},"pot_metallicizer":{"name":"liquid metal"},"pot_invisibility":{"name":"vial of invisibility"},"pot_bottled_starlight":{"name":"bottled starlight"},"pot_weavers_balm":{"name":"weaver's balm"},"pot_dream_weaver_fibers":{"name":"dream weaver's fibers"},"pot_breath1":{"name":"portion of waterbreathing"},"pot_mana1":{"name":"draught of mana"},"pot_mana2":{"name":"well of mana"},"pot_mana3":{"name":"river of mana"},"pot_elemental1":{"name":"thimble of elements"},"pot_elemental2":{"name":"cup of elements"},"pot_elemental3":{"name":"jug of elements"},"pot_primal1":{"name":"primal whisper"},"pot_primal2":{"name":"primal echo"},"pot_primal3":{"name":"primal reverberation"},"pot_manadot":{"name":"drip of mana"},"pot_stamdot":{"name":"potion of bull's tenacity"},"pot_fake":{"name":"potion of eternal youth"},"pot_manaburn":{"name":"potion of mana burn"},"pot_cparalysis":{"name":"tincture of limberness"},"pot_csilence":{"name":"echoing flask"},"pot_csilence2":{"name":"amplified echoing flask"},"pot_heal1":{"name":"cream of mending"},"pot_heal2":{"name":"salve of mending"},"pot_heal3":{"name":"ointment of mending"},"pot_healdream":{"name":"oneirodistillation of wholeness"},"pot_manadream":{"name":"oneirodistillation of energy"},"pot_stam1":{"name":"draught of stamina"},"pot_stam2":{"name":"potion of monster's stamina"},"pot_sp":{"name":"philter of clarity"},"pot_sp_sink":{"name":"phial of skillfulness"},"pot_explodium":{"name":"volatile concoction"},"pot_corrosion":{"name":"corrosive mixture"},"pot_sticky":{"name":"engulfing glue"},"pot_smoke":{"name":"smoke bomb"},"pot_ignition":{"name":"flame potion"},"pot_frost":{"name":"Everfreeze potion"},"pot_adamant":{"name":"adamant salve"},"hestiabrew":{"name":"hestia's homebrew"},"pot_truestrike":{"name":"true striking"},"pot_serenity":{"name":"serenity"},"pot_godspeed":{"name":"godspeed"},"pot_godsblood":{"name":"god's blood"},"pot_weaponmeld":{"name":"weaponmeld salve"},"pot_perfection":{"name":"flask of perfection"},"pot_mule":{"name":"packmule's formula"},"pot_bigbrain":{"name":"bubble of mind expansion"},"pot_vileempowerment":{"name":"vile concoction"},"pot_attunement":{"name":"vial of attunement"},"pot_tarandfeathers":{"name":"tar-and-feathers potion"},"pumpcider":{"name":"spoiled pumpkin cider"},"bubblebrew":{"name":"once-bubbling brew"},"pot_stability":{"name":"draught of memory"},"pot_negotiator":{"name":"negotiator's cunning"}};
     
-    AE.data.EnchantItemNotations = ["lucky","%i of %s","%i of %s","%i of life","%i of %s","%i of biting","%i of biting","%i of biting","%i of speed","%i of the salamander","%i of the Ifrit","%i of the Sun Dog","%i of the crab","%i of the otter","%i of the Pisces","%i of the vole","%i of the Worm","%i of the Delver","%i of the sparrow","%i of the Eagle","%i of the Albatross","%i of speed","%i of speed","%i of speed","%i of %s","%i of %s","%i of %s","%i of %s","%i of %s","keen","keen","%i of spells","%i of spells","%i of spells","%i of spells","%i of colors"];
-    AE.data.EnchantNameLookup = {"sturdy armor":"en_armor1","luck":"en_luck1","mana":"en_mana1","energy":"en_energy1","life pool":"en_hp1","regeneration":"en_regen1","biting edge":"en_dmg1","biting edge ii":"en_dmg2","biting edge iii":"en_dmg3","quick boots":"en_speed1","salamander's ring":"en_fire1","fox's ring":"en_fire2","sun dog's ring":"en_fire3","crab's ring":"en_water1","otter's ring":"en_water2","pisces' ring":"en_water3","vole's ring":"en_earth1","worms' ring":"en_earth2","delver's ring":"en_earth3","sparrow's ring":"en_air1","eagle's ring":"en_air2","albatross's ring":"en_air3","quick boots ii":"en_speed2","quick boots iii":"en_speed3","quick boots iv":"en_speed4","clarity":"en_clarity","great clarity":"en_clarity2","courage":"en_courage","sanity":"en_sanity","refreshment":"en_stam1","keen weapon":"en_tohit1","keen weapon ii":"en_tohit2","spellcraft":"en_scraft","spellcraft ii":"en_scraft2","spellcraft iii":"en_scraft3","spellcraft iv":"en_scraft4","prismatic ring":"en_prisma"};
-    AE.data.EnchantData = {"en_armor1":{"level":1,"name":"sturdy armor","target":["armor"],"mods":{}},"en_luck1":{"level":1,"name":"luck","target":["ring"],"mods":{}},"en_mana1":{"level":1,"name":"mana","target":["ring"],"mods":{}},"en_energy1":{"level":1,"name":"energy","target":["ring"],"mods":{}},"en_hp1":{"level":1,"name":"life pool","target":["neck"],"mods":{}},"en_regen1":{"level":2,"name":"regeneration","target":["neck"],"mods":{}},"en_dmg1":{"level":1,"name":"biting edge","target":["weapon"],"mods":{}},"en_dmg2":{"level":3,"name":"biting edge II","target":["weapon"],"mods":{}},"en_dmg3":{"level":5,"name":"biting edge III","target":["weapon"],"mods":{}},"en_speed1":{"level":2,"name":"quick boots","target":["feet"],"mods":{}},"en_fire1":{"level":2,"name":"salamander's ring","target":["ring"],"mods":{}},"en_fire2":{"level":2,"name":"fox's ring","target":["ring"],"mods":{}},"en_fire3":{"level":3,"name":"sun Dog's ring","target":["ring"],"mods":{}},"en_water1":{"level":2,"name":"crab's ring","target":["ring"],"mods":{}},"en_water2":{"level":2,"name":"otter's ring","target":["ring"],"mods":{}},"en_water3":{"level":3,"name":"pisces' ring","target":["ring"],"mods":{}},"en_earth1":{"level":2,"name":"vole's ring","target":["ring"],"mods":{}},"en_earth2":{"level":2,"name":"worms' Ring","target":["ring"],"mods":{}},"en_earth3":{"level":3,"name":"delver's ring","target":["ring"],"mods":{}},"en_air1":{"level":2,"name":"sparrow's ring","target":["ring"],"mods":{}},"en_air2":{"level":2,"name":"eagle's ring","target":["ring"],"mods":{}},"en_air3":{"level":3,"name":"albatross's ring","target":["ring"],"mods":{}},"en_speed2":{"level":3,"name":"quick boots II","target":["feet"],"mods":{}},"en_speed3":{"level":4,"name":"quick boots III","target":["feet"],"mods":{}},"en_speed4":{"level":5,"name":"quick boots IV","target":["feet"],"mods":{}},"en_clarity":{"level":3,"name":"clarity","target":["head"],"mods":{}},"en_clarity2":{"level":7,"name":"great clarity","target":["head"],"mods":{}},"en_courage":{"level":5,"name":"courage","target":["waist"],"mods":{}},"en_sanity":{"level":6,"name":"sanity","target":["head"],"mods":{}},"en_stam1":{"level":7,"name":"refreshment","target":["ring"],"mods":{}},"en_tohit1":{"level":1,"name":"keen weapon","target":["weapon"],"mods":{}},"en_tohit2":{"level":2,"name":"keen weapon II","target":["weapon"],"mods":{}},"en_scraft":{"level":3,"name":"spellcraft","target":["armor","weapon"],"mods":{}},"en_scraft2":{"level":6,"name":"spellcraft II","target":["armor","weapon"],"mods":{}},"en_scraft3":{"level":8,"name":"spellcraft III","target":["armor","weapon"],"mods":{}},"en_scraft4":{"level":10,"name":"spellcraft IV","target":["armor","weapon"],"mods":{}},"en_prisma":{"level":8,"name":"prismatic ring","target":["ring"],"mods":{}}};
+    AE.data.EnchantItemNotations = ["lucky","%i of %s","%i of %s","%i of life","%i of %s","%i of biting","%i of biting","%i of biting","%i of speed","%i of the salamander","%i of the Ifrit","%i of the Sun Dog","%i of the crab","%i of the otter","%i of the Pisces","%i of the vole","%i of the Worm","%i of the Delver","%i of the sparrow","%i of the Eagle","%i of the Albatross","%i of speed","%i of speed","%i of speed","%i of %s","%i of %s","%i of %s","%i of %s","%i of %s","keen","keen","%i of spells","%i of spells","%i of spells","%i of spells","%i of colors","%i of gold","%i of mana","%i of repel","%i of minerals","%i of shrouding","%i of amplification","%i of fireballs","%i of elements","%i of spells","%i of restoration","%i of clarity","%i of ingenuity","%i of the arcane","%i of the stars","%i of curses","%i of protection","%i of souls","%i of shadows","%i of spurring","%i of greater momentum","%i of courage","%i of storage","%i of condensing mana","%i gathering color"];
+    AE.data.EnchantNameLookup = {"sturdy armor":"en_armor1","luck":"en_luck1","mana":"en_mana1","energy":"en_energy1","life pool":"en_hp1","regeneration":"en_regen1","biting edge":"en_dmg1","biting edge ii":"en_dmg2","biting edge iii":"en_dmg3","quick boots":"en_speed1","salamander's ring":"en_fire1","fox's ring":"en_fire2","sun dog's ring":"en_fire3","crab's ring":"en_water1","otter's ring":"en_water2","pisces' ring":"en_water3","vole's ring":"en_earth1","worms' ring":"en_earth2","delver's ring":"en_earth3","sparrow's ring":"en_air1","eagle's ring":"en_air2","albatross's ring":"en_air3","quick boots ii":"en_speed2","quick boots iii":"en_speed3","quick boots iv":"en_speed4","clarity":"en_clarity","great clarity":"en_clarity2","courage":"en_courage","sanity":"en_sanity","refreshment":"en_stam1","keen weapon":"en_tohit1","keen weapon ii":"en_tohit2","spellcraft":"en_scraft","spellcraft ii":"en_scraft2","spellcraft iii":"en_scraft3","spellcraft iv":"en_scraft4","prismatic ring":"en_prisma","golden wand":"en_wandgold","arcane wand":"en_wandmana","repel wand":"en_wandrepel","rod of minerals":"en_rodminerals","rod of shrouding":"en_rodshroud","rod of amplification":"en_rodamplification","staff of fireballs":"en_greatstafffireballs","staff of elements":"en_greatstaffregen","staff of spells":"en_greatstaffspell","staff of restoration":"en_greatstaffrestoration","focus of clarity":"en_focusclarity","focus of ingenuity":"en_focusingenuity","focus of the arcane":"en_focusarcane","focus of the stars":"en_focusstellar","fetish of curses":"en_fetishcurses","fetish of protection":"en_fetishprotection","fetish of souls":"en_fetishsouls","fetish of shadows":"en_fetishshadows","fetish of spurring":"en_fetishspurring","wings of flight":"en_wings_of_flight","cape of bravery":"en_cape_of_bravery","belt of holding":"en_belt_of_holding","robes of mana":"en_robes_of_manamax1","robes of gathering manas":"en_robes_of_color_max1"};
+    AE.data.EnchantData = {"en_armor1":{"level":1,"name":"sturdy armor","target":["armor"],"mods":{}},"en_luck1":{"level":1,"name":"luck","target":["ring"],"mods":{}},"en_mana1":{"level":1,"name":"mana","target":["ring"],"mods":{}},"en_energy1":{"level":1,"name":"energy","target":["ring"],"mods":{}},"en_hp1":{"level":1,"name":"life pool","target":["neck"],"mods":{}},"en_regen1":{"level":2,"name":"regeneration","target":["neck"],"mods":{}},"en_dmg1":{"level":1,"name":"biting edge","target":["weapon"],"mods":{}},"en_dmg2":{"level":3,"name":"biting edge II","target":["weapon"],"mods":{}},"en_dmg3":{"level":5,"name":"biting edge III","target":["weapon"],"mods":{}},"en_speed1":{"level":2,"name":"quick boots","target":["feet"],"mods":{}},"en_fire1":{"level":2,"name":"salamander's ring","target":["ring"],"mods":{}},"en_fire2":{"level":2,"name":"fox's ring","target":["ring"],"mods":{}},"en_fire3":{"level":3,"name":"sun Dog's ring","target":["ring"],"mods":{}},"en_water1":{"level":2,"name":"crab's ring","target":["ring"],"mods":{}},"en_water2":{"level":2,"name":"otter's ring","target":["ring"],"mods":{}},"en_water3":{"level":3,"name":"pisces' ring","target":["ring"],"mods":{}},"en_earth1":{"level":2,"name":"vole's ring","target":["ring"],"mods":{}},"en_earth2":{"level":2,"name":"worms' Ring","target":["ring"],"mods":{}},"en_earth3":{"level":3,"name":"delver's ring","target":["ring"],"mods":{}},"en_air1":{"level":2,"name":"sparrow's ring","target":["ring"],"mods":{}},"en_air2":{"level":2,"name":"eagle's ring","target":["ring"],"mods":{}},"en_air3":{"level":3,"name":"albatross's ring","target":["ring"],"mods":{}},"en_speed2":{"level":3,"name":"quick boots II","target":["feet"],"mods":{}},"en_speed3":{"level":4,"name":"quick boots III","target":["feet"],"mods":{}},"en_speed4":{"level":5,"name":"quick boots IV","target":["feet"],"mods":{}},"en_clarity":{"level":3,"name":"clarity","target":["head"],"mods":{}},"en_clarity2":{"level":7,"name":"great clarity","target":["head"],"mods":{}},"en_courage":{"level":5,"name":"courage","target":["waist"],"mods":{}},"en_sanity":{"level":6,"name":"sanity","target":["head"],"mods":{}},"en_stam1":{"level":7,"name":"refreshment","target":["ring"],"mods":{}},"en_tohit1":{"level":1,"name":"keen weapon","target":["weapon"],"mods":{}},"en_tohit2":{"level":2,"name":"keen weapon II","target":["weapon"],"mods":{}},"en_scraft":{"level":3,"name":"spellcraft","target":["armor","weapon"],"mods":{}},"en_scraft2":{"level":6,"name":"spellcraft II","target":["armor","weapon"],"mods":{}},"en_scraft3":{"level":8,"name":"spellcraft III","target":["armor","weapon"],"mods":{}},"en_scraft4":{"level":10,"name":"spellcraft IV","target":["armor","weapon"],"mods":{}},"en_prisma":{"level":8,"name":"prismatic ring","target":["ring"],"mods":{}},"en_wandgold":{"level":1,"name":"golden wand","target":["t_wand"],"mods":{}},"en_wandmana":{"level":1,"name":"arcane wand","target":["t_wand"],"mods":{}},"en_wandrepel":{"level":1,"name":"repel wand","target":["t_wand"],"mods":{}},"en_rodminerals":{"level":3,"name":"rod of minerals","target":["t_rod"],"mods":{}},"en_rodshroud":{"level":3,"name":"rod of shrouding","target":["t_rod"],"mods":{}},"en_rodamplification":{"level":3,"name":"rod of amplification","target":["t_rod"],"mods":{}},"en_greatstafffireballs":{"level":8,"name":"staff of fireballs","target":["t_greatstaff"],"mods":{}},"en_greatstaffregen":{"level":6,"name":"staff of elements","target":["t_greatstaff"],"mods":{}},"en_greatstaffspell":{"level":6,"name":"staff of spells","target":["t_greatstaff"],"mods":{}},"en_greatstaffrestoration":{"level":8,"name":"staff of restoration","target":["t_greatstaff"],"mods":{}},"en_focusclarity":{"level":7,"name":"focus of clarity","target":["t_orb"],"mods":{}},"en_focusingenuity":{"level":7,"name":"focus of ingenuity","target":["t_orb"],"mods":{}},"en_focusarcane":{"level":7,"name":"focus of the arcane","target":["t_orb"],"mods":{}},"en_focusstellar":{"level":7,"name":"focus of the stars","target":["t_orb"],"mods":{}},"en_fetishcurses":{"level":8,"name":"fetish of curses","target":["t_fetish"],"mods":{}},"en_fetishprotection":{"level":6,"name":"fetish of protection","target":["t_fetish"],"mods":{}},"en_fetishsouls":{"level":6,"name":"fetish of souls","target":["t_fetish"],"mods":{}},"en_fetishshadows":{"level":6,"name":"fetish of shadows","target":["t_fetish"],"mods":{}},"en_fetishspurring":{"level":8,"name":"fetish of spurring","target":["t_fetish"],"mods":{}},"en_wings_of_flight":{"level":3,"name":"wings of flight","target":["t_wings"],"mods":{}},"en_cape_of_bravery":{"level":3,"name":"cape of bravery","target":["t_cape"],"mods":{}},"en_belt_of_holding":{"level":2,"name":"belt of holding","target":["t_belt"],"mods":{}},"en_robes_of_manamax1":{"level":5,"name":"robes of mana","target":["t_robe"],"mods":{}},"en_robes_of_color_max1":{"level":3,"name":"robes of gathering manas","target":["t_robe"],"mods":{}}};
     
-    AE.data.MaterialData = {"silk":{"level":1},"cotton":{"level":1},"sackcloth":{"level":6},"twine":{"level":1},"stone":{"level":1},"glass":{"level":2},"leather":{"level":2},"wood":{"level":1,"adj":"wooden"},"bone":{"level":2},"bone_armor":{"level":2},"ivory":{"level":4},"ivory_armor":{"level":4},"mat_gold":{"level":4,"adj":"golden"},"mat_gold_armor":{"level":4},"mat_ruby":{"level":6},"mat_ruby_armor":{"level":6},"bronze":{"level":2},"bronze_armor":{"level":2},"iron":{"level":3},"iron_armor":{"level":3},"steel":{"level":4},"steel_armor":{"level":4},"dragonscale":{"level":7},"basiliskhide":{"level":6},"quicksteel":{"level":5},"quicksteel_armor":{"level":5},"mithril":{"level":9},"mithril_armor":{"level":9},"ebonwood":{"level":8},"ebonwood_armor":{"level":8},"idrasil":{"level":12},"idrasil_armor":{"level":12},"ethereal":{"level":10},"ethereal_armor":{"level":10},"adamant":{"level":12,"adj":"adamantine"},"adamant_armor":{"level":12,"adj":"adamantine"}};
+    AE.data.MaterialData = {"silk":{"level":1},"cotton":{"level":1},"sackcloth":{"level":6},"twine":{"level":1},"stone":{"level":1},"glass":{"level":2},"leather":{"level":2},"wood":{"level":1,"adj":"wooden"},"bone":{"level":2},"bone_armor":{"level":2},"ivory":{"level":4},"ivory_armor":{"level":4},"mat_gold":{"level":4,"adj":"golden"},"mat_gold_armor":{"level":4},"mat_ruby":{"level":6},"mat_ruby_armor":{"level":6},"bronze":{"level":2},"bronze_armor":{"level":2},"iron":{"level":3},"iron_armor":{"level":3},"steel":{"level":4},"steel_armor":{"level":4},"dragonscale":{"level":7},"basiliskhide":{"level":6},"quicksteel":{"level":5},"quicksteel_armor":{"level":5},"mithril":{"level":9},"mithril_armor":{"level":9},"ebonwood":{"level":8},"ebonwood_armor":{"level":8},"idrasil":{"level":12},"idrasil_armor":{"level":12},"ethereal":{"level":10},"ethereal_armor":{"level":10},"adamant":{"level":12,"adj":"adamantine"},"adamant_armor":{"level":12,"adj":"adamantine"},"crimsonice":{"level":5},"coldsteel":{"level":5},"permafrost":{"level":7}};
     
-    AE.data.HomeData = {"alcove":{"name":"alcove","size":5},"earthspire":{"name":"earthen spire","size":150},"atticbedroom":{"name":"Attic Bedroom","size":10},"innroom":{"name":"Lodge at Inn","size":12},"hut":{"name":"hut","size":15},"camp":{"name":"camp","size":14},"wagon":{"name":"tinker's wagon","size":12},"cottage":{"name":"cottage","size":20},"house":{"name":"house","size":30},"shop":{"name":"shop","size":25},"inn":{"name":"inn","size":50},"lodge":{"name":"lodge","size":30},"gabledhouse":{"name":"gabled mansion","size":65},"halftimber":{"name":"half-timber house","size":75},"cave":{"name":"cave","size":25},"pavilion":{"name":"pavilion","size":50},"hauntedmanse":{"name":"haunted manse","size":75},"ancientruins":{"name":"ancient ruins","size":110},"tower":{"name":"tower","size":55},"lighthouse":{"name":"lighthouse","size":80},"cataract":{"name":"cataract","size":330},"citadel":{"name":"citadel","size":60},"academy":{"name":"academy","size":75},"temple":{"name":"temple","size":60},"magetower":{"name":"mage tower","size":420},"home_idrasil_sapling":{"name":"idrasil sapling","size":300},"palace":{"name":"palace","size":400},"castle":{"name":"castle","size":400},"cove":{"name":"cove","size":300},"volcano":{"name":"volcanic lair","size":200},"cavern":{"name":"cavern","size":200},"grove":{"name":"Enchanted Grove","size":320},"island":{"name":"Shrouded Isle","size":320},"facemuseum":{"name":"Museum of Faces","size":300},"sm_idrasil":{"name":"idrasil seedling (DEPRECATED)","size":300},"home_idrasil_sprout":{"name":"idrasil sprout","size":150},"home_idrasil_tree":{"name":"idrasil tree","size":400},"home_collective":{"name":"collective","size":150},"home_caravan":{"name":"caravan","size":150},"home_emporium":{"name":"emporium","size":150},"home_waterfall":{"name":"waterfall","size":50},"ruinedpalace":{"name":"mouldering palace","size":150},"ruinedcastle":{"name":"crumbling castle","size":150},"wildcamp":{"name":"wild's encampment","size":40},"shianpagoda":{"name":"elegant pagoda","size":550},"clockworkhome":{"name":"clockwork home","size":50}};
-    AE.data.HomeNameLookup = {"alcove":"alcove","earthen spire":"earthspire","attic bedroom":"atticbedroom","lodge at inn":"innroom","hut":"hut","camp":"camp","tinker's wagon":"wagon","cottage":"cottage","house":"house","shop":"shop","inn":"inn","lodge":"lodge","gabled mansion":"gabledhouse","half-timber house":"halftimber","cave":"cave","pavilion":"pavilion","haunted manse":"hauntedmanse","ancient ruins":"ancientruins","tower":"tower","lighthouse":"lighthouse","cataract":"cataract","citadel":"citadel","academy":"academy","temple":"temple","mage tower":"magetower","idrasil sapling":"home_idrasil_sapling","palace":"palace","castle":"castle","cove":"cove","volcanic lair":"volcano","cavern":"cavern","enchanted grove":"grove","shrouded isle":"island","museum of faces":"facemuseum","idrasil seedling (deprecated)":"sm_idrasil","idrasil sprout":"home_idrasil_sprout","idrasil tree":"home_idrasil_tree","collective":"home_collective","caravan":"home_caravan","emporium":"home_emporium","waterfall":"home_waterfall","mouldering palace":"ruinedpalace","crumbling castle":"ruinedcastle","wild's encampment":"wildcamp","elegant pagoda":"shianpagoda","clockwork home":"clockworkhome"};
+    AE.data.HomeData = {"alcove":{"name":"alcove","size":5},"earthspire":{"name":"earthen spire","size":150},"atticbedroom":{"name":"Attic Bedroom","size":10},"innroom":{"name":"Lodge at Inn","size":12},"hut":{"name":"hut","size":15},"camp":{"name":"camp","size":14},"wagon":{"name":"tinker's wagon","size":12},"cottage":{"name":"cottage","size":20},"house":{"name":"house","size":30},"shop":{"name":"shop","size":25},"inn":{"name":"inn","size":50},"lodge":{"name":"lodge","size":30},"gabledhouse":{"name":"gabled mansion","size":65},"halftimber":{"name":"half-timber house","size":75},"cave":{"name":"cave","size":25},"pavilion":{"name":"pavilion","size":50},"hauntedmanse":{"name":"haunted manse","size":75},"ancientruins":{"name":"ancient ruins","size":110},"tower":{"name":"tower","size":55},"lighthouse":{"name":"lighthouse","size":80},"cataract":{"name":"cataract","size":330},"citadel":{"name":"citadel","size":60},"academy":{"name":"academy","size":75},"temple":{"name":"temple","size":60},"magetower":{"name":"mage tower","size":420},"home_idrasil_sapling":{"name":"idrasil sapling","size":300},"palace":{"name":"palace","size":400},"castle":{"name":"castle","size":400},"cove":{"name":"cove","size":300},"volcano":{"name":"volcanic lair","size":200},"cavern":{"name":"cavern","size":200},"grove":{"name":"Enchanted Grove","size":320},"island":{"name":"Shrouded Isle","size":320},"facemuseum":{"name":"Museum of Faces","size":300},"sm_idrasil":{"name":"idrasil seedling (DEPRECATED)","size":300},"home_idrasil_sprout":{"name":"idrasil sprout","size":150},"home_idrasil_tree":{"name":"idrasil tree","size":400},"home_collective":{"name":"collective","size":150},"home_caravan":{"name":"caravan","size":150},"home_emporium":{"name":"emporium","size":150},"home_waterfall":{"name":"waterfall","size":50},"ruinedpalace":{"name":"mouldering palace","size":150},"ruinedcastle":{"name":"crumbling castle","size":150},"wildcamp":{"name":"wild's encampment","size":40},"clockworkhome":{"name":"clockwork home","size":50},"shianpagoda":{"name":"elegant pagoda","size":550}};
+    AE.data.HomeNameLookup = {"alcove":"alcove","earthen spire":"earthspire","attic bedroom":"atticbedroom","lodge at inn":"innroom","hut":"hut","camp":"camp","tinker's wagon":"wagon","cottage":"cottage","house":"house","shop":"shop","inn":"inn","lodge":"lodge","gabled mansion":"gabledhouse","half-timber house":"halftimber","cave":"cave","pavilion":"pavilion","haunted manse":"hauntedmanse","ancient ruins":"ancientruins","tower":"tower","lighthouse":"lighthouse","cataract":"cataract","citadel":"citadel","academy":"academy","temple":"temple","mage tower":"magetower","idrasil sapling":"home_idrasil_sapling","palace":"palace","castle":"castle","cove":"cove","volcanic lair":"volcano","cavern":"cavern","enchanted grove":"grove","shrouded isle":"island","museum of faces":"facemuseum","idrasil seedling (deprecated)":"sm_idrasil","idrasil sprout":"home_idrasil_sprout","idrasil tree":"home_idrasil_tree","collective":"home_collective","caravan":"home_caravan","emporium":"home_emporium","waterfall":"home_waterfall","mouldering palace":"ruinedpalace","crumbling castle":"ruinedcastle","wild's encampment":"wildcamp","clockwork home":"clockworkhome","elegant pagoda":"shianpagoda"};
     
     AE.data.MountData = {"magicbroomstick":{"name":"magic broomstick","distance":115},"ebonwoodbroomstick":{"name":"ebonwood broomstick","distance":355},"flyingcarpet":{"name":"flying carpet","distance":300},"mule":{"name":"mule","distance":15},"oldnag":{"name":"old nag","distance":30},"gelding":{"name":"demure gelding","distance":55},"bayhorse":{"name":"fine bay","distance":100},"skelcharger":{"name":"skeletal charger","distance":270},"firecharger":{"name":"fire charger","distance":275},"fly":{"name":"fly","distance":525},"firechariot":{"name":"chariot of fire","distance":550},"pegasusmount":{"name":"pegasus","distance":320},"gryffonmount":{"name":"gryffon","distance":325}};
     AE.data.MountNameLookup = {"magic broomstick":"magicbroomstick","ebonwood broomstick":"ebonwoodbroomstick","flying carpet":"flyingcarpet","mule":"mule","old nag":"oldnag","demure gelding":"gelding","fine bay":"bayhorse","skeletal charger":"skelcharger","fire charger":"firecharger","fly":"fly","chariot of fire":"firechariot","pegasus":"pegasusmount","gryffon":"gryffonmount"};
     
 })(window.jQuery);
-     
- 
+    
+
 // Generated Data
 (function($) {
     'use strict';
@@ -414,8 +418,8 @@ let AE = (function($){
     AE.data.ResourceData.hp = {};
 
 })(window.jQuery);
- 
- 
+
+
 // Item utils
 (function($) {
     'use strict';
@@ -793,8 +797,8 @@ let AE = (function($){
 
     AE.itemUtils = new AEItemUtils();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Page utils
 (function($) {
     'use strict';
@@ -1117,8 +1121,8 @@ let AE = (function($){
 
     AE.pageUtils = new AEPageUtils();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Player State
 (function($) {
     'use strict';
@@ -1265,8 +1269,8 @@ let AE = (function($){
 
     AE.playerState = new AEPlayerState();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Settings
 (function($) {
     'use strict';
@@ -1356,8 +1360,8 @@ let AE = (function($){
 
     AE.settings = new AESettings();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Damage Meter
 (function($) {
     'use strict';
@@ -1866,8 +1870,8 @@ let AE = (function($){
 
     AE.damageMeter = new AEDamageMeter();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Quickslots
 (function($) {
     'use strict';
@@ -2077,8 +2081,8 @@ let AE = (function($){
 
     AE.quickSlots = new AEQuickSlots();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Storage Boost
 (function($) {
     'use strict';
@@ -2107,6 +2111,11 @@ let AE = (function($){
 
             let gameData = unsafeWindow.game.gdata;
             for(let homeId in AE.data.HomeData) {
+                if(gameData[homeId] === undefined) {
+                    console.warn("Unknown home: " + homeId);
+                    continue;
+                }
+
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let boostedValue = (10 + currentValue) * 5;
                 if(AE.config.enableDebugMode === true) {
@@ -2141,6 +2150,10 @@ let AE = (function($){
 
             let gameData = unsafeWindow.game.gdata;
             for(let homeId in AE.data.HomeData) {
+                if(gameData[homeId] === undefined) {
+                    continue;
+                }
+
                 let currentValue = gameData[homeId].mod.space.max.value;
                 let unboostedValue = (currentValue / 5) - 10;
 
@@ -2167,8 +2180,8 @@ let AE = (function($){
 
     AE.storageBoost = new AEStorageBoost();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Save Utils
 (function($) {
     'use strict';
@@ -2457,8 +2470,8 @@ let AE = (function($){
 
     AE.saveUtils = new AESaveUtils();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Page Style helpers
 (function($) {
     'use strict';
@@ -2526,8 +2539,8 @@ let AE = (function($){
 
     AE.pageStyle = new AEPageStyle();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Tab Style helpers
 (function($) {
     'use strict';
@@ -2627,8 +2640,8 @@ let AE = (function($){
 
     AE.tabStyle = new AETabStyle();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Player State
 (function($) {
     'use strict';
@@ -3011,8 +3024,8 @@ let AE = (function($){
 
     AE.tabStyleMain = new AETabStyleMain();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // TabStyle - Enchant
 (function($) {
     'use strict';
@@ -3257,8 +3270,8 @@ let AE = (function($){
 
     AE.tabStyleEnchant = new AETabStyleEnchant();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // TabStyle - Equip
 (function($) {
     'use strict';
@@ -3318,8 +3331,8 @@ let AE = (function($){
 
     AE.tabStyleEquip = new AETabStyleEquip();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // TabStyle - Adventure
 (function($) {
     'use strict';
@@ -3373,8 +3386,8 @@ let AE = (function($){
 
     AE.tabStyleAdventure = new AETabStyleAdventure();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // TabStyle - Home
 (function($) {
     'use strict';
@@ -3468,8 +3481,8 @@ let AE = (function($){
 
     AE.tabStyleHome = new AETabStyleHome();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // TabStyle - Equip
 (function($) {
     'use strict';
@@ -3495,8 +3508,8 @@ let AE = (function($){
 
     AE.tabStyleLoot = new AETabStyleLoot();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Sanctum
 (function($) {
     'use strict';
@@ -3696,8 +3709,8 @@ let AE = (function($){
 
     AE.sanctum = new AESanctum();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Sanctum Data
 (function($) {
     'use strict';
@@ -3724,8 +3737,8 @@ let AE = (function($){
         }
     };
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Sanctum Conjure
 (function($) {
     'use strict';
@@ -3783,8 +3796,8 @@ let AE = (function($){
 
     AE.sanctumConjure = new AESanctumConjure();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Sanctum Research
 (function($) {
     'use strict';
@@ -3832,8 +3845,8 @@ let AE = (function($){
 
     AE.sanctumResearch = new AESanctumResearch();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Debug
 (function($) {
     'use strict';
@@ -3861,17 +3874,11 @@ let AE = (function($){
 
     AE.debug = new AEDebug();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 // Loader
 (function($) {
     'use strict';
-
-    const ValidGameVersions = [
-        'vers pseudo_stable 0.8.1',
-        'vers 0.8.0',
-        'Version: pseudo_stable 0.10.4',
-        'Version: stable 0.11.1.3'];
 
     class AELoader {
         load() {
@@ -3924,8 +3931,8 @@ let AE = (function($){
             }
 
             let rawText = versionSpan.text().trim();
-            for(let i = 0; i < ValidGameVersions.length; i++){
-                let specialVersion = ValidGameVersions[i];
+            for(let i = 0; i < AE.data.ValidGameVersions.length; i++){
+                let specialVersion = AE.data.ValidGameVersions[i];
                 if(rawText === specialVersion){
                     console.log("Detected Game Version: '" + rawText + "'");
                     return;
@@ -3971,8 +3978,8 @@ let AE = (function($){
 
     AE.loader = new AELoader();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+
 (function($) {
     'use strict';
 
@@ -4019,5 +4026,5 @@ let AE = (function($){
 
     update();
 
-})(window.jQuery); 
- 
+})(window.jQuery);
+

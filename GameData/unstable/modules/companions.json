@@ -1,0 +1,284 @@
+{
+	"module": "companions",
+	"data": {
+		"monsters": [
+			{
+				"id": "bearcomp",
+				"tags": "t_animalcompanion",
+				"slot": "companion",
+				"require": "g.animalfriend>0",
+				"name": "bear companion",
+				"level": 10,
+				"onSummon": {
+					"name": "bristle",
+					"targets": "self",
+					"dot": {
+						"tags": "t_taunt",
+						"flags": "taunt"
+					}
+				},
+				"kind": "animal",
+				"noproc": true,
+				"speed": -1,
+				"hp": 300,
+				"tohit": 10,
+				"defense": 25,
+				"dodge": 5,
+				"regen": 4,
+				"attack": [
+					{
+						"name": "bear hug",
+						"targets": "enemy",
+						"damage": "5~15",
+						"dot": {
+							"%": "10%",
+							"duration": 5,
+							"id": "stun"
+						}
+					}
+				]
+			},
+			{
+				"id": "lynxcomp",
+				"tags": "t_animalcompanion",
+				"slot": "companion",
+				"require": "g.animalfriend>0",
+				"name": "lynx companion",
+				"level": 10,
+				"onSummon": {
+					"name": "stalking",
+					"targets": "self",
+					"dot": {
+						"tags": "t_hiding",
+						"flags": "hiding"
+					}
+				},
+				"kind": "animal",
+				"noproc": true,
+				"speed": 15,
+				"hp": 120,
+				"tohit": 15,
+				"defense": 15,
+				"dodge": 10,
+				"regen": 1,
+				"attack": [
+					{
+						"kind": "slash",
+						"name": "rake",
+						"targets": "enemy",
+						"damage": "10~15",
+						"dot": {
+							"name": "bleed",
+							"duration": 5,
+							"damage": "4~6"
+						}
+					}
+				]
+			},
+			{
+				"id": "wolfcomp",
+				"tags": "t_animalcompanion",
+				"slot": "companion",
+				"require": "g.animalfriend>0",
+				"name": "wolf companion",
+				"level": 10,
+				"kind": "animal",
+				"noproc": true,
+				"speed": 20,
+				"hp": 170,
+				"tohit": 20,
+				"defense": 20,
+				"dodge": 10,
+				"regen": 1,
+				"attack": [
+					{
+						"hits": [
+							{
+								"name": "throat rip",
+								"kind": "slash",
+								"damage": "10~15"
+							},
+							{
+								"name": "abdomen tear",
+								"kind": "slash",
+								"leech": 1,
+								"damage": "10~15"
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": "squirrelcomp",
+				"tags": "t_animalcompanion",
+				"slot": "companion",
+				"require": "g.animalfriend>0",
+				"name": "squirrel companion",
+				"spells": "mk_sqrl",
+				"onSummon": {
+					"name": "scurrying",
+					"targets": "self",
+					"dot": {
+						"tags": "t_hiding",
+						"flags": "hiding"
+					}
+				},
+				"chaincast": 1,
+				"level": 10,
+				"kind": "animal",
+				"noproc": true,
+				"speed": 15,
+				"hp": 10,
+				"tohit": 50,
+				"defense": -1,
+				"dodge": 50,
+				"regen": 0.1,
+				"attack": [
+					{
+						"hits": [
+							{
+								"kind": "blunt",
+								"name": "acorn toss",
+								"targets": "enemy",
+								"damage": "0~2",
+								"harmless": true,
+								"nodefense": true
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": "sqrl_taunt",
+				"tags": "t_animalcompanion",
+				"name": "feisty squirrel",
+				"level": 10,
+				"kind": "animal",
+				"onSummon": {
+					"name": "jeering",
+					"targets": "self",
+					"dot": {
+						"tags": "t_taunt",
+						"flags": "taunt"
+					}
+				},
+				"noproc": true,
+				"speed": 15,
+				"hp": 10,
+				"tohit": 50,
+				"defense": -1,
+				"dodge": -1,
+				"regen": 0.1,
+				"attack": [
+					{
+						"kind": "blunt",
+						"name": "acorn toss",
+						"targets": "enemy",
+						"damage": "0~2",
+						"harmless": true,
+						"nodefense": true
+					}
+				]
+			},
+			{
+				"id": "sqrl_nohit",
+				"tags": "t_animalcompanion",
+				"name": "see no squirrel",
+				"level": 10,
+				"kind": "animal",
+				"noproc": true,
+				"speed": 15,
+				"hp": 10,
+				"tohit": 50,
+				"defense": -1,
+				"dodge": -1,
+				"regen": 0.1,
+				"attack": [
+					{
+						"kind": "blunt",
+						"name": "acorn toss",
+						"targets": "enemy",
+						"damage": "0~2",
+						"harmless": true,
+						"nodefense": true,
+						"dot": {
+							"name": "bruised eye",
+							"tags": "t_tohitdown",
+							"duration": 5,
+							"mod": {
+								"self.tohit": -1
+							}
+						}
+					}
+				]
+			},
+			{
+				"id": "sqrl_nododge",
+				"tags": "t_animalcompanion",
+				"name": "ankle biter",
+				"level": 10,
+				"kind": "animal",
+				"noproc": true,
+				"speed": 15,
+				"hp": 10,
+				"tohit": 50,
+				"defense": -1,
+				"dodge": -1,
+				"regen": 0.1,
+				"attack": [
+					{
+						"kind": "blunt",
+						"name": "ankle bite",
+						"targets": "enemy",
+						"damage": "0~2",
+						"harmless": true,
+						"nodefense": true,
+						"dot": {
+							"name": "bitten ankle",
+							"id": "dodgedown",
+							"duration": 5,
+							"mod": {
+								"self.dodge": -1
+							}
+						}
+					}
+				]
+			}
+		],
+		"spells": [
+			{
+				"id": "mk_sqrl",
+				"name": "summon squirrels",
+				"level": 1,
+				"school": "animation",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["multiple"],
+					"delivery": ["instant"]
+				},
+				"require": "g.lore>=9999",
+				"summon": [
+					{
+						"id": "sqrl_taunt",
+						"count": 1,
+						"max": 1,
+						"%": "15%"
+					},
+					{
+						"id": "sqrl_nohit",
+						"count": 1,
+						"max": 1,
+						"%": "15%"
+					},
+					{
+						"id": "sqrl_nododge",
+						"count": 1,
+						"max": 1,
+						"%": "15%"
+					}
+				]
+			}
+		]
+	}
+}

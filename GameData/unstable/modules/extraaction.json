@@ -1,0 +1,134 @@
+{
+	"module": "extraaction",
+	"data": {
+		"upgrades": [
+			{
+				"id": "timespiral",
+				"name": "time spiral",
+				"desc": "Take a step back and do it again.",
+				"require": "g.tier5>0&&g.runner.max>=3",
+				"lock": "t_actionexpansion",
+				"tags": "t_actionexpansion",
+				"cost": {
+					"stillroom": 1,
+					"chargedtimepiece": 6
+				},
+				"mod": {
+					"runner.max": 1
+				},
+				"group": "actions"
+			}
+		],
+		"resources": [
+			{
+				"id": "stillroom",
+				"name": "still room",
+				"group": "materials",
+				"desc": "Nothing occurs within this room.",
+				"max": 1,
+				"sortOrder": 542,
+				"flavor": "Perfect for extremely specialized experiments."
+			},
+			{
+				"id": "chargedtimepiece",
+				"name": "charged timepiece",
+				"group": "materials",
+				"desc": "Imbued with time energies, this timepiece shows the current time no matter when you are.",
+				"max": 6,
+				"sortOrder": 541,
+				"flavor": "How many of you have one?"
+			},
+			{
+				"id": "emptytimepiece",
+				"name": "intricate timepiece",
+				"group": "materials",
+				"desc": "An ordinary timepiece, crafted with remarkable materials.",
+				"max": 6,
+				"sortOrder": 540,
+				"flavor": "The time is L1:69."
+			}
+		],
+		"tasks": [
+			{
+				"id": "crafttimepiece",
+				"name": "craft timepiece",
+				"verb": "clockmaking",
+				"require": "g.tier5>0&&g.runner.max>=3",
+				"need": ["workspace", "timesource"],
+				"desc": "Create an intricate timepiece.",
+				"length": 120,
+				"fill": ["emptytimepiece"],
+				"cost": {
+					"gold": 1000,
+					"research": 1500,
+					"runestones": 2,
+					"firerune": 2,
+					"airrune": 2,
+					"earthrune": 2,
+					"waterrune": 2
+				},
+				"run": {
+					"stamina": 2,
+					"tempus": 2
+				},
+				"result": {
+					"emptytimepiece": 1
+				},
+				"group": "crafting"
+			},
+			{
+				"id": "imbuetimepiece",
+				"name": "imbue timepiece",
+				"verb": "weaving time",
+				"require": "g.emptytimepiece>0",
+				"need": ["workspace", "timesource"],
+				"desc": "Weave time energies into the empty timepiece.",
+				"length": 60,
+				"fill": ["chargedtimepiece"],
+				"cost": {
+					"gold": 1500,
+					"research": 1000,
+					"timerune": 3,
+					"tomes": 15,
+					"timegem": 10,
+					"runestones": 4,
+					"codices": 500,
+					"emptytimepiece": 1
+				},
+				"run": {
+					"stamina": 3,
+					"tempus": 3,
+					"gold": 25,
+					"research": 35,
+					"timegem": 0.5,
+					"bloodgem": 0.25,
+					"managem": 0.25,
+					"sindel": 0.0025
+				},
+				"result": {
+					"chargedtimepiece": 1
+				},
+				"group": "crafting"
+			},
+			{
+				"id": "createstillroom",
+				"name": "create still room",
+				"verb": "stilling",
+				"require": "g.tier5>0&&g.runner.max>=3",
+				"need": ["workspace", "timesource"],
+				"desc": "Stop.",
+				"length": 720,
+				"fill": ["stillroom"],
+				"cost": {
+					"timegem": 100,
+					"timerune": 3,
+					"clepsydra100": 2
+				},
+				"result": {
+					"stillroom": 1
+				},
+				"group": "crafting"
+			}
+		]
+	}
+}

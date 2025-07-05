@@ -1,0 +1,1916 @@
+{
+	"module": "winter",
+	"sym": "❄️",
+	"data": {
+		"events": [
+			{
+				"id": "evt_mountain",
+				"require": "evt_helper",
+				"name": "wintertide",
+				"result": {
+					"frost": 1
+				},
+				"desc": "The winter is colder than ever, and new horrors have appeared with the chill. The gales from Thandhrun groan more loudly each day and bear investigation. Knowledge of fire should help you prepare."
+			},
+			{
+				"id": "evt_snowcopy",
+				"name": "snow double",
+				"desc": "A copy of yourself arises from the quickened snow. You feel its limbs like you feel your own arms."
+			},
+			{
+				"id": "evt_sacrifice",
+				"name": "the path opens",
+				"desc": "The sacrifice made, a portion of the fog parts before you, like curtains hanging in the air. The faintest outlines of a path appear on the frozen ground."
+			},
+			{
+				"id": "evt_w_legend",
+				"name": "legend tells",
+				"desc": "Of an icy wasteland on a plain of endless fog. An altar marks the way to the Tree of Winter, which grew when the first snows fell."
+			},
+			{
+				"id": "evt_w_chillforge",
+				"name": "a cold legend",
+				"desc": "A tome tells of a forge without fire, a stronghold in the mountain passes, and an endless blizzard trapped within a globe.",
+				"mod": {
+					"winterlore.max": 2
+				}
+			}
+		],
+		"resources": [
+			{
+				"id": "snowman",
+				"name": "snomunculus",
+				"desc": "A being of living snow",
+				"max": 5,
+				"group": "seasonal",
+				"mod": {
+					"frost.rate": 1,
+					"icelore.rate": 0.2
+				},
+				"flavor": "It's not a snowman. Why would you say that?"
+			},
+			{
+				"id": "livingsnow",
+				"desc": "Snow that pulsates and beats like a heart; it melts away slowly",
+				"require": "g.livingsnow>=1",
+				"max": 20,
+				"group": "seasonal",
+				"mod": {
+					"icelore.rate": 0.05,
+					"livingsnow.rate": -0.0001,
+					"water.rate": 0.01
+				},
+				"flavor": "there's a metaphor here somewhere."
+			},
+			{
+				"id": "frost",
+				"desc": "Winter chill reduces your effectiveness.",
+				"max": 200,
+				"group": "adversities",
+				"reverse": true,
+				"mod": {
+					"hp.rate": "-0.4%",
+					"fire.rate": "-0.4%",
+					"water.rate": "-0.4%",
+					"ice.rate": "0.25%"
+				}
+			},
+			{
+				"id": "emblemofice",
+				"name": "emblem of ice",
+				"group": "seasonal",
+				"desc": "An ancient rune engraved in unmelting ice",
+				"max": 1,
+				"mod": {
+					"ice.rate": 0.2
+				}
+			},
+			{
+				"id": "ice",
+				"desc": "ice mana",
+				"require": "g.icelore>=1",
+				"max": 0,
+				"color": "#44beeb",
+				"tags": "manas,specialty"
+			},
+			{
+				"id": "snowdrop",
+				"name": "snowdrop",
+				"tags": "herb,reagent",
+				"group": "seasonal",
+				"desc": "A tiny white flower that starts to bloom despite the cold",
+				"max": 5,
+				"mod": {
+					"nature.rate": 0.05
+				}
+			}
+		],
+		"tasks": [
+			{
+				"id": "makesnowman",
+				"name": "build snomunculus",
+				"desc": "Build a homunculus from snow",
+				"flavor": "It's not a snowman. Why would you say that?",
+				"require": "g.emblemofice>=1",
+				"verb": "building",
+				"length": 10,
+				"fill": "snowman",
+				"cost": {
+					"livingsnow": 10,
+					"souls": 1
+				},
+				"run": {
+					"stamina": 0.5,
+					"mana": 1
+				},
+				"result": {
+					"snowman": 1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "meltsnowman",
+				"name": "melt snomunculus",
+				"desc": "Liquify your cold creation.",
+				"require": "g.snowman>=1",
+				"verb": "Melting",
+				"cost": {
+					"snowman": 1,
+					"fire": 5
+				},
+				"fill": ["watergem", "water", "frost"],
+				"result": {
+					"watergem": 2,
+					"water": 10,
+					"frost": -10
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "icystudy",
+				"name": "nixifer's study",
+				"require": "g.arctictower>0",
+				"desc": "Ebin Nixifer's notes on the magical properties of ice.",
+				"length": 75,
+				"repeat": false,
+				"cost": {
+					"arcana": 5,
+					"tomes": 1
+				},
+				"run": {
+					"research": 2,
+					"ice": 0.5
+				},
+				"result": {
+					"icelore.max": 2,
+					"ice.rate": 0.1
+				},
+				"group": "winter ❄️"
+			}
+		],
+		"upgrades": [
+			{
+				"id": "warmrest",
+				"name": "warm up",
+				"desc": "Light extra fires as you rest to stave off the cold",
+				"tags": "t_restmod",
+				"require": "g.frost>=10",
+				"slot": "leisure",
+				"buy": {},
+				"mod": {
+					"t_rest.effect.frost": -10
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "snowcraft",
+				"desc": "The more you sculpt your snow homunculi, the more you learn about ice magic.",
+				"require": "g.snowman>=5",
+				"need": "g.snowman>=((g.snowcraft+1)*5)",
+				"max": 14,
+				"needtext": "Each purchase needs 5 more snomunculi than the previous, starting with 5 for the first and ending with 70 for the fourteenth.",
+				"mod": {
+					"icelore.max": 1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit1",
+				"name": "paper restoration",
+				"desc": "The old documents found in the workshop could be restored, with a sufficient investment",
+				"require": "g.w_fazbitknowledge>=50&&g.w_fazbitshop>0",
+				"mod": {
+					"crafting.max": 1
+				},
+				"lock": "enc_w_faz_auditlog",
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit2",
+				"name": "withered designs",
+				"desc": "An anatomical drawing of a human with unnaturally large eyes. The skeleton is wrong, yet familliar.",
+				"require": "g.w_fazbitknowledge>=500&&g.w_fazbit1>0",
+				"mod": {
+					"anatomy.max": 1
+				},
+				"lock": "enc_w_faz_tinyskeletons",
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit3",
+				"name": "record restoration",
+				"desc": "You have found the reason behind the distorted laughter - the crystals that held the recordings have heavily deteriorated. You can replace them with your own.",
+				"require": "g.w_fazbitknowledge>=1500&&g.w_fazbit2>0",
+				"mod": {
+					"crafting.rate": 0.2,
+					"spiritlore.max": 1,
+					"spiritlore.rate": 0.1
+				},
+				"lock": ["enc_w_faz_creepylaugh", "enc_w_faz_boominglaugh"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit4",
+				"name": "alchemical formula",
+				"desc": "A formula for producing a thick, firm, yet easily yielding coating.",
+				"require": "g.w_fazbitknowledge>=5000&&g.w_fazbit3>0",
+				"mod": {
+					"alchemy.max": 1,
+					"potions.max": 1
+				},
+				"lock": ["enc_w_faz_blobs"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit5",
+				"name": "battered ledger",
+				"desc": "A ledger detailing the payments for shipments. It appears the products were shipped out to arrive at a specific date.",
+				"require": "g.w_fazbitknowledge>=10000&&g.w_fazbit4>0",
+				"mod": {
+					"concentrate.max": 1
+				},
+				"lock": ["enc_w_faz_stockpile"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit6",
+				"name": "odd spellchart",
+				"desc": "A spellchart detailing a superbly efficient spell for animating a small golem. Multiple flaws prevent the golem from applying any dangerous force.",
+				"require": "g.w_fazbitknowledge>=15000&&g.w_fazbit5>0",
+				"mod": {
+					"summoning.max": 1,
+					"conjuration.max": 1,
+					"puppetry.max": 1,
+					"machinacreation.max": 1
+				},
+				"lock": ["enc_w_faz_prototype"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit7",
+				"name": "transportation sigils",
+				"desc": "Your investigation reveals multiple sigils woven into the walls and floors of the workshop. They appear to be designed to transport materials in an automated fashion. Warning spells are included, to compel anyone in the way to step aside.",
+				"require": "g.w_fazbitknowledge>=25000&&g.w_fazbit6>0",
+				"mod": {
+					"runelore.max": 1
+				},
+				"lock": ["enc_w_faz_nothingthere", "enc_w_faz_somethingthere"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit8",
+				"name": "letter of request",
+				"desc": "A letter from a few centuries ago, requesting the aid of Fazbit in producing a large amount of items for an unknown festivity. The designs are supposed to be enclosed, but are clearly missing.",
+				"require": "g.w_fazbitknowledge>=40000&&g.w_fazbit7>0",
+				"mod": {
+					"history.rate": 0.3,
+					"history.max": 1,
+					"tomes.rate": 0.001
+				},
+				"lock": ["enc_w_faz_paint"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit9",
+				"name": "discarded missives",
+				"desc": "A large bin full of paper dust. With your restoration technique, you manage to recover what appears to be missives and drawings crudely detailing the golems produced by the workshop.",
+				"require": "g.w_fazbitknowledge>=60000&&g.w_fazbit8>0",
+				"mod": {
+					"lore.rate": 0.2,
+					"history.max": 1,
+					"tomes.max": 25,
+					"codices.max": 25,
+					"scrolls.max": 25
+				},
+				"lock": ["enc_w_faz_scrapper"],
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fazbit10",
+				"name": "the purpose",
+				"desc": "The entire facility was created by Fazbit and what surely was a team of exceptional wizards, to provide large amounts of what must be animated toys for multiple settlements, to be used in an unknown festivity. Perhaps, you should revive the tradition.",
+				"require": "g.w_fazbitknowledge>=100000&&g.w_fazbit9>0",
+				"mod": {
+					"crafting.max": 1,
+					"history.max": 1,
+					"allies.max": 5
+				},
+				"result": {
+					"title": "Fazbit's Legacy"
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_multitask",
+				"name": "Multitask focus",
+				"desc": "Use your Snow Double as an extension of yourself, without tasking it otherwise",
+				"cost": {
+					"ice": 2
+				},
+				"require": "g.evt_snowcopy>=1",
+				"warn": true,
+				"disable": ["w_fame", "w_scholar"],
+				"mod": {
+					"runner.max": 1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_fame",
+				"name": "gold-focused copy",
+				"desc": "Set your snow double to acquisition of cold hard gold",
+				"cost": {
+					"gold": 100
+				},
+				"warn": true,
+				"require": "g.evt_snowcopy>=1",
+				"disable": ["w_multitask", "w_scholar"],
+				"mod": {
+					"gold.rate": 0.5,
+					"stamina.rate": -0.25,
+					"runner.max": 1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "w_scholar",
+				"name": "cold calculation",
+				"desc": "Dedicate your Snow Double to arcane studies.",
+				"cost": {
+					"arcana": 2
+				},
+				"warn": true,
+				"require": "g.evt_snowcopy>=1",
+				"disable": ["w_fame", "w_multitask"],
+				"mod": {
+					"skill.rate": 0.3,
+					"focus.result.runner.skillprogress": "50%",
+					"runner.max": 1,
+					"stamina.rate": -0.25
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "hearthexpansion",
+				"name": "expanded hearth",
+				"desc": "Doubles the effectiveness of your Hearths",
+				"require": "g.frost.rate>0&&g.hearth>=5",
+				"cost": {
+					"firegem": 10
+				},
+				"mod": {
+					"hearth.mod.frost.rate": -1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winterboon",
+				"name": "winter's boon",
+				"desc": "A small piece of winter finds a home within you",
+				"require": "g.winteressence>=1&&g.snowymountain>0",
+				"cost": {
+					"livingsnow": 10
+				},
+				"mod": {
+					"waterrune.max": 2,
+					"water.max": 1,
+					"water.rate": "1%",
+					"waterdmg": 3,
+					"waterlore.mod.player.hits.water": 0.04,
+					"icelore.max": 2,
+					"icedmg": 5
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winteraward",
+				"name": "winter's reward",
+				"desc": "You can feel the chill spreading",
+				"require": "g.winteressence>=10&&g.winterboon>0",
+				"cost": {
+					"livingsnow": 30,
+					"snowman": 10
+				},
+				"mod": {
+					"waterrune.max": 2,
+					"water.max": 1,
+					"water.rate": "1%",
+					"waterdmg": 3,
+					"waterlore.mod.player.hits.water": 0.04,
+					"icelore.rate": 0.2,
+					"icedmg": 5
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winterhowl",
+				"name": "winter's howl",
+				"desc": "A howling wind surrounds you, always",
+				"require": "g.winteressence>=100&&g.winteraward>0",
+				"cost": {
+					"livingsnow": 40,
+					"snowman": 15
+				},
+				"mod": {
+					"ice.max": 10,
+					"ice.rate": 2,
+					"icedmg": 5
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winterchill",
+				"name": "winter's chill",
+				"desc": "People around you start to shiver uncontrollably.",
+				"require": "g.winteressence>=500&&g.winterhowl>0",
+				"cost": {
+					"livingsnow": 50,
+					"snowman": 20,
+					"watergem": 75
+				},
+				"mod": {
+					"waterrune.max": 2,
+					"water.max": 1,
+					"water.rate": "1%",
+					"waterdmg": 3,
+					"waterlore.mod.player.hits.water": 0.04,
+					"icelore.rate": 0.2,
+					"icedmg": 10
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winterbreath",
+				"name": "winter's breath",
+				"desc": "Your mere presence is enough to turn the warmest summer to a winter night.",
+				"require": "g.winteressence>=1000&&g.winterchill>0",
+				"cost": {
+					"livingsnow": 60,
+					"snowman": 25,
+					"watergem": 100,
+					"waterrune": 20
+				},
+				"mod": {
+					"icelore.max": 5,
+					"icelore.rate": 0.5,
+					"icedmg": 15
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "winterenvoy",
+				"name": "winter's envoy",
+				"desc": "You spread the joy of the cold far and wide, for the winter has come",
+				"require": "g.winteressence>=5000&&g.winterbreath>0",
+				"cost": {
+					"livingsnow": 80,
+					"snowman": 30,
+					"watergem": 150,
+					"waterrune": 25
+				},
+				"mod": {
+					"iceflame.attack.dot.damage.min": 20,
+					"iceflame.attack.dot.damage.max": 30,
+					"iceflame.cost.ice": 6,
+					"iceflame.cost.fire": 2,
+					"icedmg": 20
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "wintermastery",
+				"name": "master of winter",
+				"desc": "You braved every blizzard and stayed cool throughout. Congratulations!",
+				"require": "g.winteressence>=10000&&g.winterenvoy>0",
+				"cost": {
+					"livingsnow": 100
+				},
+				"result": {
+					"title": "Master of Winter"
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "warmpotion",
+				"name": "dew of icy fire",
+				"need": "potsource",
+				"require": "((g.icystudy+g.alchemist)>0&&(g.firelore+g.icelore)>=15&&g.potions>=7)",
+				"desc": "A sure way to combat the freezing cold. It will however, render many of your icy spells useless.",
+				"disable": ["iceshard", "iceshard0", "iceshard1", "iceshard2"],
+				"warn": true,
+				"cost": {
+					"ice": 5,
+					"fire": 10,
+					"firegem": 1,
+					"watergem": 1,
+					"snowdrop": 2
+				},
+				"mod": {
+					"icelore.mod.frost.rate": -0.15,
+					"hearth.mod.frost.rate": -1,
+					"snowman.mod.frost.rate": -0.8
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "preparetree",
+				"name": "preparation",
+				"desc": "The altar glows faintly with your offerings. Your gifts were well-received, but more is required.",
+				"require": "g.evil_sacrifice>=1||g.good_sacrifice>=1",
+				"result": {
+					"prestige": 1,
+					"evt_sacrifice": true
+				},
+				"cost": {
+					"bloodgem": 5,
+					"watergem": 15,
+					"livingsnow": 15,
+					"gold": 500,
+					"research": 1500,
+					"gems": 25
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "good_sacrifice",
+				"name": "winter fog",
+				"desc": "You enter a relentless fog which the strongest spells do not disperse. At their center you find an altar of sacrifice. A small offering should do.",
+				"disable": "evil_sacrifice",
+				"warn": true,
+				"require": "g.winterlore>=5&&(g.evil==0||g.good==1)",
+				"cost": {
+					"gems": 10,
+					"gold": 200
+				},
+				"mod": {
+					"virtue": 20,
+					"fire.rate": 0.5,
+					"lightlore.max": 1,
+					"light.rate": 0.2,
+					"frost.rate": -1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "evil_sacrifice",
+				"name": "winter fog",
+				"desc": "You enter a relentless fog which the strongest spells do not disperse. At their center you find an altar of sacrifice. Inwardly you smile; you know just the thing.",
+				"disable": "good_sacrifice",
+				"require": "g.winterlore>=5&&(g.good==0||g.evil==1)",
+				"warn": true,
+				"cost": {
+					"hp": 50,
+					"bloodgem": 5
+				},
+				"mod": {
+					"evilamt": 20,
+					"ice.rate": 0.5,
+					"shadowlore.max": 1,
+					"shadow.rate": 0.2,
+					"frost.rate": 1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "iceshard0",
+				"name": "improve ice shard",
+				"desc": "After a few preliminary tests of the spell, you feel the potential in it.",
+				"require": "g.iceshard>=10",
+				"cost": {
+					"ice": 2,
+					"research": 100
+				},
+				"mod": {
+					"frost.rate": 4,
+					"icelore.max": 1,
+					"icedmg": 5,
+					"player.hits.ice": 0.5,
+					"iceshard.cost.ice": -1
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "iceshard1",
+				"name": "ice proficiency",
+				"desc": "As you use ice magic more and more, it starts to resonate with you. Maybe, you can push it little further",
+				"require": "g.iceshard>=100&&g.iceshard0>0",
+				"cost": {
+					"ice": 3,
+					"research": 250
+				},
+				"mod": {
+					"frost.rate": 7,
+					"icelore.max": 1,
+					"icedmg": 15,
+					"player.hits.ice": 1.5,
+					"iceshard.cost.ice": -1
+				},
+				"log": {
+					"name": "ice shard proficiency",
+					"desc": "With each Ice Shard cast you feel your power grow, but your warmth begins to fade as well."
+				},
+				"group": "winter ❄️"
+			},
+			{
+				"id": "iceshard2",
+				"name": "ice mastery",
+				"desc": "You feel like imbuing yourself with Ice can push your power even further.",
+				"require": "g.iceshard>=1000&&g.iceshard1>0",
+				"warn": true,
+				"disable": ["hearth", "hearthexpansion"],
+				"cost": {
+					"ice": 10,
+					"sp": 2,
+					"arcana": 5
+				},
+				"mod": {
+					"fazbithearth.mod.frost.rate": 80,
+					"icelore.max": 4,
+					"frost.mod.hp.rate": "0.4%",
+					"icedmg": 30,
+					"player.hits.ice": 3,
+					"frost.rate": 5,
+					"iceshard.cost.ice": -1
+				},
+				"log": {
+					"name": "heart of ice",
+					"desc": "Your power is immeasurable, your veins suffused with cold. But something feels wrong. The warmth is gone."
+				},
+				"group": "winter ❄️"
+			}
+		],
+		"spells": [
+			{
+				"id": "snowminion",
+				"name": "frost golem",
+				"desc": "Transform a minor construct into a lumbering hulk of ice.",
+				"level": 5,
+				"school": "ice",
+				"tags": "frost_spell",
+				"keywords": {
+					"type": ["summon"],
+					"target": ["ally"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.snowman>=1",
+				"buy": {
+					"ice": 5
+				},
+				"cost": {
+					"snowman": 1
+				},
+				"result": {
+					"frost": 10
+				},
+				"summon": [
+					{
+						"id": "snowmanmonster",
+						"count": 1,
+						"max": 3
+					}
+				]
+			},
+			{
+				"id": "iceflame",
+				"name": "icy flame",
+				"desc": "A contradiction sustained by magic.",
+				"level": 3,
+				"school": "ice",
+				"tags": "frost_spell",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant", "over time"]
+				},
+				"require": "(g.icelore>=10&&g.firelore>=10)||g.warmpotion>0",
+				"buy": {
+					"ice": 2
+				},
+				"cost": {
+					"ice": 3,
+					"fire": 1
+				},
+				"attack": {
+					"damage": "5~10",
+					"tohit": 2,
+					"kind": "fire",
+					"potencies": ["spelldmg", "firedmg"],
+					"dot": {
+						"duration": 5,
+						"damage": "3~5",
+						"potencies": ["spelldmg", "firedmg"]
+					}
+				},
+				"at": {
+					"100": {
+						"attack.dot.damage.min": 2,
+						"attack.dot.damage.max": 5,
+						"attack.tohit": 1,
+						"attack.dot.duration": 5
+					},
+					"1000": {
+						"attack.dot.damage.min": 5,
+						"attack.dot.damage.max": 10,
+						"attack.tohit": 2,
+						"attack.dot.duration": 10
+					}
+				}
+			},
+			{
+				"id": "warmfield",
+				"name": "field of heat",
+				"sortOrder": 740,
+				"level": 5,
+				"school": "fire",
+				"tags": "frost_spell",
+				"keywords": {
+					"type": ["buff"],
+					"target": ["self"],
+					"targets": ["single"],
+					"delivery": ["over time"]
+				},
+				"require": "g.firelore>=5",
+				"buy": {
+					"firegem": 4,
+					"arcana": 1
+				},
+				"cost": {
+					"fire": 2
+				},
+				"cd": 30,
+				"dot": {
+					"duration": 60,
+					"mod": {
+						"frost.rate": -2,
+						"player.resist.ice": 20
+					}
+				},
+				"at": {
+					"30": {
+						"dot.duration": 60
+					},
+					"100": {
+						"dot.duration": 120
+					}
+				}
+			},
+			{
+				"id": "iceshard",
+				"name": "ice shard",
+				"desc": "Shoot a fragment of winter's wrath at an enemy. Can accumulate tremendous potential.",
+				"level": 3,
+				"school": "ice",
+				"tags": "frost_spell",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.ice>=3",
+				"buy": {
+					"ice": 2,
+					"watergem": 3
+				},
+				"cost": {
+					"ice": 4
+				},
+				"result": {
+					"frost": 2
+				},
+				"attack": {
+					"damage": "1~3",
+					"potencies": ["spelldmg", "icedmg"]
+				},
+				"at": {
+					"10": {
+						"attack.tohit": 1
+					},
+					"50": {
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					},
+					"100": {
+						"attack.tohit": 1
+					},
+					"200": {
+						"attack.damage.min": 1,
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					},
+					"500": {
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					},
+					"1000": {
+						"attack.damage.min": 1,
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					},
+					"2000": {
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					},
+					"10000": {
+						"attack.damage.min": 1,
+						"attack.damage.max": 1,
+						"attack.tohit": 1
+					}
+				}
+			},
+			{
+				"id": "icicledisaster",
+				"name": "icicle disaster",
+				"desc": "Invoke the power of the glacial blade.",
+				"level": 5,
+				"school": "ice",
+				"tags": "frost_spell,t_finisher",
+				"keywords": {
+					"type": ["damage"],
+					"target": ["enemy"],
+					"targets": ["single"],
+					"delivery": ["instant"]
+				},
+				"require": "g.ice_blade.isEquipped()",
+				"buy": {
+					"ice": 5,
+					"watergem": 25
+				},
+				"need": "g.ice_blade.isEquipped()",
+				"needtext": "Only works with the glacial blade",
+				"cost": {
+					"ice": "g.ice.max*0.25"
+				},
+				"cd": 30,
+				"attack": {
+					"damage": "a.context.gdata.ice.max",
+					"targets": "enemy",
+					"targetspec": {
+						"stat": "hp",
+						"highest": false,
+						"usepercentage": false
+					},
+					"potencies": ["physdmg", "icedmg", "sworddmg"],
+					"dot": {
+						"duration": 1,
+						"onDeath": {
+							"name": "echoing disaster",
+							"targets": "enemyleader",
+							"harmless": true,
+							"result": {
+								"icicledisaster.timer": -30
+							}
+						}
+					}
+				}
+			}
+		],
+		"furniture": [
+			{
+				"id": "hearth",
+				"desc": "A warm fireplace; the more you have the more gems you require to create them.",
+				"require": "g.frost>=10",
+				"max": 20,
+				"cost": {
+					"firegem": "1+g.hearth||0"
+				},
+				"mod": {
+					"frost.rate": -1,
+					"fire.rate": 0.1
+				}
+			},
+			{
+				"id": "fazbithearth",
+				"name": "fazbit's hearth",
+				"desc": "Originally used to warm the entire workshop, can be repurposed for home use.",
+				"require": "w_fazbit6",
+				"max": 1,
+				"cost": {
+					"firegem": 100,
+					"firerune": 25
+				},
+				"mod": {
+					"frost.rate": -100,
+					"fire.rate": 0.5,
+					"iceflame.attack.dot.duration": 5
+				}
+			},
+			{
+				"id": "freezer",
+				"desc": "A place to store the melting snow.",
+				"require": "g.livingsnow>=1",
+				"max": 1,
+				"cost": {
+					"watergem": 1,
+					"ice": 5
+				},
+				"mod": {
+					"fire.rate": -0.2,
+					"frost.rate": 1,
+					"livingsnow.mod.livingsnow.rate": 0.0001
+				}
+			}
+		],
+		"skills": [
+			{
+				"id": "winterlore",
+				"name": "winter lore",
+				"desc": "Study of winter legends",
+				"require": "evt_w_legend",
+				"buy": {
+					"research": 100
+				},
+				"mod": {
+					"livingsnow.max": 1,
+					"snowman.max": 0.35,
+					"research.max": 5
+				}
+			},
+			{
+				"id": "icelore",
+				"tags": "t_school",
+				"name": "cryomancy",
+				"desc": "The study of cold incarnate.",
+				"require": "g.emblemofice>=1",
+				"buy": {
+					"livingsnow": 10
+				},
+				"run": {
+					"stamina": 0.5
+				},
+				"result": {
+					"sp": 0.1
+				},
+				"mod": {
+					"livingsnow.max": 2,
+					"snowman.max": 1,
+					"ice.max": 1,
+					"ice.rate": "0.1//20/-1",
+					"frost.rate": "0.2//20/-1",
+					"icedmg": 1
+				}
+			}
+		],
+		"dungeons": [
+			{
+				"id": "snowymountain",
+				"name": "thandhrune cavern",
+				"desc": "The mountain is filled with the perils of winter, but also with its treasures",
+				"level": 3,
+				"length": 50,
+				"require": "g.firelore>=5",
+				"run": {
+					"fire": 0.2,
+					"stamina": 1
+				},
+				"runmod": {
+					"frost.rate": 2
+				},
+				"result": {
+					"emblemofice": 1,
+					"title": "Winter's Heart",
+					"winteressence": 5
+				},
+				"loot": {
+					"maxlevel": 10
+				},
+				"log": {
+					"name": "Mountaineer",
+					"desc": "You have survived the chilly winds and monsters of the white"
+				},
+				"boss": "iceyeti",
+				"spawns": [
+					["frostelemental", "frostelemental", "frostelemental"],
+					"avalanche",
+					"iceelemental",
+					"w_troll",
+					"icywinds",
+					"frixie"
+				]
+			},
+			{
+				"id": "w_chillforge",
+				"name": "chilled forge",
+				"desc": "An old citadel of the icy craft, where wizards wrought artifacts of snow and ice.",
+				"require": "g.evt_w_chillforge>0&&g.winterlore>=7",
+				"level": 8,
+				"run": {
+					"stamina": 2
+				},
+				"runmod": {
+					"frost.rate": 1
+				},
+				"result": {
+					"winteressence": 10
+				},
+				"length": 100,
+				"loot": {
+					"iceorb": 1,
+					"ice_blade": 1
+				},
+				"boss": "frostgiant",
+				"spawns": [
+					"w_blizzardguardian",
+					["icywinds", "w_blizzardguardian", "icywinds"],
+					["frostelemental", "iceelemental", "frostelemental"],
+					"frostelemental",
+					"w_troll",
+					["frixie", "elf", "elf", "frixie", "frixie"],
+					"poltergeist",
+					"iceelemental",
+					["elf", "elf", "frixie"],
+					"yeti",
+					["icewalker", "icewalker", "icewalker", "icewalker"]
+				]
+			}
+		],
+		"monsters": [
+			{
+				"id": "frostelemental",
+				"name": "frost elemental",
+				"level": 1,
+				"kind": "elemental",
+				"desc": "A spiral of deadly icicles",
+				"hp": 20,
+				"defense": 4,
+				"attack": {
+					"name": "icicles",
+					"kind": "ice",
+					"damage": "5~8"
+				},
+				"loot": {
+					"livingsnow": "30%",
+					"winteressence": 0.04
+				}
+			},
+			{
+				"id": "avalanche",
+				"level": 2,
+				"kind": "hazard",
+				"desc": "The mass of snow seems to aim directly for you as it tumbles down the mountain",
+				"hp": 100,
+				"defense": -10,
+				"attack": {
+					"name": "chilling",
+					"kind": "ice",
+					"targets": "enemies",
+					"damage": "2~5"
+				},
+				"loot": {
+					"winteressence": 0.04,
+					"livingsnow": 3
+				}
+			},
+			{
+				"id": "w_troll",
+				"name": "ice troll",
+				"level": 3,
+				"kind": "giant",
+				"desc": "A huge dumb looking creature with a club of ice",
+				"hp": 40,
+				"defense": 10,
+				"attack": {
+					"name": "smash",
+					"kind": "blunt",
+					"damage": "10~15"
+				},
+				"loot": {
+					"bloodgem": 1,
+					"winteressence": 0.04,
+					"livingsnow": 1
+				}
+			},
+			{
+				"id": "w_blizzardguardian",
+				"name": "blizzard guardian",
+				"level": 9,
+				"kind": "elemental",
+				"desc": "Winter holds its own secrets, and summons guardians to watch them.",
+				"tohit": 12,
+				"hp": 50,
+				"defense": 55,
+				"attack": {
+					"targets": "enemies",
+					"name": "freeze",
+					"kind": "ice",
+					"damage": "10~20"
+				},
+				"loot": {
+					"livingsnow": "0~5",
+					"winteressence": 0.04
+				},
+				"immune": "ice,water,air"
+			},
+			{
+				"id": "icywinds",
+				"name": "icy winds",
+				"level": 2,
+				"kind": "hazard",
+				"desc": "A chilling wind",
+				"hp": 30,
+				"defense": 5,
+				"immune": "blunt,slash,pierce",
+				"attack": {
+					"name": "Icy winds",
+					"kind": "ice",
+					"damage": "2~3"
+				},
+				"result": {
+					"icelore.exp": 50
+				},
+				"loot": {
+					"ice": 3,
+					"winteressence": 0.04
+				}
+			},
+			{
+				"id": "iceyeti",
+				"name": "yeti",
+				"level": 5,
+				"kind": "giant",
+				"desc": "A mythical creature, found only in legends",
+				"hp": 200,
+				"defense": 20,
+				"speed": 1,
+				"attack": {
+					"name": "icybreath",
+					"kind": "ice",
+					"targets": "enemies",
+					"damage": "35~55"
+				},
+				"loot": {
+					"winteressence": 0.04,
+					"snowman": 1
+				}
+			},
+			{
+				"id": "snowmanmonster",
+				"name": "frost golem",
+				"level": 1,
+				"desc": "A hulking Golem sculpted in ice",
+				"hp": 50,
+				"defense": 8,
+				"speed": 10,
+				"regen": 2,
+				"attack": {
+					"name": "snowball",
+					"kind": "ice",
+					"damage": "3~5"
+				},
+				"loot": {
+					"winteressence": 0.04,
+					"livingsnow": 1,
+					"watergem": 1
+				}
+			}
+		],
+		"locales": [
+			{
+				"id": "winter_village",
+				"name": "winter village",
+				"desc": "Now that you command the power of winter, the villagers ask you to help with their preparations",
+				"level": 2,
+				"require": "g.emblemofice>=1",
+				"length": 50,
+				"run": {
+					"stamina": 0.4
+				},
+				"runmod": {
+					"fire.rate": 0.2
+				},
+				"mod": {
+					"icelore.max": "2.5%//10/-1"
+				},
+				"result": {
+					"livingsnow": 10,
+					"winteressence": 5
+				},
+				"loot": {
+					"snowman": "0~2"
+				},
+				"encs": [
+					"enc_w_kidsplaying",
+					"enc_w_windbarrier",
+					"enc_w_conjuring",
+					"enc_w_candles",
+					"enc_w_legends",
+					"enc_w_decorations"
+				]
+			},
+			{
+				"id": "w_fazbitshop",
+				"name": "fazbit's workshop?",
+				"level": 3,
+				"length": 100,
+				"require": "g.fazbitshop>0&&g.tier3>0",
+				"desc": "Travelers have reported unusual activity in the long-abandoned workshop. Deep, unsettling laughing and the loud clanking of metal can be heard throughout the day.",
+				"run": {
+					"stamina": 2
+				},
+				"result": {
+					"w_fazbitknowledge": 400
+				},
+				"encs": [
+					"enc_w_faz_nothingthere",
+					"enc_w_faz_tinyskeletons",
+					"enc_w_faz_blobs",
+					"enc_w_faz_paint",
+					"enc_w_faz_somethingthere",
+					"enc_w_faz_boominglaugh",
+					"enc_w_faz_creepylaugh",
+					"enc_w_faz_auditlog",
+					"enc_w_faz_prototype",
+					"enc_w_faz_stockpile",
+					"enc_w_faz_scrapper",
+					"enc_w_faz_nothingthere2",
+					"enc_w_faz_tinyskeletons2",
+					"enc_w_faz_blobs2",
+					"enc_w_faz_paint2",
+					"enc_w_faz_somethingthere2",
+					"enc_w_faz_boominglaugh2",
+					"enc_w_faz_creepylaugh2",
+					"enc_w_faz_auditlog2",
+					"enc_w_faz_prototype2",
+					"enc_w_faz_stockpile2",
+					"enc_w_faz_scrapper2",
+					"enc_chest3"
+				]
+			},
+			{
+				"id": "w_fazbitshop2",
+				"name": "restored fazbit's workshop",
+				"level": 3,
+				"length": 100,
+				"require": "g.fazbit_restoration2>0&&g.tier1>0",
+				"desc": "The old workshop, fully repaired and ready to produce. Of course, it could always use a little extra maintenance and tuning.",
+				"run": {
+					"stamina": 3
+				},
+				"result": {
+					"w_dolls": 5
+				},
+				"encs": [
+					"enc_w_faz_nothingthere3",
+					"enc_w_faz_tinyskeletons3",
+					"enc_w_faz_blobs3",
+					"enc_w_faz_paint3",
+					"enc_w_faz_somethingthere3",
+					"enc_w_faz_boominglaugh3",
+					"enc_w_faz_creepylaugh3",
+					"enc_w_faz_auditlog3",
+					"enc_w_faz_prototype3",
+					"enc_w_faz_stockpile3",
+					"enc_w_faz_scrapper3",
+					"enc_chest3"
+				]
+			},
+			{
+				"id": "icelake",
+				"name": "ice lake",
+				"level": 3,
+				"length": 50,
+				"require": "g.emblemofice>=1",
+				"desc": "At the bottom of the frozen lake, numerous caves can be found, full of curiosities and wonders.",
+				"run": {
+					"stamina": 0.5
+				},
+				"runmod": {
+					"frost.rate": 1
+				},
+				"result": {
+					"winteressence": 5
+				},
+				"encs": [
+					"movingsnow",
+					"enc_w_coldsnap",
+					"enc_emberstone",
+					"enc_w_coldsnap",
+					"drippingwater",
+					"frozenloam",
+					"w_crystalsocket",
+					"enc_chest3",
+					"icegrave",
+					"icesculpture",
+					"icefairy"
+				]
+			},
+			{
+				"id": "arctictower",
+				"name": "tower of nixifer",
+				"level": 3,
+				"length": 50,
+				"require": "g.winterlore>=4&&g.tier3>0",
+				"desc": "The frozen tower once belonged to a wizard who mastered the mysteries of ice",
+				"run": {
+					"stamina": 0.5
+				},
+				"runmod": {
+					"frost.rate": 1
+				},
+				"result": {
+					"title": "Nixifer's Disciple",
+					"winteressence": 5
+				},
+				"encs": [
+					"enc_w_coldsnap",
+					"enc_w_coldsnap",
+					"enc_w_coldsnap",
+					"enc_icestudy",
+					"enc_icestudy",
+					"enc_icestudy",
+					"enc_winterstudy",
+					"enc_winterstudy",
+					"frozenbookcase",
+					"frozenbookcase",
+					"enc_chest3",
+					"icesculpture"
+				]
+			},
+			{
+				"id": "treeofrites",
+				"name": "tree of rites",
+				"level": 5,
+				"length": 30,
+				"require": "g.preparetree>=1",
+				"desc": "A fir older than the mountains stands alone in the midst of a clearing. You feel its age, heavier than the fog itself. The embodiment of the living winter.",
+				"run": {
+					"stamina": 0.5
+				},
+				"runmod": {
+					"frost.rate": 1
+				},
+				"mod": {
+					"icelore.max": "25%//1/-1"
+				},
+				"result": {
+					"evt_snowcopy": 1
+				},
+				"encs": [
+					"enc_w_lifeforce",
+					"enc_w_drawscheme",
+					"enc_w_placegems",
+					"enc_w_setfocus",
+					"enc_w_attune"
+				]
+			}
+		],
+		"encounters": [],
+		"rares": [],
+		"potions": [
+			{
+				"id": "pot_icecreamevil",
+				"name": "ice cream lure",
+				"desc": "A batch of ice cream, for children",
+				"require": "g.potions>=1&&g.t_demonclass>0",
+				"buy": {
+					"gold": 250,
+					"ice": 5
+				},
+				"cost": {
+					"herbs": 15,
+					"ice": 5
+				},
+				"sell": {
+					"gold": 100
+				},
+				"use": {
+					"dot": {
+						"id": "icecreamlure",
+						"name": "ice cream lure",
+						"duration": 3600,
+						"mod": {
+							"eatchildrenrest.mod.t_rest.effect.stress": -0.05,
+							"eatchildrenrest.mod.t_rest.effect.shadow": 0.1,
+							"eatchildrenrest.mod.t_rest.effect.spirit": 0.1,
+							"eatchildrenrest.mod.t_rest.effect.hp": 0.5
+						}
+					}
+				}
+			},
+			{
+				"id": "pot_icecream",
+				"name": "ice cream",
+				"desc": "A batch of ice cream flavored with eleven wintery herbs and spices",
+				"require": "g.potions>=1",
+				"buy": {
+					"gold": 250,
+					"ice": 5
+				},
+				"cost": {
+					"herbs": 15,
+					"ice": 5
+				},
+				"sell": {
+					"gold": 100
+				},
+				"use": {
+					"dot": {
+						"id": "icecream",
+						"name": "ice cream high",
+						"duration": 3600,
+						"effect": {
+							"hp": 0.5,
+							"stress": -0.5
+						}
+					}
+				}
+			}
+		],
+		"hall": {
+			"data": {
+				"resources": [
+					{
+						"id": "w_fazbitknowledge",
+						"name": "fazbit's knowledge",
+						"desc": "Accumulated knowledge on the workings of the mysterious workshop. May yield benefits as it accumulates",
+						"max": 100000,
+						"sym": "🏰❄️",
+						"group": "hall"
+					},
+					{
+						"id": "winteressence",
+						"name": "essence of winter",
+						"group": "hall",
+						"desc": "As you go deeper into the winter, understanding dawns.",
+						"max": 10000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "frostbrass",
+						"name": "treated brass",
+						"group": "hall",
+						"desc": "Brass, forged by an unknown wizard and treated with long-lost alchemical expertise of Fazbit.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "frostwood",
+						"name": "frost-touched wood",
+						"group": "hall",
+						"desc": "Rare timber, infused with winter's energies and extremely malleable under magical influences.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "frostparts",
+						"name": "rime-rimmed parts",
+						"group": "hall",
+						"desc": "Cogs, springs and multitudes of other mechanical parts. Ever-cold, even after prolonged use.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "froststone",
+						"name": "permafrost stone",
+						"group": "hall",
+						"desc": "Harvested from below unthawing ice, one stone is enough to cool an entire house for years on end.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "frostservants",
+						"name": "cold ones",
+						"group": "hall",
+						"desc": "Winter is generally lauded as indifferent, yet it is unquestionably proud to preserve its kills. It would be a shame to let them go to waste.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "frostsigils",
+						"name": "ice-etched sigils",
+						"group": "hall",
+						"desc": "Etched in purest ice, charged with energies of winter, ready to assist in arcane tasks.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					},
+					{
+						"id": "w_dolls",
+						"name": "animated toys",
+						"group": "hall",
+						"desc": "Just like they were back in the day.",
+						"max": 1000,
+						"sym": "🏰❄️"
+					}
+				],
+				"upgrades": [
+					{
+						"id": "fazbit_restoration",
+						"name": "fazbit's workshop restoration project",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"desc": "This place must have once been a source of great joy to people all over the realm. It would be a tremendous accomplishment to repair it.",
+						"require": "g.w_fazbit10>0",
+						"max": 1,
+						"result": {
+							"fame": 10
+						}
+					},
+					{
+						"id": "fazbit_restoration2",
+						"name": "fazbit's refurbished winter workshop",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"desc": "Finish the restoration and allow the workshop to work towards its original purpose.",
+						"need": "(g.fazbit_restoration_stage1+g.fazbit_restoration_stage2+g.fazbit_restoration_stage3)>2",
+						"require": "g.fazbit_restoration>0",
+						"max": 1,
+						"result": {
+							"fame": 25
+						},
+						"mod": {
+							"w_dolls.rate": 0.01,
+							"puppetry.buy.sp": -1,
+							"machinacreation.buy.sp": -1,
+							"automatasculpting.buy.sp": -2
+						}
+					}
+				],
+				"tasks": [
+					{
+						"id": "fazbit_restoration_stage1",
+						"name": "workshop structure renovation",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0&&g.fazbit_restoration2==0",
+						"desc": "Restore the outside walls of the workshop, with an eye for future expansion.",
+						"length": 1200,
+						"max": 1,
+						"cost": {
+							"froststone": 1000,
+							"frostwood": 1000
+						},
+						"run": {
+							"stamina": 3
+						},
+						"lock": [
+							"frostwood_production1",
+							"frostwood_production2",
+							"frostwood_productionex",
+							"froststone_production1",
+							"froststone_production2",
+							"froststone_productionex"
+						],
+						"result": {
+							"fame": 10
+						}
+					},
+					{
+						"id": "fazbit_restoration_stage2",
+						"name": "workshop internals renovation",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage1>0",
+						"desc": "Restore the machinery inside the workshop, to prepare for its reactivation.",
+						"length": 1200,
+						"max": 1,
+						"cost": {
+							"frostparts": 1000,
+							"frostbrass": 1000
+						},
+						"run": {
+							"stamina": 3
+						},
+						"lock": [
+							"frostparts_production1",
+							"frostparts_production2",
+							"frostparts_productionex"
+						],
+						"result": {
+							"fame": 15
+						}
+					},
+					{
+						"id": "fazbit_restoration_stage3",
+						"name": "workshop production restoration",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"desc": "Provide the necessary workforce and magical reserves to resume production in the workshop.",
+						"length": 1200,
+						"max": 1,
+						"cost": {
+							"frostsigils": 1000,
+							"frostservants": 1000
+						},
+						"run": {
+							"stamina": 3
+						},
+						"lock": [
+							"frostservants_production1",
+							"frostservants_production2",
+							"frostservants_productionex",
+							"frostsigils_production1",
+							"frostsigils_production2",
+							"frostsigils_productionex"
+						],
+						"result": {
+							"fame": 25
+						}
+					},
+					{
+						"id": "frostwood_production1",
+						"name": "produce frost-touched wood",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "highkell",
+						"desc": "Infuse the freshly-grown wood with frost. Will not work without a source of fresh wood",
+						"length": 10,
+						"run": {
+							"stamina": 2,
+							"frost": -5,
+							"ice": 5
+						}
+					},
+					{
+						"id": "frostwood_production2",
+						"name": "wood growth",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "highkell",
+						"desc": "Grow new wood to enable production of frost-touched wood.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"nature": 1
+						},
+						"runmod": {
+							"frostwood_production1.result.frostwood": 5
+						}
+					},
+					{
+						"id": "frostwood_productionex",
+						"name": "growth tinctures",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "alchemist",
+						"desc": "Produce a special fast-growth formula to supplement the growth of wood needed.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"nature": 1
+						},
+						"runmod": {
+							"frostwood_production2.runmod.frostwood_production1.result.frostwood": 5
+						}
+					},
+					{
+						"id": "frostparts_production1",
+						"name": "produce rime-rimmed parts",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage1>0",
+						"need": "mechamancer",
+						"desc": "Quench the parts in the frost, imbuing them with endless cold. Only work on just-forged parts.",
+						"length": 10,
+						"run": {
+							"stamina": 2,
+							"frost": -5,
+							"ice": 5
+						}
+					},
+					{
+						"id": "frostparts_production2",
+						"name": "forge parts",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage1>0",
+						"need": "mechamancer",
+						"desc": "Forge parts with intent to turn them into rime-rimmed parts.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"gold": 5
+						},
+						"runmod": {
+							"frostparts_production1.result.frostparts": 5
+						}
+					},
+					{
+						"id": "frostparts_productionex",
+						"name": "forge enchantments",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage1>0",
+						"need": "enchanter",
+						"desc": "Enchant your forge to increase smithing efficiency.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"mana": 1
+						},
+						"runmod": {
+							"frostparts_production2.runmod.frostparts_production1.result.frostparts": 5
+						}
+					},
+					{
+						"id": "froststone_production1",
+						"name": "produce permafrost stone",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "titan",
+						"desc": "Harvest the cold stone from the depths of the earth. Requires proper mining support to function.",
+						"length": 10,
+						"run": {
+							"stamina": 2,
+							"frost": -5,
+							"ice": 5
+						}
+					},
+					{
+						"id": "froststone_production2",
+						"name": "mining supports",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "titan",
+						"desc": "Maintain a mineshaft to the deep layers, where ice never melts.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"earth": 1
+						},
+						"runmod": {
+							"froststone_production1.result.froststone": 5
+						}
+					},
+					{
+						"id": "froststone_productionex",
+						"name": "Frost summoning",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration>0",
+						"need": "summoner",
+						"desc": "Increase the efficiency of your permafrost mining endeavors, by summoning the nearby stone to you, extending your reach.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"mana": 1
+						},
+						"runmod": {
+							"froststone_production2.runmod.froststone_production1.result.froststone": 5
+						}
+					},
+					{
+						"id": "frostservants_production1",
+						"name": "reanimate cold ones",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "necro3",
+						"desc": "Animate the corpses of those slain by the frost. Requires corpses that were recently unearthed.",
+						"length": 10,
+						"run": {
+							"stamina": 2,
+							"frost": -5,
+							"ice": 5
+						}
+					},
+					{
+						"id": "frostservants_production2",
+						"name": "corpse harvesting",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "necro3",
+						"desc": "Harvest the frosty corpses of the unfortunates.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"shadow": 1
+						},
+						"runmod": {
+							"frostservants_production1.result.frostservants": 5
+						}
+					},
+					{
+						"id": "frostservants_productionex",
+						"name": "corpse divination",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "seer",
+						"desc": "Many winters mean many corpses and divination is exactly what you need to find them.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"mana": 1
+						},
+						"runmod": {
+							"frostservants_production2.runmod.frostservants_production1.result.frostservants": 5
+						}
+					},
+					{
+						"id": "frostsigils_production1",
+						"name": "imbue frost sigils",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "wizard3",
+						"desc": "Imbue frost into carved sigils. Requires sigils to be untainted by ambient energies.",
+						"length": 10,
+						"run": {
+							"stamina": 2,
+							"frost": -5,
+							"ice": 5
+						}
+					},
+					{
+						"id": "frostsigils_production2",
+						"name": "carve sigils",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "wizard3",
+						"desc": "Carve out the sigils in prepared conduits.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"mana": 2
+						},
+						"runmod": {
+							"frostsigils_production1.result.frostsigils": 5
+						}
+					},
+					{
+						"id": "frostsigils_productionex",
+						"name": "optimized carving",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.fazbit_restoration_stage2>0",
+						"need": "battlemage",
+						"desc": "Utilize your expertise with weaponry to speed up the carving process.",
+						"perpetual": true,
+						"run": {
+							"stamina": 1,
+							"vigor": 0.1
+						},
+						"runmod": {
+							"frostsigils_production2.runmod.frostsigils_production1.result.frostsigils": 5
+						}
+					},
+					{
+						"id": "w_doll_charity",
+						"name": "distribute presents",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.w_dolls>0",
+						"need": "tier0",
+						"desc": "Distribute the animated toys to the children of Dhrune, earning recognition for your hall.",
+						"length": 20,
+						"cost": {
+							"w_dolls": 10
+						},
+						"max": 50,
+						"result": {
+							"fame": 0.5
+						}
+					},
+					{
+						"id": "w_doll_profit",
+						"name": "sell toys",
+						"sym": "🏰❄️",
+						"tags": "hall",
+						"require": "g.w_dolls>0",
+						"need": "tier0",
+						"desc": "Sell the toys for a tidy profit.",
+						"length": 10,
+						"fill": "gold",
+						"cost": {
+							"w_dolls": 1
+						},
+						"result": {
+							"gold": 50,
+							"gems": 1
+						}
+					}
+				]
+			}
+		}
+	}
+}

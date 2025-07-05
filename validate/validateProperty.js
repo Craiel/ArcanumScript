@@ -424,6 +424,10 @@ function validateAttackBlock(settings, value) {
             continue;
         }
 
+        if(property.startsWith('self.')){
+            property = property.substring(5);
+        }
+
         switch (property) {
             case 'adj':
             case 'log':
@@ -436,6 +440,7 @@ function validateAttackBlock(settings, value) {
             case 'attack':
             case 'onDeath':
             case 'onExpire':
+            case 'onSummon':
             case 'only':
             case 'healing':
             case 'cure':
@@ -455,6 +460,8 @@ function validateAttackBlock(settings, value) {
             case '%':
             case 'duration':
             case 'dmg':
+            case 'dodge':
+            case 'speed':
             case 'damage': {
                 let damageParsed = validateStat.validateOne(settings, propertyValue);
                 if(damageParsed === undefined) {
@@ -657,6 +664,9 @@ exports.validateSecondPass = function(settings, object, key) {
         case 'sell':
         case 'keywords':
         case 'resurrect':
+        case 'caststoppers':
+        case 'runmod':
+        case 'onSummon':
         case 'exclude': {
             validateObjectTarget(settings, object[key], key);
             break;
@@ -821,6 +831,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'silent':
         case 'secret':
         case 'craftable':
+        case 'hidden':
         case 'repeat': {
             switch(typeof propertyData) {
                 case 'string': {
@@ -877,8 +888,11 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'keywords':
         case 'summon':
         case 'resurrect':
+        case 'caststoppers':
         case 'convert':
         case 'sell':
+        case 'onsummon':
+        case 'runmod':
         case 'tags': {
             if(Array.isArray(propertyData)) {
                 targetData[property] = propertyData;
@@ -915,6 +929,7 @@ exports.validateFirstPass = function(settings, sourceData, targetData, property)
         case 'needtext':
         case 'extdesc':
         case 'parent':
+        case 'warnmsg':
         case 'name': {
             targetData[property] = propertyData;
             return true;

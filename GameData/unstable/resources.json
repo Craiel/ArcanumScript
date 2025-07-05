@@ -1,0 +1,598 @@
+[
+	{
+		"id": "gold",
+		"group": "basic",
+		"desc": "Gold coins.",
+		"locked": false,
+		"max": 5,
+		"sortOrder": 5
+	},
+	{
+		"id": "research",
+		"group": "knowledge",
+		"desc": "Research into the Arcane.",
+		"max": 10,
+		"sortOrder": 105
+	},
+	{
+		"id": "arcana",
+		"group": "knowledge",
+		"school": "arcane",
+		"desc": "Profound mystical knowledge.",
+		"max": 0,
+		"sortOrder": 110
+	},
+	{
+		"id": "scrolls",
+		"group": "knowledge",
+		"desc": "Scroll of arcane lore.",
+		"max": 10,
+		"sortOrder": 115,
+		"mod": {
+			"research.rate": 0.005,
+			"research.max": 1
+		}
+	},
+	{
+		"id": "runestones",
+		"name": "rune stones",
+		"group": "runes",
+		"desc": "Runes carved on pieces of stone.",
+		"tags": "t_runes",
+		"max": 10,
+		"sortOrder": 205,
+		"mod": {
+			"research.max": "1%",
+			"runelore.rate": "0.02//100/-8",
+			"runelore.max": "0.05//100/-20"
+		},
+		"flavor": ""
+	},
+	{
+		"id": "firerune",
+		"name": "flame runes",
+		"tags": "t_runes,elementalrunes,prismaticrunes",
+		"group": "runes",
+		"desc": "Rune etched with lines of fire.",
+		"max": 10,
+		"sortOrder": 230,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "waterrune",
+		"name": "water runes",
+		"tags": "t_runes,elementalrunes,prismaticrunes",
+		"group": "runes",
+		"desc": "Rune lined in flowing water.",
+		"max": 10,
+		"sortOrder": 220,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "spiritrune",
+		"name": "spirit runes",
+		"tags": "t_runes,prismaticrunes,primalrunes",
+		"group": "runes",
+		"desc": "A Runestone carved in bone; it seems to whisper.",
+		"max": 10,
+		"sortOrder": 245,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "airrune",
+		"name": "air runes",
+		"tags": "t_runes,elementalrunes,prismaticrunes",
+		"group": "runes",
+		"desc": "Rune etched with solid air.",
+		"max": 10,
+		"sortOrder": 225,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "earthrune",
+		"name": "earth runes",
+		"tags": "t_runes,elementalrunes,prismaticrunes",
+		"group": "runes",
+		"desc": "Rune ingrained with moonstone.",
+		"max": 10,
+		"sortOrder": 235,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "lightrune",
+		"name": "light runes",
+		"tags": "t_runes,prismaticrunes,primalrunes",
+		"group": "runes",
+		"desc": "Rune ingrained with sparkling diamond.",
+		"max": 10,
+		"sortOrder": 250,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "shadowrune",
+		"name": "shadow runes",
+		"tags": "t_runes,prismaticrunes,primalrunes",
+		"group": "runes",
+		"desc": "Black upon black, only a trained eye can distinguish the tiniest difference in the shades of black.",
+		"max": 10,
+		"sortOrder": 255,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "manarune",
+		"name": "mana runes",
+		"tags": "t_runes,prismaticrunes",
+		"group": "runes",
+		"desc": "The surging energy of this rune can be felt even by the least talented of mages.",
+		"max": 10,
+		"sortOrder": 215,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "naturerune",
+		"name": "nature runes",
+		"tags": "t_runes,prismaticrunes,primalrunes",
+		"group": "runes",
+		"desc": "Formed out of a complicated tangle of stems and leaves.",
+		"max": 10,
+		"sortOrder": 240,
+		"mod": {
+			"research.max": 10
+		},
+		"flavor": ""
+	},
+	{
+		"id": "chaosrune",
+		"name": "chaos runes",
+		"tags": "fundamentalrunes",
+		"group": "runes",
+		"desc": "Unmistakably a rune, even if it's impossible to tell quite what it looks like.",
+		"max": 10,
+		"sortOrder": 260,
+		"mod": {
+			"chaos.max": 1
+		},
+		"flavor": "You can do anything!"
+	},
+	{
+		"id": "timerune",
+		"name": "time runes",
+		"tags": "fundamentalrunes",
+		"group": "runes",
+		"desc": "Time flows along the grooves of the rune.",
+		"mod": {
+			"tempus.rate": 0.05,
+			"bf.rate": 0.01
+		},
+		"max": 6,
+		"sortOrder": 265,
+		"flavor": "It's not easy to look at."
+	},
+	{
+		"id": "bodies",
+		"group": "necromancy",
+		"desc": "Bodies for necromantic magic",
+		"max": 1,
+		"mod": {
+			"dissection.rate": 0.01,
+			"embalming.rate": 0.01
+		}
+	},
+	{
+		"id": "bones",
+		"group": "necromancy",
+		"desc": "Human Bones",
+		"max": 10
+	},
+	{
+		"id": "skulls",
+		"group": "necromancy",
+		"desc": "Human Skull",
+		"max": 5
+	},
+	{
+		"id": "bonedust",
+		"name": "bone dust",
+		"group": "necromancy",
+		"desc": "The dust of human bones.",
+		"max": 10
+	},
+	{
+		"id": "souls",
+		"group": "necromancy",
+		"desc": "Imprisoned souls of living creatures.",
+		"max": 1,
+		"mod": {
+			"shadow.rate": 0.001,
+			"spirit.rate": 0.001,
+			"spiritlore.rate": 0.01
+		},
+		"flavor": "Is it wrong?"
+	},
+	{
+		"id": "schematic",
+		"name": "schematics",
+		"desc": "Schematic of Thurn the Artificer.",
+		"group": "materials",
+		"max": 3,
+		"sortOrder": 420,
+		"mod": {
+			"crafting.rate": 0.1
+		}
+	},
+	{
+		"id": "codices",
+		"name": "codices",
+		"group": "knowledge",
+		"desc": "Codex of arcane lore.",
+		"max": 10,
+		"sortOrder": 120,
+		"mod": {
+			"research.rate": 0.07,
+			"research.max": 5
+		}
+	},
+	{
+		"id": "tomes",
+		"name": "tomes",
+		"group": "knowledge",
+		"desc": "A hefty tome of knowledge.",
+		"max": 5,
+		"sortOrder": 125,
+		"mod": {
+			"research.max": 7,
+			"arcana.rate": 0.001,
+			"lore.rate": 0.01,
+			"lore.max": "0.1//100/-10"
+		}
+	},
+	{
+		"id": "gems",
+		"name": "gemstones",
+		"group": "gems",
+		"desc": "Various fine gemstones.",
+		"max": 5,
+		"sortOrder": 305
+	},
+	{
+		"id": "managem",
+		"tags": "magicgems,prismaticgems",
+		"group": "gems",
+		"name": "arcane gem",
+		"desc": "Gem infused with arcane energy.",
+		"max": 2,
+		"sortOrder": 315
+	},
+	{
+		"id": "firegem",
+		"tags": "magicgems,prismaticgems,elementalgems",
+		"group": "gems",
+		"name": "fire gem",
+		"desc": "Gem imbued with the essence of fire.",
+		"max": 2,
+		"sortOrder": 330
+	},
+	{
+		"id": "watergem",
+		"tags": "magicgems,prismaticgems,elementalgems",
+		"group": "gems",
+		"name": "water gem",
+		"desc": "Gem imbued with the essence of water.",
+		"max": 2,
+		"sortOrder": 320
+	},
+	{
+		"id": "naturegem",
+		"tags": "magicgems,prismaticgems,primalgems",
+		"group": "gems",
+		"name": "nature gem",
+		"desc": "Physical essence of life.",
+		"max": 2,
+		"sortOrder": 340,
+		"flavor": "The force from the beginning."
+	},
+	{
+		"id": "earthgem",
+		"tags": "magicgems,prismaticgems,elementalgems",
+		"group": "gems",
+		"name": "earth gem",
+		"desc": "Gem imbued with the essence of earth.",
+		"max": 2,
+		"sortOrder": 335
+	},
+	{
+		"id": "airgem",
+		"tags": "magicgems,prismaticgems,elementalgems",
+		"group": "gems",
+		"name": "air gem",
+		"desc": "Gem imbued with the essence of air.",
+		"max": 2,
+		"sortOrder": 325
+	},
+	{
+		"id": "shadowgem",
+		"tags": "magicgems,prismaticgems,primalgems",
+		"group": "gems",
+		"name": "shadow gem",
+		"desc": "Gem imbued with the essence of darkness.",
+		"max": 2,
+		"sortOrder": 355
+	},
+	{
+		"id": "lightgem",
+		"tags": "magicgems,prismaticgems,primalgems",
+		"group": "gems",
+		"name": "light gem",
+		"desc": "Gem imbued with the essence of light.",
+		"max": 2,
+		"sortOrder": 350
+	},
+	{
+		"id": "spiritgem",
+		"tags": "magicgems,prismaticgems,primalgems",
+		"group": "gems",
+		"name": "spirit gem",
+		"desc": "Gem imbued with raw spirit.",
+		"max": 2,
+		"sortOrder": 345
+	},
+	{
+		"id": "bloodgem",
+		"group": "gems",
+		"name": "blood gem",
+		"desc": "A little magic and a lot of blood.",
+		"max": 2,
+		"sortOrder": 310,
+		"mod": {
+			"hp.max": 1
+		}
+	},
+	{
+		"id": "timegem",
+		"name": "time gem",
+		"tags": "magicgems,fundamentalgems",
+		"group": "gems",
+		"desc": "Crafted from gems which do not yet exist.",
+		"mod": {
+			"tempus.rate": 0.01
+		},
+		"max": 3,
+		"sortOrder": 365
+	},
+	{
+		"id": "voidgem",
+		"name": "void gem",
+		"tags": "magicgems,fundamentalgems",
+		"group": "gems",
+		"desc": "The space where a gem once was.",
+		"mod": {
+			"player.resist.void": 1
+		},
+		"max": 3,
+		"sortOrder": 370,
+		"flavor": "There was a GEM here. It's gone now."
+	},
+	{
+		"id": "chaosgem",
+		"name": "chaos gem",
+		"tags": "magicgems,fundamentalgems",
+		"group": "gems",
+		"desc": "Every time you look at it, it looks different.",
+		"mod": {
+			"chaos.rate": 0.01
+		},
+		"max": 3,
+		"sortOrder": 360,
+		"flavor": "Chaos, chaos!"
+	},
+	{
+		"id": "ichor",
+		"group": "materials",
+		"desc": "The blood of gods.",
+		"flavor": "The secret courtesy that courses like ichor.",
+		"max": 5,
+		"sortOrder": 415
+	},
+	{
+		"id": "sindel",
+		"name": "star shard",
+		"group": "esoteric",
+		"desc": "A glowing cinder of the stars.",
+		"flavor": "The pillars broke; the stars fell screaming from the sky.",
+		"max": 3,
+		"sortOrder": 505,
+		"mod": {
+			"light.rate": 0.1,
+			"player.resist.shadow": 1
+		}
+	},
+	{
+		"id": "dreams",
+		"group": "esoteric",
+		"desc": "We are such stuff as dreams are made of. And our little life is rounded with a sleep.",
+		"max": 3,
+		"sortOrder": 510,
+		"mod": {
+			"weary.rate": -0.1,
+			"arcana.rate": "1%"
+		},
+		"flavor": "In your wildest..."
+	},
+	{
+		"id": "herbs",
+		"group": "materials",
+		"desc": "Special plants for potions and alchemy.",
+		"max": 10,
+		"sortOrder": 405
+	},
+	{
+		"id": "potionessence",
+		"name": "potion base",
+		"group": "materials",
+		"desc": "Basic essence for creating advanced potions.",
+		"flavor": "Smells faintly of milk.",
+		"max": 3,
+		"sortOrder": 410
+	},
+	{
+		"id": "space",
+		"name": "floor space",
+		"desc": "Available space.",
+		"hide": true,
+		"reverse": true,
+		"reverseDisplay": true,
+		"max": 0
+	},
+	{
+		"id": "vigor",
+		"tags": "t_endurance",
+		"desc": "Your capacity for short-term exertions.",
+		"unit": false,
+		"require": "lore",
+		"name": "vigor",
+		"max": 10
+	},
+	{
+		"id": "mana",
+		"tags": "manas,prismatic",
+		"desc": "Raw magical energy.",
+		"unit": false,
+		"require": "lore",
+		"name": "mana",
+		"max": 0,
+		"sortOrder": 10
+	},
+	{
+		"id": "fire",
+		"require": "firelore",
+		"unit": false,
+		"tags": "manas,element,prismatic",
+		"desc": "Fire mana.",
+		"max": 0,
+		"sortOrder": 40
+	},
+	{
+		"id": "air",
+		"require": "airlore",
+		"unit": false,
+		"tags": "manas,element,prismatic",
+		"desc": "Air mana.",
+		"max": 0,
+		"sortOrder": 30
+	},
+	{
+		"id": "earth",
+		"unit": false,
+		"tags": "manas,element,prismatic",
+		"require": "earthlore",
+		"desc": "Earth mana.",
+		"max": 0,
+		"sortOrder": 50
+	},
+	{
+		"id": "water",
+		"unit": false,
+		"tags": "manas,element,prismatic",
+		"desc": "Water mana.",
+		"require": "waterlore",
+		"max": 0,
+		"sortOrder": 20
+	},
+	{
+		"id": "nature",
+		"tags": "manas,primal,prismatic",
+		"unit": false,
+		"require": "naturelore",
+		"desc": "Nature mana.",
+		"max": 0,
+		"sortOrder": 60
+	},
+	{
+		"id": "shadow",
+		"name": "shadow",
+		"tags": "manas,primal,prismatic",
+		"unit": false,
+		"require": "shadowlore",
+		"desc": "Shadow mana.",
+		"max": 0,
+		"sortOrder": 90
+	},
+	{
+		"id": "light",
+		"tags": "manas,primal,prismatic",
+		"unit": false,
+		"require": "lightlore",
+		"desc": "Light mana.",
+		"max": 0,
+		"sortOrder": 80
+	},
+	{
+		"id": "spirit",
+		"tags": "manas,primal,prismatic",
+		"unit": false,
+		"desc": "Spirit mana.",
+		"require": "spiritlore",
+		"max": 0,
+		"sortOrder": 70
+	},
+	{
+		"id": "tempus",
+		"require": "chronomancy",
+		"tags": "manas,fundamental",
+		"unit": false,
+		"desc": "Time incarnate. If only...",
+		"max": 0,
+		"sortOrder": 110
+	},
+	{
+		"id": "chaos",
+		"tags": "manas,fundamental",
+		"require": "g.t_chaosclass>0||g.chaoslore>0",
+		"unit": false,
+		"desc": "Chaos incarnate. You can do anything!",
+		"max": 0,
+		"sortOrder": 100
+	},
+	{
+		"id": "void",
+		"tags": "manas,fundamental",
+		"unit": false,
+		"desc": "Nothingness. No current use.",
+		"flavor": "",
+		"max": 0,
+		"sortOrder": 120
+	},
+	{
+		"id": "offlinetime",
+		"name": "stored time",
+		"group": "basic",
+		"desc": "Time since you last checked in. Can be used to speed up the game.",
+		"flavor": "Where does time go when you aren't looking?",
+		"locked": false,
+		"max": 10800
+	}
+]
